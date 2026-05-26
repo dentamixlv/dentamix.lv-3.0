@@ -1,0 +1,57 @@
+{
+  "id": "cta_block",
+  "type": "SharedSlice",
+  "name": "CTABlock",
+  "description": "CTA block with badge, title, description, and button link fields",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge text",
+            "placeholder": "Share Your Experience"
+          }
+        },
+        "title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Title",
+            "placeholder": "Would you like to leave a review of your visit?",
+            "allowTargetBlank": true,
+            "single": "heading1,heading2,heading3,heading4,heading5,heading6"
+          }
+        },
+        "description": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Description",
+            "placeholder": "Every patient's opinion helps us grow...",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6"
+          }
+        },
+        "button_text": {
+          "type": "Text",
+          "config": {
+            "label": "Button text",
+            "placeholder": "Book a Visit"
+          }
+        },
+        "button_link": {
+          "type": "Link",
+          "config": {
+            "label": "Button Link",
+            "placeholder": "Select page or enter URL"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

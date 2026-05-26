@@ -18,15 +18,10 @@ export default function BlogPostClient({ post, langCode }: BlogPostClientProps) 
     router.push(`${langPrefix}/blogs`);
   };
 
-  const handleBook = () => {
-    router.push(langCode === 'en-us' ? '/en/contacts' : '/kontakti');
-  };
-
   return (
     <BlogDetailPage 
       post={post} 
       onBack={handleBack} 
-      onBook={handleBook} 
       langCode={langCode} 
     />
   );

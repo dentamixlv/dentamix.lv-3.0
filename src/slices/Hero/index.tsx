@@ -137,13 +137,23 @@ export default function Hero({ slice }: HeroProps) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           )}
-          <Link
-            href={isEn ? '/en/services' : '/pakalpojumi'}
-            className="px-8 py-4 bg-white border border-[#d9c1c2] hover:border-[#400112] text-[#400112] hover:bg-[#fbf9f8] rounded-full text-base font-semibold transition-all text-center cursor-pointer inline-block shadow-sm"
-            id="hero-secondary-btn"
-          >
-            {secondaryCtaText}
-          </Link>
+          {isFilled.link(primary.secondary_cta_link) ? (
+            <PrismicNextLink
+              field={primary.secondary_cta_link}
+              className="px-8 py-4 bg-transparent border border-[#400112]/30 text-[#400112] hover:bg-[#400112]/5 hover:border-[#400112]/60 rounded-full text-base font-semibold transition-all text-center cursor-pointer inline-block"
+              id="hero-secondary-btn"
+            >
+              {secondaryCtaText}
+            </PrismicNextLink>
+          ) : (
+            <Link
+              href={isEn ? '/en/services' : '/pakalpojumi'}
+              className="px-8 py-4 bg-transparent border border-[#400112]/30 text-[#400112] hover:bg-[#400112]/5 hover:border-[#400112]/60 rounded-full text-base font-semibold transition-all text-center cursor-pointer inline-block"
+              id="hero-secondary-btn"
+            >
+              {secondaryCtaText}
+            </Link>
+          )}
         </motion.div>
       </motion.div>
     </section>

@@ -8,9 +8,8 @@ import { BlogPost } from '../../../types';
 import { getBlogPosts } from '../../../data';
 
 const staggerContainerVariants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.12,
       delayChildren: 0.05
@@ -111,7 +110,7 @@ export default function BlogsClient({ langCode, customBlogPosts }: BlogsClientPr
               </div>
 
               {/* Bottom actions */}
-              <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
+              <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
                 <Link
                   href={`${langPrefix}/blogs/${post.id}`}
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#400112] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
@@ -120,9 +119,6 @@ export default function BlogsClient({ langCode, customBlogPosts }: BlogsClientPr
                   {t.readPost}
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
-                <span className="px-3 py-1.5 text-[9px] font-bold text-[#400112] bg-[#fbf9f8]/90 rounded-full font-mono uppercase tracking-widest border border-[#efedec]/65">
-                  {post.readTime}
-                </span>
               </div>
             </div>
           </motion.div>

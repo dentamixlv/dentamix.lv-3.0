@@ -47,9 +47,8 @@ const getFallbackSlices = (langCode: string) => [
 ];
 
 const staggerContainerVariants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.12,
       delayChildren: 0.05

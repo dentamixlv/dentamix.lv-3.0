@@ -130,9 +130,8 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
   } as const;
 
   const staggerContainer = {
-    hidden: { opacity: 0 },
+    hidden: {},
     visible: {
-      opacity: 1,
       transition: { staggerChildren: 0.08 }
     }
   } as const;

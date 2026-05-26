@@ -57,6 +57,13 @@
             "placeholder": "Mūsu pakalpojumi"
           }
         },
+        "secondary_cta_link": {
+          "type": "Link",
+          "config": {
+            "label": "Secondary CTA Link",
+            "placeholder": "Select page or enter URL"
+          }
+        },
         "background_image": {
           "type": "Image",
           "config": {

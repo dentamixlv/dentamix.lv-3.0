@@ -13,9 +13,8 @@ import { Doctor } from '../../types';
 import { createClient } from '../../prismicio';
 
 const staggerContainerVariants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.12,
       delayChildren: 0.05

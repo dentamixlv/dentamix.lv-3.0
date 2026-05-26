@@ -819,6 +819,84 @@ type ContactFormSliceVariation = ContactFormSliceDefault
 export type ContactFormSlice = prismic.SharedSlice<"contact_form", ContactFormSliceVariation>;
 
 /**
+ * Primary content in *CTABlock → Default → Primary*
+ */
+export interface CtaBlockSliceDefaultPrimary {
+	/**
+	 * Badge text field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Share Your Experience
+	 * - **API ID Path**: cta_block.default.primary.badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: Would you like to leave a review of your visit?
+	 * - **API ID Path**: cta_block.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: Every patient's opinion helps us grow...
+	 * - **API ID Path**: cta_block.default.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+	
+	/**
+	 * Button text field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Book a Visit
+	 * - **API ID Path**: cta_block.default.primary.button_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	button_text: prismic.KeyTextField;
+	
+	/**
+	 * Button Link field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: Select page or enter URL
+	 * - **API ID Path**: cta_block.default.primary.button_link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	button_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Default variation for CTABlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CtaBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<CtaBlockSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *CTABlock*
+ */
+type CtaBlockSliceVariation = CtaBlockSliceDefault
+
+/**
+ * CTABlock Shared Slice
+ *
+ * - **API ID**: `cta_block`
+ * - **Description**: CTA block with badge, title, description, and button link fields
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CtaBlockSlice = prismic.SharedSlice<"cta_block", CtaBlockSliceVariation>;
+
+/**
  * Primary content in *DoctorsList → Default → Primary*
  */
 export interface DoctorsListSliceDefaultPrimary {
@@ -929,6 +1007,16 @@ export interface HeroSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	secondary_cta_text: prismic.KeyTextField;
+	
+	/**
+	 * Secondary CTA Link field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: Select page or enter URL
+	 * - **API ID Path**: hero.default.primary.secondary_cta_link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	secondary_cta_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 	
 	/**
 	 * Background Image field in *Hero → Default → Primary*
@@ -1150,6 +1238,10 @@ declare module "@prismicio/client" {
 			ContactFormSliceDefaultPrimary,
 			ContactFormSliceVariation,
 			ContactFormSliceDefault,
+			CtaBlockSlice,
+			CtaBlockSliceDefaultPrimary,
+			CtaBlockSliceVariation,
+			CtaBlockSliceDefault,
 			DoctorsListSlice,
 			DoctorsListSliceDefaultPrimary,
 			DoctorsListSliceVariation,

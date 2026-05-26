@@ -9,4 +9,5 @@ export const components = {
   pricelist: dynamic(() => import("./Pricelist")),
   testimonials_list: dynamic(() => import("./TestimonialsList")),
   contact_form: dynamic(() => import("./ContactForm")),
+  cta_block: dynamic(() => import("./CTABlock")),
 };

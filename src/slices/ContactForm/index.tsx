@@ -1,8 +1,8 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react';
+import React from 'react';
+import { motion } from 'motion/react';
+import { MapPin, Phone, Mail, Clock } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
@@ -10,9 +10,8 @@ import { SliceComponentProps } from "@prismicio/react";
 import { getClinics } from '../../data';
 
 const staggerContainerVariants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.12,
       delayChildren: 0.05
@@ -33,19 +32,6 @@ const fadeUpVariants = {
   }
 } as const;
 
-const scaleInVariants = {
-  hidden: { opacity: 0, scale: 0.96 },
-  visible: {
-    opacity: 1,
-    scale: 1,
-    transition: {
-      type: 'tween' as const,
-      ease: 'easeOut',
-      duration: 0.45
-    }
-  }
-} as const;
-
 type ContactFormProps = SliceComponentProps<Content.ContactFormSlice>;
 
 export default function ContactForm({ slice }: ContactFormProps) {
@@ -55,34 +41,6 @@ export default function ContactForm({ slice }: ContactFormProps) {
 
   const isEn = langCode === 'en-us';
   const clinics = getClinics(langCode);
-
-  // Form states
-  const [contactName, setContactName] = useState('');
-  const [contactEmail, setContactEmail] = useState('');
-  const [contactMessage, setContactMessage] = useState('');
-  const [contactSuccess, setContactSuccess] = useState(false);
-
-  // Prefill if message or doctor query was in localStorage or session (e.g. from team booking clicks)
-  useEffect(() => {
-    const draftMsg = sessionStorage.getItem('dentamic_booking_message');
-    if (draftMsg) {
-      setContactMessage(draftMsg);
-      sessionStorage.removeItem('dentamic_booking_message');
-    }
-  }, []);
-
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (contactName && contactEmail && contactMessage) {
-      setContactSuccess(true);
-      setTimeout(() => {
-        setContactName('');
-        setContactEmail('');
-        setContactMessage('');
-        setContactSuccess(false);
-      }, 5000);
-    }
-  };
 
   const labels = {
     tag: isEn ? 'Contacts' : 'Kontakti',
@@ -94,20 +52,7 @@ export default function ContactForm({ slice }: ContactFormProps) {
     workingDays: isEn ? 'Weekdays:' : 'Darba dienās:',
     sat: isEn ? 'Saturday:' : 'Sestdien:',
     sun: isEn ? 'Sunday:' : 'Svētdien:',
-    applyToClinic: isEn ? 'Book at this branch' : 'Pieteikties šajā klīnikā',
-    writeUs: isEn ? 'Write Us a Message' : 'Uzrakstiet mums ziņu',
-    writeUsSub: isEn 
-      ? 'If you have questions, suggestions or need a custom estimate, please fill in the form. We will reply within 2 hours.'
-      : 'Ja Jums ir jautājumi, ieteikumi vai vēlaties individuālu tāmēšanu, lūdzu, aizpildiet formu. Atbildēsim 2 stundu laikā.',
-    yourName: isEn ? 'First, Last Name' : 'Vārds, Uzvārds',
-    yourEmail: isEn ? 'Email Address' : 'E-pasta adrese',
-    messageContent: isEn ? 'Message Content' : 'Ziņojuma saturs',
-    messagePlaceholder: isEn ? 'Hello! I would like to get more information about...' : 'Sveiki! Es vēlētos uzzināt sīkāku informāciju par...',
-    sendMsg: isEn ? 'Send Message' : 'Nosūtīt ziņu',
-    msgSuccess: isEn ? 'Message sent successfully!' : 'Ziņa ir sekmīgi nosūtīta!',
-    msgSuccessSub: isEn 
-      ? 'Thank you for contacting us! Our administrator will get in touch with you shortly at the provided email address.'
-      : 'Paldies, ka sazinājāties ar mums! Mūsu administrators drīzumā sazināsies ar Jums norādītajā e-pasta adresē.'
+    applyToClinic: isEn ? 'Book at this branch' : 'Pieteikties šajā klīnikā'
   };
 
   return (
@@ -212,113 +157,10 @@ export default function ContactForm({ slice }: ContactFormProps) {
               </div>
             )}
 
-            <div className="mt-6 pt-5 border-t border-[#efedec]/60">
-              <button
-                onClick={() => {
-                  const formEl = document.getElementById('contact-form-section');
-                  if (formEl) {
-                    formEl.scrollIntoView({ behavior: 'smooth' });
-                  }
-                }}
-                className="w-full py-3 text-center text-xs font-bold uppercase tracking-wider text-[#400112] hover:bg-[#f2dde1]/50 border border-[#d9c1c2] rounded-xl transition-all cursor-pointer"
-              >
-                {labels.applyToClinic}
-              </button>
-            </div>
           </motion.div>
         ))}
       </motion.div>
 
-      {/* Direct Patient Enquiry Contact Form */}
-      <motion.div 
-        id="contact-form-section"
-        initial="hidden"
-        animate="visible"
-        variants={scaleInVariants}
-        className="max-w-xl mx-auto bg-white border border-[#efedec] rounded-3xl p-6 md:p-10 shadow-sm relative"
-      >
-        <h3 className="text-xl font-serif font-bold text-[#400112] tracking-tight mb-2">
-          {labels.writeUs}
-        </h3>
-        <p className="text-xs text-[#6a5b5e] mb-6 font-medium">
-          {labels.writeUsSub}
-        </p>
-
-        <form onSubmit={handleContactSubmit} className="space-y-4">
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#6a5b5e] mb-1">
-              {labels.yourName}
-            </label>
-            <input
-              type="text"
-              required
-              value={contactName}
-              onChange={(e) => setContactName(e.target.value)}
-              placeholder={isEn ? "John Doe" : "Edgars Kalniņš"}
-              className="w-full px-4 py-3 text-sm bg-[#fbf9f8] border border-[#efedec] focus:border-[#400112] focus:bg-white rounded-xl transition-all outline-none"
-            />
-          </div>
-
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#6a5b5e] mb-1">
-              {labels.yourEmail}
-            </label>
-            <input
-              type="email"
-              required
-              value={contactEmail}
-              onChange={(e) => setContactEmail(e.target.value)}
-              placeholder="john@example.com"
-              className="w-full px-4 py-3 text-sm bg-[#fbf9f8] border border-[#efedec] focus:border-[#400112] focus:bg-white rounded-xl transition-all outline-none"
-            />
-          </div>
-
-          <div>
-            <label className="block text-[11px] font-bold uppercase tracking-wider text-[#6a5b5e] mb-1">
-              {labels.messageContent}
-            </label>
-            <textarea
-              required
-              rows={4}
-              value={contactMessage}
-              onChange={(e) => setContactMessage(e.target.value)}
-              placeholder={labels.messagePlaceholder}
-              className="w-full px-4 py-3 text-sm bg-[#fbf9f8] border border-[#efedec] focus:border-[#400112] focus:bg-white rounded-xl transition-all outline-none resize-none"
-            />
-          </div>
-
-          <button
-            type="submit"
-            className="w-full py-3.5 bg-[#400112] text-white hover:bg-[#5d1726] rounded-xl text-xs font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center justify-center gap-2 shadow-md shadow-[#400112]/10"
-            id="contact-submit-btn"
-          >
-            <Send className="w-3.5 h-3.5" />
-            {labels.sendMsg}
-          </button>
-        </form>
-
-        {/* Contact success notification */}
-        <AnimatePresence>
-          {contactSuccess && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              className="absolute inset-0 bg-white/95 backdrop-blur-md rounded-3xl flex flex-col items-center justify-center p-6 text-center"
-            >
-              <div className="w-12 h-12 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4">
-                <CheckCircle className="w-6 h-6" />
-              </div>
-              <h4 className="font-serif font-bold text-[#400112] text-lg">
-                {labels.msgSuccess}
-              </h4>
-              <p className="text-xs text-[#6a5b5e] mt-2 max-w-xs leading-relaxed font-semibold">
-                {labels.msgSuccessSub}
-              </p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </motion.div>
     </div>
   );
 }

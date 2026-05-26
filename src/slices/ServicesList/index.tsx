@@ -13,9 +13,8 @@ import { Service } from '../../types';
 import { createClient } from '../../prismicio';
 
 const staggerContainerVariants = {
-  hidden: { opacity: 0 },
+  hidden: {},
   visible: {
-    opacity: 1,
     transition: {
       staggerChildren: 0.12,
       delayChildren: 0.05
@@ -24,10 +23,9 @@ const staggerContainerVariants = {
 } as const;
 
 const fadeUpVariants = {
-  hidden: { opacity: 0, y: 6 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
     transition: {
       type: 'tween' as const,
       ease: 'easeOut',

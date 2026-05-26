@@ -1,18 +1,17 @@
 'use client';
 
 import React from 'react';
-import { ArrowLeft, Clock, Calendar, User, Bookmark, Heart } from 'lucide-react';
+import { ArrowLeft, Bookmark } from 'lucide-react';
 import { motion } from 'motion/react';
 import { BlogPost } from '../types';
 
 interface BlogDetailPageProps {
   post: BlogPost;
   onBack: () => void;
-  onBook: () => void;
   langCode?: string;
 }
 
-export default function BlogDetailPage({ post, onBack, onBook, langCode = 'lv' }: BlogDetailPageProps) {
+export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDetailPageProps) {
   const isEn = langCode === 'en-us';
 
   const fadeUpVariants = {
@@ -25,9 +24,8 @@ export default function BlogDetailPage({ post, onBack, onBook, langCode = 'lv' }
   } as const;
 
   const staggerContainer = {
-    hidden: { opacity: 0 },
+    hidden: {},
     visible: {
-      opacity: 1,
       transition: { staggerChildren: 0.12, delayChildren: 0.05 }
     }
   } as const;
@@ -52,20 +50,6 @@ export default function BlogDetailPage({ post, onBack, onBook, langCode = 'lv' }
           {post.description}
         </p>
         
-        <div className="flex flex-wrap items-center justify-center gap-6 mt-4 text-xs text-[#6a5b5e] border-y border-[#efedec] py-4">
-          <div className="flex items-center gap-2">
-            <User className="w-4 h-4 text-[#de7c8a]" />
-            <span className="font-bold text-slate-800">{post.author}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4 text-[#de7c8a]" />
-            <span>{post.date}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Clock className="w-4 h-4 text-[#de7c8a]" />
-            <span>{post.readTime} {isEn ? 'READ' : 'LASĪŠANAI'}</span>
-          </div>
-        </div>
       </motion.div>
 
       {/* Article Content Grid */}
@@ -137,37 +121,19 @@ export default function BlogDetailPage({ post, onBack, onBook, langCode = 'lv' }
             </ul>
           </div>
 
-          <div className="bg-[#f2dde1]/15 border border-[#d9c1c2]/40 rounded-3xl p-6 md:p-8 text-center space-y-4">
-            <Heart className="w-8 h-8 text-[#de7c8a] mx-auto animate-pulse" />
-            <h4 className="text-sm font-serif font-bold text-[#400112]">
-              {isEn ? 'A Beautiful Smile Starts Here' : 'Skaists smaids sākas šeit'}
-            </h4>
-            <p className="text-xs text-[#6a5b5e]">
-              {isEn 
-                ? 'Would you like to discuss your wishes with the author or one of our team dentists?'
-                : 'Vēlaties apspriest savas vēlmes ar raksta autoru vai kādu no mūsu komandas zobārstiem?'}
-            </p>
-            <button
-              onClick={onBook}
-              className="w-full py-3 bg-[#400112] hover:bg-[#5d1726] text-white font-bold text-[11px] rounded-full uppercase tracking-wider transition-colors cursor-pointer"
-            >
-              {isEn ? 'Book a Visit' : 'Rezervēt vizīti'}
-            </button>
-          </div>
         </motion.div>
       </div>
 
       {/* Back Button underneath the blog post info */}
-      <motion.div variants={fadeUpVariants} className="mt-16 pt-8 border-t border-[#efedec] flex justify-center">
-        <button
+      <div className="mt-10 text-center">
+        <button 
           onClick={onBack}
-          className="inline-flex items-center gap-2 px-6 py-3.5 bg-white hover:bg-[#fbf9f8] border border-[#efedec] text-xs font-bold uppercase tracking-widest text-[#400112] rounded-full transition-all cursor-pointer shadow-xs hover:border-[#de7c8a]/40 hover:scale-[1.02] active:scale-[0.98]"
-          id="blog-detail-back-btn"
+          className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#400112] transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
           {isEn ? 'Back to Blog' : 'Atpakaļ uz blogu'}
         </button>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }

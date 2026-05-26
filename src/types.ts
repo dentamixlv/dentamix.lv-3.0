@@ -48,6 +48,7 @@ export interface Clinic {
     sunday: string;
   };
   gmapsEmbed?: string;
+  waze?: string;
 }
 
 export interface BlogPost {

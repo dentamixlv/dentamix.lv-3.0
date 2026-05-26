@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { MapPin, Phone, Clock, Mail } from 'lucide-react';
+import { MapPin, Phone, Mail } from 'lucide-react';
 import { useParams } from 'next/navigation';
 import { getClinics } from '../data';
 
@@ -41,8 +41,7 @@ export default function Footer() {
 
         {/* Column 2: Mūsu Klīnikas */}
         <div>
-          <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6 flex items-center gap-2">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#de7c8a]" />
+          <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6">
             {t.ourClinics}
           </h4>
           <div className="flex flex-col gap-8">
@@ -71,6 +70,19 @@ export default function Footer() {
                     <Mail className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
                     <span className="font-medium">{clinic.email}</span>
                   </a>
+                  {clinic.waze && (
+                    <a 
+                      href={clinic.waze}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
+                    >
+                      <svg className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M20.676 8.615a6.633 6.633 0 0 0-.13-1.343 6.773 6.773 0 0 0-4.718-5.036A6.819 6.819 0 0 0 12.005 2h-.013a6.824 6.824 0 0 0-6.532 4.495 6.04 6.04 0 0 0-.26.974 5.146 5.146 0 0 0-.097.551 6.724 6.724 0 0 0-.073.947l.002.004c-.007.773.12 1.541.376 2.266l.002.006a10.336 10.336 0 0 0 1.346 2.647l.005.007a14.65 14.65 0 0 0 3.16 3.15l.01.008.008.006A17.72 17.72 0 0 0 12 18.656a18.006 18.006 0 0 0 2.685-1.694 16.316 16.316 0 0 0 2.551-2.213 11.9 11.9 0 0 0 1.296-1.724 9.74 9.74 0 0 0 .793-1.485 6.78 6.78 0 0 0 .483-1.452A5.74 5.74 0 0 0 20 9.317a2.795 2.795 0 0 0-.008-.243l-.002-.008a3.774 3.774 0 0 0-.01-.14c-.074-.1-.156-.2-.304-.311Zm-8.671 5.518a3.307 3.307 0 1 1 0-6.614 3.307 3.307 0 0 1 0 6.614Z"/>
+                      </svg>
+                      <span className="font-medium">Waze</span>
+                    </a>
+                  )}
                 </div>
               </div>
             ))}
@@ -79,8 +91,7 @@ export default function Footer() {
 
         {/* Column 3: Darba Laiks */}
         <div>
-          <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6 flex items-center gap-2">
-            <Clock className="w-3.5 h-3.5 text-[#de7c8a]" />
+          <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6">
             {t.workingHours}
           </h4>
           
