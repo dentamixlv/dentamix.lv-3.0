@@ -243,15 +243,9 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
         className="mt-16 bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/25 border border-[#efedec] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8"
       >
         <div className="space-y-3 max-w-2xl">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-[#de7c8a]" />
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a]">
-              {isEn ? 'Share Your Experience' : 'Dalieties pieredzē'}
-            </span>
-          </div>
-          <h4 className="text-xl font-serif font-bold text-[#400112] tracking-tight">
-            {isEn ? 'Would you like to leave a review of your visit?' : 'Vēlaties atstāt savu atsauksmi par vizīti?'}
-          </h4>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+            {isEn ? 'Patient Testimonials' : 'Pacientu atsauksmes'}
+          </h2>
           <p className="text-xs text-[#6a5b5e] leading-relaxed">
             {isEn
               ? 'Every patient\'s opinion helps us grow and maintain our standard of excellence. If you recently visited our clinic, we will be happy to receive your story and feedback!'
