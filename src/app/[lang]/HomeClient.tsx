@@ -1,15 +1,12 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Quote, Star } from 'lucide-react';
 import Link from 'next/link';
 
 import { SliceZone } from '@prismicio/react';
 import { components } from '../../slices';
-import { DOCTORS } from '../../data';
-import { Doctor } from '../../types';
-import DoctorDetailModal from '../../components/DoctorDetailModal';
 
 // Fallback slices if Prismic CMS doesn't return data (e.g. for en-us document before it is created)
 const getFallbackSlices = (langCode: string) => [
@@ -132,18 +129,11 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ slices, langCode }: HomeClientProps) {
-  const [detailDoc, setDetailDoc] = useState<Doctor | null>(null);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-
   const t = langCode === 'en-us' ? homeTranslations.en : homeTranslations.lv;
   const langPrefix = langCode === 'en-us' ? '/en' : '';
 
+  const isEn = langCode === 'en-us';
   const activeSlices = slices && slices.length > 0 ? slices : getFallbackSlices(langCode);
-
-  const handleOpenDoctorDetail = (doc: Doctor) => {
-    setDetailDoc(doc);
-    setIsDetailOpen(true);
-  };
 
   return (
     <div className="relative">
@@ -194,17 +184,14 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
               </p>
 
               <div>
-                <button
-                  onClick={() => {
-                    const leaderDoc = DOCTORS.find(d => d.id === 'dr-janis-berzins');
-                    if (leaderDoc) handleOpenDoctorDetail(leaderDoc);
-                  }}
+                <Link
+                  href={`${langPrefix}/doctors`}
                   className="inline-flex items-center gap-2 text-sm font-bold text-[#400112] hover:text-[#5d1726] border-b border-[#efedec] hover:border-[#400112] pb-1.5 transition-all cursor-pointer"
                   id="home-learn-more-btn"
                 >
                   {t.learnMore}
                   <ArrowRight className="w-4 h-4" />
-                </button>
+                </Link>
               </div>
             </motion.div>
           </div>
@@ -452,13 +439,6 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
         </div>
       </section>
 
-      {/* Doctor Bio modal */}
-      <DoctorDetailModal 
-        doctor={detailDoc} 
-        isOpen={isDetailOpen} 
-        onClose={() => setIsDetailOpen(false)} 
-        onBookWithDoctor={() => {}} // No longer using specific bookings
-      />
     </div>
   );
 }

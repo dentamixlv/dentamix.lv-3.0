@@ -127,7 +127,7 @@ export default function ServicesClient({ langCode }: ServicesClientProps) {
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </Link>
                 <Link
-                  href={`${langPrefix}/contacts`}
+                  href={isEn ? '/en/contacts' : '/kontakti'}
                   className="px-4 py-2 text-xs font-bold text-[#400112] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
                 >
                   {t.apply}

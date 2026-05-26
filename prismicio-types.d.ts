@@ -393,6 +393,17 @@ interface MenuDocumentData {
 	logo_image: prismic.ImageField<never>;
 	
 	/**
+	 * Phone Number field in *Menu*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: +371 20000000
+	 * - **API ID Path**: menu.phone_number
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	phone_number: prismic.KeyTextField;
+	
+	/**
 	 * Booking Button Text field in *Menu*
 	 *
 	 * - **Field Type**: Text

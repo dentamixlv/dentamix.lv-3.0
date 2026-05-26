@@ -19,7 +19,7 @@ export default function BlogPostClient({ post, langCode }: BlogPostClientProps) 
   };
 
   const handleBook = () => {
-    router.push(`${langPrefix}/contacts`);
+    router.push(langCode === 'en-us' ? '/en/contacts' : '/kontakti');
   };
 
   return (

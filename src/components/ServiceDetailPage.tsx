@@ -4,7 +4,6 @@ import React, { useState } from 'react';
 import { ArrowLeft, Clock, Check, ShieldCheck, Sparkles, Droplet, Scissors, Activity, CalendarDays, ChevronDown } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Service } from '../types';
-
 interface ServiceDetailPageProps {
   service: Service;
   onBack: () => void;
@@ -271,14 +270,6 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
       className="py-16 md:py-24 max-w-7xl mx-auto px-6"
       id={`service-detail-page-${service.id}`}
     >
-      <button 
-        onClick={onBack}
-        className="mb-8 inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#400112] transition-colors cursor-pointer"
-      >
-        <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
-        {t.back}
-      </button>
-
       {/* Centered Page Header */}
       <motion.div 
         variants={fadeUpVariants}
@@ -475,6 +466,17 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
               );
             })}
           </div>
+        </div>
+
+        {/* Breadcrumb below FAQ */}
+        <div className="mt-10 text-center">
+          <button 
+            onClick={onBack}
+            className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#400112] transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
+            {t.back}
+          </button>
         </div>
       </motion.div>
     </motion.div>

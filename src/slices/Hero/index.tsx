@@ -8,6 +8,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { PrismicNextLink } from '@prismicio/next';
+import Badge from '../../components/Badge';
 
 /**
  * Variants for motion animations (identical to App.tsx).
@@ -96,15 +97,14 @@ export default function Hero({ slice }: HeroProps) {
         animate="visible"
         className="max-w-4xl mx-auto px-6 w-full relative z-10 flex flex-col items-center text-center"
       >
-        {/* Premium Care tag */}
-        <motion.div
+        {/* Premium Care badge */}
+        <Badge
+          text={premiumTag}
+          variant="default"
+          animated
           variants={fadeUpVariants}
-          className="mb-4 inline-block"
-        >
-          <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100/90 border border-gray-200/80 text-[9px] font-extrabold uppercase tracking-widest text-gray-600">
-            {premiumTag}
-          </span>
-        </motion.div>
+          className="mb-4"
+        />
 
         <motion.div variants={fadeUpVariants}>
           <PrismicRichText field={primary.title} components={richTextComponents} />
@@ -129,7 +129,7 @@ export default function Hero({ slice }: HeroProps) {
             </PrismicNextLink>
           ) : (
             <Link
-              href={isEn ? '/en/contacts' : '/contacts'}
+              href={isEn ? '/en/contacts' : '/kontakti'}
               className="px-8 py-4 bg-[#400112] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#400112]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
               id="hero-primary-btn"
             >

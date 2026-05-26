@@ -1,13 +1,11 @@
 'use client';
 
-import React, { useState } from 'react';
+import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 import { DOCTORS } from '../../../data';
-import { Doctor } from '../../../types';
-import DoctorDetailModal from '../../../components/DoctorDetailModal';
 
 const staggerContainerVariants = {
   hidden: { opacity: 0 },
@@ -74,16 +72,9 @@ interface DoctorsClientProps {
 }
 
 export default function DoctorsClient({ langCode }: DoctorsClientProps) {
-  const [detailDoc, setDetailDoc] = useState<Doctor | null>(null);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
-
   const t = langCode === 'en-us' ? translations.en : translations.lv;
+  const isEn = langCode === 'en-us';
   const langPrefix = langCode === 'en-us' ? '/en' : '';
-
-  const handleOpenDoctorDetail = (doc: Doctor) => {
-    setDetailDoc(doc);
-    setIsDetailOpen(true);
-  };
 
   return (
     <div className="py-16 md:py-24 max-w-7xl mx-auto px-6">
@@ -144,14 +135,14 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
               </div>
 
               <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
-                <button
-                  onClick={() => handleOpenDoctorDetail(doc)}
+                <Link
+                  href={`${langPrefix}/doctors`}
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#400112] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   id={`learn-profile-btn-${doc.id}`}
                 >
                   {t.viewProfile}
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
+                </Link>
                 <Link
                   href={`${langPrefix}/contacts`}
                   className="px-4 py-2 text-xs font-bold text-[#400112] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
@@ -191,13 +182,6 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
         </div>
       </section>
 
-      {/* Doctor Bio modal */}
-      <DoctorDetailModal 
-        doctor={detailDoc} 
-        isOpen={isDetailOpen} 
-        onClose={() => setIsDetailOpen(false)} 
-        onBookWithDoctor={() => {}} // General bookings, no doctor parameters
-      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Menu, X, Calendar } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 
 import { useParams, usePathname } from 'next/navigation';
@@ -10,11 +10,12 @@ import Link from 'next/link';
 interface HeaderProps {
   logoText?: string;
   logoImage?: any;
+  phoneNumber?: string;
   bookingButtonText?: string;
   menuLinks?: Array<{ label: string; path: string }>;
 }
 
-export default function Header({ logoText, logoImage, bookingButtonText, menuLinks }: HeaderProps) {
+export default function Header({ logoText, logoImage, phoneNumber, bookingButtonText, menuLinks }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const params = useParams();
   const pathname = usePathname();
@@ -37,6 +38,9 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
     if (normalizedId === 'testimonials' || normalizedId === 'atsauksmes') {
       return isEn ? '/en/testimonials' : '/atsauksmes';
     }
+    if (normalizedId === 'contacts' || normalizedId === 'kontakti') {
+      return isEn ? '/en/contacts' : '/kontakti';
+    }
     
     return `${langPrefix}/${normalizedId}`;
   };
@@ -55,6 +59,9 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
     if (normalizedId === 'testimonials' || normalizedId === 'atsauksmes') {
       return pathname === '/testimonials' || pathname === '/lv/testimonials' || pathname === '/atsauksmes' || pathname === '/lv/atsauksmes' || pathname === '/en/testimonials';
     }
+    if (normalizedId === 'contacts' || normalizedId === 'kontakti') {
+      return pathname === '/contacts' || pathname === '/lv/contacts' || pathname === '/kontakti' || pathname === '/lv/kontakti' || pathname === '/en/contacts';
+    }
     return pathname.endsWith(`/${normalizedId}`);
   };
 
@@ -67,6 +74,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         else if (remaining.startsWith('pakalpojumi/')) target = `services/${remaining.substring('pakalpojumi/'.length)}`;
         else if (remaining === 'cenas') target = 'prices';
         else if (remaining === 'atsauksmes') target = 'testimonials';
+        else if (remaining === 'kontakti') target = 'contacts';
         return `/en/${target}`;
       } else if (pathname === '/lv') {
         return '/en';
@@ -81,6 +89,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         else if (remaining.startsWith('pakalpojumi/')) target = `services/${remaining.substring('pakalpojumi/'.length)}`;
         else if (remaining === 'cenas') target = 'prices';
         else if (remaining === 'atsauksmes') target = 'testimonials';
+        else if (remaining === 'kontakti') target = 'contacts';
         return `/en${target ? '/' + target : ''}`;
       }
     } else {
@@ -91,6 +100,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         else if (remaining.startsWith('services/')) target = `pakalpojumi/${remaining.substring('services/'.length)}`;
         else if (remaining === 'prices') target = 'cenas';
         else if (remaining === 'testimonials') target = 'atsauksmes';
+        else if (remaining === 'contacts') target = 'kontakti';
         return `/${target}`;
       } else if (pathname === '/en') {
         return '/';
@@ -101,6 +111,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         else if (remaining.startsWith('services/')) target = `pakalpojumi/${remaining.substring('services/'.length)}`;
         else if (remaining === 'prices') target = 'cenas';
         else if (remaining === 'testimonials') target = 'atsauksmes';
+        else if (remaining === 'contacts') target = 'kontakti';
         return `/${target}`;
       }
     }
@@ -254,14 +265,15 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
               )}
 
               <Link
-                href={getPath('contacts')}
+                href={phoneNumber ? `tel:${phoneNumber.replace(/\s+/g, '')}` : getPath('contacts')}
                 onClick={() => setMobileMenuOpen(false)}
                 className="w-full mt-2 inline-flex items-center justify-center gap-2 bg-[#de7c8a] text-white hover:bg-[#e38c98] px-6 py-3.5 rounded-full text-sm font-bold shadow-md shadow-[#400112]/20"
                 id="mobile-booking-btn"
               >
-                <Calendar className="w-4 h-4" />
+                <Phone className="w-4 h-4" />
                 {bookingButtonText || (isEn ? 'Book a Visit' : 'Pierakstīties vizītei')}
               </Link>
+REPLACE
             </div>
           </motion.div>
         )}

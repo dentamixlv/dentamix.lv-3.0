@@ -20,6 +20,13 @@
           "thumbnails": []
         }
       },
+      "phone_number": {
+        "type": "Text",
+        "config": {
+          "label": "Phone Number",
+          "placeholder": "+371 20000000"
+        }
+      },
       "booking_button_text": {
         "type": "Text",
         "config": {

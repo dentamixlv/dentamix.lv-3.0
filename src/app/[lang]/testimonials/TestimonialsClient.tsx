@@ -28,7 +28,7 @@ export default function TestimonialsClient({ langCode, customTestimonials }: Tes
   const langPrefix = langCode === 'en-us' ? '/en' : '';
 
   const handleBook = () => {
-    router.push(`${langPrefix}/contacts`);
+    router.push(langCode === 'en-us' ? '/en/contacts' : '/kontakti');
   };
 
   return (

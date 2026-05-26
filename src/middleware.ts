@@ -106,6 +106,30 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  // 7. Redirect /contacts (or /lv/contacts) to /kontakti for Latvian locale
+  if (pathname === '/contacts') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/kontakti';
+    return NextResponse.redirect(url, 307);
+  }
+  if (pathname === '/lv/contacts') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/kontakti';
+    return NextResponse.redirect(url, 307);
+  }
+
+  // 8. Rewrite /kontakti (or /lv/kontakti) to /lv/contacts internally
+  if (pathname === '/kontakti') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/contacts';
+    return NextResponse.rewrite(url);
+  }
+  if (pathname === '/lv/kontakti') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/contacts';
+    return NextResponse.rewrite(url);
+  }
+
   // Check if pathname starts with a supported locale
   const hasLocale = pathname.startsWith('/en') || pathname.startsWith('/lv');
 

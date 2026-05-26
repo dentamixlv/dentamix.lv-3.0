@@ -28,7 +28,7 @@ export default function PricesClient({ langCode, customPriceItems }: PricesClien
   const langPrefix = langCode === 'en-us' ? '/en' : '';
 
   const handleBook = () => {
-    router.push(`${langPrefix}/contacts`);
+    router.push(langCode === 'en-us' ? '/en/contacts' : '/kontakti');
   };
 
   let customPriceData: PriceCategory[] | undefined = undefined;

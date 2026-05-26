@@ -11,7 +11,6 @@ import { SliceComponentProps } from "@prismicio/react";
 import { getDoctors } from '../../data';
 import { Doctor } from '../../types';
 import { createClient } from '../../prismicio';
-import DoctorDetailModal from '../../components/DoctorDetailModal';
 
 const staggerContainerVariants = {
   hidden: { opacity: 0 },
@@ -59,8 +58,6 @@ export default function DoctorsList({ slice }: DoctorsListProps) {
   const langPrefix = langCode === 'en-us' ? '/en' : '';
 
   const [doctors, setDoctors] = useState<Doctor[]>([]);
-  const [detailDoc, setDetailDoc] = useState<Doctor | null>(null);
-  const [isDetailOpen, setIsDetailOpen] = useState(false);
 
   const isEn = langCode === 'en-us';
 
@@ -105,11 +102,6 @@ export default function DoctorsList({ slice }: DoctorsListProps) {
     };
     fetchDoctors();
   }, [langCode]);
-
-  const handleOpenDoctorDetail = (doc: Doctor) => {
-    setDetailDoc(doc);
-    setIsDetailOpen(true);
-  };
 
   return (
     <div className="py-16 md:py-24 max-w-7xl mx-auto px-6">
@@ -170,14 +162,14 @@ export default function DoctorsList({ slice }: DoctorsListProps) {
               </div>
 
               <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
-                <button
-                  onClick={() => handleOpenDoctorDetail(doc)}
+                <Link
+                  href={`${langPrefix}/doctors`}
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#400112] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   id={`learn-profile-btn-${doc.id}`}
                 >
                   {viewProfileLabel}
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </button>
+                </Link>
                 <Link
                   href={`${langPrefix}/contacts`}
                   className="px-4 py-2 text-xs font-bold text-[#400112] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
@@ -217,13 +209,6 @@ export default function DoctorsList({ slice }: DoctorsListProps) {
         </div>
       </section>
 
-      {/* Doctor Bio modal */}
-      <DoctorDetailModal 
-        doctor={detailDoc} 
-        isOpen={isDetailOpen} 
-        onClose={() => setIsDetailOpen(false)} 
-        onBookWithDoctor={() => {}}
-      />
     </div>
   );
 }
