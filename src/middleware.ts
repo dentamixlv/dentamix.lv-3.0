@@ -179,6 +179,36 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 307);
   }
 
+  // 11b. Privacy policy routing
+  // Redirect /privacy (or /lv/privacy) to /privatuma-politika for Latvian locale
+  if (pathname === '/privacy') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/privatuma-politika';
+    return NextResponse.redirect(url, 307);
+  }
+  if (pathname === '/lv/privacy') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/privatuma-politika';
+    return NextResponse.redirect(url, 307);
+  }
+  // Rewrite /privatuma-politika (or /lv/privatuma-politika) to /lv/privacy internally
+  if (pathname === '/privatuma-politika') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/privacy';
+    return NextResponse.rewrite(url);
+  }
+  if (pathname === '/lv/privatuma-politika') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/privacy';
+    return NextResponse.rewrite(url);
+  }
+  // EN locale - redirect /en/privatuma-politika to /en/privacy
+  if (pathname === '/en/privatuma-politika') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/en/privacy';
+    return NextResponse.redirect(url, 307);
+  }
+
   // 12. Rewrite /zobarsti (or /lv/zobarsti) to /lv/doctors internally
   if (pathname === '/zobarsti') {
     const url = request.nextUrl.clone();

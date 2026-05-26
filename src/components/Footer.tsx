@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { MapPin, Phone, Mail } from 'lucide-react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getClinics } from '../data';
 
@@ -153,6 +154,12 @@ export default function Footer() {
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#989999] font-medium">
           <p>© {new Date().getFullYear()} Dentamic. {t.allRightsReserved}</p>
           <div className="flex gap-6">
+            <Link
+              href={isEn ? '/en/privacy' : '/privatuma-politika'}
+              className="hover:text-white transition-colors duration-200 cursor-pointer"
+            >
+              {isEn ? 'Privacy Policy' : 'Privātuma politika'}
+            </Link>
             <span className="hover:text-white transition-colors duration-200 cursor-pointer">
               {t.patientSafety}
             </span>

@@ -9,3 +9,5 @@ coverage/
 .next/
 .vscode/
 tsconfig.tsbuildinfo
+
+.vercel
