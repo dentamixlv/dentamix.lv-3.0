@@ -41,6 +41,9 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
     if (normalizedId === 'contacts' || normalizedId === 'kontakti') {
       return isEn ? '/en/contacts' : '/kontakti';
     }
+    if (normalizedId === 'about' || normalizedId === 'par-mums') {
+      return isEn ? '/en/about' : '/par-mums';
+    }
     
     return `${langPrefix}/${normalizedId}`;
   };
@@ -62,6 +65,9 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
     if (normalizedId === 'contacts' || normalizedId === 'kontakti') {
       return pathname === '/contacts' || pathname === '/lv/contacts' || pathname === '/kontakti' || pathname === '/lv/kontakti' || pathname === '/en/contacts';
     }
+    if (normalizedId === 'about' || normalizedId === 'par-mums') {
+      return pathname === '/about' || pathname === '/lv/about' || pathname === '/par-mums' || pathname === '/lv/par-mums' || pathname === '/en/about' || pathname === '/en/par-mums';
+    }
     return pathname.endsWith(`/${normalizedId}`);
   };
 
@@ -75,6 +81,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'cenas') target = 'prices';
         else if (remaining === 'atsauksmes') target = 'testimonials';
         else if (remaining === 'kontakti') target = 'contacts';
+        else if (remaining === 'par-mums') target = 'about';
         return `/en/${target}`;
       } else if (pathname === '/lv') {
         return '/en';
