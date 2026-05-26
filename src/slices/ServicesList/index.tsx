@@ -151,20 +151,14 @@ export default function ServicesList({ slice }: ServicesListProps) {
               </div>
 
               {/* Bottom actions */}
-              <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
+              <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
                 <Link
-                  href={isEn ? `/en/services/${serv.id}` : `/pakalpojumi/${serv.id}`}
+                  href={`${langPrefix}/services/${serv.id}`}
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#400112] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   id={`learn-service-btn-${serv.id}`}
                 >
                   {viewDescLabel}
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                </Link>
-                <Link
-                  href={isEn ? '/en/contacts' : '/kontakti'}
-                  className="px-4 py-2 text-xs font-bold text-[#400112] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
-                >
-                  {applyLabel}
                 </Link>
               </div>
             </div>
