@@ -246,7 +246,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
           <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a]">
             {isEn ? 'Share Your Experience' : 'Dalieties pieredzē'}
           </span>
-          <h4 className="text-xl font-serif font-bold text-[#400112] tracking-tight">
+          <h4 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
             {isEn ? 'Would you like to leave a review of your visit?' : 'Vēlaties atstāt savu atsauksmi par vizīti?'}
           </h4>
           <p className="text-xs text-[#6a5b5e] leading-relaxed">
