@@ -1,0 +1,43 @@
+{
+  "name": "react-example",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "next dev --port 3000 -H 0.0.0.0",
+    "build": "next build",
+    "start": "next start --port 3000 -H 0.0.0.0",
+    "clean": "rm -rf dist .next out",
+    "lint": "tsc --noEmit",
+    "slicemachine": "start-slicemachine"
+  },
+  "dependencies": {
+    "@google/genai": "^1.29.0",
+    "@prismicio/client": "^7.21.8",
+    "@prismicio/next": "^2.2.4",
+    "@prismicio/react": "^3.4.1",
+    "dotenv": "^17.2.3",
+    "express": "^4.21.2",
+    "framer-motion": "^12.40.0",
+    "lucide-react": "^1.16.0",
+    "motion": "^12.23.24",
+    "next": "^16.2.6",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6"
+  },
+  "devDependencies": {
+    "@slicemachine/adapter-next": "^0.3.96",
+    "@tailwindcss/postcss": "^4.3.0",
+    "@types/express": "^4.17.21",
+    "@types/node": "^22.14.0",
+    "@types/react": "19.2.15",
+    "autoprefixer": "^10.4.21",
+    "esbuild": "^0.25.0",
+    "postcss": "^8.5.15",
+    "prismic-ts-codegen": "^0.1.30",
+    "slice-machine-ui": "^2.21.3",
+    "tailwindcss": "^4.1.14",
+    "tsx": "^4.21.0",
+    "typescript": "~5.8.2"
+  }
+}

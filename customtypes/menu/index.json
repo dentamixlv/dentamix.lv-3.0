@@ -1,0 +1,46 @@
+{
+  "id": "menu",
+  "label": "Menu",
+  "status": true,
+  "repeatable": false,
+  "json": {
+    "Main": {
+      "logo_text": {
+        "type": "Text",
+        "config": {
+          "label": "Logo Text",
+          "placeholder": "Dentamic"
+        }
+      },
+      "booking_button_text": {
+        "type": "Text",
+        "config": {
+          "label": "Booking Button Text",
+          "placeholder": "Pierakstīties"
+        }
+      },
+      "menu_links": {
+        "type": "Group",
+        "config": {
+          "label": "Menu Links",
+          "fields": {
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Label",
+                "placeholder": "Pakalpojumi"
+              }
+            },
+            "path": {
+              "type": "Text",
+              "config": {
+                "label": "Path/UID",
+                "placeholder": "services"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

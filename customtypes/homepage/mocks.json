@@ -1,0 +1,50 @@
+[
+  {
+    "__typename": "HomepageDocument",
+    "id": "mock-homepage-id",
+    "uid": null,
+    "url": null,
+    "type": "homepage",
+    "href": "https://dentamix-v30.prismic.io/api/v2/documents/mock-homepage-id",
+    "tags": [],
+    "first_publication_date": null,
+    "last_publication_date": null,
+    "slugs": [],
+    "linked_documents": [],
+    "lang": "*",
+    "alternate_languages": [],
+    "data": {
+      "slices": [
+        {
+          "key": "hero-slice-key-1",
+          "value": {
+            "__typename": "HeroSlice",
+            "variation": "default",
+            "version": "sktwi1xtmkfgx8627",
+            "primary": {
+              "title": [
+                {
+                  "type": "heading1",
+                  "text": "Izcila zobārstniecība Jūsu labsajūtai",
+                  "spans": []
+                }
+              ],
+              "subtitle": [
+                {
+                  "type": "paragraph",
+                  "text": "Modernas tehnoloģijas un individuāla pieeja katram pacientam",
+                  "spans": []
+                }
+              ],
+              "premium_tag": "Premium Care",
+              "cta_text": "Pierakstīties vizītei",
+              "secondary_cta_text": "Mūsu pakalpojumi",
+              "background_image": {}
+            },
+            "items": []
+          }
+        }
+      ]
+    }
+  }
+]

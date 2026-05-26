@@ -1,0 +1,34 @@
+{
+  "id": "testimonials_list",
+  "type": "SharedSlice",
+  "name": "TestimonialsList",
+  "description": "Renders the testimonials feedback cards grid.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Title",
+            "placeholder": "Pacientu atsauksmes",
+            "allowTargetBlank": true,
+            "single": "heading2,heading3"
+          }
+        },
+        "subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "Mūsu pacienti novērtē augstāko aprūpes kvalitāti..."
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

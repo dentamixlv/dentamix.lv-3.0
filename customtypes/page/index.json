@@ -1,0 +1,49 @@
+{
+  "id": "page",
+  "label": "Page",
+  "repeatable": true,
+  "status": true,
+  "json": {
+    "Main": {
+      "uid": {
+        "type": "UID",
+        "config": {
+          "label": "UID / URL Slug"
+        }
+      },
+      "title": {
+        "type": "Text",
+        "config": {
+          "label": "Page Title",
+          "placeholder": "Services, Testimonials, etc."
+        }
+      },
+      "slices": {
+        "type": "Slices",
+        "fieldset": "Slice Zone",
+        "config": {
+          "choices": {
+            "hero": {
+              "type": "SharedSlice"
+            },
+            "services_list": {
+              "type": "SharedSlice"
+            },
+            "doctors_list": {
+              "type": "SharedSlice"
+            },
+            "pricelist": {
+              "type": "SharedSlice"
+            },
+            "testimonials_list": {
+              "type": "SharedSlice"
+            },
+            "contact_form": {
+              "type": "SharedSlice"
+            }
+          }
+        }
+      }
+    }
+  }
+}

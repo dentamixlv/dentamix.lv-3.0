@@ -1,0 +1,72 @@
+{
+  "id": "hero",
+  "type": "SharedSlice",
+  "name": "Hero",
+  "description": "Hero section with title, subtitle, and CTA buttons",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Hero default section",
+      "primary": {
+        "title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Title",
+            "placeholder": "Izcila zobārstniecība Jūsu labsajūtai",
+            "allowTargetBlank": true,
+            "single": "heading1,heading2,heading3,heading4,heading5,heading6"
+          }
+        },
+        "subtitle": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "Modernas tehnoloģijas un individuāla pieeja...",
+            "allowTargetBlank": true,
+            "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6"
+          }
+        },
+        "premium_tag": {
+          "type": "Text",
+          "config": {
+            "label": "Premium tag text",
+            "placeholder": "Premium Care"
+          }
+        },
+        "cta_text": {
+          "type": "Text",
+          "config": {
+            "label": "Primary CTA text",
+            "placeholder": "Pierakstīties vizītei"
+          }
+        },
+        "cta_link": {
+          "type": "Link",
+          "config": {
+            "label": "Primary CTA Link",
+            "placeholder": "Select page or enter URL"
+          }
+        },
+        "secondary_cta_text": {
+          "type": "Text",
+          "config": {
+            "label": "Secondary CTA text",
+            "placeholder": "Mūsu pakalpojumi"
+          }
+        },
+        "background_image": {
+          "type": "Image",
+          "config": {
+            "label": "Background Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
