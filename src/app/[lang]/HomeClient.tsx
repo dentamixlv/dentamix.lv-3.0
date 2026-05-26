@@ -234,12 +234,6 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
                   <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
                 </div>
                 
-                <div className="mb-3">
-                  <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#f2dde1]/50 border border-[#de7c8a]/20 text-[10px] uppercase font-bold text-[#400112]">
-                    {langCode === 'en-us' ? 'Premium Quality' : 'Premium kvalitāte'}
-                  </span>
-                </div>
-
                 <p className="text-xs text-[#6a5b5e] leading-relaxed italic mb-6">
                   {langCode === 'en-us'
                     ? '"Excellent premium quality and precision. Swiss implants were inserted completely painlessly. Dr. Jānis Bērziņš and his team work amazingly professionally – every detail is considered."'
@@ -272,12 +266,6 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
                   <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
                 </div>
                 
-                <div className="mb-3">
-                  <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#f2dde1]/50 border border-[#de7c8a]/20 text-[10px] uppercase font-bold text-[#400112]">
-                    {langCode === 'en-us' ? 'Absolute Comfort' : 'Absolūts komforts'}
-                  </span>
-                </div>
-
                 <p className="text-xs text-[#6a5b5e] leading-relaxed italic mb-6">
                   {langCode === 'en-us'
                     ? '"I have always had a massive fear of the dentist, but at Dentamic clinic it vanished completely. Gentle touch, calming environment, and 100% care. I am incredibly grateful for my new smile!"'
@@ -310,12 +298,6 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
                   <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
                 </div>
                 
-                <div className="mb-3">
-                  <span className="inline-block px-2.5 py-0.5 rounded-full bg-[#f2dde1]/50 border border-[#de7c8a]/20 text-[10px] uppercase font-bold text-[#400112]">
-                    {langCode === 'en-us' ? 'Long-term Guarantees' : 'Ilglaicīgas garantijas'}
-                  </span>
-                </div>
-
                 <p className="text-xs text-[#6a5b5e] leading-relaxed italic mb-6">
                   {langCode === 'en-us'
                     ? '"We believe in the precision and work of our doctors, which is why we received both contract guarantees and very attentive follow-up care after the procedure. This service exceeds any experience in Latvia."'
