@@ -71,7 +71,7 @@ const fadeUpVariants = {
   },
 } as const;
 
-type CTABlockProps = SliceComponentProps<Content.CTABlockSlice>;
+type CTABlockProps = SliceComponentProps<Content.CtaBlockSlice>;
 
 export default function CTABlock({ slice }: CTABlockProps) {
   const { primary } = slice;
