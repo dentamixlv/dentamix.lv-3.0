@@ -1,5 +1,6 @@
 import React from 'react';
 import { Manrope, Playfair_Display } from 'next/font/google';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { createClient } from '../../prismicio';
@@ -117,6 +118,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
           cookiePolicyLabel={footerData?.cookiePolicyLabel}
           cookiePolicyLink={footerData?.cookiePolicyLink}
         />
+        <SpeedInsights />
       </body>
     </html>
   );

@@ -16,6 +16,7 @@
     "@prismicio/client": "^7.21.8",
     "@prismicio/next": "^2.2.4",
     "@prismicio/react": "^3.4.1",
+    "@vercel/speed-insights": "^2.0.0",
     "dotenv": "^17.2.3",
     "express": "^4.21.2",
     "framer-motion": "^12.40.0",
