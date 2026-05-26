@@ -58,6 +58,30 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  // 3. Redirect /prices (or /lv/prices) to /cenas for Latvian locale
+  if (pathname === '/prices') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/cenas';
+    return NextResponse.redirect(url, 307);
+  }
+  if (pathname === '/lv/prices') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/cenas';
+    return NextResponse.redirect(url, 307);
+  }
+
+  // 4. Rewrite /cenas (or /lv/cenas) to /lv/prices internally
+  if (pathname === '/cenas') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/prices';
+    return NextResponse.rewrite(url);
+  }
+  if (pathname === '/lv/cenas') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/prices';
+    return NextResponse.rewrite(url);
+  }
+
   // Check if pathname starts with a supported locale
   const hasLocale = pathname.startsWith('/en') || pathname.startsWith('/lv');
 

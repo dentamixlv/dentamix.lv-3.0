@@ -26,14 +26,13 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
   const getPath = (id: string) => {
     if (id === 'home') return langPrefix || '/';
     
-    // Normalize id by removing leading slash if present
     const normalizedId = id.startsWith('/') ? id.substring(1) : id;
     
-    if (normalizedId === 'services') {
+    if (normalizedId === 'services' || normalizedId === 'pakalpojumi') {
       return isEn ? '/en/services' : '/pakalpojumi';
     }
-    if (normalizedId === 'pakalpojumi') {
-      return isEn ? '/en/services' : '/pakalpojumi';
+    if (normalizedId === 'prices' || normalizedId === 'cenas') {
+      return isEn ? '/en/prices' : '/cenas';
     }
     
     return `${langPrefix}/${normalizedId}`;
@@ -47,6 +46,9 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
     if (normalizedId === 'services' || normalizedId === 'pakalpojumi') {
       return pathname === '/services' || pathname === '/lv/services' || pathname === '/pakalpojumi' || pathname === '/lv/pakalpojumi' || pathname.startsWith('/en/services');
     }
+    if (normalizedId === 'prices' || normalizedId === 'cenas') {
+      return pathname === '/prices' || pathname === '/lv/prices' || pathname === '/cenas' || pathname === '/lv/cenas' || pathname === '/en/prices';
+    }
     return pathname.endsWith(`/${normalizedId}`);
   };
 
@@ -56,9 +58,8 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         const remaining = pathname.substring(4);
         let target = remaining;
         if (remaining === 'pakalpojumi') target = 'services';
-        else if (remaining.startsWith('pakalpojumi/')) {
-          target = `services/${remaining.substring('pakalpojumi/'.length)}`;
-        }
+        else if (remaining.startsWith('pakalpojumi/')) target = `services/${remaining.substring('pakalpojumi/'.length)}`;
+        else if (remaining === 'cenas') target = 'prices';
         return `/en/${target}`;
       } else if (pathname === '/lv') {
         return '/en';
@@ -70,9 +71,8 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         const remaining = pathname === '/' ? '' : pathname.substring(1);
         let target = remaining;
         if (remaining === 'pakalpojumi') target = 'services';
-        else if (remaining.startsWith('pakalpojumi/')) {
-          target = `services/${remaining.substring('pakalpojumi/'.length)}`;
-        }
+        else if (remaining.startsWith('pakalpojumi/')) target = `services/${remaining.substring('pakalpojumi/'.length)}`;
+        else if (remaining === 'cenas') target = 'prices';
         return `/en${target ? '/' + target : ''}`;
       }
     } else {
@@ -80,9 +80,8 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         const remaining = pathname.substring(4);
         let target = remaining;
         if (remaining === 'services') target = 'pakalpojumi';
-        else if (remaining.startsWith('services/')) {
-          target = `pakalpojumi/${remaining.substring('services/'.length)}`;
-        }
+        else if (remaining.startsWith('services/')) target = `pakalpojumi/${remaining.substring('services/'.length)}`;
+        else if (remaining === 'prices') target = 'cenas';
         return `/${target}`;
       } else if (pathname === '/en') {
         return '/';
@@ -90,9 +89,8 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         const remaining = pathname === '/' ? '' : pathname.substring(1);
         let target = remaining;
         if (remaining === 'services') target = 'pakalpojumi';
-        else if (remaining.startsWith('services/')) {
-          target = `pakalpojumi/${remaining.substring('services/'.length)}`;
-        }
+        else if (remaining.startsWith('services/')) target = `pakalpojumi/${remaining.substring('services/'.length)}`;
+        else if (remaining === 'prices') target = 'cenas';
         return `/${target}`;
       }
     }
@@ -122,7 +120,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
             <img 
               src={logoImage.url} 
               alt={logoImage.alt || logoText || "Dentamic"} 
-              className="h-9 md:h-11 w-auto object-contain transition-opacity group-hover:opacity-90"
+              className="h-14 md:h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
               referrerPolicy="no-referrer"
             />
           ) : (
