@@ -9,11 +9,12 @@ import Link from 'next/link';
 
 interface HeaderProps {
   logoText?: string;
+  logoImage?: any;
   bookingButtonText?: string;
   menuLinks?: Array<{ label: string; path: string }>;
 }
 
-export default function Header({ logoText, bookingButtonText, menuLinks }: HeaderProps) {
+export default function Header({ logoText, logoImage, bookingButtonText, menuLinks }: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const params = useParams();
   const pathname = usePathname();
@@ -117,9 +118,18 @@ export default function Header({ logoText, bookingButtonText, menuLinks }: Heade
           className="flex items-center gap-2 cursor-pointer group"
           id="header-logo-button"
         >
-          <span className="text-3xl font-extrabold tracking-tight text-white font-serif transition-opacity group-hover:opacity-95">
-            {logoText || 'Dentamic'}
-          </span>
+          {logoImage?.url ? (
+            <img 
+              src={logoImage.url} 
+              alt={logoImage.alt || logoText || "Dentamic"} 
+              className="h-9 md:h-11 w-auto object-contain transition-opacity group-hover:opacity-90"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <span className="text-3xl font-extrabold tracking-tight text-white font-serif transition-opacity group-hover:opacity-95">
+              {logoText || 'Dentamic'}
+            </span>
+          )}
         </Link>
 
         {/* Desktop Navigation */}

@@ -22,6 +22,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     if (doc) {
       menuData = {
         logoText: doc.data.logo_text || undefined,
+        logoImage: doc.data.logo_image || undefined,
         bookingButtonText: doc.data.booking_button_text || undefined,
         menuLinks: Array.isArray(doc.data.menu_links)
           ? doc.data.menu_links
@@ -41,6 +42,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
     <>
       <Header 
         logoText={menuData?.logoText}
+        logoImage={menuData?.logoImage}
         bookingButtonText={menuData?.bookingButtonText}
         menuLinks={menuData?.menuLinks}
       />

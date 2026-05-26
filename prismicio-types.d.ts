@@ -382,6 +382,17 @@ interface MenuDocumentData {
 	logo_text: prismic.KeyTextField;
 	
 	/**
+	 * Header logo field in *Menu*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: menu.logo_image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	logo_image: prismic.ImageField<never>;
+	
+	/**
 	 * Booking Button Text field in *Menu*
 	 *
 	 * - **Field Type**: Text

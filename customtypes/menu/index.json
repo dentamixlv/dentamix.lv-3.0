@@ -12,6 +12,14 @@
           "placeholder": "Dentamic"
         }
       },
+      "logo_image": {
+        "type": "Image",
+        "config": {
+          "label": "Header logo",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
       "booking_button_text": {
         "type": "Text",
         "config": {
