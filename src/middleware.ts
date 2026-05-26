@@ -130,6 +130,30 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  // 9. Redirect /doctors (or /lv/doctors) to /zobarsti for Latvian locale
+  if (pathname === '/doctors') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/zobarsti';
+    return NextResponse.redirect(url, 307);
+  }
+  if (pathname === '/lv/doctors') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/zobarsti';
+    return NextResponse.redirect(url, 307);
+  }
+
+  // 10. Rewrite /zobarsti (or /lv/zobarsti) to /lv/doctors internally
+  if (pathname === '/zobarsti') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/doctors';
+    return NextResponse.rewrite(url);
+  }
+  if (pathname === '/lv/zobarsti') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/doctors';
+    return NextResponse.rewrite(url);
+  }
+
   // Check if pathname starts with a supported locale
   const hasLocale = pathname.startsWith('/en') || pathname.startsWith('/lv');
 
