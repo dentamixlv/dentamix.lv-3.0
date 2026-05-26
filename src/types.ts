@@ -48,6 +48,7 @@ export interface Clinic {
     sunday: string;
   };
   gmapsEmbed?: string;
+  gmapsLink?: string;
   waze?: string;
 }
 

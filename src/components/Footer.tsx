@@ -14,7 +14,7 @@ export default function Footer() {
   const clinics = getClinics(isEn ? 'en-us' : 'lv');
 
   const t = {
-    quote: isEn ? '"A smile that inspires. Care that calms."' : '"Smails, kas iedvesmo. Aprūpe, kas nomierina."',
+    quote: isEn ? '"Modern dental technologies and experienced specialists for your smile\'s health. We provide the highest quality dental services in a comfortable environment in Riga and Adazi."' : '"Modernas zobārstniecības tehnoloģijas un pieredzējuši speciālisti Jūsu smaida veselībai. Mēs nodrošinām augstākās kvalitātes zobārstniecības pakalpojumus ērtā vidē Rīgā un Ādažos."',
     ourClinics: isEn ? 'Our Clinics' : 'Mūsu Klīnikas',
     workingHours: isEn ? 'Working Hours' : 'Darba Laiks',
     weekdays: isEn ? 'Weekdays:' : 'Darba dienas:',
@@ -23,7 +23,8 @@ export default function Footer() {
     closed: isEn ? 'Closed' : 'Slēgts',
     allRightsReserved: isEn ? 'All rights reserved.' : 'Visas tiesības aizsargātas.',
     patientSafety: isEn ? 'Patient Safety' : 'Pacientu drošība',
-    cookieSettings: isEn ? 'Cookie Settings' : 'Sīkdatņu iestatījumi'
+    cookieSettings: isEn ? 'Cookie Settings' : 'Sīkdatņu iestatījumi',
+    map: isEn ? 'Map' : 'Karte'
   };
 
   return (
@@ -71,19 +72,34 @@ export default function Footer() {
                     <Mail className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
                     <span className="font-medium">{clinic.email}</span>
                   </a>
-                  {clinic.waze && (
-                    <a 
-                      href={clinic.waze}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
-                    >
-                      <svg className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" viewBox="0 0 24 24" fill="currentColor">
-                        <path d="M20.676 8.615a6.633 6.633 0 0 0-.13-1.343 6.773 6.773 0 0 0-4.718-5.036A6.819 6.819 0 0 0 12.005 2h-.013a6.824 6.824 0 0 0-6.532 4.495 6.04 6.04 0 0 0-.26.974 5.146 5.146 0 0 0-.097.551 6.724 6.724 0 0 0-.073.947l.002.004c-.007.773.12 1.541.376 2.266l.002.006a10.336 10.336 0 0 0 1.346 2.647l.005.007a14.65 14.65 0 0 0 3.16 3.15l.01.008.008.006A17.72 17.72 0 0 0 12 18.656a18.006 18.006 0 0 0 2.685-1.694 16.316 16.316 0 0 0 2.551-2.213 11.9 11.9 0 0 0 1.296-1.724 9.74 9.74 0 0 0 .793-1.485 6.78 6.78 0 0 0 .483-1.452A5.74 5.74 0 0 0 20 9.317a2.795 2.795 0 0 0-.008-.243l-.002-.008a3.774 3.774 0 0 0-.01-.14c-.074-.1-.156-.2-.304-.311Zm-8.671 5.518a3.307 3.307 0 1 1 0-6.614 3.307 3.307 0 0 1 0 6.614Z"/>
-                      </svg>
-                      <span className="font-medium">Waze</span>
-                    </a>
-                  )}
+                  <div className="flex items-center gap-3 mt-1">
+                    {clinic.gmapsLink && (
+                      <a 
+                        href={clinic.gmapsLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 hover:text-[#de7c8a] transition-colors duration-200 w-fit text-[11px]"
+                      >
+                        <svg className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                        <span className="font-medium">{t.map}</span>
+                      </a>
+                    )}
+                    {clinic.waze && (
+                      <a 
+                        href={clinic.waze}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-1.5 hover:text-[#de7c8a] transition-colors duration-200 w-fit text-[11px]"
+                      >
+                        <svg className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" viewBox="0 0 24 24" fill="currentColor">
+                          <path d="M20.676 8.615a6.633 6.633 0 0 0-.13-1.343 6.773 6.773 0 0 0-4.718-5.036A6.819 6.819 0 0 0 12.005 2h-.013a6.824 6.824 0 0 0-6.532 4.495 6.04 6.04 0 0 0-.26.974 5.146 5.146 0 0 0-.097.551 6.724 6.724 0 0 0-.073.947l.002.004c-.007.773.12 1.541.376 2.266l.002.006a10.336 10.336 0 0 0 1.346 2.647l.005.007a14.65 14.65 0 0 0 3.16 3.15l.01.008.008.006A17.72 17.72 0 0 0 12 18.656a18.006 18.006 0 0 0 2.685-1.694 16.316 16.316 0 0 0 2.551-2.213 11.9 11.9 0 0 0 1.296-1.724 9.74 9.74 0 0 0 .793-1.485 6.78 6.78 0 0 0 .483-1.452A5.74 5.74 0 0 0 20 9.317a2.795 2.795 0 0 0-.008-.243l-.002-.008a3.774 3.774 0 0 0-.01-.14c-.074-.1-.156-.2-.304-.311Zm-8.671 5.518a3.307 3.307 0 1 1 0-6.614 3.307 3.307 0 0 1 0 6.614Z"/>
+                        </svg>
+                        <span className="font-medium">Waze</span>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
@@ -160,9 +176,12 @@ export default function Footer() {
             >
               {isEn ? 'Privacy Policy' : 'Privātuma politika'}
             </Link>
-            <span className="hover:text-white transition-colors duration-200 cursor-pointer">
-              {t.cookieSettings}
-            </span>
+            <Link
+              href={isEn ? '/en/cookies' : '/sikdatnu-politika'}
+              className="hover:text-white transition-colors duration-200 cursor-pointer"
+            >
+              {isEn ? 'Cookie Policy' : 'Sīkdatņu politika'}
+            </Link>
           </div>
         </div>
       </div>
