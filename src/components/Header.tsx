@@ -34,6 +34,9 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
     if (normalizedId === 'prices' || normalizedId === 'cenas') {
       return isEn ? '/en/prices' : '/cenas';
     }
+    if (normalizedId === 'testimonials' || normalizedId === 'atsauksmes') {
+      return isEn ? '/en/testimonials' : '/atsauksmes';
+    }
     
     return `${langPrefix}/${normalizedId}`;
   };
@@ -49,6 +52,9 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
     if (normalizedId === 'prices' || normalizedId === 'cenas') {
       return pathname === '/prices' || pathname === '/lv/prices' || pathname === '/cenas' || pathname === '/lv/cenas' || pathname === '/en/prices';
     }
+    if (normalizedId === 'testimonials' || normalizedId === 'atsauksmes') {
+      return pathname === '/testimonials' || pathname === '/lv/testimonials' || pathname === '/atsauksmes' || pathname === '/lv/atsauksmes' || pathname === '/en/testimonials';
+    }
     return pathname.endsWith(`/${normalizedId}`);
   };
 
@@ -60,6 +66,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         if (remaining === 'pakalpojumi') target = 'services';
         else if (remaining.startsWith('pakalpojumi/')) target = `services/${remaining.substring('pakalpojumi/'.length)}`;
         else if (remaining === 'cenas') target = 'prices';
+        else if (remaining === 'atsauksmes') target = 'testimonials';
         return `/en/${target}`;
       } else if (pathname === '/lv') {
         return '/en';
@@ -73,6 +80,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         if (remaining === 'pakalpojumi') target = 'services';
         else if (remaining.startsWith('pakalpojumi/')) target = `services/${remaining.substring('pakalpojumi/'.length)}`;
         else if (remaining === 'cenas') target = 'prices';
+        else if (remaining === 'atsauksmes') target = 'testimonials';
         return `/en${target ? '/' + target : ''}`;
       }
     } else {
@@ -82,6 +90,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         if (remaining === 'services') target = 'pakalpojumi';
         else if (remaining.startsWith('services/')) target = `pakalpojumi/${remaining.substring('services/'.length)}`;
         else if (remaining === 'prices') target = 'cenas';
+        else if (remaining === 'testimonials') target = 'atsauksmes';
         return `/${target}`;
       } else if (pathname === '/en') {
         return '/';
@@ -91,6 +100,7 @@ export default function Header({ logoText, logoImage, bookingButtonText, menuLin
         if (remaining === 'services') target = 'pakalpojumi';
         else if (remaining.startsWith('services/')) target = `pakalpojumi/${remaining.substring('services/'.length)}`;
         else if (remaining === 'prices') target = 'cenas';
+        else if (remaining === 'testimonials') target = 'atsauksmes';
         return `/${target}`;
       }
     }

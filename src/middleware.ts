@@ -82,6 +82,30 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(url);
   }
 
+  // 5. Redirect /testimonials (or /lv/testimonials) to /atsauksmes for Latvian locale
+  if (pathname === '/testimonials') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/atsauksmes';
+    return NextResponse.redirect(url, 307);
+  }
+  if (pathname === '/lv/testimonials') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/atsauksmes';
+    return NextResponse.redirect(url, 307);
+  }
+
+  // 6. Rewrite /atsauksmes (or /lv/atsauksmes) to /lv/testimonials internally
+  if (pathname === '/atsauksmes') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/testimonials';
+    return NextResponse.rewrite(url);
+  }
+  if (pathname === '/lv/atsauksmes') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/testimonials';
+    return NextResponse.rewrite(url);
+  }
+
   // Check if pathname starts with a supported locale
   const hasLocale = pathname.startsWith('/en') || pathname.startsWith('/lv');
 
