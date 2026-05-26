@@ -39,7 +39,13 @@ export default async function Page({ params }: PageProps) {
   let slices = null;
   try {
     const uid = locale === 'en-us' ? 'home' : 'sakums';
-    const document = await client.getByUID('homepage', uid, { lang: locale });
+    let document;
+    try {
+      document = await client.getByUID('homepage', uid, { lang: locale });
+    } catch (e) {
+      const fallbackUid = uid === 'sakums' ? 'home' : 'sakums';
+      document = await client.getByUID('homepage', fallbackUid, { lang: locale });
+    }
     slices = document?.data?.slices || null;
   } catch (error) {
     console.warn(`Prismic homepage document for locale "${locale}" with UID not found, falling back to static content.`, error);

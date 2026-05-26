@@ -14,6 +14,13 @@ export function middleware(request: NextRequest) {
     return NextResponse.next();
   }
 
+  // Normalize en-us to en (e.g. resolved paths from Prismic link fields)
+  if (pathname.startsWith('/en-us')) {
+    const url = request.nextUrl.clone();
+    url.pathname = pathname.replace('/en-us', '/en');
+    return NextResponse.redirect(url, 307);
+  }
+
   // 1. Redirect /services (or /lv/services) to /pakalpojumi for Latvian locale
   if (pathname === '/services') {
     const url = request.nextUrl.clone();

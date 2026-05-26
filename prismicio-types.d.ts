@@ -312,6 +312,248 @@ interface DoctorDocumentData {
  */
 export type DoctorDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<DoctorDocumentData>, "doctor", Lang>;
 
+/**
+ * Item in *Footer → Clinics*
+ */
+export interface FooterDocumentDataClinicsItem {
+	/**
+	 * Clinic Name field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Dentamic Rīga
+	 * - **API ID Path**: footer.clinics[].name
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	name: prismic.KeyTextField;
+	
+	/**
+	 * Address field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Brīvības iela 100, Rīga, LV-1001
+	 * - **API ID Path**: footer.clinics[].address
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	address: prismic.KeyTextField;
+	
+	/**
+	 * Phone Number field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: +371 29 459 999
+	 * - **API ID Path**: footer.clinics[].phone
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	phone: prismic.KeyTextField;
+	
+	/**
+	 * Email Address field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: riga@dentamic.lv
+	 * - **API ID Path**: footer.clinics[].email
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	email: prismic.KeyTextField;
+	
+	/**
+	 * Working Hours Weekdays field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: P. - Pk.: 09:00 - 19:00
+	 * - **API ID Path**: footer.clinics[].work_hours_weekdays
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	work_hours_weekdays: prismic.KeyTextField;
+	
+	/**
+	 * Working Hours Saturday field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: S.: 10:00 - 15:00
+	 * - **API ID Path**: footer.clinics[].work_hours_saturday
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	work_hours_saturday: prismic.KeyTextField;
+	
+	/**
+	 * Working Hours Sunday field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Sv.: Slēgts
+	 * - **API ID Path**: footer.clinics[].work_hours_sunday
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	work_hours_sunday: prismic.KeyTextField;
+	
+	/**
+	 * Weekdays Label field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Darba dienas:
+	 * - **API ID Path**: footer.clinics[].label_weekdays
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	label_weekdays: prismic.KeyTextField;
+	
+	/**
+	 * Saturday Label field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Sestdiena:
+	 * - **API ID Path**: footer.clinics[].label_saturday
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	label_saturday: prismic.KeyTextField;
+	
+	/**
+	 * Sunday Label field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Svētdiena:
+	 * - **API ID Path**: footer.clinics[].label_sunday
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	label_sunday: prismic.KeyTextField;
+}
+
+/**
+ * Content for Footer documents
+ */
+interface FooterDocumentData {
+	/**
+	 * Logo Text field in *Footer*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Dentamic
+	 * - **API ID Path**: footer.logo_text
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	logo_text: prismic.KeyTextField;
+	
+	/**
+	 * Logo Image field in *Footer*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: footer.logo_image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	logo_image: prismic.ImageField<never>;
+	
+	/**
+	 * Description field in *Footer*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Modern dental technologies...
+	 * - **API ID Path**: footer.description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	description: prismic.KeyTextField;
+	
+	/**
+	 * Clinics Column Title field in *Footer*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Mūsu Klīnikas
+	 * - **API ID Path**: footer.clinics_column_title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	clinics_column_title: prismic.KeyTextField;
+	
+	/**
+	 * Working Hours Column Title field in *Footer*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Darba Laiks
+	 * - **API ID Path**: footer.working_hours_column_title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	working_hours_column_title: prismic.KeyTextField;
+	
+	/**
+	 * Clinics field in *Footer*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: footer.clinics[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	clinics: prismic.GroupField<Simplify<FooterDocumentDataClinicsItem>>;
+	
+	/**
+	 * Copyright Text field in *Footer*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Dentamic. Visas tiesības aizsargātas.
+	 * - **API ID Path**: footer.copyright_text
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	copyright_text: prismic.KeyTextField;
+	
+	/**
+	 * Privacy Policy Label field in *Footer*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Privātuma politika
+	 * - **API ID Path**: footer.privacy_policy_label
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	privacy_policy_label: prismic.KeyTextField;
+	
+	/**
+	 * Privacy Policy Link field in *Footer*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: Select Privacy Policy page or URL
+	 * - **API ID Path**: footer.privacy_policy_link
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	privacy_policy_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
+	 * Cookie Policy Label field in *Footer*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Sīkdatņu politika
+	 * - **API ID Path**: footer.cookie_policy_label
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cookie_policy_label: prismic.KeyTextField;
+	
+	/**
+	 * Cookie Policy Link field in *Footer*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: Select Cookie Policy page or URL
+	 * - **API ID Path**: footer.cookie_policy_link
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	cookie_policy_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Footer document from Prismic
+ *
+ * - **API ID**: `footer`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
+
 type HomepageDocumentDataSlicesSlice = HeroSlice
 
 /**
@@ -768,7 +1010,7 @@ interface TestimonialDocumentData {
  */
 export type TestimonialDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<TestimonialDocumentData>, "testimonial", Lang>;
 
-export type AllDocumentTypes = BlogPostDocument | DoctorDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument;
+export type AllDocumentTypes = BlogPostDocument | DoctorDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument;
 
 /**
  * Primary content in *ContactForm → Default → Primary*
@@ -1218,6 +1460,9 @@ declare module "@prismicio/client" {
 			DoctorDocumentDataSpecializationsItem,
 			DoctorDocumentDataEducationItem,
 			DoctorDocumentDataLanguagesItem,
+			FooterDocument,
+			FooterDocumentData,
+			FooterDocumentDataClinicsItem,
 			HomepageDocument,
 			HomepageDocumentData,
 			HomepageDocumentDataSlicesSlice,

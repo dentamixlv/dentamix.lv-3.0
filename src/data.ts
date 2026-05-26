@@ -13,7 +13,7 @@ export const DOCTORS_LV: Doctor[] = [
     role: 'ZOBĀRSTE',
     description: 'Dr. Bērziņa ir vadošā speciāliste estētiskajā zobārstniecībā ar vairāk nekā 10 gadu pieredzi. Viņas pieeja balstās uz minimāli invazīvām metodēm, nodrošinot pacientiem mierpilnu un nesāpīgu ārstēšanas procesu.',
     fullBio: 'Dr. Anna Bērziņa absolvējusi Rīgas Stradiņa universitātes Zobārstniecības fakultāti un regulāri papildina zināšanas starptautiskos kongresos Vācijā un Šveicē. Viņa specializējas augstākās sarežģītības pakāpes estētisko rekonstrukciju un protezēšanas darbos, izmantojot modernākās laminātu un bezmetāla keramikas tehnoloģijas. Viņas mērķis ir radīt dabisku un harmonisku smaidu, maksimāli saglabājot zobu veselos audus. Pacienti viņu raksturo kā izcili iejūtīgu, nepārspējami precīzu un dabiski nomierinošu speciālisti.',
-    image: 'https://images.unsplash.com/photo-1594824813573-246434e33963?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.prismic.io/dentamix-v30/ahXHyrK9tuLqEKMT_01.png',
     specializations: [
       'Estētiskā zobu restaurācija',
       'Zobārstniecības lamināti (Veneers)',
@@ -243,7 +243,7 @@ export const DOCTORS_EN: Doctor[] = [
     role: 'DENTIST',
     description: 'Dr. Berzina is a leading specialist in aesthetic dentistry with over 10 years of experience. Her approach is based on minimally invasive methods, ensuring a peaceful and painless treatment process.',
     fullBio: 'Dr. Anna Berzina graduated from the Faculty of Dentistry at Riga Stradins University and regularly refines her knowledge at international congresses in Germany and Switzerland. She specializes in highly complex aesthetic restorations and prosthetics, utilizing state-of-the-art veneers and metal-free ceramic technologies. Her goal is to create a natural and harmonious smile while preserving maximum healthy tooth structure. Patients describe her as highly empathetic, exceptionally precise, and naturally calming.',
-    image: 'https://images.unsplash.com/photo-1594824813573-246434e33963?auto=format&fit=crop&q=80&w=800',
+    image: 'https://images.prismic.io/dentamix-v30/ahXHyrK9tuLqEKMT_01.png',
     specializations: [
       'Aesthetic tooth restoration',
       'Dental veneers',

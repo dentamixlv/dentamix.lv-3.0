@@ -88,7 +88,7 @@ export default function Hero({ slice }: HeroProps) {
           className="w-full h-full object-cover object-center scale-105"
           referrerPolicy="no-referrer"
         />
-        <div className="absolute inset-0 bg-white/40" />
+        <div className="absolute inset-0 bg-white/80" />
       </div>
 
       <motion.div

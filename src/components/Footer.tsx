@@ -6,12 +6,47 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { getClinics } from '../data';
 
-export default function Footer() {
+interface FooterProps {
+  logoText?: string;
+  logoImage?: any;
+  description?: string;
+  clinicsTitle?: string;
+  workingHoursTitle?: string;
+  clinics?: Array<{
+    name: string;
+    address: string;
+    phone: string;
+    email: string;
+    workHoursWeekdays: string;
+    workHoursSaturday: string;
+    workHoursSunday: string;
+    labelWeekdays?: string;
+    labelSaturday?: string;
+    labelSunday?: string;
+  }>;
+  copyrightText?: string;
+  privacyPolicyLabel?: string;
+  privacyPolicyLink?: any;
+  cookiePolicyLabel?: string;
+  cookiePolicyLink?: any;
+}
+
+export default function Footer({
+  logoText,
+  logoImage,
+  description,
+  clinicsTitle,
+  workingHoursTitle,
+  clinics: clinicsProp,
+  copyrightText,
+  privacyPolicyLabel,
+  privacyPolicyLink,
+  cookiePolicyLabel,
+  cookiePolicyLink
+}: FooterProps) {
   const params = useParams();
   const langList = params?.lang;
-  const isEn = Array.isArray(langList) && langList.length > 0 && langList[0] === 'en';
-
-  const clinics = getClinics(isEn ? 'en-us' : 'lv');
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList[0] === 'en');
 
   const t = {
     quote: isEn ? '"Modern dental technologies and experienced specialists for your smile\'s health. We provide the highest quality dental services in a comfortable environment in Riga and Adazi."' : '"Modernas zobārstniecības tehnoloģijas un pieredzējuši speciālisti Jūsu smaida veselībai. Mēs nodrošinām augstākās kvalitātes zobārstniecības pakalpojumus ērtā vidē Rīgā un Ādažos."',
@@ -27,27 +62,102 @@ export default function Footer() {
     map: isEn ? 'Map' : 'Karte'
   };
 
+  const clinicsToRender = clinicsProp && clinicsProp.length > 0
+    ? clinicsProp.map((c, idx) => ({
+        id: `dynamic-${idx}`,
+        name: c.name,
+        address: c.address,
+        phone: c.phone,
+        email: c.email,
+        gmapsLink: c.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.address)}` : undefined,
+        waze: c.address ? `https://waze.com/ul?q=${encodeURIComponent(c.address)}` : undefined,
+        workHours: {
+          weekdays: c.workHoursWeekdays ? `P. - Pk.: ${c.workHoursWeekdays}` : '',
+          saturday: c.workHoursSaturday ? `S.: ${c.workHoursSaturday}` : '',
+          sunday: c.workHoursSunday ? `Sv.: ${c.workHoursSunday}` : '',
+        },
+        labels: {
+          weekdays: c.labelWeekdays || t.weekdays,
+          saturday: c.labelSaturday || t.saturday,
+          sunday: c.labelSunday || t.sunday,
+          closed: t.closed,
+        }
+      }))
+    : getClinics(isEn ? 'en-us' : 'lv').map((clinic) => ({
+        ...clinic,
+        workHours: {
+          weekdays: clinic.workHours.weekdays,
+          saturday: clinic.workHours.saturday,
+          sunday: clinic.workHours.sunday,
+        },
+        labels: {
+          weekdays: t.weekdays,
+          saturday: t.saturday,
+          sunday: t.sunday,
+          closed: t.closed,
+        }
+      }));
+
+  const getHoursValue = (hoursString: string) => {
+    if (!hoursString) return '';
+    if (hoursString.includes(': ')) {
+      return hoursString.split(': ').slice(1).join(': ');
+    }
+    return hoursString;
+  };
+
+  const resolveLink = (linkField: any) => {
+    if (!linkField?.url) return undefined;
+    let url = linkField.url;
+    if (url.startsWith('/') && !url.startsWith('//')) {
+      const hasPrefix = url.startsWith('/en/') || url.startsWith('/lv/') || url === '/en' || url === '/lv';
+      if (!hasPrefix && isEn) {
+        url = `/en${url}`;
+      }
+    }
+    return url;
+  };
+
   return (
     <footer className="bg-[#151617] text-white border-t border-[#252728]">
+      {/* Logo Row - Left aligned, full width on its own line like header logo */}
+      <div className="max-w-7xl mx-auto px-6 pt-16 md:pt-20 flex items-center justify-start">
+        <Link 
+          href={isEn ? '/en' : '/'} 
+          className="inline-block cursor-pointer group"
+          id="footer-logo-button"
+        >
+          {logoImage?.url ? (
+            <img 
+              src={logoImage.url} 
+              alt={logoImage.alt || logoText || "Dentamic"} 
+              className="h-14 md:h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
+              referrerPolicy="no-referrer"
+            />
+          ) : (
+            <span className="text-3xl font-extrabold tracking-tight text-white font-serif relative select-none transition-opacity group-hover:opacity-95">
+              {logoText || 'Dentamic'}<span className="text-[#de7c8a]">.</span>
+            </span>
+          )}
+        </Link>
+      </div>
+
       {/* Upper Footer section with Grid */}
-      <div className="max-w-7xl mx-auto px-6 py-16 md:py-24 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 items-start text-left">
+      <div className="max-w-7xl mx-auto px-6 pt-8 pb-16 md:pb-24 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 items-start text-left">
         {/* Column 1: Brand Info */}
         <div className="flex flex-col gap-5">
-          <span className="text-3xl font-extrabold tracking-tight text-white font-serif relative select-none">
-            Dentamic<span className="text-[#de7c8a]">.</span>
-          </span>
           <p className="text-[#989999] text-sm leading-relaxed max-w-sm italic font-medium">
-            {t.quote}
+            {description || t.quote}
           </p>
         </div>
 
         {/* Column 2: Mūsu Klīnikas */}
         <div>
           <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6">
-            {t.ourClinics}
+            {clinicsTitle || t.ourClinics}
           </h4>
           <div className="flex flex-col gap-8">
-            {clinics.map((clinic) => (
+            {clinicsToRender.map((clinic) => (
               <div key={clinic.id} className="group border-l-2 border-white/[0.06] hover:border-[#de7c8a]/50 pl-4 transition-all duration-300">
                 <h5 className="text-[13px] font-bold text-white tracking-wide uppercase mb-2">
                   {clinic.name}
@@ -58,20 +168,24 @@ export default function Footer() {
                     <MapPin className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[#de7c8a]" />
                     <span className="leading-relaxed hover:text-white transition-colors duration-200">{clinic.address}</span>
                   </span>
-                  <a 
-                    href={`tel:${clinic.phone.replace(/\s+/g, '')}`} 
-                    className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
-                  >
-                    <Phone className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
-                    <span className="font-mono font-medium">{clinic.phone}</span>
-                  </a>
-                  <a 
-                    href={`mailto:${clinic.email}`} 
-                    className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
-                  >
-                    <Mail className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
-                    <span className="font-medium">{clinic.email}</span>
-                  </a>
+                  {clinic.phone && (
+                    <a 
+                      href={`tel:${clinic.phone.replace(/\s+/g, '')}`} 
+                      className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
+                    >
+                      <Phone className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
+                      <span className="font-mono font-medium">{clinic.phone}</span>
+                    </a>
+                  )}
+                  {clinic.email && (
+                    <a 
+                      href={`mailto:${clinic.email}`} 
+                      className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
+                    >
+                      <Mail className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
+                      <span className="font-medium">{clinic.email}</span>
+                    </a>
+                  )}
                   <div className="flex items-center gap-3 mt-1">
                     {clinic.gmapsLink && (
                       <a 
@@ -109,11 +223,11 @@ export default function Footer() {
         {/* Column 3: Darba Laiks */}
         <div>
           <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6">
-            {t.workingHours}
+            {workingHoursTitle || t.workingHours}
           </h4>
           
           <div className="flex flex-col gap-8">
-            {clinics.map((clinic) => (
+            {clinicsToRender.map((clinic) => (
               <div 
                 key={`hours-${clinic.id}`} 
                 className="group border-l-2 border-white/[0.06] hover:border-[#de7c8a]/50 pl-4 transition-all duration-300"
@@ -124,27 +238,29 @@ export default function Footer() {
                 
                 <div className="flex flex-col gap-2 text-xs text-[#989999]">
                   {/* Weekdays */}
-                  <div className="flex justify-between items-center gap-4">
-                    <span className="font-medium group-hover:text-white transition-colors duration-200">
-                      {t.weekdays}
-                    </span>
-                    <span className="font-mono font-semibold text-slate-200 group-hover:text-white transition-colors duration-200">
-                      {clinic.workHours.weekdays.split(': ')[1]}
-                    </span>
-                  </div>
+                  {clinic.workHours.weekdays && (
+                    <div className="flex justify-between items-center gap-4">
+                      <span className="font-medium group-hover:text-white transition-colors duration-200">
+                        {clinic.labels.weekdays}
+                      </span>
+                      <span className="font-mono font-semibold text-slate-200 group-hover:text-white transition-colors duration-200">
+                        {getHoursValue(clinic.workHours.weekdays)}
+                      </span>
+                    </div>
+                  )}
                   
                   {/* Saturday */}
                   <div className="flex justify-between items-center gap-4">
                     <span className="font-medium group-hover:text-white transition-colors duration-200">
-                      {t.saturday}
+                      {clinic.labels.saturday}
                     </span>
-                    {clinic.workHours.saturday.includes('Slēgts') || clinic.workHours.saturday.includes('Closed') ? (
+                    {clinic.workHours.saturday.includes('Slēgts') || clinic.workHours.saturday.includes('Closed') || !getHoursValue(clinic.workHours.saturday) ? (
                       <span className="text-slate-500 font-medium italic text-[11px]">
-                        {t.closed}
+                        {clinic.labels.closed}
                       </span>
                     ) : (
                       <span className="font-mono font-semibold text-slate-200 group-hover:text-white transition-colors duration-200">
-                        {clinic.workHours.saturday.split(': ')[1]}
+                        {getHoursValue(clinic.workHours.saturday)}
                       </span>
                     )}
                   </div>
@@ -152,11 +268,17 @@ export default function Footer() {
                   {/* Sunday */}
                   <div className="flex justify-between items-center gap-4">
                     <span className="font-medium group-hover:text-white transition-colors duration-200">
-                      {t.sunday}
+                      {clinic.labels.sunday}
                     </span>
-                    <span className="text-slate-500 font-medium italic text-[11px]">
-                      {t.closed}
-                    </span>
+                    {clinic.workHours.sunday.includes('Slēgts') || clinic.workHours.sunday.includes('Closed') || !getHoursValue(clinic.workHours.sunday) ? (
+                      <span className="text-slate-500 font-medium italic text-[11px]">
+                        {clinic.labels.closed}
+                      </span>
+                    ) : (
+                      <span className="font-mono font-semibold text-slate-200 group-hover:text-white transition-colors duration-200">
+                        {getHoursValue(clinic.workHours.sunday)}
+                      </span>
+                    )}
                   </div>
                 </div>
               </div>
@@ -168,19 +290,19 @@ export default function Footer() {
       {/* Footer Bottom copyright */}
       <div className="border-t border-white/[0.06] bg-[#0f1011]">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#989999] font-medium">
-          <p>© {new Date().getFullYear()} Dentamic. {t.allRightsReserved}</p>
+          <p>© {new Date().getFullYear()} {copyrightText || `Dentamic. ${t.allRightsReserved}`}</p>
           <div className="flex gap-6">
             <Link
-              href={isEn ? '/en/privacy' : '/privatuma-politika'}
+              href={resolveLink(privacyPolicyLink) || (isEn ? '/en/privacy' : '/privatuma-politika')}
               className="hover:text-white transition-colors duration-200 cursor-pointer"
             >
-              {isEn ? 'Privacy Policy' : 'Privātuma politika'}
+              {privacyPolicyLabel || (isEn ? 'Privacy Policy' : 'Privātuma politika')}
             </Link>
             <Link
-              href={isEn ? '/en/cookies' : '/sikdatnu-politika'}
+              href={resolveLink(cookiePolicyLink) || (isEn ? '/en/cookies' : '/sikdatnu-politika')}
               className="hover:text-white transition-colors duration-200 cursor-pointer"
             >
-              {isEn ? 'Cookie Policy' : 'Sīkdatņu politika'}
+              {cookiePolicyLabel || (isEn ? 'Cookie Policy' : 'Sīkdatņu politika')}
             </Link>
           </div>
         </div>

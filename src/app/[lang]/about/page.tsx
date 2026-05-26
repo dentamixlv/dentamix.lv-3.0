@@ -1,4 +1,6 @@
 import React from 'react';
+import { SliceZone } from '@prismicio/react';
+import { components } from '../../../slices';
 import { createClient } from '../../../prismicio';
 import AboutClient from './AboutClient';
 import { getPrismicLocale } from '../page';
@@ -31,17 +33,16 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  let pageContent = null;
+  let slices = null;
   try {
     const document = await client.getByUID('page', 'about', { lang: locale });
-    if (document) {
-      pageContent = {
-        title: document.data.title || '',
-        slices: document.data.slices || []
-      };
-    }
+    slices = document?.data?.slices || null;
   } catch (error) {
     console.warn("No about page found in Prismic, falling back to static about view.");
+  }
+
+  if (slices && slices.length > 0) {
+    return <SliceZone slices={slices} components={components} />;
   }
 
   return <AboutClient />;

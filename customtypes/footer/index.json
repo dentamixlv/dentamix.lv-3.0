@@ -1,0 +1,159 @@
+{
+  "id": "footer",
+  "label": "Footer",
+  "status": true,
+  "repeatable": false,
+  "json": {
+    "Main": {
+      "logo_text": {
+        "type": "Text",
+        "config": {
+          "label": "Logo Text",
+          "placeholder": "Dentamic"
+        }
+      },
+      "logo_image": {
+        "type": "Image",
+        "config": {
+          "label": "Logo Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "description": {
+        "type": "Text",
+        "config": {
+          "label": "Description",
+          "placeholder": "Modern dental technologies..."
+        }
+      },
+      "clinics_column_title": {
+        "type": "Text",
+        "config": {
+          "label": "Clinics Column Title",
+          "placeholder": "Mūsu Klīnikas"
+        }
+      },
+      "working_hours_column_title": {
+        "type": "Text",
+        "config": {
+          "label": "Working Hours Column Title",
+          "placeholder": "Darba Laiks"
+        }
+      },
+      "clinics": {
+        "type": "Group",
+        "config": {
+          "label": "Clinics",
+          "fields": {
+            "name": {
+              "type": "Text",
+              "config": {
+                "label": "Clinic Name",
+                "placeholder": "Dentamic Rīga"
+              }
+            },
+            "address": {
+              "type": "Text",
+              "config": {
+                "label": "Address",
+                "placeholder": "Brīvības iela 100, Rīga, LV-1001"
+              }
+            },
+            "phone": {
+              "type": "Text",
+              "config": {
+                "label": "Phone Number",
+                "placeholder": "+371 29 459 999"
+              }
+            },
+            "email": {
+              "type": "Text",
+              "config": {
+                "label": "Email Address",
+                "placeholder": "riga@dentamic.lv"
+              }
+            },
+            "work_hours_weekdays": {
+              "type": "Text",
+              "config": {
+                "label": "Working Hours Weekdays",
+                "placeholder": "P. - Pk.: 09:00 - 19:00"
+              }
+            },
+            "work_hours_saturday": {
+              "type": "Text",
+              "config": {
+                "label": "Working Hours Saturday",
+                "placeholder": "S.: 10:00 - 15:00"
+              }
+            },
+            "work_hours_sunday": {
+              "type": "Text",
+              "config": {
+                "label": "Working Hours Sunday",
+                "placeholder": "Sv.: Slēgts"
+              }
+            },
+            "label_weekdays": {
+              "type": "Text",
+              "config": {
+                "label": "Weekdays Label",
+                "placeholder": "Darba dienas:"
+              }
+            },
+            "label_saturday": {
+              "type": "Text",
+              "config": {
+                "label": "Saturday Label",
+                "placeholder": "Sestdiena:"
+              }
+            },
+            "label_sunday": {
+              "type": "Text",
+              "config": {
+                "label": "Sunday Label",
+                "placeholder": "Svētdiena:"
+              }
+            }
+          }
+        }
+      },
+      "copyright_text": {
+        "type": "Text",
+        "config": {
+          "label": "Copyright Text",
+          "placeholder": "Dentamic. Visas tiesības aizsargātas."
+        }
+      },
+      "privacy_policy_label": {
+        "type": "Text",
+        "config": {
+          "label": "Privacy Policy Label",
+          "placeholder": "Privātuma politika"
+        }
+      },
+      "privacy_policy_link": {
+        "type": "Link",
+        "config": {
+          "label": "Privacy Policy Link",
+          "placeholder": "Select Privacy Policy page or URL"
+        }
+      },
+      "cookie_policy_label": {
+        "type": "Text",
+        "config": {
+          "label": "Cookie Policy Label",
+          "placeholder": "Sīkdatņu politika"
+        }
+      },
+      "cookie_policy_link": {
+        "type": "Link",
+        "config": {
+          "label": "Cookie Policy Link",
+          "placeholder": "Select Cookie Policy page or URL"
+        }
+      }
+    }
+  }
+}
