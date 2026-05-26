@@ -1,20 +1,20 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Dentamix – Zobārstniecības klīnikas mājaslapa
 
-# Run and deploy your AI Studio app
+Dentamix ir mūsdienīga zobārstniecības klīnika, kas apvieno jaunākās tehnoloģijas un individuālu pieeju katram pacientam. Šis projekts ir klīnikas oficiālā digitālā platforma, kas izstrādāta, lai nodrošinātu pacientiem ērtu piekļuvi informācijai par pakalpojumiem un klīnikas atrašanās vietām.
 
-This contains everything you need to run your app locally.
+## 🚀 Tehnoloģiju steks
 
-View your app in AI Studio: https://ai.studio/apps/b503dcc4-29c7-4369-8eda-3cb274531420
+Projekts ir būvēts, izmantojot mūsdienīgus un ātrus rīkus:
 
-## Run Locally
+* **[Next.js](https://nextjs.org/)** – React ietvars, kas nodrošina ātru ielādi un lielisku SEO veiktspēju.
+* **[React](https://react.dev/)** – Bibliotēka lietotāja saskarņu veidošanai.
+* **[Tailwind CSS](https://tailwindcss.com/)** – Funkcionāla CSS bibliotēka ātrai un responsīvai dizaina izstrādei.
+* **[Prismic CMS](https://prismic.io/)** – "Headless" satura pārvaldības sistēma, kas ļauj klīnikas personālam ērti rediģēt saturu (tekstus, bildes, pakalpojumus) bez programmēšanas zināšanām.
 
-**Prerequisites:**  Node.js
+## 🦷 Par klīniku
 
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+Mūsu mērķis ir nodrošināt augstākās kvalitātes zobārstniecības pakalpojumus ērtā un draudzīgā vidē. 
+- **Speciālisti:** Pieredzējuši ārsti, kuri regulāri pilnveido savas zināšanas.
+- **Aprīkojums:** Modernas tehnoloģijas precīzai un nesāpīgai ārstēšanai.
+- **Pakalpojumi:** Pilns spektrs – no higiēnas un profilakses līdz ķirurģijai un estētikai.
+- **Lokācijas:** Atrodamies Rīgas centrā un Ādažos.
