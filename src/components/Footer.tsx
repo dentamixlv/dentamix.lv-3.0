@@ -161,9 +161,6 @@ export default function Footer() {
               {isEn ? 'Privacy Policy' : 'Privātuma politika'}
             </Link>
             <span className="hover:text-white transition-colors duration-200 cursor-pointer">
-              {t.patientSafety}
-            </span>
-            <span className="hover:text-white transition-colors duration-200 cursor-pointer">
               {t.cookieSettings}
             </span>
           </div>
