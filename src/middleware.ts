@@ -142,7 +142,14 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 307);
   }
 
-  // 10. Rewrite /zobarsti (or /lv/zobarsti) to /lv/doctors internally
+  // 10. Redirect /en/zobarsti to /en/doctors (EN locale switch from Latvian page)
+  if (pathname === '/en/zobarsti') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/en/doctors';
+    return NextResponse.redirect(url, 307);
+  }
+
+  // 11. Rewrite /zobarsti (or /lv/zobarsti) to /lv/doctors internally
   if (pathname === '/zobarsti') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/doctors';
