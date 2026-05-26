@@ -90,6 +90,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'cenas') target = 'prices';
         else if (remaining === 'atsauksmes') target = 'testimonials';
         else if (remaining === 'kontakti') target = 'contacts';
+        else if (remaining === 'par-mums') target = 'about';
         return `/en${target ? '/' + target : ''}`;
       }
     } else {
@@ -101,6 +102,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'prices') target = 'cenas';
         else if (remaining === 'testimonials') target = 'atsauksmes';
         else if (remaining === 'contacts') target = 'kontakti';
+        else if (remaining === 'about') target = 'par-mums';
         return `/${target}`;
       } else if (pathname === '/en') {
         return '/';
@@ -121,6 +123,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
     ? menuLinks.map(link => ({ id: link.path, label: link.label }))
     : [
         { id: 'services', label: isEn ? 'Services' : 'Pakalpojumi' },
+        { id: 'about', label: isEn ? 'About' : 'Par Mums' },
         { id: 'doctors', label: isEn ? 'Dentists' : 'Zobārsti' },
         { id: 'prices', label: isEn ? 'Prices' : 'Cenas' },
         { id: 'testimonials', label: isEn ? 'Testimonials' : 'Atsauksmes' },
@@ -152,7 +155,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-8 lg:gap-12">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-7">
           {navItems.map((item) => {
             const active = isActive(item.id);
             return (
@@ -273,7 +276,6 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
                 <Phone className="w-4 h-4" />
                 {bookingButtonText || (isEn ? 'Book a Visit' : 'Pierakstīties vizītei')}
               </Link>
-REPLACE
             </div>
           </motion.div>
         )}

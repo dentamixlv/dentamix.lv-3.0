@@ -198,13 +198,6 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
                     {item.author}
                   </h3>
                   
-                  {/* Quoted block inside card */}
-                  <blockquote className="border-l-2 border-[#f2dde1] pl-3.5 mt-4 mb-3">
-                    <p className="text-xs text-[#400112] leading-relaxed italic font-medium">
-                      "{item.quote}"
-                    </p>
-                  </blockquote>
-
                   {/* Complete story matching descriptive length of doctors */}
                   <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal">
                     {item.story}

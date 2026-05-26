@@ -149,7 +149,37 @@ export function middleware(request: NextRequest) {
     return NextResponse.redirect(url, 307);
   }
 
-  // 11. Rewrite /zobarsti (or /lv/zobarsti) to /lv/doctors internally
+  // 11. Redirect about pages
+  // Redirect /about (or /lv/about) to /par-mums for Latvian locale
+  if (pathname === '/about') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/par-mums';
+    return NextResponse.redirect(url, 307);
+  }
+  if (pathname === '/lv/about') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/par-mums';
+    return NextResponse.redirect(url, 307);
+  }
+  // Rewrite /par-mums (or /lv/par-mums) to /lv/about internally
+  if (pathname === '/par-mums') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/about';
+    return NextResponse.rewrite(url);
+  }
+  if (pathname === '/lv/par-mums') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/lv/about';
+    return NextResponse.rewrite(url);
+  }
+  // EN locale - redirect /en/par-mums to /en/about
+  if (pathname === '/en/par-mums') {
+    const url = request.nextUrl.clone();
+    url.pathname = '/en/about';
+    return NextResponse.redirect(url, 307);
+  }
+
+  // 12. Rewrite /zobarsti (or /lv/zobarsti) to /lv/doctors internally
   if (pathname === '/zobarsti') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/doctors';
