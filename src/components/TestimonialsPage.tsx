@@ -213,17 +213,11 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
                 </div>
 
                 {/* Footer timestamp and actions */}
-                <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
+                <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
                   <div className="flex items-center gap-1.5 text-slate-400">
                     <Heart className="w-3.5 h-3.5 text-[#de7c8a] fill-[#de7c8a]/20" />
                     <span className="text-[10px] font-semibold text-slate-500">{item.date}</span>
                   </div>
-                  <button
-                    onClick={onBook}
-                    className="px-4 py-2 text-xs font-bold text-[#400112] bg-[#f2dde1]/50 hover:bg-[#fbf9f8] rounded-full transition-colors cursor-pointer border border-[#efedec]"
-                  >
-                    {isEn ? 'Book' : 'Pieteikties'}
-                  </button>
                 </div>
               </div>
             </motion.div>
