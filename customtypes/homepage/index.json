@@ -18,6 +18,30 @@
           "choices": {
             "hero": {
               "type": "SharedSlice"
+            },
+            "services_list": {
+              "type": "SharedSlice"
+            },
+            "doctors_list": {
+              "type": "SharedSlice"
+            },
+            "pricelist": {
+              "type": "SharedSlice"
+            },
+            "testimonials_list": {
+              "type": "SharedSlice"
+            },
+            "contact_form": {
+              "type": "SharedSlice"
+            },
+            "cta_block": {
+              "type": "SharedSlice"
+            },
+            "ceo_block": {
+              "type": "SharedSlice"
+            },
+            "testimonial_block": {
+              "type": "SharedSlice"
             }
           }
         }

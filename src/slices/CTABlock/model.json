@@ -49,6 +49,12 @@
             "label": "Button Link",
             "placeholder": "Select page or enter URL"
           }
+        },
+        "background_color": {
+          "type": "Color",
+          "config": {
+            "label": "Background Color"
+          }
         }
       },
       "items": {}

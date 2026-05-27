@@ -415,6 +415,16 @@ export interface FooterDocumentDataClinicsItem {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	label_sunday: prismic.KeyTextField;
+	
+	/**
+	 * Accessibility Alert Message field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: e.g., Klīnika ir pilnībā pieejama ratiņkrēslā
+	 * - **API ID Path**: footer.clinics[].accessibility_alert
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	accessibility_alert: prismic.KeyTextField;
 }
 
 /**
@@ -554,7 +564,7 @@ interface FooterDocumentData {
  */
 export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ServicesListSlice | DoctorsListSlice | PricelistSlice | TestimonialsListSlice | ContactFormSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice
 
 /**
  * Content for Homepage documents
@@ -679,7 +689,7 @@ interface MenuDocumentData {
  */
 export type MenuDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = HeroSlice | ServicesListSlice | DoctorsListSlice | PricelistSlice | TestimonialsListSlice | ContactFormSlice
+type PageDocumentDataSlicesSlice = HeroSlice | ServicesListSlice | DoctorsListSlice | PricelistSlice | TestimonialsListSlice | ContactFormSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice
 
 /**
  * Content for Page documents
@@ -1013,6 +1023,104 @@ export type TestimonialDocument<Lang extends string = string> = prismic.PrismicD
 export type AllDocumentTypes = BlogPostDocument | DoctorDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument;
 
 /**
+ * Primary content in *CEOBlock → Default → Primary*
+ */
+export interface CeoBlockSliceDefaultPrimary {
+	/**
+	 * Leader Tag field in *CEOBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Klīnikas vadītājs un vadošais speciālists
+	 * - **API ID Path**: ceo_block.default.primary.leader_tag
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	leader_tag: prismic.KeyTextField;
+	
+	/**
+	 * Name field in *CEOBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Dr. Jānis Bērziņš
+	 * - **API ID Path**: ceo_block.default.primary.name
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	name: prismic.KeyTextField;
+	
+	/**
+	 * Biography field in *CEOBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: Mūsu klīnikas filozofija balstās uz...
+	 * - **API ID Path**: ceo_block.default.primary.biography
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	biography: prismic.RichTextField;
+	
+	/**
+	 * Image field in *CEOBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: ceo_block.default.primary.image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Signature Image field in *CEOBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: ceo_block.default.primary.signature_image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	signature_image: prismic.ImageField<never>;
+	
+	/**
+	 * Link Text field in *CEOBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Uzzināt vairāk
+	 * - **API ID Path**: ceo_block.default.primary.link_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	link_text: prismic.KeyTextField;
+	
+	/**
+	 * Link URL field in *CEOBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: Select page or enter URL
+	 * - **API ID Path**: ceo_block.default.primary.link_url
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link_url: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Default variation for CEOBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CeoBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<CeoBlockSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *CEOBlock*
+ */
+type CeoBlockSliceVariation = CeoBlockSliceDefault
+
+/**
+ * CEOBlock Shared Slice
+ *
+ * - **API ID**: `ceo_block`
+ * - **Description**: Renders the CEO/Clinic Director card block with bio, photo, signature, and learn more link.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type CeoBlockSlice = prismic.SharedSlice<"ceo_block", CeoBlockSliceVariation>;
+
+/**
  * Primary content in *ContactForm → Default → Primary*
  */
 export interface ContactFormSliceDefaultPrimary {
@@ -1113,6 +1221,16 @@ export interface CtaBlockSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/link
 	 */
 	button_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
+	 * Background Color field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Color
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: cta_block.default.primary.background_color
+	 * - **Documentation**: https://prismic.io/docs/fields/color
+	 */
+	background_color: prismic.ColorField;
 }
 
 /**
@@ -1391,6 +1509,139 @@ type ServicesListSliceVariation = ServicesListSliceDefault
 export type ServicesListSlice = prismic.SharedSlice<"services_list", ServicesListSliceVariation>;
 
 /**
+ * Primary content in *TestimonialBlock → Default → Primary*
+ */
+export interface TestimonialBlockSliceDefaultPrimary {
+	/**
+	 * Badge Text field in *TestimonialBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pacientu atsauksmes
+	 * - **API ID Path**: testimonial_block.default.primary.badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *TestimonialBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Atsauksmes
+	 * - **API ID Path**: testimonial_block.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Subtitle field in *TestimonialBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Mūsu pacienti novērtē...
+	 * - **API ID Path**: testimonial_block.default.primary.subtitle
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	subtitle: prismic.KeyTextField;
+	
+	/**
+	 * Section Link Text field in *TestimonialBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Skatīt visus pacientu stāstus
+	 * - **API ID Path**: testimonial_block.default.primary.link_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	link_text: prismic.KeyTextField;
+	
+	/**
+	 * Section Link URL field in *TestimonialBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: Select page or enter URL
+	 * - **API ID Path**: testimonial_block.default.primary.link_url
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link_url: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+}
+
+/**
+ * Primary content in *TestimonialBlock → Items*
+ */
+export interface TestimonialBlockSliceDefaultItem {
+	/**
+	 * Testimonial Tagline / Treatment field in *TestimonialBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Zobu implantācija
+	 * - **API ID Path**: testimonial_block.items[].tagline
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	tagline: prismic.KeyTextField;
+	
+	/**
+	 * Author field in *TestimonialBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Anna Bērziņa
+	 * - **API ID Path**: testimonial_block.items[].author
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	author: prismic.KeyTextField;
+	
+	/**
+	 * Testimonial Text / Story field in *TestimonialBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Lieliska attieksme un nesāpīga procedūra...
+	 * - **API ID Path**: testimonial_block.items[].testimonial_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	testimonial_text: prismic.KeyTextField;
+	
+	/**
+	 * Date field in *TestimonialBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 12. Maijs, 2026
+	 * - **API ID Path**: testimonial_block.items[].date
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	date: prismic.KeyTextField;
+	
+	/**
+	 * Rating (1-5) field in *TestimonialBlock → Items*
+	 *
+	 * - **Field Type**: Number
+	 * - **Placeholder**: 5
+	 * - **API ID Path**: testimonial_block.items[].rating
+	 * - **Documentation**: https://prismic.io/docs/fields/number
+	 */
+	rating: prismic.NumberField;
+}
+
+/**
+ * Default variation for TestimonialBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TestimonialBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<TestimonialBlockSliceDefaultPrimary>, Simplify<TestimonialBlockSliceDefaultItem>>;
+
+/**
+ * Slice variation for *TestimonialBlock*
+ */
+type TestimonialBlockSliceVariation = TestimonialBlockSliceDefault
+
+/**
+ * TestimonialBlock Shared Slice
+ *
+ * - **API ID**: `testimonial_block`
+ * - **Description**: Renders testimonial cards in a 3-column bento-like grid with editable fields and customizable CTA links.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type TestimonialBlockSlice = prismic.SharedSlice<"testimonial_block", TestimonialBlockSliceVariation>;
+
+/**
  * Primary content in *TestimonialsList → Default → Primary*
  */
 export interface TestimonialsListSliceDefaultPrimary {
@@ -1479,6 +1730,10 @@ declare module "@prismicio/client" {
 			TestimonialDocument,
 			TestimonialDocumentData,
 			AllDocumentTypes,
+			CeoBlockSlice,
+			CeoBlockSliceDefaultPrimary,
+			CeoBlockSliceVariation,
+			CeoBlockSliceDefault,
 			ContactFormSlice,
 			ContactFormSliceDefaultPrimary,
 			ContactFormSliceVariation,
@@ -1503,6 +1758,11 @@ declare module "@prismicio/client" {
 			ServicesListSliceDefaultPrimary,
 			ServicesListSliceVariation,
 			ServicesListSliceDefault,
+			TestimonialBlockSlice,
+			TestimonialBlockSliceDefaultPrimary,
+			TestimonialBlockSliceDefaultItem,
+			TestimonialBlockSliceVariation,
+			TestimonialBlockSliceDefault,
 			TestimonialsListSlice,
 			TestimonialsListSliceDefaultPrimary,
 			TestimonialsListSliceVariation,

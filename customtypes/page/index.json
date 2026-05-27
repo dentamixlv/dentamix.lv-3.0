@@ -40,6 +40,15 @@
             },
             "contact_form": {
               "type": "SharedSlice"
+            },
+            "cta_block": {
+              "type": "SharedSlice"
+            },
+            "ceo_block": {
+              "type": "SharedSlice"
+            },
+            "testimonial_block": {
+              "type": "SharedSlice"
             }
           }
         }

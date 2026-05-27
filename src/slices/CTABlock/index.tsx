@@ -1,13 +1,13 @@
 'use client';
 
 import React from 'react';
-import { motion } from 'motion/react';
 import { Content, isFilled } from "@prismicio/client";
 import { SliceComponentProps, PrismicRichText, JSXMapSerializer } from "@prismicio/react";
 import { useParams } from 'next/navigation';
 import { CalendarDays } from 'lucide-react';
 import { PrismicNextLink } from '@prismicio/next';
 import Link from 'next/link';
+import ReusableCTABlock from '../../components/CTABlock';
 
 /**
  * Rich text serializer for title and description
@@ -58,19 +58,6 @@ const richTextComponents: JSXMapSerializer = {
 /**
  * Animation variants matching Hero slice
  */
-const fadeUpVariants = {
-  hidden: { opacity: 0, y: 6 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: 'tween' as const,
-      ease: 'easeOut',
-      duration: 0.45,
-    },
-  },
-} as const;
-
 type CTABlockProps = SliceComponentProps<Content.CtaBlockSlice>;
 
 export default function CTABlock({ slice }: CTABlockProps) {
@@ -79,53 +66,43 @@ export default function CTABlock({ slice }: CTABlockProps) {
 
   const langList = params?.lang;
   const isEn = Array.isArray(langList) && langList.length > 0 && langList[0] === 'en';
-  const langPrefix = isEn ? `/${langList[0]}` : '';
 
   const badgeText = primary.badge_text || (isEn ? 'Share Your Experience' : 'Dalieties pieredzē');
   const buttonText = primary.button_text || (isEn ? 'Book a Visit' : 'Pierakstīties vizītei');
 
-  return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={fadeUpVariants}
-      className="max-w-7xl mx-auto px-6 py-16 md:py-24"
+  const customButton = isFilled.link(primary.button_link) ? (
+    <PrismicNextLink
+      field={primary.button_link}
+      className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
+      id="cta-block-btn"
     >
-      <div className="bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/25 border border-[#efedec] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8">
-        <div className="space-y-3 max-w-2xl">
-          {/* Badge text */}
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] block">
-            {badgeText}
-          </span>
+      <CalendarDays className="w-4 h-4" />
+      {buttonText}
+    </PrismicNextLink>
+  ) : (
+    <Link
+      href={isEn ? '/en/contacts' : '/kontakti'}
+      className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
+      id="cta-block-btn"
+    >
+      <CalendarDays className="w-4 h-4" />
+      {buttonText}
+    </Link>
+  );
 
-          {/* Title */}
-          <PrismicRichText field={primary.title} components={richTextComponents} />
+  const style = isFilled.color(primary.background_color) ? {
+    backgroundColor: primary.background_color,
+  } : undefined;
 
-          {/* Description */}
-          <PrismicRichText field={primary.description} components={richTextComponents} />
-        </div>
-
-        {/* Button */}
-        {isFilled.link(primary.button_link) ? (
-          <PrismicNextLink
-            field={primary.button_link}
-            className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
-            id="cta-block-btn"
-          >
-            <CalendarDays className="w-4 h-4" />
-            {buttonText}
-          </PrismicNextLink>
-        ) : (
-          <Link
-            href={isEn ? '/en/contacts' : '/kontakti'}
-            className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
-            id="cta-block-btn"
-          >
-            <CalendarDays className="w-4 h-4" />
-            {buttonText}
-          </Link>
-        )}
-      </div>
-    </motion.div>
+  return (
+    <div className="max-w-7xl mx-auto px-6 py-16 md:py-24">
+      <ReusableCTABlock
+        badgeText={badgeText}
+        title={<PrismicRichText field={primary.title} components={richTextComponents} />}
+        description={<PrismicRichText field={primary.description} components={richTextComponents} />}
+        customButton={customButton}
+        style={style}
+      />
+    </div>
   );
 }

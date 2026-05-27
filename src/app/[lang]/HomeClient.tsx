@@ -2,12 +2,13 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight, Quote, Star } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
 import { SliceZone } from '@prismicio/react';
 import { components } from '../../slices';
+import { getTestimonials } from '../../data/testimonials';
 
 // Fallback slices if Prismic CMS doesn't return data (e.g. for en-us document before it is created)
 const getFallbackSlices = (langCode: string) => [
@@ -44,6 +45,63 @@ const getFallbackSlices = (langCode: string) => [
       }
     },
     items: []
+  },
+  {
+    slice_type: "ceo_block" as const,
+    variation: "default" as const,
+    id: "fallback-ceo",
+    primary: {
+      leader_tag: langCode === 'en-us' ? "Clinic Director and Leading Specialist" : "Klīnikas vadītājs un vadošais speciālists",
+      name: "Dr. Jānis Bērziņš",
+      biography: [
+        {
+          type: "paragraph" as const,
+          text: langCode === 'en-us'
+            ? "Our clinic philosophy is built on excellence in every detail and deep respect for patient well-being. We do not just treat; we create an environment where modern technology meets genuine care and a personalized approach, ensuring a premier dental experience."
+            : "Mūsu klīnikas filozofija balstās uz izcilību katrā detaļā un dziļu cieņu pret pacienta labsajūtu. Mēs ne tikai ārstējam, bet radām vidi, kurā modernākās tehnoloģijas satiekas ar patiesu rūpību un individuālu pieeju, nodrošinot augstākā līmeņa zobārstniecības pieredzi.",
+          spans: [],
+          direction: "ltr" as const
+        }
+      ],
+      image: {
+        url: "https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800",
+        alt: "Dr. Jānis Bērziņš"
+      },
+      signature_image: {
+        url: "",
+        alt: ""
+      },
+      link_text: langCode === 'en-us' ? "Learn More" : "Uzzināt vairāk",
+      link_url: {
+        link_type: "Web" as const,
+        url: "/doctors"
+      }
+    },
+    items: []
+  },
+  {
+    slice_type: "testimonial_block" as const,
+    variation: "default" as const,
+    id: "fallback-testimonials",
+    primary: {
+      badge_text: langCode === 'en-us' ? "TESTIMONIALS" : "PACIENTU ATSAUKSMES",
+      title: langCode === 'en-us' ? "Patient Testimonials" : "Pacientu atsauksmes",
+      subtitle: langCode === 'en-us' 
+        ? "Our patients appreciate the highest quality of care, painless procedures, and attentive treatment."
+        : "Mūsu pacienti novērtē augstāko aprūpes kvalitāti, nesāpīgas procedūras un gādīgu attieksmi.",
+      link_text: langCode === 'en-us' ? "View All Patient Stories" : "Skatīt visus pacientu stāstus",
+      link_url: {
+        link_type: "Web" as const,
+        url: "/testimonials"
+      }
+    },
+    items: getTestimonials(langCode === 'en-us' ? 'en-us' : 'lv').slice(0, 3).map((item) => ({
+      tagline: item.treatment,
+      author: item.author,
+      testimonial_text: item.story,
+      date: item.date,
+      rating: item.rating
+    }))
   }
 ];
 
@@ -70,37 +128,8 @@ const fadeUpVariants = {
   }
 } as const;
 
-const slideInLeftVariants = {
-  hidden: { opacity: 0, x: -35 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      type: 'tween',
-      ease: 'easeOut',
-      duration: 0.45
-    }
-  }
-} as const;
-
-const slideInRightVariants = {
-  hidden: { opacity: 0, x: 35 },
-  visible: {
-    opacity: 1,
-    x: 0,
-    transition: {
-      type: 'tween',
-      ease: 'easeOut',
-      duration: 0.45
-    }
-  }
-} as const;
-
 const homeTranslations = {
   lv: {
-    leaderTag: 'Klīnikas vadītājs un vadošais speciālists',
-    learnMore: 'Uzzināt vairāk',
-    biography: 'Mūsu klīnikas filozofija balstās uz izcilību katrā detaļā un dziļu cieņu pret pacienta labsajūtu. Mēs ne tikai ārstējam, bet radām vidi, kurā modernākās tehnoloģijas satiekas ar patiesu rūpību un individuālu pieeju, nodrošinot augstākā līmeņa zobārstniecības pieredzi.',
     advantagesTitle: 'DENTAMIC PRIEKŠROCĪBAS',
     testimonialsTitle: 'Pacientu atsauksmes',
     testimonialsSub: 'Mūsu pacienti novērtē augstāko aprūpes kvalitāti, nesāpīgas procedūras un gādīgu attieksmi.',
@@ -110,9 +139,6 @@ const homeTranslations = {
     partnerSub: 'Sadarbojamies ar pasaulē vadošajiem Šveices, Vācijas un Somijas medicīnas zīmoliem, lai garantētu izcilību katrā smaidā.'
   },
   en: {
-    leaderTag: 'Clinic Director and Leading Specialist',
-    learnMore: 'Learn More',
-    biography: 'Our clinic philosophy is built on excellence in every detail and deep respect for patient well-being. We do not just treat; we create an environment where modern technology meets genuine care and a personalized approach, ensuring a premier dental experience.',
     advantagesTitle: 'DENTAMIC ADVANTAGES',
     testimonialsTitle: 'Patient Testimonials',
     testimonialsSub: 'Our patients appreciate the highest quality of care, painless procedures, and attentive treatment.',
@@ -139,198 +165,6 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
     <div className="relative">
       {/* Dynamic Hero Section via SliceZone */}
       <SliceZone slices={activeSlices} components={components} />
-
-      {/* Introductory section with Dr. Jānis Bērziņš Card */}
-      <section className="py-20 md:py-28 max-w-7xl mx-auto px-6">
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={staggerContainerVariants}
-          className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-2xl shadow-[#511B29]/5 p-6 md:p-12 relative"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
-            
-            <motion.div 
-              variants={slideInLeftVariants}
-              className="lg:col-span-5 w-full aspect-[4/3] max-h-[400px] rounded-2xl overflow-hidden border border-[#efedec] shadow-md bg-[#fbf9f8] relative"
-            >
-              <Image
-                src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800"
-                alt="Dr. Jānis Bērziņš"
-                fill
-                sizes="(max-width: 1024px) 100vw, 40vw"
-                className="object-cover object-top hover:scale-[1.02] transition-transform duration-500"
-                priority
-              />
-            </motion.div>
-
-            {/* Right side: Biography details inline */}
-            <motion.div 
-              variants={slideInRightVariants}
-              className="lg:col-span-7 flex flex-col justify-center animate-fade-in"
-            >
-              <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
-                {t.leaderTag}
-              </span>
-              <h2 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
-                Dr. Jānis Bērziņš
-              </h2>
-              
-              {/* Pink accent bar */}
-              <div className="w-12 h-1 bg-[#de7c8a] mt-3 mb-6" />
-
-              <p className="text-[#1b1c1b] text-base leading-relaxed font-normal mb-8">
-                {t.biography}
-              </p>
-
-              <div>
-                <Link
-                  href={`${langPrefix}/doctors`}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[#511B29] hover:text-[#5d1726] border-b border-[#efedec] hover:border-[#511B29] pb-1.5 transition-all cursor-pointer"
-                  id="home-learn-more-btn"
-                >
-                  {t.learnMore}
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* Highlights Bento-like Features Section */}
-      <section className="bg-gradient-to-b from-white to-[#fbf9f8] py-20 border-t border-[#efedec]/60">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariants}
-            className="text-center max-w-xl mx-auto mb-16"
-          >
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">{t.advantagesTitle}</span>
-            <h3 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">{t.testimonialsTitle}</h3>
-            <p className="text-xs text-[#6a5b5e] mt-2 font-medium">{t.testimonialsSub}</p>
-          </motion.div>
-
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainerVariants}
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-          >
-            {/* Testimonial 1 */}
-            <motion.div variants={fadeUpVariants} className="bg-white p-8 rounded-2xl border border-[#efedec] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-300 relative group">
-              <div className="absolute top-6 right-6 text-[#f2dde1]/50 group-hover:text-[#de7c8a]/20 transition-all duration-300">
-                <Quote className="w-10 h-10 transform scale-x-[-1]" />
-              </div>
-              <div>
-                <div className="flex gap-1 mb-4 text-[#de7c8a]">
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                </div>
-                
-                <p className="text-xs text-[#6a5b5e] leading-relaxed italic mb-6">
-                  {langCode === 'en-us'
-                    ? '"Excellent premium quality and precision. Swiss implants were inserted completely painlessly. Dr. Jānis Bērziņš and his team work amazingly professionally – every detail is considered."'
-                    : '"Izcila premium kvalitāte un precizitāte. Šveices implanti tika ievietoti pilnīgi nesāpīgi. Dr. Jānis Bērziņš un viņa komanda strādā apbrīnojami profesionāli – katra detaļa ir pārdomāta."'}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-3 pt-4 border-t border-[#efedec]">
-                <div className="w-10 h-10 rounded-full bg-[#511B29] flex items-center justify-center text-white text-xs font-bold font-serif shadow-sm">
-                  KZ
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-[#511B29]">{langCode === 'en-us' ? 'Kristaps Zarins' : 'Kristaps Zariņš'}</h4>
-                  <p className="text-[10px] text-[#de7c8a] font-medium">{langCode === 'en-us' ? 'Dental Implants' : 'Zobu implantācija'}</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 2 */}
-            <motion.div variants={fadeUpVariants} className="bg-white p-8 rounded-2xl border border-[#efedec] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-300 relative group">
-              <div className="absolute top-6 right-6 text-[#f2dde1]/50 group-hover:text-[#de7c8a]/20 transition-all duration-300">
-                <Quote className="w-10 h-10 transform scale-x-[-1]" />
-              </div>
-              <div>
-                <div className="flex gap-1 mb-4 text-[#de7c8a]">
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                </div>
-                
-                <p className="text-xs text-[#6a5b5e] leading-relaxed italic mb-6">
-                  {langCode === 'en-us'
-                    ? '"I have always had a massive fear of the dentist, but at Dentamic clinic it vanished completely. Gentle touch, calming environment, and 100% care. I am incredibly grateful for my new smile!"'
-                    : '"Man vienmēr ir bijušas milzīgas bailes no zobārsta, bet Dentamic klīnikā tās pilnībā izgaisa. Maigs pieskāriens, nomierinoša vide un 100% gādība. Esmu bezgala pateicīga par savu jauno smaidu!"'}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-3 pt-4 border-t border-[#efedec]">
-                <div className="w-10 h-10 rounded-full bg-[#de7c8a] flex items-center justify-center text-white text-xs font-bold font-serif shadow-sm">
-                  AK
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-[#511B29]">{langCode === 'en-us' ? 'Anete Kalnina' : 'Anete Kalniņa'}</h4>
-                  <p className="text-[10px] text-[#de7c8a] font-medium">{langCode === 'en-us' ? 'Aesthetic Restoration' : 'Estētiskā restaurācija'}</p>
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Testimonial 3 */}
-            <motion.div variants={fadeUpVariants} className="bg-white p-8 rounded-2xl border border-[#efedec] shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow duration-300 relative group">
-              <div className="absolute top-6 right-6 text-[#f2dde1]/50 group-hover:text-[#de7c8a]/20 transition-all duration-300">
-                <Quote className="w-10 h-10 transform scale-x-[-1]" />
-              </div>
-              <div>
-                <div className="flex gap-1 mb-4 text-[#de7c8a]">
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                  <Star className="w-3.5 h-3.5 fill-[#de7c8a]" />
-                </div>
-                
-                <p className="text-xs text-[#6a5b5e] leading-relaxed italic mb-6">
-                  {langCode === 'en-us'
-                    ? '"We believe in the precision and work of our doctors, which is why we received both contract guarantees and very attentive follow-up care after the procedure. This service exceeds any experience in Latvia."'
-                    : '"Mēs ticam mūsu ārstu precizitātei un darbam, tāpēc saņēmām gan līguma garantijas, gan ļoti gādīgu sekošanu līdzi pēc procedūras. Šis serviss pārsniedz jebkuru pieredzi Latvijā."'}
-                </p>
-              </div>
-
-              <div className="flex items-center gap-3 pt-4 border-t border-[#efedec]">
-                <div className="w-10 h-10 rounded-full bg-[#6a5b5e] flex items-center justify-center text-white text-xs font-bold font-serif shadow-sm">
-                  MO
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-[#511B29]">{langCode === 'en-us' ? 'Marcis Ozolins' : 'Mārcis Ozoliņš'}</h4>
-                  <p className="text-[10px] text-[#de7c8a] font-medium">{langCode === 'en-us' ? 'Hygiene & Fillings' : 'Zobu higiēna un labošana'}</p>
-                </div>
-              </div>
-            </motion.div>
-          </motion.div>
-          
-          {/* View all testimonials link */}
-          <div className="text-center mt-12">
-            <Link
-              href={`${langPrefix}/testimonials`}
-              className="inline-flex items-center gap-2 text-sm font-bold text-[#511B29] hover:text-[#5d1726] border-b border-[#efedec] hover:border-[#511B29] pb-1.5 transition-all cursor-pointer"
-              id="home-view-all-reviews-btn"
-            >
-              {t.viewAllReviews}
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-          </div>
-        </div>
-      </section>
 
       {/* Partneri section */}
       <section className="bg-white py-16 border-t border-[#efedec]/65">

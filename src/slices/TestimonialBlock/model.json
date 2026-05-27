@@ -1,0 +1,89 @@
+{
+  "id": "testimonial_block",
+  "type": "SharedSlice",
+  "name": "TestimonialBlock",
+  "description": "Renders testimonial cards in a 3-column bento-like grid with editable fields and customizable CTA links.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge Text",
+            "placeholder": "Pacientu atsauksmes"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Atsauksmes"
+          }
+        },
+        "subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "Mūsu pacienti novērtē..."
+          }
+        },
+        "link_text": {
+          "type": "Text",
+          "config": {
+            "label": "Section Link Text",
+            "placeholder": "Skatīt visus pacientu stāstus"
+          }
+        },
+        "link_url": {
+          "type": "Link",
+          "config": {
+            "label": "Section Link URL",
+            "placeholder": "Select page or enter URL"
+          }
+        }
+      },
+      "items": {
+        "tagline": {
+          "type": "Text",
+          "config": {
+            "label": "Testimonial Tagline / Treatment",
+            "placeholder": "Zobu implantācija"
+          }
+        },
+        "author": {
+          "type": "Text",
+          "config": {
+            "label": "Author",
+            "placeholder": "Anna Bērziņa"
+          }
+        },
+        "testimonial_text": {
+          "type": "Text",
+          "config": {
+            "label": "Testimonial Text / Story",
+            "placeholder": "Lieliska attieksme un nesāpīga procedūra..."
+          }
+        },
+        "date": {
+          "type": "Text",
+          "config": {
+            "label": "Date",
+            "placeholder": "12. Maijs, 2026"
+          }
+        },
+        "rating": {
+          "type": "Number",
+          "config": {
+            "label": "Rating (1-5)",
+            "placeholder": "5"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "id": "ceo_block",
+  "type": "SharedSlice",
+  "name": "CEOBlock",
+  "description": "Renders the CEO/Clinic Director card block with bio, photo, signature, and learn more link.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "leader_tag": {
+          "type": "Text",
+          "config": {
+            "label": "Leader Tag",
+            "placeholder": "Klīnikas vadītājs un vadošais speciālists"
+          }
+        },
+        "name": {
+          "type": "Text",
+          "config": {
+            "label": "Name",
+            "placeholder": "Dr. Jānis Bērziņš"
+          }
+        },
+        "biography": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Biography",
+            "placeholder": "Mūsu klīnikas filozofija balstās uz...",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "signature_image": {
+          "type": "Image",
+          "config": {
+            "label": "Signature Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "link_text": {
+          "type": "Text",
+          "config": {
+            "label": "Link Text",
+            "placeholder": "Uzzināt vairāk"
+          }
+        },
+        "link_url": {
+          "type": "Link",
+          "config": {
+            "label": "Link URL",
+            "placeholder": "Select page or enter URL"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

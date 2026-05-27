@@ -15,6 +15,7 @@ export interface CTABlockProps {
   id?: string;
   className?: string;
   customButton?: React.ReactNode;
+  style?: React.CSSProperties;
 }
 
 const fadeUpVariants = {
@@ -39,18 +40,21 @@ export default function CTABlock({
   id,
   className = '',
   customButton,
+  style,
 }: CTABlockProps) {
   const isTitleString = typeof title === 'string';
   const isDescString = typeof description === 'string';
 
   const buttonClass = "btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0";
+  const hasCustomBg = style?.background || style?.backgroundColor;
 
   return (
     <motion.div
       initial="hidden"
       animate="visible"
       variants={fadeUpVariants}
-      className={`bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/25 border border-[#efedec] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 ${className}`}
+      style={style}
+      className={`${hasCustomBg ? '' : 'bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/25'} border border-[#efedec] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 ${className}`}
     >
       <div className="space-y-3 max-w-2xl text-left w-full">
         {/* Badge text */}

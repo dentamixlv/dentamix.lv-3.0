@@ -10,4 +10,6 @@ export const components = {
   testimonials_list: dynamic(() => import("./TestimonialsList")),
   contact_form: dynamic(() => import("./ContactForm")),
   cta_block: dynamic(() => import("./CTABlock")),
+  ceo_block: dynamic(() => import("./CEOBlock")),
+  testimonial_block: dynamic(() => import("./TestimonialBlock")),
 };
