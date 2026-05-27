@@ -37,12 +37,12 @@ const fadeUpVariants = {
 
 const getServiceIcon = (iconName: string) => {
   switch (iconName) {
-    case 'ShieldCheck': return <ShieldCheck className="w-8 h-8 text-[#400112]" />;
-    case 'Sparkles': return <Sparkles className="w-8 h-8 text-[#400112]" />;
-    case 'Droplet': return <Droplet className="w-8 h-8 text-[#400112]" />;
-    case 'Scissors': return <Scissors className="w-8 h-8 text-[#400112]" />;
-    case 'Activity': return <Activity className="w-8 h-8 text-[#400112]" />;
-    default: return <Sparkles className="w-8 h-8 text-[#400112]" />;
+    case 'ShieldCheck': return <ShieldCheck className="w-8 h-8 text-[#511B29]" />;
+    case 'Sparkles': return <Sparkles className="w-8 h-8 text-[#511B29]" />;
+    case 'Droplet': return <Droplet className="w-8 h-8 text-[#511B29]" />;
+    case 'Scissors': return <Scissors className="w-8 h-8 text-[#511B29]" />;
+    case 'Activity': return <Activity className="w-8 h-8 text-[#511B29]" />;
+    default: return <Sparkles className="w-8 h-8 text-[#511B29]" />;
   }
 };
 
@@ -103,7 +103,7 @@ export default function ServicesList({ slice }: ServicesListProps) {
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {isEn ? 'Services' : 'Pakalpojumi'}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {(slice.primary.title as any)?.[0]?.text || defaultTitle}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
@@ -142,7 +142,7 @@ export default function ServicesList({ slice }: ServicesListProps) {
                 <span className="text-[10px] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
                   {premiumLabel}
                 </span>
-                <h3 className="text-xl font-serif font-bold text-[#400112] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-1">
+                <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-1">
                   {serv.title}
                 </h3>
                 <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
@@ -154,7 +154,7 @@ export default function ServicesList({ slice }: ServicesListProps) {
               <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
                 <Link
                   href={`${langPrefix}/services/${serv.id}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#400112] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   id={`learn-service-btn-${serv.id}`}
                 >
                   {viewDescLabel}

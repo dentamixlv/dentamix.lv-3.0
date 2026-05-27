@@ -44,7 +44,7 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
           {post.category}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight leading-tight mb-6 text-center w-full">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight mb-6 text-center w-full">
           {post.title}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
@@ -59,14 +59,14 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
         <motion.div variants={fadeUpVariants} className="lg:col-span-2 space-y-6">
           <div className="text-base sm:text-lg leading-relaxed text-slate-800 space-y-6 font-normal">
             {post.detailedContent.map((paragraph, idx) => (
-              <p key={idx} className={idx === 0 ? "text-[#400112] font-serif text-lg leading-relaxed border-l-2 border-[#de7c8a] pl-4 font-medium" : ""}>
+              <p key={idx} className={idx === 0 ? "text-[#511B29] font-serif text-lg leading-relaxed border-l-2 border-[#de7c8a] pl-4 font-medium" : ""}>
                 {paragraph}
               </p>
             ))}
           </div>
 
           <div className="p-6 bg-[#fbf9f8] rounded-2xl border border-[#efedec] mt-8">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#400112] mb-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-2">
               {isEn ? 'All procedures at Dentamic Clinic' : 'Visas procedūras klīnikā Dentamic'}
             </h4>
             <p className="text-xs text-[#6a5b5e] leading-relaxed">
@@ -91,7 +91,7 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
           </div>
 
           <div className="bg-white border border-[#efedec] rounded-3xl p-6 md:p-8 shadow-sm">
-            <h3 className="text-sm font-serif font-bold text-[#400112] tracking-tight mb-4 flex items-center gap-2 border-b border-[#efedec] pb-3">
+            <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight mb-4 flex items-center gap-2 border-b border-[#efedec] pb-3">
               <Bookmark className="w-4 h-4 text-[#de7c8a]" />
               {isEn ? 'Key Takeaways' : 'Svarīgas atziņas'}
             </h3>
@@ -130,7 +130,7 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
       <div className="mt-10 text-center">
         <button 
           onClick={onBack}
-          className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#400112] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
           {isEn ? 'Back to Blog' : 'Atpakaļ uz blogu'}

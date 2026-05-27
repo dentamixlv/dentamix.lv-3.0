@@ -150,7 +150,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
       ];
 
   return (
-    <header className="sticky top-0 z-40 w-full bg-[#400112] backdrop-blur-md border-b border-[#5d1726]/30">
+    <header className="sticky top-0 z-40 w-full bg-[#511B29] backdrop-blur-md border-b border-[#5d1726]/30">
       <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
         {/* Logo */}
         <Link 
@@ -222,7 +222,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         <div className="flex items-center gap-4">
           <Link
             href={getPath('contacts')}
-            className="hidden sm:inline-flex items-center justify-center bg-white text-[#400112] hover:bg-[#fbf9f8] active:scale-[0.98] transition-all px-6 py-3 rounded-full text-sm font-semibold cursor-pointer shadow-md shadow-[#400112]/30"
+            className="hidden sm:inline-flex items-center justify-center bg-white text-[#511B29] hover:bg-[#fbf9f8] active:scale-[0.98] transition-all px-6 py-3 rounded-full text-sm font-semibold cursor-pointer shadow-md shadow-[#511B29]/30"
             id="header-booking-btn"
           >
             {bookingButtonText || (isEn ? 'Book Now' : 'Pierakstīties')}
@@ -248,7 +248,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="md:hidden w-full bg-[#400112] border-b border-[#5d1726]/40 overflow-hidden"
+            className="md:hidden w-full bg-[#511B29] border-b border-[#5d1726]/40 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-5">
               {navItems.map((item) => (
@@ -289,7 +289,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
               <Link
                 href={phoneNumber ? `tel:${phoneNumber.replace(/\s+/g, '')}` : getPath('contacts')}
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full mt-2 inline-flex items-center justify-center gap-2 bg-[#de7c8a] text-white hover:bg-[#e38c98] px-6 py-3.5 rounded-full text-sm font-bold shadow-md shadow-[#400112]/20"
+                className="w-full mt-2 inline-flex items-center justify-center gap-2 bg-[#de7c8a] text-white hover:bg-[#e38c98] px-6 py-3.5 rounded-full text-sm font-bold shadow-md shadow-[#511B29]/20"
                 id="mobile-booking-btn"
               >
                 <Phone className="w-4 h-4" />

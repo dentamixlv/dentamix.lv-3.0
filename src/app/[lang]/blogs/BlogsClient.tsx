@@ -62,7 +62,7 @@ export default function BlogsClient({ langCode, customBlogPosts }: BlogsClientPr
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {t.tag}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {t.title}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
@@ -102,7 +102,7 @@ export default function BlogsClient({ langCode, customBlogPosts }: BlogsClientPr
                   {post.category}
                 </span>
                 <div className="min-h-[3.5rem] flex flex-col justify-start">
-                  <h3 className="text-xl font-serif font-bold text-[#400112] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-2">
+                  <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-2">
                     {post.title}
                   </h3>
                 </div>
@@ -115,7 +115,7 @@ export default function BlogsClient({ langCode, customBlogPosts }: BlogsClientPr
               <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
                 <Link
                   href={`${langPrefix}/blogs/${post.id}`}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#400112] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   id={`learn-blog-btn-${post.id}`}
                 >
                   {t.readPost}

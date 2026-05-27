@@ -232,7 +232,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {isEn ? 'Pricelist' : 'Cenrādis'}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {isEn ? 'Transparent Pricing & Quality' : 'Caurspīdīgas cenas un kvalitāte'}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
@@ -258,7 +258,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
               <div className="w-10 h-10 rounded-xl bg-white shadow-sm border border-[#efedec]/80 flex items-center justify-center">
                 {cat.icon}
               </div>
-              <h3 className="text-lg font-serif font-bold text-[#400112] tracking-tight">
+              <h3 className="text-lg font-serif font-bold text-[#511B29] tracking-tight">
                 {cat.title}
               </h3>
             </div>
@@ -271,7 +271,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
                   className="p-6 md:p-8 flex flex-col sm:flex-row sm:items-center sm:justify-between hover:bg-[#fbf9f8]/40 transition-colors gap-4"
                 >
                   <div className="max-w-2xl">
-                    <h4 className="text-sm font-bold text-[#400112] tracking-tight">
+                    <h4 className="text-sm font-bold text-[#511B29] tracking-tight">
                       {item.name}
                     </h4>
                     {item.note && (
@@ -282,7 +282,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
                   </div>
                   {/* Price Tag styled aligned nicely */}
                   <div className="flex items-center sm:text-right shrink-0">
-                    <span className="text-sm font-mono font-extrabold text-[#400112] bg-[#f2dde1]/35 px-4 py-2 rounded-full border border-[#d9c1c2]/20">
+                    <span className="text-sm font-mono font-extrabold text-[#511B29] bg-[#f2dde1]/35 px-4 py-2 rounded-full border border-[#d9c1c2]/20">
                       {item.price}
                     </span>
                   </div>
@@ -307,7 +307,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
               {isEn ? 'Guaranteed Quality' : 'Garantēta Kvalitāte'}
             </span>
           </div>
-          <h4 className="text-xl font-serif font-bold text-[#400112] tracking-tight">
+          <h4 className="text-xl font-serif font-bold text-[#511B29] tracking-tight">
             {isEn ? 'Would you like to receive a full, detailed estimate?' : 'Vai vēlaties saņemt pilnu, detalizētu tāmi?'}
           </h4>
           <p className="text-xs text-[#6a5b5e] leading-relaxed">
@@ -318,7 +318,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
         </div>
         <button
           onClick={onBook}
-          className="btn inline-flex items-center gap-2 bg-[#400112] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#400112]/15 shrink-0"
+          className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
           id="prices-cta-booking-btn"
         >
           <CalendarDays className="w-4 h-4" />

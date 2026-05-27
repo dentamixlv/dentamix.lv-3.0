@@ -50,6 +50,7 @@ export interface Clinic {
   gmapsEmbed?: string;
   gmapsLink?: string;
   waze?: string;
+  accessibilityAlert?: string;
 }
 
 export interface BlogPost {

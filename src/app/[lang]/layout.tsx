@@ -79,6 +79,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
                 labelWeekdays: c.label_weekdays || undefined,
                 labelSaturday: c.label_saturday || undefined,
                 labelSunday: c.label_sunday || undefined,
+                accessibilityAlert: c.accessibility_alert || undefined,
               }))
           : undefined,
         copyrightText: doc.data.copyright_text || undefined,

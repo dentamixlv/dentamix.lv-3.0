@@ -66,7 +66,7 @@ export default function ContactForm({ slice }: ContactFormProps) {
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {labels.tag}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {(slice.primary.title as any)?.[0]?.text || labels.defaultTitle}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
@@ -93,7 +93,7 @@ export default function ContactForm({ slice }: ContactFormProps) {
               <span className="text-[10px] font-extrabold tracking-widest text-[#de7c8a] block mb-1.5 uppercase">
                 {clinic.id === 'riga' ? labels.centralBranch : labels.suburbBranch}
               </span>
-              <h3 className="text-2xl font-serif font-bold text-[#400112] mb-4">
+              <h3 className="text-2xl font-serif font-bold text-[#511B29] mb-4">
                 {clinic.name}
               </h3>
 
@@ -104,7 +104,7 @@ export default function ContactForm({ slice }: ContactFormProps) {
                     <MapPin className="w-4 h-4 text-[#de7c8a] shrink-0 mt-0.5" />
                     <span>{clinic.address}</span>
                   </p>
-                  <p className="flex items-center gap-2 font-mono font-bold text-[#400112] hover:text-[#5d1726]/80 transition-colors">
+                  <p className="flex items-center gap-2 font-mono font-bold text-[#511B29] hover:text-[#5d1726]/80 transition-colors">
                     <Phone className="w-4 h-4 text-[#de7c8a] shrink-0" />
                     <span>{clinic.phone}</span>
                   </p>
@@ -115,7 +115,7 @@ export default function ContactForm({ slice }: ContactFormProps) {
                 </div>
 
                 <div className="bg-[#fbf9f8] p-4 rounded-xl border border-[#efedec] text-[11px]">
-                  <p className="text-[#400112] font-bold uppercase tracking-wider flex items-center gap-1.5 mb-2">
+                  <p className="text-[#511B29] font-bold uppercase tracking-wider flex items-center gap-1.5 mb-2">
                     <Clock className="w-3.5 h-3.5 text-[#de7c8a]" />
                     {labels.workingHours}
                   </p>

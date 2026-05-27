@@ -14,32 +14,32 @@ import Link from 'next/link';
  */
 const richTextComponents: JSXMapSerializer = {
   heading1: ({ children }) => (
-    <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+    <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
       {children}
     </h3>
   ),
   heading2: ({ children }) => (
-    <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+    <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
       {children}
     </h3>
   ),
   heading3: ({ children }) => (
-    <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+    <h3 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
       {children}
     </h3>
   ),
   heading4: ({ children }) => (
-    <h4 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+    <h4 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
       {children}
     </h4>
   ),
   heading5: ({ children }) => (
-    <h5 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+    <h5 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
       {children}
     </h5>
   ),
   heading6: ({ children }) => (
-    <h6 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+    <h6 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
       {children}
     </h6>
   ),
@@ -109,7 +109,7 @@ export default function CTABlock({ slice }: CTABlockProps) {
         {isFilled.link(primary.button_link) ? (
           <PrismicNextLink
             field={primary.button_link}
-            className="btn inline-flex items-center gap-2 bg-[#400112] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#400112]/15 shrink-0"
+            className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
             id="cta-block-btn"
           >
             <CalendarDays className="w-4 h-4" />
@@ -118,7 +118,7 @@ export default function CTABlock({ slice }: CTABlockProps) {
         ) : (
           <Link
             href={isEn ? '/en/contacts' : '/kontakti'}
-            className="btn inline-flex items-center gap-2 bg-[#400112] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#400112]/15 shrink-0"
+            className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
             id="cta-block-btn"
           >
             <CalendarDays className="w-4 h-4" />

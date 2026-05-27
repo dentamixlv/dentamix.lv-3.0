@@ -39,7 +39,7 @@ export default async function Page({ params }: PageProps) {
         id: d.uid!,
         author: d.data.author || '',
         initials: d.data.initials || 'PT',
-        bgColor: d.data.bgColor || 'bg-[#400112] text-white',
+        bgColor: d.data.bgColor || 'bg-[#511B29] text-white',
         treatment: d.data.treatment || '',
         doctor: d.data.doctor || '',
         rating: Number(d.data.rating) || 5,

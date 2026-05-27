@@ -29,7 +29,7 @@
         "type": "Text",
         "config": {
           "label": "Background Color Class",
-          "placeholder": "bg-[#400112] text-white"
+          "placeholder": "bg-[#511B29] text-white"
         }
       },
       "treatment": {

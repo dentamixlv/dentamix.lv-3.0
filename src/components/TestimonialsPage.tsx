@@ -32,7 +32,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
       id: 'at-1',
       author: isEn ? 'Kristaps Zarins' : 'Kristaps Zariņš',
       initials: 'KZ',
-      bgColor: 'bg-[#400112] text-white',
+      bgColor: 'bg-[#511B29] text-white',
       treatment: isEn ? 'Dental Implants (Straumann)' : 'Zobu implantācija (Straumann)',
       doctor: 'Dr. Jānis Kalniņš',
       rating: 5,
@@ -77,7 +77,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
       id: 'at-4',
       author: isEn ? 'Laura Krumina' : 'Laura Krūmiņa',
       initials: 'LK',
-      bgColor: 'bg-[#e2979e]/90 text-[#400112]',
+      bgColor: 'bg-[#e2979e]/90 text-[#511B29]',
       treatment: isEn ? 'Porcelain Veneers (Veneers)' : 'Porcelāna lamināti (Veneers)',
       doctor: 'Dr. Anna Bērziņa',
       rating: 5,
@@ -148,7 +148,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {isEn ? 'DENTAMIC ADVANTAGES' : 'DENTAMIC PRIEKŠROCĪBAS'}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {isEn ? 'Patient Testimonials' : 'Pacientu atsauksmes'}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
@@ -194,7 +194,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
                   <span className="text-[10px] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
                     {item.treatment}
                   </span>
-                  <h3 className="text-xl font-serif font-bold text-[#400112] tracking-tight group-hover:text-[#5d1726] transition-colors">
+                  <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors">
                     {item.author}
                   </h3>
                   
@@ -217,7 +217,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
         ) : (
           <div className="col-span-full text-center py-16 bg-white border border-[#efedec] rounded-3xl">
             <Quote className="w-10 h-10 text-[#de7c8a] mx-auto mb-4" />
-            <h3 className="text-base font-bold text-[#400112]">
+            <h3 className="text-base font-bold text-[#511B29]">
               {isEn ? 'No testimonials found' : 'Netika atrasts neviens atsauksmes stāsts'}
             </h3>
             <p className="text-xs text-[#6a5b5e] mt-1">
@@ -238,7 +238,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
           <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a]">
             {isEn ? 'Share Your Experience' : 'Dalieties pieredzē'}
           </span>
-          <h4 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+          <h4 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
             {isEn ? 'Would you like to leave a review of your visit?' : 'Vēlaties atstāt savu atsauksmi par vizīti?'}
           </h4>
           <p className="text-xs text-[#6a5b5e] leading-relaxed">
@@ -249,7 +249,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
         </div>
         <button
           onClick={onBook}
-          className="btn inline-flex items-center gap-2 bg-[#400112] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#400112]/15 shrink-0"
+          className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
           id="testimonials-cta-booking-btn"
         >
           <CalendarDays className="w-4 h-4" />

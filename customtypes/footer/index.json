@@ -115,6 +115,13 @@
                 "label": "Sunday Label",
                 "placeholder": "Svētdiena:"
               }
+            },
+            "accessibility_alert": {
+              "type": "Text",
+              "config": {
+                "label": "Accessibility Alert Message",
+                "placeholder": "e.g., Klīnika ir pilnībā pieejama ratiņkrēslā"
+              }
             }
           }
         }

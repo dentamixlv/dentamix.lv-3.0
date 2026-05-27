@@ -147,7 +147,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
           variants={staggerContainerVariants}
-          className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-2xl shadow-[#400112]/5 p-6 md:p-12 relative"
+          className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-2xl shadow-[#511B29]/5 p-6 md:p-12 relative"
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
             
@@ -173,7 +173,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
               <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
                 {t.leaderTag}
               </span>
-              <h2 className="text-3xl font-serif font-bold text-[#400112] mt-2 tracking-tight">
+              <h2 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
                 Dr. Jānis Bērziņš
               </h2>
               
@@ -187,7 +187,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
               <div>
                 <Link
                   href={`${langPrefix}/doctors`}
-                  className="inline-flex items-center gap-2 text-sm font-bold text-[#400112] hover:text-[#5d1726] border-b border-[#efedec] hover:border-[#400112] pb-1.5 transition-all cursor-pointer"
+                  className="inline-flex items-center gap-2 text-sm font-bold text-[#511B29] hover:text-[#5d1726] border-b border-[#efedec] hover:border-[#511B29] pb-1.5 transition-all cursor-pointer"
                   id="home-learn-more-btn"
                 >
                   {t.learnMore}
@@ -210,7 +210,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
             className="text-center max-w-xl mx-auto mb-16"
           >
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">{t.advantagesTitle}</span>
-            <h3 className="text-3xl font-serif font-bold text-[#400112] mt-2 tracking-tight">{t.testimonialsTitle}</h3>
+            <h3 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">{t.testimonialsTitle}</h3>
             <p className="text-xs text-[#6a5b5e] mt-2 font-medium">{t.testimonialsSub}</p>
           </motion.div>
 
@@ -243,11 +243,11 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
               </div>
 
               <div className="flex items-center gap-3 pt-4 border-t border-[#efedec]">
-                <div className="w-10 h-10 rounded-full bg-[#400112] flex items-center justify-center text-white text-xs font-bold font-serif shadow-sm">
+                <div className="w-10 h-10 rounded-full bg-[#511B29] flex items-center justify-center text-white text-xs font-bold font-serif shadow-sm">
                   KZ
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#400112]">{langCode === 'en-us' ? 'Kristaps Zarins' : 'Kristaps Zariņš'}</h4>
+                  <h4 className="text-xs font-bold text-[#511B29]">{langCode === 'en-us' ? 'Kristaps Zarins' : 'Kristaps Zariņš'}</h4>
                   <p className="text-[10px] text-[#de7c8a] font-medium">{langCode === 'en-us' ? 'Dental Implants' : 'Zobu implantācija'}</p>
                 </div>
               </div>
@@ -279,7 +279,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
                   AK
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#400112]">{langCode === 'en-us' ? 'Anete Kalnina' : 'Anete Kalniņa'}</h4>
+                  <h4 className="text-xs font-bold text-[#511B29]">{langCode === 'en-us' ? 'Anete Kalnina' : 'Anete Kalniņa'}</h4>
                   <p className="text-[10px] text-[#de7c8a] font-medium">{langCode === 'en-us' ? 'Aesthetic Restoration' : 'Estētiskā restaurācija'}</p>
                 </div>
               </div>
@@ -311,7 +311,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
                   MO
                 </div>
                 <div>
-                  <h4 className="text-xs font-bold text-[#400112]">{langCode === 'en-us' ? 'Marcis Ozolins' : 'Mārcis Ozoliņš'}</h4>
+                  <h4 className="text-xs font-bold text-[#511B29]">{langCode === 'en-us' ? 'Marcis Ozolins' : 'Mārcis Ozoliņš'}</h4>
                   <p className="text-[10px] text-[#de7c8a] font-medium">{langCode === 'en-us' ? 'Hygiene & Fillings' : 'Zobu higiēna un labošana'}</p>
                 </div>
               </div>
@@ -322,7 +322,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
           <div className="text-center mt-12">
             <Link
               href={`${langPrefix}/testimonials`}
-              className="inline-flex items-center gap-2 text-sm font-bold text-[#400112] hover:text-[#5d1726] border-b border-[#efedec] hover:border-[#400112] pb-1.5 transition-all cursor-pointer"
+              className="inline-flex items-center gap-2 text-sm font-bold text-[#511B29] hover:text-[#5d1726] border-b border-[#efedec] hover:border-[#511B29] pb-1.5 transition-all cursor-pointer"
               id="home-view-all-reviews-btn"
             >
               {t.viewAllReviews}
@@ -343,7 +343,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
             className="text-center max-w-xl mx-auto mb-12"
           >
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">{t.partnerTag}</span>
-            <h3 className="text-3xl font-serif font-bold text-[#400112] mt-2 tracking-tight">{t.partnerTitle}</h3>
+            <h3 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">{t.partnerTitle}</h3>
             <p className="text-xs text-[#6a5b5e] mt-2 font-medium">{t.partnerSub}</p>
           </motion.div>
 
@@ -356,7 +356,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
           >
             {/* Partner 1: Straumann */}
             <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#400112] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
+              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
                 <circle cx="20" cy="20" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
                 <path d="M20 14v12M14 20h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
                 <text x="40" y="26" fontSize="16" fontWeight="900" letterSpacing="0.03em" className="font-sans">straumann</text>
@@ -366,7 +366,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
 
             {/* Partner 2: Planmeca */}
             <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#400112] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
+              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
                 <path d="M10 26 L18 14 L23 22 L28 16 L34 26" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
                 <circle cx="18" cy="14" r="2" />
                 <circle cx="28" cy="16" r="2" />
@@ -377,7 +377,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
 
             {/* Partner 3: Ivoclar */}
             <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#400112] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
+              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
                 <circle cx="15" cy="20" r="8" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.6" />
                 <circle cx="24" cy="20" r="8" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="2 1.5" />
                 <text x="42" y="26" fontSize="18" fontWeight="700" letterSpacing="0.01em" className="font-sans">ivoclar</text>
@@ -387,7 +387,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
 
             {/* Partner 4: Geistlich */}
             <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#400112] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
+              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
                 <path d="M10 20 l4 -7 h8 l4 7 l-4 7 h-8 z" fill="none" stroke="currentColor" strokeWidth="1.5" />
                 <path d="M14 13 l4 7 l-4 7" fill="none" stroke="currentColor" strokeWidth="1" />
                 <text x="36" y="26" fontSize="17" fontWeight="700" letterSpacing="-0.01em" className="font-serif italic font-bold">Geistlich</text>
@@ -397,7 +397,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
 
             {/* Partner 5: Curaprox */}
             <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#400112] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
+              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
                 <circle cx="15" cy="20" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" />
                 <circle cx="15" cy="20" r="4.5" fill="currentColor" opacity="0.4" />
                 <circle cx="15" cy="14" r="1.5" fill="currentColor" />
@@ -411,7 +411,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
 
             {/* Partner 6: 3M ESPE */}
             <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#400112] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
+              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
                 <rect x="6" y="10" width="22" height="18" rx="2" fill="currentColor" opacity="0.15" />
                 <text x="10" y="23" fontSize="11" fontWeight="900" className="font-sans">3M</text>
                 <text x="35" y="26" fontSize="16" fontWeight="800" letterSpacing="0.08em" className="font-serif">ESPE</text>

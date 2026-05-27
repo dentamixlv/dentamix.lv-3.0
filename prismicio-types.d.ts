@@ -914,7 +914,7 @@ interface TestimonialDocumentData {
 	 * Background Color Class field in *Testimonial*
 	 *
 	 * - **Field Type**: Text
-	 * - **Placeholder**: bg-[#400112] text-white
+	 * - **Placeholder**: bg-[#511B29] text-white
 	 * - **API ID Path**: testimonial.bgColor
 	 * - **Tab**: Main
 	 * - **Documentation**: https://prismic.io/docs/fields/text

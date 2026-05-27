@@ -28,7 +28,7 @@ const variantClasses: Record<BadgeVariant, string> = {
   default:
     'bg-gray-100/90 border border-gray-200/80 text-gray-600',
   primary:
-    'bg-[#400112]/10 border border-[#400112]/20 text-[#400112]',
+    'bg-[#511B29]/10 border border-[#511B29]/20 text-[#511B29]',
   accent:
     'bg-emerald-50 border border-emerald-200 text-emerald-700',
 };

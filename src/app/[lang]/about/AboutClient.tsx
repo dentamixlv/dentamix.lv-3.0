@@ -41,7 +41,7 @@ export default function AboutClient() {
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
           {isEn ? 'About the Clinic' : 'Par klīniku'}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight leading-tight mb-6 text-center w-full">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight mb-6 text-center w-full">
           {isEn ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecības klīnika'}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
@@ -56,7 +56,7 @@ export default function AboutClient() {
         {/* Main Content */}
         <motion.div variants={fadeUpVariants} className="lg:col-span-2 space-y-6">
           <div className="text-base sm:text-lg leading-relaxed text-slate-800 space-y-6 font-normal">
-            <p className="text-[#400112] font-serif text-lg leading-relaxed border-l-2 border-[#de7c8a] pl-4 font-medium">
+            <p className="text-[#511B29] font-serif text-lg leading-relaxed border-l-2 border-[#de7c8a] pl-4 font-medium">
               {isEn
                 ? 'Dentamic is a modern dental clinic that combines the latest technologies with an individual approach to each patient. Our goal is to provide the highest quality dental services in a comfortable and friendly environment.'
                 : 'Dentamic ir mūsdienīga zobārstniecības klīnika, kas apvieno jaunākās tehnoloģijas un individuālu pieeju katram pacientam. Mūsu mērķis ir nodrošināt augstākās kvalitātes zobārstniecības pakalpojumus ērtā un draudzīgā vidē.'}
@@ -79,7 +79,7 @@ export default function AboutClient() {
           </div>
 
           <div className="p-6 bg-[#fbf9f8] rounded-2xl border border-[#efedec] mt-8">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#400112] mb-2">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-2">
               {isEn ? 'Our Mission' : 'Mūsu misija'}
             </h4>
             <p className="text-xs text-[#6a5b5e] leading-relaxed">
@@ -104,7 +104,7 @@ export default function AboutClient() {
           </div>
 
           <div className="bg-white border border-[#efedec] rounded-3xl p-6 md:p-8 shadow-sm">
-            <h3 className="text-sm font-serif font-bold text-[#400112] tracking-tight mb-4 flex items-center gap-2 border-b border-[#efedec] pb-3">
+            <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight mb-4 flex items-center gap-2 border-b border-[#efedec] pb-3">
               <Bookmark className="w-4 h-4 text-[#de7c8a]" />
               {isEn ? 'Why Choose Us' : 'Kāpēc izvēlēties mūs'}
             </h3>
@@ -150,7 +150,7 @@ export default function AboutClient() {
       <div className="mt-10 text-center">
         <Link
           href={langPrefix || '/'}
-          className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#400112] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
           {isEn ? 'Back to Home' : 'Atpakaļ uz sākumu'}

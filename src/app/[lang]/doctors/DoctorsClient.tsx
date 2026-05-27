@@ -89,7 +89,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {t.tag}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {t.title}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
@@ -128,7 +128,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
                 <span className="text-[10px] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
                   {doc.category === 'SPECIĀLISTE' ? doc.role : doc.category}
                 </span>
-                <h3 className="text-xl font-serif font-bold text-[#400112] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-1">
+                <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-1">
                   {doc.name}
                 </h3>
                 <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
@@ -139,7 +139,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
               <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
                 <Link
                   href={`${langPrefix}/doctors`}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#400112] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   id={`learn-profile-btn-${doc.id}`}
                 >
                   {t.viewProfile}
@@ -147,7 +147,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
                 </Link>
                 <Link
                   href={`${langPrefix}/contacts`}
-                  className="px-4 py-2 text-xs font-bold text-[#400112] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
+                  className="px-4 py-2 text-xs font-bold text-[#511B29] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
                 >
                   {t.apply}
                 </Link>
@@ -167,7 +167,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
             variants={scaleInVariants}
             className="bg-[#f2dde1]/15 border border-[#d9c1c2]/50 p-8 md:p-14 rounded-3xl space-y-6"
           >
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#400112]">
+            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#511B29]">
               {t.wantBookTitle}
             </h3>
             <p className="text-sm text-[#6a5b5e] max-w-xl mx-auto font-medium leading-relaxed">
@@ -175,7 +175,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
             </p>
             <Link
               href={`${langPrefix}/contacts`}
-              className="inline-block px-10 py-4 bg-[#400112] hover:bg-[#5d1726] text-white font-bold rounded-full text-sm tracking-uppercase active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-[#400112]/20 uppercase"
+              className="inline-block px-10 py-4 bg-[#511B29] hover:bg-[#5d1726] text-white font-bold rounded-full text-sm tracking-uppercase active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-[#511B29]/20 uppercase"
               id="team-bottom-cta-btn"
             >
               {t.bookVisit}

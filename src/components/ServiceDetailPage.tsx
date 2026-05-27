@@ -18,12 +18,12 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
   // Helper to resolve dynamically named icons
   const getServiceIconLarge = (iconName: string) => {
     switch (iconName) {
-      case 'ShieldCheck': return <ShieldCheck className="w-12 h-12 text-[#400112]" />;
-      case 'Sparkles': return <Sparkles className="w-12 h-12 text-[#400112]" />;
-      case 'Droplet': return <Droplet className="w-12 h-12 text-[#400112]" />;
-      case 'Scissors': return <Scissors className="w-12 h-12 text-[#400112]" />;
-      case 'Activity': return <Activity className="w-12 h-12 text-[#400112]" />;
-      default: return <Sparkles className="w-12 h-12 text-[#400112]" />;
+      case 'ShieldCheck': return <ShieldCheck className="w-12 h-12 text-[#511B29]" />;
+      case 'Sparkles': return <Sparkles className="w-12 h-12 text-[#511B29]" />;
+      case 'Droplet': return <Droplet className="w-12 h-12 text-[#511B29]" />;
+      case 'Scissors': return <Scissors className="w-12 h-12 text-[#511B29]" />;
+      case 'Activity': return <Activity className="w-12 h-12 text-[#511B29]" />;
+      default: return <Sparkles className="w-12 h-12 text-[#511B29]" />;
     }
   };
 
@@ -278,7 +278,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {t.tag}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#400112] tracking-tight">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {service.title}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
@@ -295,7 +295,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
             <div className="w-10 h-10 rounded-xl bg-[#f2dde1]/35 border border-[#d9c1c2]/20 flex items-center justify-center shrink-0">
               {getServiceIconLarge(service.iconName)}
             </div>
-            <h3 className="text-lg font-serif font-bold text-[#400112] tracking-tight">
+            <h3 className="text-lg font-serif font-bold text-[#511B29] tracking-tight">
               {t.aboutProcedure}
             </h3>
           </div>
@@ -306,7 +306,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
             </p>
             
             <div className="p-6 bg-white border border-[#efedec] rounded-2xl shadow-sm">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#400112] mb-3 flex items-center gap-1.5 border-b border-[#efedec]/60 pb-2">
+              <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-3 flex items-center gap-1.5 border-b border-[#efedec]/60 pb-2">
                 <Sparkles className="w-4 h-4 text-[#de7c8a]" />
                 {t.processTitle}
               </h4>
@@ -325,7 +325,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         <motion.div variants={fadeUpVariants} className="space-y-6">
           {/* Standards Box */}
           <div className="bg-white border border-[#efedec] rounded-3xl p-6 md:p-8 shadow-sm">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#400112] mb-5 flex items-center gap-1.5 border-b border-[#efedec]/65 pb-3">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-5 flex items-center gap-1.5 border-b border-[#efedec]/65 pb-3">
               <ShieldCheck className="w-4 h-4 text-[#de7c8a]" />
               {t.clinicalStandards}
             </h4>
@@ -379,7 +379,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
 
           {/* Time & Duration Info Card */}
           <div className="bg-[#fbf9f8] border border-[#efedec] rounded-3xl p-6 md:p-8">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#400112] mb-4 flex items-center gap-1.5">
+            <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-4 flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-[#de7c8a]" />
               {t.visitDuration}
             </h4>
@@ -403,7 +403,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         className="mt-12 pt-8 border-t border-[#efedec]/65 flex flex-col sm:flex-row items-center justify-between gap-6"
       >
         <div className="text-center sm:text-left">
-          <h4 className="text-sm font-bold text-[#400112]">
+          <h4 className="text-sm font-bold text-[#511B29]">
             {t.ctaTitle}
           </h4>
           <p className="text-xs text-[#6a5b5e] mt-1">
@@ -413,7 +413,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         <div className="flex gap-4 w-full sm:w-auto">
           <button
             onClick={onBookService}
-            className="btn flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-[#400112] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-sm font-bold shadow-lg shadow-[#400112]/20 cursor-pointer"
+            className="btn flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-sm font-bold shadow-lg shadow-[#511B29]/20 cursor-pointer"
             id={`book-specific-service-${service.id}`}
           >
             <CalendarDays className="w-4 h-4" />
@@ -429,7 +429,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
             <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-2.5 block">
               {t.faqTag}
             </span>
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#400112] tracking-tight">
+            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#511B29] tracking-tight">
               {t.faqTitle}
             </h3>
             <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
@@ -449,7 +449,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
                     onClick={() => setOpenFaqIndex(isOpen ? null : index)}
                     className="w-full p-5 flex items-center justify-between text-left cursor-pointer group"
                   >
-                    <span className="text-sm font-bold text-[#400112] tracking-tight group-hover:text-[#de7c8a] transition-colors pr-4">
+                    <span className="text-sm font-bold text-[#511B29] tracking-tight group-hover:text-[#de7c8a] transition-colors pr-4">
                       {faq.question}
                     </span>
                     <span className={`w-8 h-8 rounded-full bg-[#fbf9f8] border border-[#efedec] flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-[#f2dde1]/30 border-[#d9c1c2]/30 text-[#de7c8a]' : 'text-slate-400'}`}>
@@ -472,7 +472,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         <div className="mt-10 text-center">
           <button 
             onClick={onBack}
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#400112] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
             {t.back}

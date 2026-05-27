@@ -44,12 +44,12 @@ const fadeUpVariants = {
  */
 const richTextComponents: JSXMapSerializer = {
   heading1: ({ children }) => (
-    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#400112] tracking-tight leading-tight max-w-3xl">
+    <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#511B29] tracking-tight leading-tight max-w-3xl">
       {children}
     </h1>
   ),
   heading2: ({ children }) => (
-    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#400112] tracking-tight leading-tight max-w-3xl">
+    <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold text-[#511B29] tracking-tight leading-tight max-w-3xl">
       {children}
     </h2>
   ),
@@ -124,7 +124,7 @@ export default function Hero({ slice }: HeroProps) {
           {isFilled.link(primary.cta_link) ? (
             <PrismicNextLink
               field={primary.cta_link}
-              className="px-8 py-4 bg-[#400112] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#400112]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
+              className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
               id="hero-primary-btn"
             >
               {ctaText}
@@ -133,7 +133,7 @@ export default function Hero({ slice }: HeroProps) {
           ) : (
             <Link
               href={isEn ? '/en/contacts' : '/kontakti'}
-              className="px-8 py-4 bg-[#400112] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#400112]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
+              className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
               id="hero-primary-btn"
             >
               {ctaText}
@@ -143,7 +143,7 @@ export default function Hero({ slice }: HeroProps) {
           {isFilled.link(primary.secondary_cta_link) ? (
             <PrismicNextLink
               field={primary.secondary_cta_link}
-              className="px-8 py-4 bg-transparent border border-[#400112]/30 text-[#400112] hover:bg-[#400112]/5 hover:border-[#400112]/60 rounded-full text-base font-semibold transition-all text-center cursor-pointer inline-block"
+              className="px-8 py-4 bg-transparent border border-[#511B29]/30 text-[#511B29] hover:bg-[#511B29]/5 hover:border-[#511B29]/60 rounded-full text-base font-semibold transition-all text-center cursor-pointer inline-block"
               id="hero-secondary-btn"
             >
               {secondaryCtaText}
@@ -151,7 +151,7 @@ export default function Hero({ slice }: HeroProps) {
           ) : (
             <Link
               href={isEn ? '/en/services' : '/pakalpojumi'}
-              className="px-8 py-4 bg-transparent border border-[#400112]/30 text-[#400112] hover:bg-[#400112]/5 hover:border-[#400112]/60 rounded-full text-base font-semibold transition-all text-center cursor-pointer inline-block"
+              className="px-8 py-4 bg-transparent border border-[#511B29]/30 text-[#511B29] hover:bg-[#511B29]/5 hover:border-[#511B29]/60 rounded-full text-base font-semibold transition-all text-center cursor-pointer inline-block"
               id="hero-secondary-btn"
             >
               {secondaryCtaText}
