@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from 'motion/react';
 
 import { useParams, usePathname } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 interface HeaderProps {
   logoText?: string;
@@ -158,11 +159,12 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
           id="header-logo-button"
         >
           {logoImage?.url ? (
-            <img 
+            <Image 
               src={logoImage.url} 
               alt={logoImage.alt || logoText || "Dentamic"} 
+              width={logoImage.dimensions?.width || 120}
+              height={logoImage.dimensions?.height || 50}
               className="h-14 md:h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
-              referrerPolicy="no-referrer"
             />
           ) : (
             <span className="text-3xl font-extrabold tracking-tight text-white font-serif transition-opacity group-hover:opacity-95">

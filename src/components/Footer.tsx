@@ -3,6 +3,7 @@
 import React from 'react';
 import { MapPin, Phone, Mail } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { getClinics } from '../data';
 
@@ -128,11 +129,12 @@ export default function Footer({
           id="footer-logo-button"
         >
           {logoImage?.url ? (
-            <img 
+            <Image 
               src={logoImage.url} 
               alt={logoImage.alt || logoText || "Dentamic"} 
+              width={logoImage.dimensions?.width || 120}
+              height={logoImage.dimensions?.height || 50}
               className="h-14 md:h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
-              referrerPolicy="no-referrer"
             />
           ) : (
             <span className="text-3xl font-extrabold tracking-tight text-white font-serif relative select-none transition-opacity group-hover:opacity-95">

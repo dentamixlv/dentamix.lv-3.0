@@ -4,8 +4,9 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
-import { DOCTORS } from '../../../data';
+import { getDoctors } from '../../../data';
 
 const staggerContainerVariants = {
   hidden: {},
@@ -74,6 +75,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
   const t = langCode === 'en-us' ? translations.en : translations.lv;
   const isEn = langCode === 'en-us';
   const langPrefix = langCode === 'en-us' ? '/en' : '';
+  const doctors = getDoctors(langCode);
 
   return (
     <div className="py-16 md:py-24 max-w-7xl mx-auto px-6">
@@ -102,7 +104,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
         variants={staggerContainerVariants}
         className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
       >
-        {DOCTORS.filter(d => d.id !== 'dr-janis-berzins').map((doc) => (
+        {doctors.filter(d => d.id !== 'dr-janis-berzins').map((doc) => (
           <motion.div 
             variants={fadeUpVariants}
             key={doc.id} 
@@ -111,11 +113,12 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
           >
             {/* Upper Card image block */}
             <div className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec]">
-              <img
+              <Image
                 src={doc.image}
                 alt={doc.name}
-                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                referrerPolicy="no-referrer"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 30vw"
+                className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
               />
             </div>
 

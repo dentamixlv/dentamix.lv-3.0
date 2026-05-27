@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, Quote, Star } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 
 import { SliceZone } from '@prismicio/react';
 import { components } from '../../slices';
@@ -150,16 +151,17 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
         >
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
             
-            {/* Left side: Doctor Image */}
             <motion.div 
               variants={slideInLeftVariants}
-              className="lg:col-span-5 w-full aspect-[4/3] max-h-[400px] rounded-2xl overflow-hidden border border-[#efedec] shadow-md bg-[#fbf9f8]"
+              className="lg:col-span-5 w-full aspect-[4/3] max-h-[400px] rounded-2xl overflow-hidden border border-[#efedec] shadow-md bg-[#fbf9f8] relative"
             >
-              <img
+              <Image
                 src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=800"
                 alt="Dr. Jānis Bērziņš"
-                className="w-full h-full object-cover object-top hover:scale-[1.02] transition-transform duration-500"
-                referrerPolicy="no-referrer"
+                fill
+                sizes="(max-width: 1024px) 100vw, 40vw"
+                className="object-cover object-top hover:scale-[1.02] transition-transform duration-500"
+                priority
               />
             </motion.div>
 

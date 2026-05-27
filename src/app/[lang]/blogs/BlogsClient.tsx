@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { BlogPost } from '../../../types';
 import { getBlogPosts } from '../../../data';
 
@@ -85,11 +86,12 @@ export default function BlogsClient({ langCode, customBlogPosts }: BlogsClientPr
           >
             {/* Upper Card image block */}
             <div className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec]">
-              <img
+              <Image
                 src={post.image}
                 alt={post.title}
-                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                referrerPolicy="no-referrer"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 30vw"
+                className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
               />
             </div>
 

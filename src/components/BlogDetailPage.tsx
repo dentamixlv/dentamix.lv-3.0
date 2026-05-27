@@ -3,6 +3,7 @@
 import React from 'react';
 import { ArrowLeft, Bookmark } from 'lucide-react';
 import { motion } from 'motion/react';
+import Image from 'next/image';
 import { BlogPost } from '../types';
 
 interface BlogDetailPageProps {
@@ -80,11 +81,12 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
         <motion.div variants={fadeUpVariants} className="space-y-6">
           {/* Blog Post Image in Sidebar */}
           <div className="relative aspect-[3/2] rounded-3xl overflow-hidden border border-[#efedec] bg-[#fbf9f8] shadow-sm">
-            <img
+            <Image
               src={post.image}
               alt={post.title}
-              className="w-full h-full object-cover select-none"
-              referrerPolicy="no-referrer"
+              fill
+              sizes="(max-width: 1024px) 100vw, 30vw"
+              className="object-cover select-none"
             />
           </div>
 

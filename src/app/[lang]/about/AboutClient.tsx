@@ -5,6 +5,7 @@ import { ArrowLeft, Bookmark } from 'lucide-react';
 import { motion } from 'motion/react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 export default function AboutClient() {
   const params = useParams();
@@ -93,11 +94,12 @@ export default function AboutClient() {
         <motion.div variants={fadeUpVariants} className="space-y-6">
           {/* Clinic Image in Sidebar */}
           <div className="relative aspect-[3/2] rounded-3xl overflow-hidden border border-[#efedec] bg-[#fbf9f8] shadow-sm">
-            <img
+            <Image
               src="/clinic-placeholder.jpg"
               alt={isEn ? 'Dentamic Clinic' : 'Dentamic klīnika'}
-              className="w-full h-full object-cover select-none"
-              referrerPolicy="no-referrer"
+              fill
+              sizes="(max-width: 1024px) 100vw, 30vw"
+              className="object-cover select-none"
             />
           </div>
 

@@ -5,6 +5,7 @@ import { motion } from 'motion/react';
 import { Content, isFilled } from "@prismicio/client";
 import { SliceComponentProps, PrismicRichText, JSXMapSerializer } from "@prismicio/react";
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { ArrowRight } from 'lucide-react';
 import { PrismicNextLink } from '@prismicio/next';
@@ -82,11 +83,13 @@ export default function Hero({ slice }: HeroProps) {
     <section className="relative overflow-hidden min-h-[80vh] flex items-center bg-gradient-to-tr from-[#fbf9f8] via-[#fbf9f8] to-[#f2dde1]/20 pb-16 pt-8 md:py-24">
       {/* Backdrop Wave Image Decoration */}
       <div className="absolute inset-0 pointer-events-none transition-all duration-700">
-        <img
+        <Image
           src={bgImage}
           alt="Dentamic Background"
-          className="w-full h-full object-cover object-center scale-105"
-          referrerPolicy="no-referrer"
+          fill
+          sizes="100vw"
+          className="object-cover object-center scale-105"
+          priority
         />
         <div className="absolute inset-0 bg-white/80" />
       </div>

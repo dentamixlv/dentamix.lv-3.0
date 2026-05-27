@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
 import { ArrowRight, ShieldCheck, Sparkles, Droplet, Scissors, Activity } from 'lucide-react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { Content } from "@prismicio/client";
 import { SliceComponentProps, PrismicRichText } from "@prismicio/react";
@@ -126,11 +127,12 @@ export default function ServicesList({ slice }: ServicesListProps) {
           >
             {/* Upper Card image block */}
             <div className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec]">
-              <img
+              <Image
                 src={serv.image}
                 alt={serv.title}
-                className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-500"
-                referrerPolicy="no-referrer"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 30vw"
+                className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
               />
             </div>
 
