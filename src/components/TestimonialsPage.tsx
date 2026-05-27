@@ -121,10 +121,9 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
   ];
 
   const fadeUpVariants = {
-    hidden: { opacity: 0, y: 6 },
+    hidden: { opacity: 0 },
     visible: { 
       opacity: 1, 
-      y: 0,
       transition: { type: 'tween', ease: 'easeOut', duration: 0.45 }
     }
   } as const;
@@ -170,7 +169,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
             <motion.div 
               variants={fadeUpVariants}
               key={item.id} 
-              className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group"
               id={`testimonial-card-${item.id}`}
             >
               {/* Upper Card visual block with only stars */}

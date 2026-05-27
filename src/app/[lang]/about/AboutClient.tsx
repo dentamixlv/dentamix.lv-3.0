@@ -14,10 +14,9 @@ export default function AboutClient() {
   const langPrefix = isEn ? '/en' : '';
 
   const fadeUpVariants = {
-    hidden: { opacity: 0, y: 6 },
+    hidden: { opacity: 0 },
     visible: { 
       opacity: 1, 
-      y: 0,
       transition: { type: 'tween', ease: 'easeOut', duration: 0.45 }
     }
   } as const;

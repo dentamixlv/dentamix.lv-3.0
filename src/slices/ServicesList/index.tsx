@@ -122,7 +122,7 @@ export default function ServicesList({ slice }: ServicesListProps) {
           <motion.div 
             variants={fadeUpVariants}
             key={serv.id} 
-            className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+            className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group"
             id={`service-card-${serv.id}`}
           >
             {/* Upper Card image block */}

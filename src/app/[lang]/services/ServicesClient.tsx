@@ -19,10 +19,9 @@ const staggerContainerVariants = {
 } as const;
 
 const fadeUpVariants = {
-  hidden: { opacity: 0, y: 6 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
     transition: {
       type: 'tween',
       ease: 'easeOut',
@@ -90,7 +89,7 @@ export default function ServicesClient({ langCode }: ServicesClientProps) {
           <motion.div 
             variants={fadeUpVariants}
             key={serv.id} 
-            className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+            className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group"
             id={`service-card-${serv.id}`}
           >
             {/* Upper Card image block */}

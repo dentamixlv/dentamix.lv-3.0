@@ -20,10 +20,9 @@ const staggerContainerVariants = {
 } as const;
 
 const fadeUpVariants = {
-  hidden: { opacity: 0, y: 6 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
     transition: {
       type: 'tween' as const,
       ease: 'easeOut',

@@ -24,10 +24,9 @@ const staggerContainerVariants = {
 } as const;
 
 const fadeUpVariants = {
-  hidden: { opacity: 0, y: 6 },
+  hidden: { opacity: 0 },
   visible: {
     opacity: 1,
-    y: 0,
     transition: {
       type: 'tween' as const,
       ease: 'easeOut',
@@ -134,7 +133,7 @@ export default function DoctorsList({ slice }: DoctorsListProps) {
           <motion.div 
             variants={fadeUpVariants}
             key={doc.id} 
-            className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group"
+            className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group"
             id={`doctor-card-${doc.id}`}
           >
             {/* Upper Card image block */}
