@@ -137,7 +137,7 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
 
               <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
                 <Link
-                  href={`${langPrefix}/doctors`}
+                  href={`${langPrefix}/doctors/${doc.id}`}
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   id={`learn-profile-btn-${doc.id}`}
                 >

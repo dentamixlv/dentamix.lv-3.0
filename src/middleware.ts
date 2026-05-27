@@ -148,11 +148,26 @@ export function middleware(request: NextRequest) {
     url.pathname = '/zobarsti';
     return NextResponse.redirect(url, 307);
   }
+  if (pathname.startsWith('/doctors/')) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/zobarsti/${pathname.substring('/doctors/'.length)}`;
+    return NextResponse.redirect(url, 307);
+  }
+  if (pathname.startsWith('/lv/doctors/')) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/zobarsti/${pathname.substring('/lv/doctors/'.length)}`;
+    return NextResponse.redirect(url, 307);
+  }
 
   // 10. Redirect /en/zobarsti to /en/doctors (EN locale switch from Latvian page)
   if (pathname === '/en/zobarsti') {
     const url = request.nextUrl.clone();
     url.pathname = '/en/doctors';
+    return NextResponse.redirect(url, 307);
+  }
+  if (pathname.startsWith('/en/zobarsti/')) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/en/doctors/${pathname.substring('/en/zobarsti/'.length)}`;
     return NextResponse.redirect(url, 307);
   }
 
@@ -255,6 +270,16 @@ export function middleware(request: NextRequest) {
   if (pathname === '/lv/zobarsti') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/doctors';
+    return NextResponse.rewrite(url);
+  }
+  if (pathname.startsWith('/zobarsti/')) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/lv/doctors/${pathname.substring('/zobarsti/'.length)}`;
+    return NextResponse.rewrite(url);
+  }
+  if (pathname.startsWith('/lv/zobarsti/')) {
+    const url = request.nextUrl.clone();
+    url.pathname = `/lv/doctors/${pathname.substring('/lv/zobarsti/'.length)}`;
     return NextResponse.rewrite(url);
   }
 

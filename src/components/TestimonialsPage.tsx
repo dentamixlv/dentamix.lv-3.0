@@ -2,21 +2,10 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { Star, Quote, CalendarDays, Heart } from 'lucide-react';
-
-interface Testimonial {
-  id: string;
-  author: string;
-  initials: string;
-  bgColor: string;
-  treatment: string;
-  doctor: string;
-  rating: number;
-  date: string;
-  advTag: string;
-  quote: string;
-  story: string;
-}
+import { CalendarDays, Quote } from 'lucide-react';
+import { Testimonial } from '../types';
+import TestimonialCard from './TestimonialCard';
+import CTABlock from './CTABlock';
 
 interface TestimonialsPageProps {
   onBook: () => void;
@@ -166,52 +155,11 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
       >
         {testimonialsData.length > 0 ? (
           testimonialsData.map((item) => (
-            <motion.div 
-              variants={fadeUpVariants}
+            <TestimonialCard 
               key={item.id} 
-              className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group"
-              id={`testimonial-card-${item.id}`}
-            >
-              {/* Upper Card visual block with only stars */}
-              <div className="relative bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/25 overflow-hidden border-b border-[#efedec] flex flex-col items-center justify-center py-8 px-6 text-center">
-                {/* Soft ambient background quote marks */}
-                <div className="absolute top-4 right-4 text-[#f2dde1]/30 group-hover:text-[#de7c8a]/15 transition-all duration-300">
-                  <Quote className="w-10 h-10 transform scale-x-[-1]" />
-                </div>
-
-                {/* Stars Rating */}
-                <div className="z-10 flex gap-1 justify-center text-[#de7c8a]">
-                  {[...Array(item.rating)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#de7c8a] stroke-[#de7c8a]" />
-                  ))}
-                </div>
-              </div>
-
-              {/* Card metadata and content matching Doctor section */}
-              <div className="p-6 md:p-8 flex flex-col justify-between flex-grow">
-                <div>
-                  <span className="text-[10px] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
-                    {item.treatment}
-                  </span>
-                  <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors">
-                    {item.author}
-                  </h3>
-                  
-                  {/* Complete story matching descriptive length of doctors */}
-                  <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal">
-                    {item.story}
-                  </p>
-                </div>
-
-                {/* Footer timestamp and actions */}
-                <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
-                  <div className="flex items-center gap-1.5 text-slate-400">
-                    <Heart className="w-3.5 h-3.5 text-[#de7c8a] fill-[#de7c8a]/20" />
-                    <span className="text-[10px] font-semibold text-slate-500">{item.date}</span>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
+              item={item} 
+              variants={fadeUpVariants} 
+            />
           ))
         ) : (
           <div className="col-span-full text-center py-16 bg-white border border-[#efedec] rounded-3xl">
@@ -227,34 +175,17 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
       </motion.div>
 
       {/* 4. Bottom Quality Standard CTA */}
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={fadeUpVariants}
-        className="mt-16 bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/25 border border-[#efedec] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8"
-      >
-        <div className="space-y-3 max-w-2xl">
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a]">
-            {isEn ? 'Share Your Experience' : 'Dalieties pieredzē'}
-          </span>
-          <h4 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
-            {isEn ? 'Would you like to leave a review of your visit?' : 'Vēlaties atstāt savu atsauksmi par vizīti?'}
-          </h4>
-          <p className="text-xs text-[#6a5b5e] leading-relaxed">
-            {isEn
-              ? 'Every patient\'s opinion helps us grow and maintain our standard of excellence. If you recently visited our clinic, we will be happy to receive your story and feedback!'
-              : 'Katrs pacienta viedoklis palīdz mums augt un turpināt uzturēt izcilības līmeni. Ja nesen esat apmeklējis mūsu klīniku, priecāsimies saņemt Jūsu stāstu un ieteikumus!'}
-          </p>
-        </div>
-        <button
-          onClick={onBook}
-          className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
-          id="testimonials-cta-booking-btn"
-        >
-          <CalendarDays className="w-4 h-4" />
-          {isEn ? 'Join the Smile Stories' : 'Piedalīties smaidu stāstā'}
-        </button>
-      </motion.div>
+      <CTABlock
+        badgeText={isEn ? 'Share Your Experience' : 'Dalieties pieredzē'}
+        title={isEn ? 'Would you like to leave a review of your visit?' : 'Vēlaties atstāt savu atsauksmi par vizīti?'}
+        description={isEn
+          ? "Every patient's opinion helps us grow and maintain our standard of excellence. If you recently visited our clinic, we will be happy to receive your story and feedback!"
+          : "Katrs pacienta viedoklis palīdz mums augt un turpināt uzturēt izcilības līmeni. Ja nesen esat apmeklējis mūsu klīniku, priecāsimies saņemt Jūsu stāstu un ieteikumus!"}
+        buttonText={isEn ? 'Join the Smile Stories' : 'Piedalīties smaidu stāstā'}
+        onClick={onBook}
+        id="testimonials-cta-booking-btn"
+        className="mt-16"
+      />
     </div>
   );
 }

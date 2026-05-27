@@ -21,7 +21,8 @@ export const DOCTORS_LV: Doctor[] = [
       'Starptautiskais estētiskās restaurācijas kurss, Heidelberga, Vācija (2015)',
       'Advanced Smile Makeover masterclass, Cīrihe, Šveice (2018)'
     ],
-    languages: ['Latviešu', 'Angļu', 'Krievu']
+    languages: ['Latviešu', 'Angļu', 'Krievu'],
+    workplace: 'Rīga, Ādaži'
   },
   {
     id: 'dr-janis-kalnins',
@@ -44,7 +45,8 @@ export const DOCTORS_LV: Doctor[] = [
       'Implantoloģijas tālākizglītība, Gēteborga, Zviedrija (2013)',
       'ITI (International Team for Implantology) biedrs kopš 2014. gada'
     ],
-    languages: ['Latviešu', 'Angļu', 'Krievu', 'Vācu']
+    languages: ['Latviešu', 'Angļu', 'Krievu', 'Vācu'],
+    workplace: 'Rīga'
   },
   {
     id: 'dr-liga-ozolina',
@@ -66,7 +68,8 @@ export const DOCTORS_LV: Doctor[] = [
       'Sertificēta Aligners (Invisalign & Spark) praktizētāja (2016)',
       'Eiropas Ortodontu asociācijas (EOS) aktīva biedre'
     ],
-    languages: ['Latviešu', 'Angļu']
+    languages: ['Latviešu', 'Angļu'],
+    workplace: 'Ādaži'
   },
   {
     id: 'dr-janis-berzins',
@@ -88,7 +91,8 @@ export const DOCTORS_LV: Doctor[] = [
       'Doktora grāds zobārstniecībā, RSU (2006)',
       'Zobārstniecības lāzeru un augsto tehnoloģiju sertifikāts, Vīne, Austrija (2009)'
     ],
-    languages: ['Latviešu', 'Angļu', 'Vācu', 'Krievu']
+    languages: ['Latviešu', 'Angļu', 'Vācu', 'Krievu'],
+    workplace: 'Rīga, Ādaži'
   }
 ];
 
@@ -113,7 +117,8 @@ export const DOCTORS_EN: Doctor[] = [
       'International Course in Aesthetic Restoration, Heidelberg, Germany (2015)',
       'Advanced Smile Makeover masterclass, Zurich, Switzerland (2018)'
     ],
-    languages: ['Latvian', 'English', 'Russian']
+    languages: ['Latvian', 'English', 'Russian'],
+    workplace: 'Riga, Adazi'
   },
   {
     id: 'dr-janis-kalnins',
@@ -136,7 +141,8 @@ export const DOCTORS_EN: Doctor[] = [
       'Further education in Implantology, Gothenburg, Sweden (2013)',
       'ITI (International Team for Implantology) member since 2014'
     ],
-    languages: ['Latvian', 'English', 'Russian', 'German']
+    languages: ['Latvian', 'English', 'Russian', 'German'],
+    workplace: 'Riga'
   },
   {
     id: 'dr-liga-ozolina',
@@ -158,7 +164,8 @@ export const DOCTORS_EN: Doctor[] = [
       'Certified Aligners (Invisalign & Spark) practitioner (2016)',
       'Active member of the European Orthodontic Society (EOS)'
     ],
-    languages: ['Latvian', 'English']
+    languages: ['Latvian', 'English'],
+    workplace: 'Adazi'
   },
   {
     id: 'dr-janis-berzins',
@@ -180,6 +187,7 @@ export const DOCTORS_EN: Doctor[] = [
       'Doctoral degree in Dentistry, RSU (2006)',
       'Dental lasers and high technology certificate, Vienna, Austria (2009)'
     ],
-    languages: ['Latvian', 'English', 'German', 'Russian']
+    languages: ['Latvian', 'English', 'German', 'Russian'],
+    workplace: 'Riga, Adazi'
   }
 ];

@@ -10,6 +10,7 @@ export interface Doctor {
   specializations: string[];
   education: string[];
   languages: string[];
+  workplace?: string;
 }
 
 export interface Service {
@@ -63,4 +64,18 @@ export interface BlogPost {
   date: string;
   author: string;
   readTime: string;
+}
+
+export interface Testimonial {
+  id: string;
+  author: string;
+  initials: string;
+  bgColor: string;
+  treatment: string;
+  doctor: string;
+  rating: number;
+  date: string;
+  advTag: string;
+  quote: string;
+  story: string;
 }
