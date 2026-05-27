@@ -24,6 +24,7 @@ interface FooterProps {
     labelWeekdays?: string;
     labelSaturday?: string;
     labelSunday?: string;
+    accessibilityAlert?: string;
   }>;
   copyrightText?: string;
   privacyPolicyLabel?: string;
@@ -82,7 +83,8 @@ export default function Footer({
           saturday: c.labelSaturday || t.saturday,
           sunday: c.labelSunday || t.sunday,
           closed: t.closed,
-        }
+        },
+        accessibilityAlert: c.accessibilityAlert
       }))
     : getClinics(isEn ? 'en-us' : 'lv').map((clinic) => ({
         ...clinic,
@@ -96,7 +98,8 @@ export default function Footer({
           saturday: t.saturday,
           sunday: t.sunday,
           closed: t.closed,
-        }
+        },
+        accessibilityAlert: clinic.accessibilityAlert
       }));
 
   const getHoursValue = (hoursString: string) => {
@@ -148,7 +151,7 @@ export default function Footer({
       <div className="max-w-7xl mx-auto px-6 pt-8 pb-16 md:pb-24 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 items-start text-left">
         {/* Column 1: Brand Info */}
         <div className="flex flex-col gap-5">
-          <p className="text-[#989999] text-sm leading-relaxed max-w-sm italic font-medium">
+          <p className="text-[#989999] text-xs leading-relaxed max-w-sm font-medium">
             {description || t.quote}
           </p>
         </div>
@@ -180,13 +183,10 @@ export default function Footer({
                     </a>
                   )}
                   {clinic.email && (
-                    <a 
-                      href={`mailto:${clinic.email}`} 
-                      className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
-                    >
+                    <span className="flex items-center gap-2">
                       <Mail className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
                       <span className="font-medium">{clinic.email}</span>
-                    </a>
+                    </span>
                   )}
                   <div className="flex items-center gap-3 mt-1">
                     {clinic.gmapsLink && (
@@ -282,6 +282,13 @@ export default function Footer({
                       </span>
                     )}
                   </div>
+
+                  {/* Accessibility Alert Message */}
+                  {clinic.accessibilityAlert && (
+                    <div className="font-medium group-hover:text-white transition-colors duration-200 mt-1">
+                      {clinic.accessibilityAlert}
+                    </div>
+                  )}
                 </div>
               </div>
             ))}
@@ -291,7 +298,7 @@ export default function Footer({
 
       {/* Footer Bottom copyright */}
       <div className="border-t border-white/[0.06] bg-[#0f1011]">
-        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-[11px] text-[#989999] font-medium">
+        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#989999] font-medium">
           <p>© {new Date().getFullYear()} {copyrightText || `Dentamic. ${t.allRightsReserved}`}</p>
           <div className="flex gap-6">
             <Link
