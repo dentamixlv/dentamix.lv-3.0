@@ -4,13 +4,13 @@ import dynamic from "next/dynamic";
 
 export const components = {
   hero: dynamic(() => import("./Hero")),
-  service_block: dynamic(() => import("./ServiceBlock")),
+  service_grid: dynamic(() => import("./ServiceGrid")),
   service_page: dynamic(() => import("./ServicePage")),
   doctor_block: dynamic(() => import("./DoctorBlock")),
   doctor_page: dynamic(() => import("./DoctorPage")),
   pricelist: dynamic(() => import("./Pricelist")),
   testimonial_card: dynamic(() => import("./TestimonialCard")),
-  contact_form: dynamic(() => import("./ContactForm")),
+  contact_block: dynamic(() => import("./ContactBlock")),
   cta_block: dynamic(() => import("./CTABlock")),
   ceo_block: dynamic(() => import("./CEOBlock")),
   testimonial_block: dynamic(() => import("./TestimonialBlock")),

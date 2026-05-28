@@ -35,7 +35,14 @@ export default async function Page({ params }: PageProps) {
 
   let slices = null;
   try {
-    const document = await client.getByUID('page', 'contacts', { lang: locale });
+    const uid = locale === 'en-us' ? 'contacts' : 'kontakti';
+    let document;
+    try {
+      document = await client.getByUID('page', uid, { lang: locale });
+    } catch (e) {
+      const fallbackUid = uid === 'kontakti' ? 'contacts' : 'kontakti';
+      document = await client.getByUID('page', fallbackUid, { lang: locale });
+    }
     slices = document?.data?.slices || null;
   } catch (error) {
     console.warn("No contacts page found in Prismic, falling back to static contact view.");

@@ -111,17 +111,21 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
   ];
 
   const fadeUpVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 6 },
     visible: { 
       opacity: 1, 
-      transition: { type: 'tween', ease: 'easeOut', duration: 0.45 }
+      y: 0,
+      transition: { type: 'tween' as const, ease: 'easeOut', duration: 0.45 }
     }
   } as const;
 
   const staggerContainer = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: 0.08 }
+      transition: {
+        staggerChildren: 0.12,
+        delayChildren: 0.05
+      }
     }
   } as const;
 
@@ -152,7 +156,8 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
       {/* 3. Testimonial Cards Layout matching Doctors / Services Grid Style */}
       <motion.div 
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true }}
         variants={staggerContainer}
         className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
       >

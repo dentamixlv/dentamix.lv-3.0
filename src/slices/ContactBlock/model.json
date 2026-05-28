@@ -1,0 +1,130 @@
+{
+  "id": "contact_block",
+  "type": "SharedSlice",
+  "name": "ContactBlock",
+  "description": "Customizable contacts block showing repeatable clinic cards in a single-column list design.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {},
+      "items": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Branch Badge / Type",
+            "placeholder": "Centrālā filiāle"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Clinic Name",
+            "placeholder": "Dentamix Rīga"
+          }
+        },
+        "phone": {
+          "type": "Text",
+          "config": {
+            "label": "Phone Number",
+            "placeholder": "+371 29 459 999"
+          }
+        },
+        "address": {
+          "type": "Text",
+          "config": {
+            "label": "Address",
+            "placeholder": "Brīvības iela 100, Rīga"
+          }
+        },
+        "email": {
+          "type": "Text",
+          "config": {
+            "label": "Email Address",
+            "placeholder": "riga@dentamix.lv"
+          }
+        },
+        "working_hours_label": {
+          "type": "Text",
+          "config": {
+            "label": "Working Hours Section Title",
+            "placeholder": "Darba laiks"
+          }
+        },
+        "weekday_text": {
+          "type": "Text",
+          "config": {
+            "label": "Weekdays Text",
+            "placeholder": "Darba dienās:"
+          }
+        },
+        "saturday_text": {
+          "type": "Text",
+          "config": {
+            "label": "Saturday Text",
+            "placeholder": "Sestdien:"
+          }
+        },
+        "sunday_text": {
+          "type": "Text",
+          "config": {
+            "label": "Sunday Text",
+            "placeholder": "Svētdien:"
+          }
+        },
+        "weekday_hours": {
+          "type": "Text",
+          "config": {
+            "label": "Weekday Hours",
+            "placeholder": "09:00 - 19:00"
+          }
+        },
+        "saturday_hours": {
+          "type": "Text",
+          "config": {
+            "label": "Saturday Hours",
+            "placeholder": "10:00 - 15:00"
+          }
+        },
+        "sunday_hours": {
+          "type": "Text",
+          "config": {
+            "label": "Sunday Hours",
+            "placeholder": "Slēgts"
+          }
+        },
+        "accessibility_text": {
+          "type": "Text",
+          "config": {
+            "label": "Accessibility Info Text",
+            "placeholder": "Klīnika ir pilnībā pieejama ratiņkrēslā"
+          }
+        },
+        "gmaps_iframe_url": {
+          "type": "Text",
+          "config": {
+            "label": "Google Maps Embed URL",
+            "placeholder": "https://www.google.com/maps/embed?pb=..."
+          }
+        },
+        "gmaps_direct_url": {
+          "type": "Text",
+          "config": {
+            "label": "Google Maps Direct Link / Share URL",
+            "placeholder": "https://maps.app.goo.gl/DvLgodzdiR5t2KQK8"
+          }
+        },
+        "waze_url": {
+          "type": "Text",
+          "config": {
+            "label": "Waze Directions Link",
+            "placeholder": "https://www.waze.com/live-map/directions?to=..."
+          }
+        }
+      }
+    }
+  ]
+}

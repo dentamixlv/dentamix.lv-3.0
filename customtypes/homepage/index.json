@@ -19,7 +19,7 @@
             "hero": {
               "type": "SharedSlice"
             },
-            "service_block": {
+            "service_grid": {
               "type": "SharedSlice"
             },
             "service_page": {
@@ -37,7 +37,7 @@
             "testimonial_card": {
               "type": "SharedSlice"
             },
-            "contact_form": {
+            "contact_block": {
               "type": "SharedSlice"
             },
             "cta_block": {
@@ -59,6 +59,9 @@
               "type": "SharedSlice"
             },
             "blog_page": {
+              "type": "SharedSlice"
+            },
+            "doctor_grid": {
               "type": "SharedSlice"
             }
           }

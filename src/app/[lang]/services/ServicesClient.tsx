@@ -19,11 +19,12 @@ const staggerContainerVariants = {
 } as const;
 
 const fadeUpVariants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, y: 6 },
   visible: {
     opacity: 1,
+    y: 0,
     transition: {
-      type: 'tween',
+      type: 'tween' as const,
       ease: 'easeOut',
       duration: 0.45
     }
@@ -88,7 +89,8 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
       {/* Services cards list grid matching dentists style */}
       <motion.div 
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true }}
         variants={staggerContainerVariants}
         className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
       >
@@ -100,7 +102,7 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
             id={`service-card-${serv.id}`}
           >
             {/* Upper Card image block */}
-            <div className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec]">
+            <Link href={`${langPrefix}/services/${serv.id}`} className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec] block">
               <Image
                 src={serv.image}
                 alt={serv.title}
@@ -108,7 +110,7 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 30vw"
                 className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
               />
-            </div>
+            </Link>
 
             {/* Card metadata and content */}
             <div className="p-6 md:p-8 flex flex-col justify-between flex-grow">
@@ -117,7 +119,9 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
                   {t.premium}
                 </span>
                 <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-1">
-                  {serv.title}
+                  <Link href={`${langPrefix}/services/${serv.id}`}>
+                    {serv.title}
+                  </Link>
                 </h3>
                 <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
                   {serv.description}

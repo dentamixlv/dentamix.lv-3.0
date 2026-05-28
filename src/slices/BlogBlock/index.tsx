@@ -131,7 +131,7 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
   };
 
   const sectionClass = hideHeaderValue
-    ? 'bg-gradient-to-b from-[#fbf9f8] to-white pt-2 pb-0 md:pt-4 md:pb-0'
+    ? 'bg-gradient-to-b from-[#fbf9f8] to-white pt-2 pb-16 md:pt-4 md:pb-24'
     : 'bg-gradient-to-b from-[#fbf9f8] to-white py-16 md:py-24';
 
   return (
@@ -182,7 +182,7 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
                 id={`blog-card-${post.id}`}
               >
                 {/* Upper Card image block */}
-                <div className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec]">
+                <Link href={postUrl} className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec] block">
                   <Image
                     src={post.image}
                     alt={post.title}
@@ -190,7 +190,7 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 30vw"
                     className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
                   />
-                </div>
+                </Link>
 
                 {/* Card metadata and content */}
                 <div className="p-6 md:p-8 flex flex-col justify-between flex-grow">
@@ -200,7 +200,9 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
                     </span>
                     <div className="min-h-[3.5rem] flex flex-col justify-start">
                       <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-2">
-                        {post.title}
+                        <Link href={postUrl}>
+                          {post.title}
+                        </Link>
                       </h3>
                     </div>
                     <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">

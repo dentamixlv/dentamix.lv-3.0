@@ -1,0 +1,71 @@
+{
+  "id": "service_grid",
+  "type": "SharedSlice",
+  "name": "ServiceGrid",
+  "description": "Services grid cards with + add item in repeatable zone.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "hideHeader": {
+          "type": "Boolean",
+          "config": {
+            "label": "Hide Header (use when PageTitle slice is above)",
+            "placeholder_false": "Show",
+            "placeholder_true": "Hide",
+            "default_value": true
+          }
+        }
+      },
+      "items": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge Text / Category",
+            "placeholder": "PAKALPOJUMS"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Service Name",
+            "placeholder": "Zobu higiēna"
+          }
+        },
+        "excerpt": {
+          "type": "Text",
+          "config": {
+            "label": "Excerpt / Description",
+            "placeholder": "Mutes dobuma veselības uzturēšanai..."
+          }
+        },
+        "link_text": {
+          "type": "Text",
+          "config": {
+            "label": "Link Text",
+            "placeholder": "Lasīt vairāk"
+          }
+        },
+        "link_url": {
+          "type": "Text",
+          "config": {
+            "label": "Link URL",
+            "placeholder": "/pakalpojumi/higiene"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Service Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        }
+      }
+    }
+  ]
+}

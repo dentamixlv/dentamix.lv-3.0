@@ -7,27 +7,24 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
-interface DoctorGridItem {
+interface ServiceGridItem {
   badge_text?: string | null;
   title?: string | null;
   excerpt?: string | null;
   link_text?: string | null;
   link_url?: string | null;
-  book_text?: string | null;
-  book_url?: string | null;
-  show_book_button?: boolean | null;
   image?: { url?: string; alt?: string } | null;
 }
 
-interface DoctorGridSlice {
+interface ServiceGridSlice {
   primary: {
     hideHeader?: boolean | null;
   };
-  items: DoctorGridItem[];
+  items: ServiceGridItem[];
 }
 
-interface DoctorGridProps {
-  slice: DoctorGridSlice;
+interface ServiceGridProps {
+  slice: ServiceGridSlice;
 }
 
 const staggerContainerVariants = {
@@ -53,7 +50,7 @@ const fadeUpVariants = {
   }
 } as const;
 
-export default function DoctorGrid({ slice }: DoctorGridProps) {
+export default function ServiceGrid({ slice }: ServiceGridProps) {
   const params = useParams();
   const langList = params?.lang;
   const langCode = Array.isArray(langList) && langList.length > 0
@@ -70,9 +67,7 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
     ? 'bg-gradient-to-b from-[#fbf9f8] to-white pt-2 pb-16 md:pt-4 md:pb-24'
     : 'bg-gradient-to-b from-[#fbf9f8] to-white py-16 md:py-24';
 
-  const defaultViewProfile = isEn ? 'View Profile' : 'Skatīt profilu';
-  const defaultBook = isEn ? 'Book' : 'Pieteikties';
-  const defaultContacts = isEn ? `${langPrefix}/contacts` : '/kontakti';
+  const defaultViewDesc = isEn ? 'Learn More' : 'Lasīt vairāk';
 
   return (
     <section className={sectionClass}>
@@ -87,26 +82,23 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
         >
           {slice.items.map((item, idx) => {
-            const badgeText  = item.badge_text || (isEn ? 'SPECIALIST' : 'SPECIĀLISTE');
-            const nameText   = item.title || '';
+            const badgeText  = item.badge_text || (isEn ? 'SERVICE' : 'PAKALPOJUMS');
+            const titleText  = item.title || '';
             const excerptText = item.excerpt || '';
-            const profileText = item.link_text || defaultViewProfile;
-            const profileUrl  = item.link_url || `${langPrefix}/doctors`;
-            const bookText    = item.book_text || defaultBook;
-            const bookUrl     = item.book_url || defaultContacts;
-            const showBookButton = item.show_book_button !== false;
-            const imageSrc    = item.image?.url || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
-            const imageAlt    = item.image?.alt || nameText;
+            const linkText   = item.link_text || defaultViewDesc;
+            const linkUrl    = item.link_url || `${langPrefix}/services`;
+            const imageSrc   = item.image?.url || 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=800';
+            const imageAlt   = item.image?.alt || titleText;
 
             return (
               <motion.div
                 variants={fadeUpVariants}
                 key={idx}
                 className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group"
-                id={`doctor-grid-card-${idx}`}
+                id={`service-grid-card-${idx}`}
               >
                 {/* Photo */}
-                <Link href={profileUrl} className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec] block">
+                <Link href={linkUrl} className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec] block">
                   <Image
                     src={imageSrc}
                     alt={imageAlt}
@@ -123,8 +115,8 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                       {badgeText}
                     </span>
                     <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-1">
-                      <Link href={profileUrl}>
-                        {nameText}
+                      <Link href={linkUrl}>
+                        {titleText}
                       </Link>
                     </h3>
                     <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
@@ -135,22 +127,13 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                   {/* Actions */}
                   <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
                     <Link
-                      href={profileUrl}
+                      href={linkUrl}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
-                      id={`doctor-grid-profile-btn-${idx}`}
+                      id={`service-grid-link-btn-${idx}`}
                     >
-                      {profileText}
+                      {linkText}
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </Link>
-                    {showBookButton && (
-                      <Link
-                        href={bookUrl}
-                        className="px-4 py-2 text-xs font-bold text-[#511B29] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
-                        id={`doctor-grid-book-btn-${idx}`}
-                      >
-                        {bookText}
-                      </Link>
-                    )}
                   </div>
                 </div>
               </motion.div>

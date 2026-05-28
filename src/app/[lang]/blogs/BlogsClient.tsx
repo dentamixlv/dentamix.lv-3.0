@@ -19,9 +19,10 @@ const staggerContainerVariants = {
 } as const;
 
 const fadeUpVariants = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 0, y: 6 },
   visible: {
     opacity: 1,
+    y: 0,
     transition: {
       type: 'tween' as const,
       ease: 'easeOut',
@@ -51,7 +52,7 @@ export default function BlogsClient({ langCode, customBlogPosts, hideHeader = fa
   };
 
   return (
-    <div className={`${hideHeader ? 'pt-2 pb-0 md:pt-4 md:pb-0' : 'py-16 md:py-24'} max-w-7xl mx-auto px-6`}>
+    <div className={`${hideHeader ? 'pt-2 pb-16 md:pt-4 md:pb-24' : 'py-16 md:py-24'} max-w-7xl mx-auto px-6`}>
       {/* Title and subtitle header */}
       {!hideHeader && (
         <motion.div 
@@ -75,7 +76,8 @@ export default function BlogsClient({ langCode, customBlogPosts, hideHeader = fa
       {/* Blogs cards list grid */}
       <motion.div 
         initial="hidden"
-        animate="visible"
+        whileInView="visible"
+        viewport={{ once: true }}
         variants={staggerContainerVariants}
         className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
       >
@@ -87,7 +89,7 @@ export default function BlogsClient({ langCode, customBlogPosts, hideHeader = fa
             id={`blog-card-${post.id}`}
           >
             {/* Upper Card image block */}
-            <div className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec]">
+            <Link href={`${langPrefix}/blogs/${post.id}`} className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec] block">
               <Image
                 src={post.image}
                 alt={post.title}
@@ -95,7 +97,7 @@ export default function BlogsClient({ langCode, customBlogPosts, hideHeader = fa
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 30vw"
                 className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
               />
-            </div>
+            </Link>
 
             {/* Card metadata and content */}
             <div className="p-6 md:p-8 flex flex-col justify-between flex-grow">
@@ -105,7 +107,9 @@ export default function BlogsClient({ langCode, customBlogPosts, hideHeader = fa
                 </span>
                 <div className="min-h-[3.5rem] flex flex-col justify-start">
                   <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-2">
-                    {post.title}
+                    <Link href={`${langPrefix}/blogs/${post.id}`}>
+                      {post.title}
+                    </Link>
                   </h3>
                 </div>
                 <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
