@@ -4,13 +4,18 @@ import dynamic from "next/dynamic";
 
 export const components = {
   hero: dynamic(() => import("./Hero")),
-  services_list: dynamic(() => import("./ServicesList")),
-  doctors_list: dynamic(() => import("./DoctorsList")),
+  service_block: dynamic(() => import("./ServiceBlock")),
+  service_page: dynamic(() => import("./ServicePage")),
+  doctor_block: dynamic(() => import("./DoctorBlock")),
+  doctor_page: dynamic(() => import("./DoctorPage")),
   pricelist: dynamic(() => import("./Pricelist")),
-  testimonials_list: dynamic(() => import("./TestimonialsList")),
+  testimonial_card: dynamic(() => import("./TestimonialCard")),
   contact_form: dynamic(() => import("./ContactForm")),
   cta_block: dynamic(() => import("./CTABlock")),
   ceo_block: dynamic(() => import("./CEOBlock")),
   testimonial_block: dynamic(() => import("./TestimonialBlock")),
   partner_block: dynamic(() => import("./PartnerBlock")),
+  page_title: dynamic(() => import("./PageTitle")),
+  blog_block: dynamic(() => import("./BlogBlock")),
+  blog_page: dynamic(() => import("./BlogPage")),
 };

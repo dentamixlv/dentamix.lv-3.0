@@ -1,4 +1,6 @@
 import React from 'react';
+import { SliceZone } from '@prismicio/react';
+import { components } from '../../../slices';
 import { createClient } from '../../../prismicio';
 import BlogsClient from './BlogsClient';
 import { getPrismicLocale } from '../page';
@@ -31,6 +33,20 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
+  // 1. Try to load dynamic page content from slices first
+  let slices = null;
+  try {
+    const document = await client.getByUID('page', 'blogs', { lang: locale });
+    slices = document?.data?.slices || null;
+  } catch (error) {
+    console.warn("No Prismic page document for 'blogs' found, falling back to standalone blog posts list.");
+  }
+
+  if (slices && slices.length > 0) {
+    return <SliceZone slices={slices} components={components} />;
+  }
+
+  // 2. Fallback to querying blog post cards dynamically
   let blogPosts = null;
   try {
     const documents = await client.getAllByType('blog_post', { lang: locale });

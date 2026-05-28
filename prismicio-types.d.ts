@@ -564,7 +564,7 @@ interface FooterDocumentData {
  */
 export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice | ServicesListSlice | DoctorsListSlice | PricelistSlice | TestimonialsListSlice | ContactFormSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceBlockSlice | ServicePageSlice | DoctorBlockSlice | DoctorPageSlice | PricelistSlice | TestimonialCardSlice | ContactFormSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice
 
 /**
  * Content for Homepage documents
@@ -689,23 +689,12 @@ interface MenuDocumentData {
  */
 export type MenuDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = HeroSlice | ServicesListSlice | DoctorsListSlice | PricelistSlice | TestimonialsListSlice | ContactFormSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice
+type PageDocumentDataSlicesSlice = HeroSlice | ServiceBlockSlice | ServicePageSlice | DoctorBlockSlice | DoctorPageSlice | PricelistSlice | TestimonialCardSlice | ContactFormSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice
 
 /**
  * Content for Page documents
  */
 interface PageDocumentData {
-	/**
-	 * Page Title field in *Page*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Services, Testimonials, etc.
-	 * - **API ID Path**: page.title
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	title: prismic.KeyTextField;
-	
 	/**
 	 * Slice Zone field in *Page*
 	 *
@@ -1023,6 +1012,214 @@ export type TestimonialDocument<Lang extends string = string> = prismic.PrismicD
 export type AllDocumentTypes = BlogPostDocument | DoctorDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument;
 
 /**
+ * Primary content in *BlogBlock → Default → Primary*
+ */
+export interface BlogBlockSliceDefaultPrimary {
+	/**
+	 * Hide Header field in *BlogBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: blog_block.default.primary.hideHeader
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	hideHeader: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *BlogBlock → Items*
+ */
+export interface BlogBlockSliceDefaultItem {
+	/**
+	 * Badge Text / Category field in *BlogBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: PADOMS
+	 * - **API ID Path**: blog_block.items[].badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *BlogBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Zobu balināšana: viss, kas jāzina
+	 * - **API ID Path**: blog_block.items[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Excerpt / Description field in *BlogBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Praktiski padomi drošai zobu balināšanai...
+	 * - **API ID Path**: blog_block.items[].excerpt
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	excerpt: prismic.KeyTextField;
+	
+	/**
+	 * Link Text field in *BlogBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Lasīt rakstu
+	 * - **API ID Path**: blog_block.items[].link_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	link_text: prismic.KeyTextField;
+	
+	/**
+	 * Link URL (Content Relationship to single post) field in *BlogBlock → Items*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_block.items[].link_url
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	link_url: prismic.ContentRelationshipField<"blog_post">;
+	
+	/**
+	 * Custom Image (Optional Override) field in *BlogBlock → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_block.items[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for BlogBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BlogBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<BlogBlockSliceDefaultPrimary>, Simplify<BlogBlockSliceDefaultItem>>;
+
+/**
+ * Slice variation for *BlogBlock*
+ */
+type BlogBlockSliceVariation = BlogBlockSliceDefault
+
+/**
+ * BlogBlock Shared Slice
+ *
+ * - **API ID**: `blog_block`
+ * - **Description**: Renders blog card previews from inline items or queries Prismic blog posts dynamically if empty.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BlogBlockSlice = prismic.SharedSlice<"blog_block", BlogBlockSliceVariation>;
+
+/**
+ * Primary content in *BlogPage → Default → Primary*
+ */
+export interface BlogPageSliceDefaultPrimary {
+	/**
+	 * Hide Header field in *BlogPage → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: blog_page.default.primary.hideHeader
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	hideHeader: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *BlogPage → Items*
+ */
+export interface BlogPageSliceDefaultItem {
+	/**
+	 * Badge Text / Category field in *BlogPage → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: PADOMS
+	 * - **API ID Path**: blog_page.items[].badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *BlogPage → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Zobu balināšana: viss, kas jāzina
+	 * - **API ID Path**: blog_page.items[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Excerpt / Description field in *BlogPage → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Praktiski padomi drošai zobu balināšanai...
+	 * - **API ID Path**: blog_page.items[].excerpt
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	excerpt: prismic.KeyTextField;
+	
+	/**
+	 * Link Text field in *BlogPage → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Lasīt rakstu
+	 * - **API ID Path**: blog_page.items[].link_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	link_text: prismic.KeyTextField;
+	
+	/**
+	 * Link URL (Content Relationship to single post) field in *BlogPage → Items*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_page.items[].link_url
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	link_url: prismic.ContentRelationshipField<"blog_post">;
+	
+	/**
+	 * Custom Image (Optional Override) field in *BlogPage → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_page.items[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for BlogPage Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BlogPageSliceDefault = prismic.SharedSliceVariation<"default", Simplify<BlogPageSliceDefaultPrimary>, Simplify<BlogPageSliceDefaultItem>>;
+
+/**
+ * Slice variation for *BlogPage*
+ */
+type BlogPageSliceVariation = BlogPageSliceDefault
+
+/**
+ * BlogPage Shared Slice
+ *
+ * - **API ID**: `blog_page`
+ * - **Description**: Renders the full grid of blog posts on the blogs page from inline items or queries Prismic dynamically.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type BlogPageSlice = prismic.SharedSlice<"blog_page", BlogPageSliceVariation>;
+
+/**
  * Primary content in *CEOBlock → Default → Primary*
  */
 export interface CeoBlockSliceDefaultPrimary {
@@ -1257,52 +1454,151 @@ type CtaBlockSliceVariation = CtaBlockSliceDefault
 export type CtaBlockSlice = prismic.SharedSlice<"cta_block", CtaBlockSliceVariation>;
 
 /**
- * Primary content in *DoctorsList → Default → Primary*
+ * Primary content in *DoctorBlock → Default → Primary*
  */
-export interface DoctorsListSliceDefaultPrimary {
+export interface DoctorBlockSliceDefaultPrimary {
 	/**
-	 * Title field in *DoctorsList → Default → Primary*
+	 * Badge Text field in *DoctorBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Zobārsti
+	 * - **API ID Path**: doctor_block.default.primary.badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *DoctorBlock → Default → Primary*
 	 *
 	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: Mūsu komanda
-	 * - **API ID Path**: doctors_list.default.primary.title
+	 * - **Placeholder**: Vadošie speciālisti
+	 * - **API ID Path**: doctor_block.default.primary.title
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
 	title: prismic.RichTextField;
 	
 	/**
-	 * Subtitle field in *DoctorsList → Default → Primary*
+	 * Subtitle field in *DoctorBlock → Default → Primary*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Profesionāli speciālisti...
-	 * - **API ID Path**: doctors_list.default.primary.subtitle
+	 * - **API ID Path**: doctor_block.default.primary.subtitle
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	subtitle: prismic.KeyTextField;
+	
+	/**
+	 * Link Text field in *DoctorBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Skatīt visus speciālistus
+	 * - **API ID Path**: doctor_block.default.primary.link_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	link_text: prismic.KeyTextField;
+	
+	/**
+	 * Link URL field in *DoctorBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: Select page or enter URL
+	 * - **API ID Path**: doctor_block.default.primary.link_url
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link_url: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
- * Default variation for DoctorsList Slice
+ * Primary content in *DoctorBlock → Items*
+ */
+export interface DoctorBlockSliceDefaultItem {
+	/**
+	 * Doctor Document field in *DoctorBlock → Items*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: doctor_block.items[].doctor
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	doctor: prismic.ContentRelationshipField<"doctor">;
+}
+
+/**
+ * Default variation for DoctorBlock Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default variation
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type DoctorsListSliceDefault = prismic.SharedSliceVariation<"default", Simplify<DoctorsListSliceDefaultPrimary>, never>;
+export type DoctorBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<DoctorBlockSliceDefaultPrimary>, Simplify<DoctorBlockSliceDefaultItem>>;
 
 /**
- * Slice variation for *DoctorsList*
+ * Slice variation for *DoctorBlock*
  */
-type DoctorsListSliceVariation = DoctorsListSliceDefault
+type DoctorBlockSliceVariation = DoctorBlockSliceDefault
 
 /**
- * DoctorsList Shared Slice
+ * DoctorBlock Shared Slice
  *
- * - **API ID**: `doctors_list`
- * - **Description**: Renders the dentist profiles cards grid.
+ * - **API ID**: `doctor_block`
+ * - **Description**: Featured doctors block with title, subtitle, and repeatable selected doctors.
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type DoctorsListSlice = prismic.SharedSlice<"doctors_list", DoctorsListSliceVariation>;
+export type DoctorBlockSlice = prismic.SharedSlice<"doctor_block", DoctorBlockSliceVariation>;
+
+/**
+ * Primary content in *DoctorPage → Default → Primary*
+ */
+export interface DoctorPageSliceDefaultPrimary {
+	/**
+	 * Hide Header field in *DoctorPage → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: doctor_page.default.primary.hideHeader
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	hideHeader: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *DoctorPage → Items*
+ */
+export interface DoctorPageSliceDefaultItem {
+	/**
+	 * Doctor Document field in *DoctorPage → Items*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: doctor_page.items[].doctor
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	doctor: prismic.ContentRelationshipField<"doctor">;
+}
+
+/**
+ * Default variation for DoctorPage Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type DoctorPageSliceDefault = prismic.SharedSliceVariation<"default", Simplify<DoctorPageSliceDefaultPrimary>, Simplify<DoctorPageSliceDefaultItem>>;
+
+/**
+ * Slice variation for *DoctorPage*
+ */
+type DoctorPageSliceVariation = DoctorPageSliceDefault
+
+/**
+ * DoctorPage Shared Slice
+ *
+ * - **API ID**: `doctor_page`
+ * - **Description**: Renders the full team grid of dentist profiles on the doctors page.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type DoctorPageSlice = prismic.SharedSlice<"doctor_page", DoctorPageSliceVariation>;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -1411,6 +1707,64 @@ type HeroSliceVariation = HeroSliceDefault
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
+
+/**
+ * Primary content in *PageTitle → Default → Primary*
+ */
+export interface PageTitleSliceDefaultPrimary {
+	/**
+	 * Badge Text field in *PageTitle → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: DENTAMIC PRIEKŠROCĪBAS
+	 * - **API ID Path**: page_title.default.primary.badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *PageTitle → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pacientu atsauksmes
+	 * - **API ID Path**: page_title.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Subtitle field in *PageTitle → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Mūsu pacientu patiesas atsauksmes...
+	 * - **API ID Path**: page_title.default.primary.subtitle
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	subtitle: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for PageTitle Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PageTitleSliceDefault = prismic.SharedSliceVariation<"default", Simplify<PageTitleSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *PageTitle*
+ */
+type PageTitleSliceVariation = PageTitleSliceDefault
+
+/**
+ * PageTitle Shared Slice
+ *
+ * - **API ID**: `page_title`
+ * - **Description**: Renders a standard centered page title block with a badge, heading, and subheading.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PageTitleSlice = prismic.SharedSlice<"page_title", PageTitleSliceVariation>;
 
 /**
  * Primary content in *PartnerBlock → Default → Primary*
@@ -1534,52 +1888,151 @@ type PricelistSliceVariation = PricelistSliceDefault
 export type PricelistSlice = prismic.SharedSlice<"pricelist", PricelistSliceVariation>;
 
 /**
- * Primary content in *ServicesList → Default → Primary*
+ * Primary content in *ServiceBlock → Default → Primary*
  */
-export interface ServicesListSliceDefaultPrimary {
+export interface ServiceBlockSliceDefaultPrimary {
 	/**
-	 * Title field in *ServicesList → Default → Primary*
+	 * Badge Text field in *ServiceBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pakalpojumi
+	 * - **API ID Path**: service_block.default.primary.badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *ServiceBlock → Default → Primary*
 	 *
 	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: Augstākās klases zobārstniecība
-	 * - **API ID Path**: services_list.default.primary.title
+	 * - **API ID Path**: service_block.default.primary.title
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
 	title: prismic.RichTextField;
 	
 	/**
-	 * Subtitle field in *ServicesList → Default → Primary*
+	 * Subtitle field in *ServiceBlock → Default → Primary*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Pilns mūsdienīgu pakalpojumu spektrs...
-	 * - **API ID Path**: services_list.default.primary.subtitle
+	 * - **API ID Path**: service_block.default.primary.subtitle
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	subtitle: prismic.KeyTextField;
+	
+	/**
+	 * Link Text field in *ServiceBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Skatīt visus pakalpojumus
+	 * - **API ID Path**: service_block.default.primary.link_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	link_text: prismic.KeyTextField;
+	
+	/**
+	 * Link URL field in *ServiceBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: Select page or enter URL
+	 * - **API ID Path**: service_block.default.primary.link_url
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	link_url: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
 }
 
 /**
- * Default variation for ServicesList Slice
+ * Primary content in *ServiceBlock → Items*
+ */
+export interface ServiceBlockSliceDefaultItem {
+	/**
+	 * Service Document field in *ServiceBlock → Items*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: service_block.items[].service
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	service: prismic.ContentRelationshipField<"service">;
+}
+
+/**
+ * Default variation for ServiceBlock Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default variation
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type ServicesListSliceDefault = prismic.SharedSliceVariation<"default", Simplify<ServicesListSliceDefaultPrimary>, never>;
+export type ServiceBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<ServiceBlockSliceDefaultPrimary>, Simplify<ServiceBlockSliceDefaultItem>>;
 
 /**
- * Slice variation for *ServicesList*
+ * Slice variation for *ServiceBlock*
  */
-type ServicesListSliceVariation = ServicesListSliceDefault
+type ServiceBlockSliceVariation = ServiceBlockSliceDefault
 
 /**
- * ServicesList Shared Slice
+ * ServiceBlock Shared Slice
  *
- * - **API ID**: `services_list`
- * - **Description**: Renders the dynamic cards list of all dental services.
+ * - **API ID**: `service_block`
+ * - **Description**: Featured services block with title, subtitle, and repeatable selected services.
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type ServicesListSlice = prismic.SharedSlice<"services_list", ServicesListSliceVariation>;
+export type ServiceBlockSlice = prismic.SharedSlice<"service_block", ServiceBlockSliceVariation>;
+
+/**
+ * Primary content in *ServicePage → Default → Primary*
+ */
+export interface ServicePageSliceDefaultPrimary {
+	/**
+	 * Hide Header field in *ServicePage → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: service_page.default.primary.hideHeader
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	hideHeader: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *ServicePage → Items*
+ */
+export interface ServicePageSliceDefaultItem {
+	/**
+	 * Service Document field in *ServicePage → Items*
+	 *
+	 * - **Field Type**: Content Relationship
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: service_page.items[].service
+	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 */
+	service: prismic.ContentRelationshipField<"service">;
+}
+
+/**
+ * Default variation for ServicePage Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ServicePageSliceDefault = prismic.SharedSliceVariation<"default", Simplify<ServicePageSliceDefaultPrimary>, Simplify<ServicePageSliceDefaultItem>>;
+
+/**
+ * Slice variation for *ServicePage*
+ */
+type ServicePageSliceVariation = ServicePageSliceDefault
+
+/**
+ * ServicePage Shared Slice
+ *
+ * - **API ID**: `service_page`
+ * - **Description**: Renders the full grid of dental services on the services page.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type ServicePageSlice = prismic.SharedSlice<"service_page", ServicePageSliceVariation>;
 
 /**
  * Primary content in *TestimonialBlock → Default → Primary*
@@ -1715,52 +2168,98 @@ type TestimonialBlockSliceVariation = TestimonialBlockSliceDefault
 export type TestimonialBlockSlice = prismic.SharedSlice<"testimonial_block", TestimonialBlockSliceVariation>;
 
 /**
- * Primary content in *TestimonialsList → Default → Primary*
+ * Primary content in *TestimonialCard → Default → Primary*
  */
-export interface TestimonialsListSliceDefaultPrimary {
+export interface TestimonialCardSliceDefaultPrimary {
 	/**
-	 * Title field in *TestimonialsList → Default → Primary*
+	 * Hide Header field in *TestimonialCard → Default → Primary*
 	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: Pacientu atsauksmes
-	 * - **API ID Path**: testimonials_list.default.primary.title
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: testimonial_card.default.primary.hideHeader
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
 	 */
-	title: prismic.RichTextField;
-	
-	/**
-	 * Subtitle field in *TestimonialsList → Default → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Mūsu pacienti novērtē augstāko aprūpes kvalitāti...
-	 * - **API ID Path**: testimonials_list.default.primary.subtitle
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	subtitle: prismic.KeyTextField;
+	hideHeader: prismic.BooleanField;
 }
 
 /**
- * Default variation for TestimonialsList Slice
+ * Primary content in *TestimonialCard → Items*
+ */
+export interface TestimonialCardSliceDefaultItem {
+	/**
+	 * Author Name field in *TestimonialCard → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Juris K.
+	 * - **API ID Path**: testimonial_card.items[].author
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	author: prismic.KeyTextField;
+	
+	/**
+	 * Treatment Type field in *TestimonialCard → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Zobu implantācija
+	 * - **API ID Path**: testimonial_card.items[].treatment
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	treatment: prismic.KeyTextField;
+	
+	/**
+	 * Rating (1-5) field in *TestimonialCard → Items*
+	 *
+	 * - **Field Type**: Number
+	 * - **Placeholder**: 5
+	 * - **API ID Path**: testimonial_card.items[].rating
+	 * - **Documentation**: https://prismic.io/docs/fields/number
+	 */
+	rating: prismic.NumberField;
+	
+	/**
+	 * Date field in *TestimonialCard → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 10. Maijs, 2026
+	 * - **API ID Path**: testimonial_card.items[].date
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	date: prismic.KeyTextField;
+	
+	/**
+	 * Detailed Story field in *TestimonialCard → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: The implant surgery was completely painless...
+	 * - **API ID Path**: testimonial_card.items[].story
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	story: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for TestimonialCard Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default variation
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type TestimonialsListSliceDefault = prismic.SharedSliceVariation<"default", Simplify<TestimonialsListSliceDefaultPrimary>, never>;
+export type TestimonialCardSliceDefault = prismic.SharedSliceVariation<"default", Simplify<TestimonialCardSliceDefaultPrimary>, Simplify<TestimonialCardSliceDefaultItem>>;
 
 /**
- * Slice variation for *TestimonialsList*
+ * Slice variation for *TestimonialCard*
  */
-type TestimonialsListSliceVariation = TestimonialsListSliceDefault
+type TestimonialCardSliceVariation = TestimonialCardSliceDefault
 
 /**
- * TestimonialsList Shared Slice
+ * TestimonialCard Shared Slice
  *
- * - **API ID**: `testimonials_list`
- * - **Description**: Renders the testimonials feedback cards grid.
+ * - **API ID**: `testimonial_card`
+ * - **Description**: Renders testimonial cards from inline items or queries Prismic testimonial documents if empty.
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type TestimonialsListSlice = prismic.SharedSlice<"testimonials_list", TestimonialsListSliceVariation>;
+export type TestimonialCardSlice = prismic.SharedSlice<"testimonial_card", TestimonialCardSliceVariation>;
 
 declare module "@prismicio/client" {
 	interface CreateClient {
@@ -1803,6 +2302,16 @@ declare module "@prismicio/client" {
 			TestimonialDocument,
 			TestimonialDocumentData,
 			AllDocumentTypes,
+			BlogBlockSlice,
+			BlogBlockSliceDefaultPrimary,
+			BlogBlockSliceDefaultItem,
+			BlogBlockSliceVariation,
+			BlogBlockSliceDefault,
+			BlogPageSlice,
+			BlogPageSliceDefaultPrimary,
+			BlogPageSliceDefaultItem,
+			BlogPageSliceVariation,
+			BlogPageSliceDefault,
 			CeoBlockSlice,
 			CeoBlockSliceDefaultPrimary,
 			CeoBlockSliceVariation,
@@ -1815,14 +2324,24 @@ declare module "@prismicio/client" {
 			CtaBlockSliceDefaultPrimary,
 			CtaBlockSliceVariation,
 			CtaBlockSliceDefault,
-			DoctorsListSlice,
-			DoctorsListSliceDefaultPrimary,
-			DoctorsListSliceVariation,
-			DoctorsListSliceDefault,
+			DoctorBlockSlice,
+			DoctorBlockSliceDefaultPrimary,
+			DoctorBlockSliceDefaultItem,
+			DoctorBlockSliceVariation,
+			DoctorBlockSliceDefault,
+			DoctorPageSlice,
+			DoctorPageSliceDefaultPrimary,
+			DoctorPageSliceDefaultItem,
+			DoctorPageSliceVariation,
+			DoctorPageSliceDefault,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,
 			HeroSliceDefault,
+			PageTitleSlice,
+			PageTitleSliceDefaultPrimary,
+			PageTitleSliceVariation,
+			PageTitleSliceDefault,
 			PartnerBlockSlice,
 			PartnerBlockSliceDefaultPrimary,
 			PartnerBlockSliceDefaultItem,
@@ -1832,19 +2351,26 @@ declare module "@prismicio/client" {
 			PricelistSliceDefaultPrimary,
 			PricelistSliceVariation,
 			PricelistSliceDefault,
-			ServicesListSlice,
-			ServicesListSliceDefaultPrimary,
-			ServicesListSliceVariation,
-			ServicesListSliceDefault,
+			ServiceBlockSlice,
+			ServiceBlockSliceDefaultPrimary,
+			ServiceBlockSliceDefaultItem,
+			ServiceBlockSliceVariation,
+			ServiceBlockSliceDefault,
+			ServicePageSlice,
+			ServicePageSliceDefaultPrimary,
+			ServicePageSliceDefaultItem,
+			ServicePageSliceVariation,
+			ServicePageSliceDefault,
 			TestimonialBlockSlice,
 			TestimonialBlockSliceDefaultPrimary,
 			TestimonialBlockSliceDefaultItem,
 			TestimonialBlockSliceVariation,
 			TestimonialBlockSliceDefault,
-			TestimonialsListSlice,
-			TestimonialsListSliceDefaultPrimary,
-			TestimonialsListSliceVariation,
-			TestimonialsListSliceDefault
+			TestimonialCardSlice,
+			TestimonialCardSliceDefaultPrimary,
+			TestimonialCardSliceDefaultItem,
+			TestimonialCardSliceVariation,
+			TestimonialCardSliceDefault
 		}
 	}
 }

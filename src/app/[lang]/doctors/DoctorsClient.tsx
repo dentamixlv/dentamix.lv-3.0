@@ -66,35 +66,42 @@ const translations = {
   }
 };
 
+import { Doctor } from '../../../types';
+
 interface DoctorsClientProps {
   langCode: string;
+  customDoctors?: Doctor[] | null;
+  hideHeader?: boolean;
 }
 
-export default function DoctorsClient({ langCode }: DoctorsClientProps) {
+export default function DoctorsClient({ langCode, customDoctors, hideHeader = false }: DoctorsClientProps) {
   const t = langCode === 'en-us' ? translations.en : translations.lv;
   const isEn = langCode === 'en-us';
   const langPrefix = langCode === 'en-us' ? '/en' : '';
-  const doctors = getDoctors(langCode);
+  const doctors = customDoctors || getDoctors(langCode);
+
 
   return (
-    <div className="py-16 md:py-24 max-w-7xl mx-auto px-6">
+    <div className={`${hideHeader ? 'pt-2 pb-0 md:pt-4 md:pb-0' : 'py-16 md:py-24'} max-w-7xl mx-auto px-6`}>
       {/* Title and subtitle header */}
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={fadeUpVariants}
-        className="text-center max-w-2xl mx-auto mb-12"
-      >
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
-          {t.tag}
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
-          {t.title}
-        </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
-          {t.sub}
-        </p>
-      </motion.div>
+      {!hideHeader && (
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={fadeUpVariants}
+          className="text-center max-w-2xl mx-auto mb-12"
+        >
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+            {t.tag}
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
+            {t.title}
+          </h2>
+          <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+            {t.sub}
+          </p>
+        </motion.div>
+      )}
 
       {/* Doctor cards list grid */}
       <motion.div 
@@ -157,31 +164,33 @@ export default function DoctorsClient({ langCode }: DoctorsClientProps) {
       </motion.div>
 
       {/* Interactive Consultation Invite Banner bottom */}
-      <section className="mt-20 md:mt-28 bg-white border-y border-[#efedec] py-16">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={scaleInVariants}
-            className="bg-[#f2dde1]/15 border border-[#d9c1c2]/50 p-8 md:p-14 rounded-3xl space-y-6"
-          >
-            <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#511B29]">
-              {t.wantBookTitle}
-            </h3>
-            <p className="text-sm text-[#6a5b5e] max-w-xl mx-auto font-medium leading-relaxed">
-              {t.wantBookSub}
-            </p>
-            <Link
-              href={`${langPrefix}/contacts`}
-              className="inline-block px-10 py-4 bg-[#511B29] hover:bg-[#5d1726] text-white font-bold rounded-full text-sm tracking-uppercase active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-[#511B29]/20 uppercase"
-              id="team-bottom-cta-btn"
+      {!hideHeader && (
+        <section className="mt-20 md:mt-28 bg-white border-y border-[#efedec] py-16">
+          <div className="max-w-4xl mx-auto px-6 text-center">
+            <motion.div 
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={scaleInVariants}
+              className="bg-[#f2dde1]/15 border border-[#d9c1c2]/50 p-8 md:p-14 rounded-3xl space-y-6"
             >
-              {t.bookVisit}
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+              <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#511B29]">
+                {t.wantBookTitle}
+              </h3>
+              <p className="text-sm text-[#6a5b5e] max-w-xl mx-auto font-medium leading-relaxed">
+                {t.wantBookSub}
+              </p>
+              <Link
+                href={`${langPrefix}/contacts`}
+                className="inline-block px-10 py-4 bg-[#511B29] hover:bg-[#5d1726] text-white font-bold rounded-full text-sm tracking-uppercase active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-[#511B29]/20 uppercase"
+                id="team-bottom-cta-btn"
+              >
+                {t.bookVisit}
+              </Link>
+            </motion.div>
+          </div>
+        </section>
+      )}
 
     </div>
   );

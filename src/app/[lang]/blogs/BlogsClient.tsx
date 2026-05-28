@@ -33,9 +33,10 @@ const fadeUpVariants = {
 interface BlogsClientProps {
   langCode: string;
   customBlogPosts?: BlogPost[] | null;
+  hideHeader?: boolean;
 }
 
-export default function BlogsClient({ langCode, customBlogPosts }: BlogsClientProps) {
+export default function BlogsClient({ langCode, customBlogPosts, hideHeader = false }: BlogsClientProps) {
   const isEn = langCode === 'en-us';
   const langPrefix = isEn ? '/en' : '';
   const posts = customBlogPosts || getBlogPosts(langCode);
@@ -50,24 +51,26 @@ export default function BlogsClient({ langCode, customBlogPosts }: BlogsClientPr
   };
 
   return (
-    <div className="py-16 md:py-24 max-w-7xl mx-auto px-6">
+    <div className={`${hideHeader ? 'pt-2 pb-0 md:pt-4 md:pb-0' : 'py-16 md:py-24'} max-w-7xl mx-auto px-6`}>
       {/* Title and subtitle header */}
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={fadeUpVariants}
-        className="text-center max-w-2xl mx-auto mb-12"
-      >
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
-          {t.tag}
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
-          {t.title}
-        </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
-          {t.sub}
-        </p>
-      </motion.div>
+      {!hideHeader && (
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={fadeUpVariants}
+          className="text-center max-w-2xl mx-auto mb-12"
+        >
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+            {t.tag}
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
+            {t.title}
+          </h2>
+          <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+            {t.sub}
+          </p>
+        </motion.div>
+      )}
 
       {/* Blogs cards list grid */}
       <motion.div 

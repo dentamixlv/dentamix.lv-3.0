@@ -11,9 +11,10 @@ interface TestimonialsPageProps {
   onBook: () => void;
   langCode?: string;
   customTestimonials?: Testimonial[];
+  hideHeader?: boolean;
 }
 
-export default function TestimonialsPage({ onBook, langCode = 'lv', customTestimonials }: TestimonialsPageProps) {
+export default function TestimonialsPage({ onBook, langCode = 'lv', customTestimonials, hideHeader = false }: TestimonialsPageProps) {
   const isEn = langCode === 'en-us';
 
   const testimonialsData: Testimonial[] = customTestimonials || [
@@ -125,26 +126,28 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
   } as const;
 
   return (
-    <div className="py-16 md:py-24 max-w-7xl mx-auto px-6" id="testimonials-page-view">
+    <div className={`${hideHeader ? 'pt-2 pb-0 md:pt-4 md:pb-0' : 'py-16 md:py-24'} max-w-7xl mx-auto px-6`} id="testimonials-page-view">
       {/* 1. Header with same badge and style */}
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={fadeUpVariants}
-        className="text-center max-w-2xl mx-auto mb-12"
-      >
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
-          {isEn ? 'DENTAMIC ADVANTAGES' : 'DENTAMIC PRIEKŠROCĪBAS'}
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
-          {isEn ? 'Patient Testimonials' : 'Pacientu atsauksmes'}
-        </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
-          {isEn 
-            ? 'Genuine feedback and heartwarming stories from our patients about their treatment.'
-            : 'Mūsu pacientu patiesas atsauksmes un sirsnīgi pieredzes stāsti par veikto ārstēšanu.'}
-        </p>
-      </motion.div>
+      {!hideHeader && (
+        <motion.div 
+          initial="hidden"
+          animate="visible"
+          variants={fadeUpVariants}
+          className="text-center max-w-2xl mx-auto mb-12"
+        >
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+            {isEn ? 'DENTAMIC ADVANTAGES' : 'DENTAMIC PRIEKŠROCĪBAS'}
+          </span>
+          <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
+            {isEn ? 'Patient Testimonials' : 'Pacientu atsauksmes'}
+          </h2>
+          <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+            {isEn 
+              ? 'Genuine feedback and heartwarming stories from our patients about their treatment.'
+              : 'Mūsu pacientu patiesas atsauksmes un sirsnīgi pieredzes stāsti par veikto ārstēšanu.'}
+          </p>
+        </motion.div>
+      )}
 
       {/* 3. Testimonial Cards Layout matching Doctors / Services Grid Style */}
       <motion.div 
@@ -175,17 +178,19 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
       </motion.div>
 
       {/* 4. Bottom Quality Standard CTA */}
-      <CTABlock
-        badgeText={isEn ? 'Share Your Experience' : 'Dalieties pieredzē'}
-        title={isEn ? 'Would you like to leave a review of your visit?' : 'Vēlaties atstāt savu atsauksmi par vizīti?'}
-        description={isEn
-          ? "Every patient's opinion helps us grow and maintain our standard of excellence. If you recently visited our clinic, we will be happy to receive your story and feedback!"
-          : "Katrs pacienta viedoklis palīdz mums augt un turpināt uzturēt izcilības līmeni. Ja nesen esat apmeklējis mūsu klīniku, priecāsimies saņemt Jūsu stāstu un ieteikumus!"}
-        buttonText={isEn ? 'Join the Smile Stories' : 'Piedalīties smaidu stāstā'}
-        onClick={onBook}
-        id="testimonials-cta-booking-btn"
-        className="mt-16"
-      />
+      {!hideHeader && (
+        <CTABlock
+          badgeText={isEn ? 'Share Your Experience' : 'Dalieties pieredzē'}
+          title={isEn ? 'Would you like to leave a review of your visit?' : 'Vēlaties atstāt savu atsauksmi par vizīti?'}
+          description={isEn
+            ? "Every patient's opinion helps us grow and maintain our standard of excellence. If you recently visited our clinic, we will be happy to receive your story and feedback!"
+            : "Katrs pacienta viedoklis palīdz mums augt un turpināt uzturēt izcilības līmeni. Ja nesen esat apmeklējis mūsu klīniku, priecāsimies saņemt Jūsu stāstu un ieteikumus!"}
+          buttonText={isEn ? 'Join the Smile Stories' : 'Piedalīties smaidu stāstā'}
+          onClick={onBook}
+          id="testimonials-cta-booking-btn"
+          className="mt-16"
+        />
+      )}
     </div>
   );
 }

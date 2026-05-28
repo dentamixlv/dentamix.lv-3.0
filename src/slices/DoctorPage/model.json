@@ -1,0 +1,36 @@
+{
+  "id": "doctor_page",
+  "type": "SharedSlice",
+  "name": "DoctorPage",
+  "description": "Renders the full team grid of dentist profiles on the doctors page.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "hideHeader": {
+          "type": "Boolean",
+          "config": {
+            "label": "Hide Header",
+            "placeholder_false": "Show",
+            "placeholder_true": "Hide",
+            "default_value": true
+          }
+        }
+      },
+      "items": {
+        "doctor": {
+          "type": "Link",
+          "config": {
+            "label": "Doctor Document",
+            "select": "document",
+            "customtypes": ["doctor"]
+          }
+        }
+      }
+    }
+  ]
+}

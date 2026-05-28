@@ -1,4 +1,6 @@
 import React from 'react';
+import { SliceZone } from '@prismicio/react';
+import { components } from '../../../slices';
 import { createClient } from '../../../prismicio';
 import TestimonialsClient from './TestimonialsClient';
 import { getPrismicLocale } from '../page';
@@ -31,6 +33,27 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
+  // 1. Try to load dynamic page content from slices first
+  let slices = null;
+  try {
+    const uid = locale === 'en-us' ? 'testimonials' : 'atsauksmes';
+    let document;
+    try {
+      document = await client.getByUID('page', uid, { lang: locale });
+    } catch (e) {
+      const fallbackUid = uid === 'atsauksmes' ? 'testimonials' : 'atsauksmes';
+      document = await client.getByUID('page', fallbackUid, { lang: locale });
+    }
+    slices = document?.data?.slices || null;
+  } catch (error) {
+    console.warn("No Prismic page document for 'testimonials' found, falling back to standalone testimonials list.");
+  }
+
+  if (slices && slices.length > 0) {
+    return <SliceZone slices={slices} components={components} />;
+  }
+
+  // 2. Fallback to querying testimonial cards dynamically
   let testimonials = null;
   try {
     const documents = await client.getAllByType('testimonial', { lang: locale });

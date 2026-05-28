@@ -1,0 +1,64 @@
+{
+  "id": "doctor_block",
+  "type": "SharedSlice",
+  "name": "DoctorBlock",
+  "description": "Featured doctors block with title, subtitle, and repeatable selected doctors.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge Text",
+            "placeholder": "Zobārsti"
+          }
+        },
+        "title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Title",
+            "placeholder": "Vadošie speciālisti",
+            "allowTargetBlank": true,
+            "single": "heading2,heading3"
+          }
+        },
+        "subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "Profesionāli speciālisti..."
+          }
+        },
+        "link_text": {
+          "type": "Text",
+          "config": {
+            "label": "Link Text",
+            "placeholder": "Skatīt visus speciālistus"
+          }
+        },
+        "link_url": {
+          "type": "Link",
+          "config": {
+            "label": "Link URL",
+            "placeholder": "Select page or enter URL"
+          }
+        }
+      },
+      "items": {
+        "doctor": {
+          "type": "Link",
+          "config": {
+            "label": "Doctor Document",
+            "select": "document",
+            "customtypes": ["doctor"]
+          }
+        }
+      }
+    }
+  ]
+}

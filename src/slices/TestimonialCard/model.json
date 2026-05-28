@@ -1,0 +1,63 @@
+{
+  "id": "testimonial_card",
+  "type": "SharedSlice",
+  "name": "TestimonialCard",
+  "description": "Renders testimonial cards from inline items or queries Prismic testimonial documents if empty.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "hideHeader": {
+          "type": "Boolean",
+          "config": {
+            "label": "Hide Header",
+            "placeholder_false": "Show",
+            "placeholder_true": "Hide",
+            "default_value": true
+          }
+        }
+      },
+      "items": {
+        "author": {
+          "type": "Text",
+          "config": {
+            "label": "Author Name",
+            "placeholder": "Juris K."
+          }
+        },
+        "treatment": {
+          "type": "Text",
+          "config": {
+            "label": "Treatment Type",
+            "placeholder": "Zobu implantācija"
+          }
+        },
+        "rating": {
+          "type": "Number",
+          "config": {
+            "label": "Rating (1-5)",
+            "placeholder": "5"
+          }
+        },
+        "date": {
+          "type": "Text",
+          "config": {
+            "label": "Date",
+            "placeholder": "10. Maijs, 2026"
+          }
+        },
+        "story": {
+          "type": "Text",
+          "config": {
+            "label": "Detailed Story",
+            "placeholder": "The implant surgery was completely painless..."
+          }
+        }
+      }
+    }
+  ]
+}

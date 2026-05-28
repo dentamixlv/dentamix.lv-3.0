@@ -115,7 +115,7 @@ export default function CEOBlock({ slice }: CEOBlockProps) {
         whileInView="visible"
         viewport={{ once: true, margin: "-100px" }}
         variants={staggerContainerVariants}
-        className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-2xl shadow-[#511B29]/5 p-6 md:p-12 relative"
+        className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 p-6 md:p-12 relative"
       >
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-center">
           

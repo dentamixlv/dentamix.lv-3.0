@@ -1,0 +1,72 @@
+{
+  "id": "blog_block",
+  "type": "SharedSlice",
+  "name": "BlogBlock",
+  "description": "Renders blog card previews from inline items or queries Prismic blog posts dynamically if empty.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "hideHeader": {
+          "type": "Boolean",
+          "config": {
+            "label": "Hide Header",
+            "placeholder_false": "Show",
+            "placeholder_true": "Hide",
+            "default_value": true
+          }
+        }
+      },
+      "items": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge Text / Category",
+            "placeholder": "PADOMS"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Zobu balināšana: viss, kas jāzina"
+          }
+        },
+        "excerpt": {
+          "type": "Text",
+          "config": {
+            "label": "Excerpt / Description",
+            "placeholder": "Praktiski padomi drošai zobu balināšanai..."
+          }
+        },
+        "link_text": {
+          "type": "Text",
+          "config": {
+            "label": "Link Text",
+            "placeholder": "Lasīt rakstu"
+          }
+        },
+        "link_url": {
+          "type": "Link",
+          "config": {
+            "label": "Link URL (Content Relationship to single post)",
+            "select": "document",
+            "customtypes": ["blog_post"]
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Custom Image (Optional Override)",
+            "constraint": {},
+            "thumbnails": []
+          }
+        }
+      }
+    }
+  ]
+}

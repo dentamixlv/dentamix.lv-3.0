@@ -1,23 +1,13 @@
 'use client';
 
 import React from 'react';
-import { SliceZone } from '@prismicio/react';
-import { components } from '../../../slices';
 import ContactFormSliceComponent from '../../../slices/ContactForm';
 
 interface ContactsClientProps {
   langCode: string;
-  pageContent?: {
-    title: string;
-    slices: any[];
-  } | null;
 }
 
-export default function ContactsClient({ langCode, pageContent }: ContactsClientProps) {
-  if (pageContent && pageContent.slices && pageContent.slices.length > 0) {
-    return <SliceZone slices={pageContent.slices} components={components} />;
-  }
-
+export default function ContactsClient({ langCode }: ContactsClientProps) {
   // Fallback using our self-contained ContactForm slice
   const mockSlice = {
     slice_type: "contact_form" as const,

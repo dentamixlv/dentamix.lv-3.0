@@ -1,8 +1,8 @@
 {
-  "id": "doctors_list",
+  "id": "page_title",
   "type": "SharedSlice",
-  "name": "DoctorsList",
-  "description": "Renders the dentist profiles cards grid.",
+  "name": "PageTitle",
+  "description": "Renders a standard centered page title block with a badge, heading, and subheading.",
   "variations": [
     {
       "id": "default",
@@ -11,20 +11,25 @@
       "version": "sktwi1xtmkfgx8627",
       "description": "Default variation",
       "primary": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge Text",
+            "placeholder": "DENTAMIC PRIEKŠROCĪBAS"
+          }
+        },
         "title": {
-          "type": "StructuredText",
+          "type": "Text",
           "config": {
             "label": "Title",
-            "placeholder": "Mūsu komanda",
-            "allowTargetBlank": true,
-            "single": "heading2,heading3"
+            "placeholder": "Pacientu atsauksmes"
           }
         },
         "subtitle": {
           "type": "Text",
           "config": {
             "label": "Subtitle",
-            "placeholder": "Profesionāli speciālisti..."
+            "placeholder": "Mūsu pacientu patiesas atsauksmes..."
           }
         }
       },

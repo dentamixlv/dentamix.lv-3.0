@@ -11,13 +11,6 @@
           "label": "UID / URL Slug"
         }
       },
-      "title": {
-        "type": "Text",
-        "config": {
-          "label": "Page Title",
-          "placeholder": "Services, Testimonials, etc."
-        }
-      },
       "slices": {
         "type": "Slices",
         "fieldset": "Slice Zone",
@@ -26,16 +19,22 @@
             "hero": {
               "type": "SharedSlice"
             },
-            "services_list": {
+            "service_block": {
               "type": "SharedSlice"
             },
-            "doctors_list": {
+            "service_page": {
+              "type": "SharedSlice"
+            },
+            "doctor_block": {
+              "type": "SharedSlice"
+            },
+            "doctor_page": {
               "type": "SharedSlice"
             },
             "pricelist": {
               "type": "SharedSlice"
             },
-            "testimonials_list": {
+            "testimonial_card": {
               "type": "SharedSlice"
             },
             "contact_form": {
@@ -48,6 +47,18 @@
               "type": "SharedSlice"
             },
             "testimonial_block": {
+              "type": "SharedSlice"
+            },
+            "partner_block": {
+              "type": "SharedSlice"
+            },
+            "page_title": {
+              "type": "SharedSlice"
+            },
+            "blog_block": {
+              "type": "SharedSlice"
+            },
+            "blog_page": {
               "type": "SharedSlice"
             }
           }
