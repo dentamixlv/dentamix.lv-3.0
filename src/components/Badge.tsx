@@ -51,7 +51,7 @@ export default function Badge({
   variants,
 }: BadgeProps) {
   const baseClasses =
-    'inline-flex items-center px-3 py-1 rounded-full text-[9px] font-extrabold uppercase tracking-widest';
+    'inline-flex items-center px-3 py-1 rounded-full text-[0.5625rem] font-extrabold uppercase tracking-widest';
 
   const allClasses = `${baseClasses} ${variantClasses[variant]} ${className}`.trim();
 

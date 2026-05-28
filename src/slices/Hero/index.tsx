@@ -54,7 +54,7 @@ const richTextComponents: JSXMapSerializer = {
     </h2>
   ),
   paragraph: ({ children }) => (
-    <p className="text-[#1b1c1b] text-base md:text-lg font-normal mt-6 max-w-2xl leading-relaxed">
+    <p className="text-[#6A5B5E] text-base font-normal mt-6 max-w-2xl leading-relaxed">
       {children}
     </p>
   ),

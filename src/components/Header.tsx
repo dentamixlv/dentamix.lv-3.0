@@ -151,7 +151,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
 
   return (
     <header className="sticky top-0 z-40 w-full bg-[#511B29] backdrop-blur-md border-b border-[#5d1726]/30">
-      <div className="max-w-7xl mx-auto px-6 h-20 md:h-24 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 h-20 lg:h-24 flex items-center justify-between">
         {/* Logo */}
         <Link 
           href={getPath('home')}
@@ -174,14 +174,14 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-5 lg:gap-7">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
           {navItems.map((item) => {
             const active = isActive(item.id);
             return (
               <Link
                 key={item.id}
                 href={getPath(item.id)}
-                className={`relative py-2 text-xs font-bold uppercase tracking-widest transition-colors cursor-pointer ${
+                className={`relative py-2 text-sm font-bold uppercase tracking-widest transition-colors cursor-pointer ${
                   active ? 'text-[#de7c8a]' : 'text-white/75 hover:text-white'
                 }`}
                 id={`nav-item-${item.id}`}
@@ -202,7 +202,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
           {isEn ? (
             <Link
               href={getLanguagePath('lv')}
-              className="relative py-2 text-xs font-bold uppercase tracking-widest text-white/75 hover:text-white transition-colors cursor-pointer"
+              className="relative py-2 text-sm font-bold uppercase tracking-widest text-white/75 hover:text-white transition-colors cursor-pointer"
               id="lang-switch-lv"
             >
               LV
@@ -210,7 +210,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
           ) : (
             <Link
               href={getLanguagePath('en')}
-              className="relative py-2 text-xs font-bold uppercase tracking-widest text-white/75 hover:text-white transition-colors cursor-pointer"
+              className="relative py-2 text-sm font-bold uppercase tracking-widest text-white/75 hover:text-white transition-colors cursor-pointer"
               id="lang-switch-en"
             >
               EN
@@ -231,7 +231,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
           {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 md:hidden text-white hover:bg-white/15 rounded-lg transition-colors cursor-pointer"
+            className="p-2 lg:hidden text-white hover:bg-white/15 rounded-lg transition-colors cursor-pointer"
             id="mobile-menu-toggle-btn"
             aria-label={isEn ? "Menu" : "Izvēlne"}
           >
@@ -248,7 +248,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
-            className="md:hidden w-full bg-[#511B29] border-b border-[#5d1726]/40 overflow-hidden"
+            className="lg:hidden w-full bg-[#511B29] border-b border-[#5d1726]/40 overflow-hidden"
           >
             <div className="px-6 py-6 flex flex-col gap-5">
               {navItems.map((item) => (
@@ -256,7 +256,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
                   key={item.id}
                   href={getPath(item.id)}
                   onClick={() => setMobileMenuOpen(false)}
-                  className={`text-left text-xs font-bold uppercase tracking-widest py-3 border-b border-white/10 ${
+                  className={`text-left text-sm font-bold uppercase tracking-widest py-3 border-b border-white/10 ${
                     isActive(item.id) ? 'text-[#de7c8a]' : 'text-white/80 hover:text-white'
                   }`}
                   id={`mobile-nav-item-${item.id}`}
@@ -270,7 +270,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
                 <Link
                   href={getLanguagePath('lv')}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-left text-xs font-bold uppercase tracking-widest py-3 border-b border-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
+                  className="text-left text-sm font-bold uppercase tracking-widest py-3 border-b border-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
                   id="mobile-lang-switch-lv"
                 >
                   LV
@@ -279,7 +279,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
                 <Link
                   href={getLanguagePath('en')}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="text-left text-xs font-bold uppercase tracking-widest py-3 border-b border-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
+                  className="text-left text-sm font-bold uppercase tracking-widest py-3 border-b border-white/10 text-white/80 hover:text-white transition-colors cursor-pointer"
                   id="mobile-lang-switch-en"
                 >
                   EN

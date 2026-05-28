@@ -131,7 +131,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                 <div>
                   {/* Upper tag detail */}
                   {branchBadge && (
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
+                    <span className="text-[0.625rem] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
                       {branchBadge}
                     </span>
                   )}
@@ -146,17 +146,17 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                   </h3>
 
                   {/* Info details in a single continuous vertical list */}
-                  <div className="space-y-4 my-6 text-xs text-[#1A1718]">
+                  <div className="space-y-4 my-6 text-sm text-[#6A5B5E]">
                     {/* Phone */}
                     {phoneVal && (
-                      <p className="flex items-center gap-2 font-medium text-[#1A1718] hover:text-[#5d1726]/80 transition-colors">
+                      <p className="flex items-center gap-2 font-medium text-[#6A5B5E] hover:text-[#5d1726]/80 transition-colors">
                         <Phone className="w-4 h-4 text-[#de7c8a] shrink-0" />
                         <span>{phoneVal}</span>
                       </p>
                     )}
                     {/* Address */}
                     {addressVal && (
-                      <p className="flex items-start gap-2 text-[#1A1718] font-medium leading-relaxed">
+                      <p className="flex items-start gap-2 text-[#6A5B5E] font-medium leading-relaxed">
                         <MapPin className="w-4 h-4 text-[#de7c8a] shrink-0 mt-0.5" />
                         {directUrl ? (
                           <a 
@@ -213,11 +213,11 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                     {/* Working hours as sub-list within the vertical list */}
                     {whLabel && (
                       <div className="pt-4 border-t border-[#efedec]/60">
-                        <p className="text-[#1A1718] font-bold uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                        <p className="text-[#6A5B5E] font-bold uppercase tracking-wider flex items-center gap-1.5 mb-3">
                           <Clock className="w-3.5 h-3.5 text-[#de7c8a]" />
                           {whLabel}
                         </p>
-                        <div className="space-y-2 pl-5 font-medium text-xs">
+                        <div className="space-y-2 pl-5 font-medium text-sm">
                           {wdText && (
                             <p className="flex justify-between max-w-xs">
                               <span>{wdText}</span>
@@ -246,7 +246,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
 
                     {/* Accessibility */}
                     {accText && (
-                      <p className="flex items-start gap-2 pt-4 border-t border-[#efedec]/60 text-[#1A1718] font-medium leading-relaxed">
+                      <p className="flex items-start gap-2 pt-4 border-t border-[#efedec]/60 text-[#6A5B5E] font-medium leading-relaxed">
                         <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                         <span>{accText}</span>
                       </p>
@@ -261,7 +261,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                       href={directUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
+                      className="inline-flex items-center gap-1.5 text-sm font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                     >
                       <span>{isEn ? 'Open in Google Maps' : 'Skatīt Google Maps'}</span>
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

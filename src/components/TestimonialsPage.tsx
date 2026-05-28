@@ -139,13 +139,13 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
           variants={fadeUpVariants}
           className="text-center max-w-2xl mx-auto mb-12"
         >
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+          <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
             {isEn ? 'DENTAMIC ADVANTAGES' : 'DENTAMIC PRIEKŠROCĪBAS'}
           </span>
           <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
             {isEn ? 'Patient Testimonials' : 'Pacientu atsauksmes'}
           </h2>
-          <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+          <p className="text-base text-[#6a5b5e] mt-2 font-medium">
             {isEn 
               ? 'Genuine feedback and heartwarming stories from our patients about their treatment.'
               : 'Mūsu pacientu patiesas atsauksmes un sirsnīgi pieredzes stāsti par veikto ārstēšanu.'}
@@ -175,7 +175,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
             <h3 className="text-base font-bold text-[#511B29]">
               {isEn ? 'No testimonials found' : 'Netika atrasts neviens atsauksmes stāsts'}
             </h3>
-            <p className="text-xs text-[#6a5b5e] mt-1">
+            <p className="text-sm text-[#6a5b5e] mt-1">
               {isEn ? 'The list is currently empty.' : 'Saraksts pašlaik ir tukšs.'}
             </p>
           </div>

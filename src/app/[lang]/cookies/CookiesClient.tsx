@@ -49,7 +49,7 @@ export default function CookiesClient() {
 
       {/* Article Content */}
       <motion.div variants={fadeUpVariants} className="space-y-6">
-        <div className="text-base sm:text-lg leading-relaxed text-slate-800 space-y-6 font-normal">
+        <div className="text-base leading-relaxed text-slate-800 space-y-6 font-normal">
           {isEn ? (
             <>
               <h3 className="text-lg font-serif font-bold text-[#511B29] pt-4">1. General Information</h3>

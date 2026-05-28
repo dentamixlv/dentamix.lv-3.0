@@ -35,7 +35,7 @@ export default function TestimonialCard({ item, variants }: TestimonialCardProps
       {/* Card metadata and content matching Doctor section */}
       <div className="p-6 md:p-8 flex flex-col justify-between flex-grow">
         <div>
-          <span className="text-[10px] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
+          <span className="text-[0.625rem] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
             {item.treatment}
           </span>
           <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors">
@@ -43,7 +43,7 @@ export default function TestimonialCard({ item, variants }: TestimonialCardProps
           </h3>
           
           {/* Complete story matching descriptive length of doctors */}
-          <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal">
+          <p className="text-base text-[#6a5b5e] leading-relaxed mt-3 font-normal">
             {item.story}
           </p>
         </div>
@@ -52,7 +52,7 @@ export default function TestimonialCard({ item, variants }: TestimonialCardProps
         <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
           <div className="flex items-center gap-1.5 text-slate-400">
             <Heart className="w-3.5 h-3.5 text-[#de7c8a] fill-[#de7c8a]/20" />
-            <span className="text-[10px] font-semibold text-slate-500">{item.date}</span>
+            <span className="text-[0.625rem] font-semibold text-slate-500">{item.date}</span>
           </div>
         </div>
       </div>

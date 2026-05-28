@@ -119,7 +119,7 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                 {/* Content */}
                 <div className="p-6 md:p-8 flex flex-col justify-between flex-grow">
                   <div>
-                    <span className="text-[10px] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
+                    <span className="text-[0.625rem] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
                       {badgeText}
                     </span>
                     <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-1">
@@ -127,7 +127,7 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                         {nameText}
                       </Link>
                     </h3>
-                    <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
+                    <p className="text-base text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
                       {excerptText}
                     </p>
                   </div>
@@ -136,7 +136,7 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                   <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
                     <Link
                       href={profileUrl}
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
+                      className="inline-flex items-center gap-1.5 text-sm font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                       id={`doctor-grid-profile-btn-${idx}`}
                     >
                       {profileText}
@@ -145,7 +145,7 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                     {showBookButton && (
                       <Link
                         href={bookUrl}
-                        className="px-4 py-2 text-xs font-bold text-[#511B29] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
+                        className="px-4 py-2 text-sm font-bold text-[#511B29] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
                         id={`doctor-grid-book-btn-${idx}`}
                       >
                         {bookText}

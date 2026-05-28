@@ -56,13 +56,13 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
         variants={fadeUpVariants}
         className="text-center max-w-2xl mx-auto mb-12"
       >
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+        <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {labels.tag}
         </span>
         <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {labels.defaultTitle}
         </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+        <p className="text-base text-[#6a5b5e] mt-2 font-medium">
           {labels.defaultSub}
         </p>
       </motion.div>
@@ -107,7 +107,7 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
             <div className="p-6 md:p-8 flex flex-col justify-between flex-grow">
               <div>
                 {/* Upper tag detail */}
-                <span className="text-[10px] font-extrabold tracking-widest text-[#de7c8a] block mb-1.5 uppercase">
+                <span className="text-[0.625rem] font-extrabold tracking-widest text-[#de7c8a] block mb-1.5 uppercase">
                   {clinic.id === 'riga' ? labels.centralBranch : labels.suburbBranch}
                 </span>
                 <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors mb-4">
@@ -121,10 +121,10 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
                 </h3>
 
                 {/* Info details in a single continuous vertical list */}
-                <div className="space-y-4 my-6 text-xs text-[#1A1718]">
+                <div className="space-y-4 my-6 text-sm text-[#6A5B5E]">
                   {/* Phone */}
                   {clinic.phone && (
-                    <p className="flex items-center gap-2 font-medium text-[#1A1718] hover:text-[#5d1726]/80 transition-colors">
+                    <p className="flex items-center gap-2 font-medium text-[#6A5B5E] hover:text-[#5d1726]/80 transition-colors">
                       <Phone className="w-4 h-4 text-[#de7c8a] shrink-0" />
                       <span>{clinic.phone}</span>
                     </p>
@@ -132,7 +132,7 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
 
                   {/* Address */}
                   {clinic.address && (
-                    <p className="flex items-start gap-2 text-[#1A1718] font-medium leading-relaxed">
+                    <p className="flex items-start gap-2 text-[#6A5B5E] font-medium leading-relaxed">
                       <MapPin className="w-4 h-4 text-[#de7c8a] shrink-0 mt-0.5" />
                       {clinic.gmapsLink ? (
                         <a 
@@ -190,11 +190,11 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
                   {/* Working hours as sub-list within the vertical list */}
                   {labels.workingHours && (
                     <div className="pt-4 border-t border-[#efedec]/60">
-                      <p className="text-[#1A1718] font-bold uppercase tracking-wider flex items-center gap-1.5 mb-3">
+                      <p className="text-[#6A5B5E] font-bold uppercase tracking-wider flex items-center gap-1.5 mb-3">
                         <Clock className="w-3.5 h-3.5 text-[#de7c8a]" />
                         {labels.workingHours}
                       </p>
-                      <div className="space-y-2 pl-5 font-medium text-xs">
+                      <div className="space-y-2 pl-5 font-medium text-sm">
                         <p className="flex justify-between max-w-xs">
                           <span>{labels.workingDays}</span>
                           <span className="text-right">{clinic.workHours.weekdays.split(': ')[1]}</span>
@@ -217,7 +217,7 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
 
                   {/* Accessibility */}
                   {clinic.accessibilityAlert && (
-                    <p className="flex items-start gap-2 pt-4 border-t border-[#efedec]/60 text-[#1A1718] font-medium leading-relaxed">
+                    <p className="flex items-start gap-2 pt-4 border-t border-[#efedec]/60 text-[#6A5B5E] font-medium leading-relaxed">
                       <AlertCircle className="w-4 h-4 text-red-500 shrink-0 mt-0.5" />
                       <span>{clinic.accessibilityAlert}</span>
                     </p>
@@ -232,7 +232,7 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
                     href={clinic.gmapsLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
+                    className="inline-flex items-center gap-1.5 text-sm font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   >
                     <span>{isEn ? 'Open in Google Maps' : 'Skatīt Google Maps'}</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />

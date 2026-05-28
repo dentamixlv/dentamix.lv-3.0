@@ -274,13 +274,13 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         variants={fadeUpVariants}
         className="text-center max-w-2xl mx-auto mb-12"
       >
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+        <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {t.tag}
         </span>
         <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {service.title}
         </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+        <p className="text-base text-[#6a5b5e] mt-2 font-medium">
           {service.description}
         </p>
       </motion.div>
@@ -305,16 +305,16 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
             </p>
             
             <div className="p-6 bg-white border border-[#efedec] rounded-2xl shadow-sm">
-              <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-3 flex items-center gap-1.5 border-b border-[#efedec]/60 pb-2">
+              <h4 className="text-[0.625rem] font-bold uppercase tracking-wider text-[#511B29] mb-3 flex items-center gap-1.5 border-b border-[#efedec]/60 pb-2">
                 <Sparkles className="w-4 h-4 text-[#de7c8a]" />
                 {t.processTitle}
               </h4>
-              <p className="text-xs sm:text-sm text-[#6a5b5e] leading-relaxed">
+              <p className="text-sm md:text-base text-[#6a5b5e] leading-relaxed">
                 {service.detailedInfo}
               </p>
             </div>
 
-            <p className="text-xs text-[#6a5b5e] leading-relaxed italic">
+            <p className="text-sm text-[#6a5b5e] leading-relaxed italic">
               {t.noteDisclaimer}
             </p>
           </div>
@@ -324,12 +324,12 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         <motion.div variants={fadeUpVariants} className="space-y-6">
           {/* Standards Box */}
           <div className="bg-white border border-[#efedec] rounded-3xl p-6 md:p-8 shadow-sm">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-5 flex items-center gap-1.5 border-b border-[#efedec]/65 pb-3">
+            <h4 className="text-[0.625rem] font-bold uppercase tracking-wider text-[#511B29] mb-5 flex items-center gap-1.5 border-b border-[#efedec]/65 pb-3">
               <ShieldCheck className="w-4 h-4 text-[#de7c8a]" />
               {t.clinicalStandards}
             </h4>
             <div className="space-y-4">
-              <div className="flex items-start gap-3 text-xs text-[#6a5b5e]">
+              <div className="flex items-start gap-3 text-sm text-[#6a5b5e]">
                 <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-slate-800 block mb-0.5">
@@ -340,7 +340,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
                   </span>
                 </div>
               </div>
-              <div className="flex items-start gap-3 text-xs text-[#6a5b5e]">
+              <div className="flex items-start gap-3 text-sm text-[#6a5b5e]">
                 <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-slate-800 block mb-0.5">
@@ -351,7 +351,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
                   </span>
                 </div>
               </div>
-              <div className="flex items-start gap-3 text-xs text-[#6a5b5e]">
+              <div className="flex items-start gap-3 text-sm text-[#6a5b5e]">
                 <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-slate-800 block mb-0.5">
@@ -362,7 +362,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
                   </span>
                 </div>
               </div>
-              <div className="flex items-start gap-3 text-xs text-[#6a5b5e]">
+              <div className="flex items-start gap-3 text-sm text-[#6a5b5e]">
                 <Check className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                 <div>
                   <span className="font-bold text-slate-800 block mb-0.5">
@@ -378,17 +378,17 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
 
           {/* Time & Duration Info Card */}
           <div className="bg-[#fbf9f8] border border-[#efedec] rounded-3xl p-6 md:p-8">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-4 flex items-center gap-1.5">
+            <h4 className="text-[0.625rem] font-bold uppercase tracking-wider text-[#511B29] mb-4 flex items-center gap-1.5">
               <Clock className="w-4 h-4 text-[#de7c8a]" />
               {t.visitDuration}
             </h4>
-            <p className="text-xs text-[#6a5b5e] leading-relaxed mb-4">
+            <p className="text-sm md:text-base text-[#6a5b5e] leading-relaxed mb-4">
               {isEn 
                 ? `The planned booking duration for this visit is approximately ${service.duration}. This ensures an unhurried consultation, preparation, and high-quality execution in a peaceful atmosphere.`
                 : `Plānotais rezervācijas ilgums šai vizītei ir aptuveni ${service.duration}. Tas nodrošina nesteidzīgu konsultāciju, sagatavošanos un kvalitatīvu tās izpildi mierpilnā atmosfērā.`
               }
             </p>
-            <div className="text-[11px] bg-white border border-[#efedec]/65 px-4 py-3 rounded-xl text-[#de7c8a] font-bold">
+            <div className="text-[0.6875rem] bg-white border border-[#efedec]/65 px-4 py-3 rounded-xl text-[#de7c8a] font-bold">
               {t.arrivalAlert}
             </div>
           </div>
@@ -402,10 +402,10 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         className="mt-12 pt-8 border-t border-[#efedec]/65 flex flex-col sm:flex-row items-center justify-between gap-6"
       >
         <div className="text-center sm:text-left">
-          <h4 className="text-sm font-bold text-[#511B29]">
+          <h4 className="text-sm md:text-base font-bold text-[#511B29]">
             {t.ctaTitle}
           </h4>
-          <p className="text-xs text-[#6a5b5e] mt-1">
+          <p className="text-sm text-[#6a5b5e] mt-1">
             {t.ctaDesc}
           </p>
         </div>
@@ -425,13 +425,13 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
       <motion.div variants={fadeUpVariants} className="mt-16 md:mt-24 pt-12 border-t border-[#efedec]">
         <div className="max-w-3xl mx-auto">
           <div className="text-center mb-10">
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-2.5 block">
+            <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-2.5 block">
               {t.faqTag}
             </span>
             <h3 className="text-2xl sm:text-3xl font-serif font-bold text-[#511B29] tracking-tight">
               {t.faqTitle}
             </h3>
-            <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+            <p className="text-sm md:text-base text-[#6a5b5e] mt-2 font-medium">
               {t.faqSub}
             </p>
           </div>
@@ -457,7 +457,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
                   </button>
                   
                   {isOpen && (
-                    <div className="px-5 pb-5 pt-1 text-xs sm:text-sm text-[#6a5b5e] leading-relaxed border-t border-[#efedec]/40 bg-[#fbf9f8]/20">
+                    <div className="px-5 pb-5 pt-1 text-sm md:text-base text-[#6a5b5e] leading-relaxed border-t border-[#efedec]/40 bg-[#fbf9f8]/20">
                       {faq.answer}
                     </div>
                   )}
@@ -471,7 +471,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
         <div className="mt-10 text-center">
           <button 
             onClick={onBack}
-            className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
           >
             <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
             {t.back}

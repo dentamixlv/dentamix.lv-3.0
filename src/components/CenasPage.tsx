@@ -228,13 +228,13 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
         variants={fadeUpVariants}
         className="text-center max-w-2xl mx-auto mb-12"
       >
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+        <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
           {isEn ? 'Pricelist' : 'Cenrādis'}
         </span>
         <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
           {isEn ? 'Transparent Pricing & Quality' : 'Caurspīdīgas cenas un kvalitāte'}
         </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+        <p className="text-base text-[#6a5b5e] mt-2 font-medium">
           {isEn ? 'Clear and simple pricing with zero hidden fees and full cost transparency.' : 'Skaidrs un saprotams cenrādis bez slēptiem maksājumiem ar pilnīgu izmaksu pārredzamību.'}
         </p>
       </motion.div>
@@ -274,7 +274,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
                       {item.name}
                     </h4>
                     {item.note && (
-                      <p className="text-xs text-[#6a5b5e] mt-1 font-normal leading-relaxed">
+                      <p className="text-sm text-[#6a5b5e] mt-1 font-normal leading-relaxed">
                         {item.note}
                       </p>
                     )}
@@ -302,14 +302,14 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
         <div className="space-y-3 max-w-2xl">
           <div className="flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a]">
+            <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a]">
               {isEn ? 'Guaranteed Quality' : 'Garantēta Kvalitāte'}
             </span>
           </div>
           <h4 className="text-xl font-serif font-bold text-[#511B29] tracking-tight">
             {isEn ? 'Would you like to receive a full, detailed estimate?' : 'Vai vēlaties saņemt pilnu, detalizētu tāmi?'}
           </h4>
-          <p className="text-xs text-[#6a5b5e] leading-relaxed">
+          <p className="text-sm md:text-base text-[#6a5b5e] leading-relaxed">
             {isEn
               ? 'An individual treatment plan detailing all steps and costs is prepared for each patient after the initial examination and 3D X-ray. There are no hidden fees, and the estimate is valid for 3 months.'
               : 'Ikvienam pacientam pēc pirmreizējās apskates un 3D rentgenuzņēmuma izveides tiek sagatavots individuāls ārstēšanas plāns, kurā detalizēti atrunāti visi soļi un izmaksas. Nav slēptu izmaksu, un tāme ir derīga 3 mēnešus no izveides brīža.'}
@@ -317,7 +317,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
         </div>
         <button
           onClick={onBook}
-          className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
+          className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-sm font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
           id="prices-cta-booking-btn"
         >
           <CalendarDays className="w-4 h-4" />

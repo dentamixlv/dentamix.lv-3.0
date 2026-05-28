@@ -63,13 +63,13 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
     >
       {/* Header Metadata block - Centered and full-width */}
       <motion.div variants={fadeUpVariants} className="text-center w-full mb-12 animate-fade-in">
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
+        <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
           {doctor.category === 'SPECIĀLISTE' || doctor.category === 'SPECIALIST' ? doctor.role : doctor.category}
         </span>
         <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight text-center w-full">
           {doctor.name}
         </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
+        <p className="text-base text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
           {doctor.description}
         </p>
       </motion.div>
@@ -78,8 +78,8 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start text-left">
         {/* Main Content (Bio) */}
         <motion.div variants={fadeUpVariants} className="lg:col-span-2 space-y-6">
-          <div className="text-base sm:text-lg leading-relaxed text-slate-800 space-y-6 font-normal">
-            <p className="text-[#511B29] font-serif text-lg leading-relaxed border-l-2 border-[#de7c8a] pl-4 font-medium">
+          <div className="space-y-6">
+            <p className="text-base md:text-lg font-serif font-medium text-[#511B29] leading-relaxed border-l-2 border-[#de7c8a] pl-4">
               {doctor.fullBio}
             </p>
           </div>
@@ -107,13 +107,13 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
               <h4 className="text-sm font-bold uppercase tracking-wider text-[#511B29]">
                 {t.bookTitle}
               </h4>
-              <p className="text-xs text-[#6a5b5e] leading-relaxed">
+              <p className="text-sm md:text-base text-[#6a5b5e] leading-relaxed">
                 {t.bookDesc}
               </p>
             </div>
             <button
               onClick={onBook}
-              className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-6 py-3 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
+              className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-6 py-3 rounded-full text-sm font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
             >
               <CalendarDays className="w-4 h-4" />
               {t.bookBtn}
@@ -142,7 +142,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
                 <Award className="w-4 h-4 text-[#de7c8a]" />
                 {t.specializations}
               </h3>
-              <ul className="space-y-2 text-xs text-[#6a5b5e]">
+              <ul className="space-y-2 text-sm text-[#6a5b5e]">
                 {doctor.specializations.map((spec, index) => (
                   <li key={index} className="flex gap-2">
                     <span className="text-[#de7c8a] font-bold">•</span>
@@ -159,7 +159,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
                   <GraduationCap className="w-4 h-4 text-[#de7c8a]" />
                   {t.education}
                 </h3>
-                <ul className="space-y-2 text-xs text-[#6a5b5e]">
+                <ul className="space-y-2 text-sm text-[#6a5b5e]">
                   <li className="flex gap-2">
                     <span className="text-[#de7c8a] font-bold">•</span>
                     <span>{doctor.education[0]}</span>
@@ -175,7 +175,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
                   <Award className="w-4 h-4 text-[#de7c8a]" />
                   {t.additionalQual}
                 </h3>
-                <ul className="space-y-2 text-xs text-[#6a5b5e]">
+                <ul className="space-y-2 text-sm text-[#6a5b5e]">
                   {doctor.education.slice(1).map((edu, index) => (
                     <li key={index} className="flex gap-2">
                       <span className="text-[#de7c8a] font-bold">•</span>
@@ -193,7 +193,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
                   <MapPin className="w-4 h-4 text-[#de7c8a]" />
                   {t.workplace}
                 </h3>
-                <ul className="space-y-2 text-xs text-[#6a5b5e]">
+                <ul className="space-y-2 text-sm text-[#6a5b5e]">
                   <li className="flex gap-2">
                     <span className="text-[#de7c8a] font-bold">•</span>
                     <span>{doctor.workplace}</span>
@@ -208,7 +208,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
                 <Languages className="w-4 h-4 text-[#de7c8a]" />
                 {t.languages}
               </h3>
-              <p className="text-xs text-[#6a5b5e] font-semibold leading-relaxed pt-1 flex items-start gap-2">
+              <p className="text-sm text-[#6a5b5e] font-semibold leading-relaxed pt-1 flex items-start gap-2">
                 <span className="text-[#de7c8a] font-bold shrink-0">•</span>
                 <span>{doctor.languages.join(', ')}</span>
               </p>
@@ -221,7 +221,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
       <div className="mt-10 text-center">
         <button 
           onClick={onBack}
-          className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
           {t.back}

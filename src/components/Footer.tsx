@@ -151,24 +151,24 @@ export default function Footer({
       <div className="max-w-7xl mx-auto px-6 pt-8 pb-16 md:pb-24 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 items-start text-left">
         {/* Column 1: Brand Info */}
         <div className="flex flex-col gap-5">
-          <p className="text-[#989999] text-xs leading-relaxed max-w-sm font-medium">
+          <p className="text-[#989999] text-sm leading-relaxed max-w-sm font-medium">
             {description || t.quote}
           </p>
         </div>
 
         {/* Column 2: Mūsu Klīnikas */}
         <div>
-          <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6">
+          <h4 className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6">
             {clinicsTitle || t.ourClinics}
           </h4>
           <div className="flex flex-col gap-8">
             {clinicsToRender.map((clinic) => (
               <div key={clinic.id} className="group border-l-2 border-white/[0.06] hover:border-[#de7c8a]/50 pl-4 transition-all duration-300">
-                <h5 className="text-[13px] font-bold text-white tracking-wide uppercase mb-2">
+                <h5 className="text-sm font-bold text-white tracking-wide uppercase mb-2">
                   {clinic.name}
                 </h5>
                 
-                <div className="flex flex-col gap-2 text-xs text-[#989999]">
+                <div className="flex flex-col gap-2 text-sm text-[#989999]">
                   <span className="flex items-start gap-2">
                     <MapPin className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[#de7c8a]" />
                     <span className="leading-relaxed hover:text-white transition-colors duration-200">{clinic.address}</span>
@@ -194,7 +194,7 @@ export default function Footer({
                         href={clinic.gmapsLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 hover:text-[#de7c8a] transition-colors duration-200 w-fit text-[11px]"
+                        className="flex items-center gap-1.5 hover:text-[#de7c8a] transition-colors duration-200 w-fit text-xs"
                       >
                         <svg className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -207,7 +207,7 @@ export default function Footer({
                         href={clinic.waze}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 hover:text-[#de7c8a] transition-colors duration-200 w-fit text-[11px]"
+                        className="flex items-center gap-1.5 hover:text-[#de7c8a] transition-colors duration-200 w-fit text-xs"
                       >
                         <svg className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" viewBox="0 0 24 24" fill="currentColor">
                           <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
@@ -224,7 +224,7 @@ export default function Footer({
 
         {/* Column 3: Darba Laiks */}
         <div>
-          <h4 className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6">
+          <h4 className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-6">
             {workingHoursTitle || t.workingHours}
           </h4>
           
@@ -234,11 +234,11 @@ export default function Footer({
                 key={`hours-${clinic.id}`} 
                 className="group border-l-2 border-white/[0.06] hover:border-[#de7c8a]/50 pl-4 transition-all duration-300"
               >
-                <h5 className="text-[13px] font-bold text-white tracking-wide uppercase mb-2">
+                <h5 className="text-sm font-bold text-white tracking-wide uppercase mb-2">
                   {clinic.name}
                 </h5>
                 
-                <div className="flex flex-col gap-2 text-xs text-[#989999]">
+                <div className="flex flex-col gap-2 text-sm text-[#989999]">
                   {/* Weekdays */}
                   {clinic.workHours.weekdays && (
                     <div className="flex justify-between items-center gap-4">
@@ -257,7 +257,7 @@ export default function Footer({
                       {clinic.labels.saturday}
                     </span>
                     {clinic.workHours.saturday.includes('Slēgts') || clinic.workHours.saturday.includes('Closed') || !getHoursValue(clinic.workHours.saturday) ? (
-                      <span className="text-slate-500 font-medium italic text-[11px]">
+                      <span className="text-slate-500 font-medium italic text-xs">
                         {clinic.labels.closed}
                       </span>
                     ) : (
@@ -273,7 +273,7 @@ export default function Footer({
                       {clinic.labels.sunday}
                     </span>
                     {clinic.workHours.sunday.includes('Slēgts') || clinic.workHours.sunday.includes('Closed') || !getHoursValue(clinic.workHours.sunday) ? (
-                      <span className="text-slate-500 font-medium italic text-[11px]">
+                      <span className="text-slate-500 font-medium italic text-xs">
                         {clinic.labels.closed}
                       </span>
                     ) : (
@@ -298,7 +298,7 @@ export default function Footer({
 
       {/* Footer Bottom copyright */}
       <div className="border-t border-white/[0.06] bg-[#0f1011]">
-        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-[#989999] font-medium">
+        <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#989999] font-medium">
           <p>© {new Date().getFullYear()} {copyrightText || `Dentamic. ${t.allRightsReserved}`}</p>
           <div className="flex gap-6">
             <Link

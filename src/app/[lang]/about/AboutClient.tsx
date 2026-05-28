@@ -37,13 +37,13 @@ export default function AboutClient() {
     >
       {/* Header Metadata block - Centered and full-width */}
       <motion.div variants={fadeUpVariants} className="text-center w-full mb-12 animate-fade-in">
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
+        <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
           {isEn ? 'About the Clinic' : 'Par klīniku'}
         </span>
         <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight mb-6 text-center w-full">
           {isEn ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecības klīnika'}
         </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
+        <p className="text-base text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
           {isEn
             ? 'Modern dentistry combining advanced technology with personalized care in Riga and Adazi.'
             : 'Mūsdienīga zobārstniecība, kas apvieno jaunākās tehnoloģijas un individuālu pieeju Rīgā un Ādažos.'}

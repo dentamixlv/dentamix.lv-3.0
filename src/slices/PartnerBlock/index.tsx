@@ -115,13 +115,13 @@ export default function PartnerBlock({ slice }: PartnerBlockProps) {
           variants={fadeUpVariants}
           className="text-center max-w-xl mx-auto mb-12"
         >
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+          <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
             {badgeText}
           </span>
           <h3 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
             {title}
           </h3>
-          <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+          <p className="text-sm md:text-base text-[#6a5b5e] mt-2 font-medium">
             {subtitle}
           </p>
         </motion.div>

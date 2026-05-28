@@ -40,13 +40,13 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
     >
       {/* Header Metadata block - Centered and full-width */}
       <motion.div variants={fadeUpVariants} className="text-center w-full mb-12 animate-fade-in">
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
+        <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
           {post.category}
         </span>
         <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight text-center w-full">
           {post.title}
         </h2>
-        <p className="text-xs text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
+        <p className="text-base text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
           {post.description}
         </p>
         
@@ -56,19 +56,26 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start text-left">
         {/* Main Content */}
         <motion.div variants={fadeUpVariants} className="lg:col-span-2 space-y-6">
-          <div className="text-base sm:text-lg leading-relaxed text-slate-800 space-y-6 font-normal">
+          <div className="space-y-6">
             {post.detailedContent.map((paragraph, idx) => (
-              <p key={idx} className={idx === 0 ? "text-[#511B29] font-serif text-lg leading-relaxed border-l-2 border-[#de7c8a] pl-4 font-medium" : ""}>
+              <p
+                key={idx}
+                className={
+                  idx === 0
+                    ? "text-base md:text-lg font-serif font-medium text-[#511B29] leading-relaxed border-l-2 border-[#de7c8a] pl-4"
+                    : "text-base md:text-lg font-normal text-slate-800 leading-relaxed"
+                }
+              >
                 {paragraph}
               </p>
             ))}
           </div>
 
           <div className="p-6 bg-[#fbf9f8] rounded-2xl border border-[#efedec] mt-8">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-[#511B29] mb-2">
+            <h4 className="text-[0.625rem] font-bold uppercase tracking-wider text-[#511B29] mb-2">
               {isEn ? 'All procedures at Dentamic Clinic' : 'Visas procedūras klīnikā Dentamic'}
             </h4>
-            <p className="text-xs text-[#6a5b5e] leading-relaxed">
+            <p className="text-sm md:text-base text-[#6a5b5e] leading-relaxed">
               {isEn 
                 ? 'Our specialists are fully certified and passionate about their work. Apply for a consultation to address any questions about aesthetics or surgery.'
                 : 'Mūsu speciālisti ir pilnībā sertificēti un kaislīgi savā darbā. Piesakieties uz konsultāciju, lai risinātu jebkurus jautājumus par viena zoba vai visa sakodiena estētiku vai ķirurģiju.'}
@@ -90,11 +97,11 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
           </div>
 
           <div className="bg-white border border-[#efedec] rounded-3xl p-6 md:p-8 shadow-sm">
-            <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight mb-4 flex items-center gap-2 border-b border-[#efedec] pb-3">
+            <h3 className="text-sm md:text-base font-serif font-bold text-[#511B29] tracking-tight mb-4 flex items-center gap-2 border-b border-[#efedec] pb-3">
               <Bookmark className="w-4 h-4 text-[#de7c8a]" />
               {isEn ? 'Key Takeaways' : 'Svarīgas atziņas'}
             </h3>
-            <ul className="space-y-4 text-xs text-[#6a5b5e]">
+            <ul className="space-y-4 text-sm text-[#6a5b5e]">
               <li className="flex gap-2">
                 <span className="text-[#de7c8a] font-bold">•</span>
                 <span>
@@ -129,7 +136,7 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
       <div className="mt-10 text-center">
         <button 
           onClick={onBack}
-          className="inline-flex items-center gap-2 text-xs font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
+          className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
         >
           <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
           {isEn ? 'Back to Blog' : 'Atpakaļ uz blogu'}

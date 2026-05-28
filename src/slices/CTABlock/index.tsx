@@ -44,12 +44,12 @@ const richTextComponents: JSXMapSerializer = {
     </h6>
   ),
   paragraph: ({ children }) => (
-    <p className="text-xs text-[#6a5b5e] leading-relaxed">
+    <p className="text-base text-[#6a5b5e] leading-relaxed">
       {children}
     </p>
   ),
   preformatted: ({ children }) => (
-    <p className="text-xs text-[#6a5b5e] leading-relaxed">
+    <p className="text-base text-[#6a5b5e] leading-relaxed">
       {children}
     </p>
   ),

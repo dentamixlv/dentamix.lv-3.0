@@ -49,7 +49,7 @@ export default function PrivacyClient() {
 
       {/* Article Content */}
       <motion.div variants={fadeUpVariants} className="space-y-6">
-        <div className="text-base sm:text-lg leading-relaxed text-slate-800 space-y-6 font-normal">
+        <div className="text-base leading-relaxed text-slate-800 space-y-6 font-normal">
           {isEn ? (
             <>
               <p className="text-[#511B29] font-serif text-lg leading-relaxed border-l-2 border-[#de7c8a] pl-4 font-medium">

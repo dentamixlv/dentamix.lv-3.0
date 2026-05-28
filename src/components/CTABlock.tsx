@@ -58,7 +58,7 @@ export default function CTABlock({
     >
       <div className="space-y-3 max-w-2xl text-center md:text-left w-full">
         {/* Badge text */}
-        <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] block">
+        <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] block">
           {badgeText}
         </span>
 
@@ -73,7 +73,7 @@ export default function CTABlock({
 
         {/* Description */}
         {isDescString ? (
-          <p className="text-xs text-[#6a5b5e] leading-relaxed">
+          <p className="text-base text-[#6a5b5e] leading-relaxed">
             {description}
           </p>
         ) : (
