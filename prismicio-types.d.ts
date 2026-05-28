@@ -1072,14 +1072,14 @@ export interface BlogBlockSliceDefaultItem {
 	link_text: prismic.KeyTextField;
 	
 	/**
-	 * Link URL (Content Relationship to single post) field in *BlogBlock → Items*
+	 * Link URL field in *BlogBlock → Items*
 	 *
-	 * - **Field Type**: Content Relationship
-	 * - **Placeholder**: *None*
+	 * - **Field Type**: Text
+	 * - **Placeholder**: /en/blogs/some-post
 	 * - **API ID Path**: blog_block.items[].link_url
-	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
-	link_url: prismic.ContentRelationshipField<"blog_post">;
+	link_url: prismic.KeyTextField;
 	
 	/**
 	 * Custom Image (Optional Override) field in *BlogBlock → Items*

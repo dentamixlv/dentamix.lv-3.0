@@ -6,9 +6,8 @@ import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { Content, isFilled } from "@prismicio/client";
+import { Content } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
-import { PrismicNextLink } from '@prismicio/next';
 
 import { getBlogPosts } from '../../data';
 import { BlogPost } from '../../types';
@@ -50,38 +49,21 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
 
   // Check if items are provided inline
   const inlineItems = slice.items || [];
-  const hasInlineItems = inlineItems.length > 0 && inlineItems.some(item => item.title || item.excerpt || isFilled.link(item.link_url));
+  const hasInlineItems = inlineItems.length > 0 && inlineItems.some(item => item.title || item.excerpt || item.link_url);
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
         const client = createClient();
-        
+
         if (hasInlineItems) {
-          // Collect document IDs to fetch referenced details (like images and publication dates)
-          const ids = inlineItems
-            .map(item => (isFilled.link(item.link_url) && (item.link_url as any).id) || '')
-            .filter(Boolean);
-
-          let fetchedDocs: any[] = [];
-          if (ids.length > 0) {
-            const response = await client.getByIDs(ids, { lang: langCode });
-            fetchedDocs = response.results;
-          }
-
-          // Map inline items resolving missing fields from fetched documents
+          // Map inline items to blog post objects
           const mapped = inlineItems.map((item, index) => {
-            const linkedId = isFilled.link(item.link_url) ? (item.link_url as any).id : null;
-            const linkedDoc = fetchedDocs.find(doc => doc.id === linkedId);
-
-            const title = item.title || linkedDoc?.data?.title || '';
-            const category = item.badge_text || linkedDoc?.data?.category || (isEn ? 'BLOG' : 'BLOGS');
-            const description = item.excerpt || linkedDoc?.data?.description || '';
-            const imageUrl = item.image?.url || linkedDoc?.data?.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800';
-            const date = linkedDoc?.data?.date || '';
-            const author = linkedDoc?.data?.author || '';
-            const readTime = linkedDoc?.data?.readTime || '4 MIN';
-            const slug = linkedDoc?.uid || (isFilled.link(item.link_url) ? (item.link_url as any).uid : null) || `inline-${index}`;
+            const title = item.title || '';
+            const category = item.badge_text || (isEn ? 'BLOG' : 'BLOGS');
+            const description = item.excerpt || '';
+            const imageUrl = item.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800';
+            const slug = item.link_url ? item.link_url.replace(/^\/?(en\/)?blogs\//, '').replace(/\/?$/, '') : `inline-${index}`;
 
             return {
               id: slug,
@@ -89,9 +71,9 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
               category,
               description,
               image: imageUrl,
-              date,
-              author,
-              readTime,
+              date: '',
+              author: '',
+              readTime: '4 MIN',
               detailedContent: []
             };
           });
@@ -182,7 +164,12 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
           className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
         >
           {posts.map((post) => {
-            const buttonText = inlineItems.find(item => isFilled.link(item.link_url) && (item.link_url as any).uid === post.id)?.link_text || readPostLabel;
+            const item = inlineItems.find(it => {
+              const slug = it.link_url ? it.link_url.replace(/^\/?(en\/)?blogs\//, '').replace(/\/?$/, '') : '';
+              return slug === post.id;
+            });
+            const buttonText = item?.link_text || readPostLabel;
+            const postUrl = item?.link_url || `${langPrefix}/blogs/${post.id}`;
             return (
               <motion.div 
                 variants={fadeUpVariants}
@@ -220,7 +207,7 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
                   {/* Bottom actions */}
                   <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
                     <Link
-                      href={`${langPrefix}/blogs/${post.id}`}
+                      href={postUrl}
                       className="inline-flex items-center gap-1.5 text-xs font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                       id={`learn-blog-btn-${post.id}`}
                     >

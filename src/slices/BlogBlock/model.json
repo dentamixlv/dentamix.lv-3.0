@@ -51,11 +51,10 @@
           }
         },
         "link_url": {
-          "type": "Link",
+          "type": "Text",
           "config": {
-            "label": "Link URL (Content Relationship to single post)",
-            "select": "document",
-            "customtypes": ["blog_post"]
+            "label": "Link URL",
+            "placeholder": "/en/blogs/some-post"
           }
         },
         "image": {
