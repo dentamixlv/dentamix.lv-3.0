@@ -12,4 +12,5 @@ export const components = {
   cta_block: dynamic(() => import("./CTABlock")),
   ceo_block: dynamic(() => import("./CEOBlock")),
   testimonial_block: dynamic(() => import("./TestimonialBlock")),
+  partner_block: dynamic(() => import("./PartnerBlock")),
 };

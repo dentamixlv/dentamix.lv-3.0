@@ -1,0 +1,48 @@
+{
+  "id": "partner_block",
+  "type": "SharedSlice",
+  "name": "PartnerBlock",
+  "description": "Renders a grid of partner logos with custom titles and countries.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge Text",
+            "placeholder": "Pacientu drošība un tehnoloģijas"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Mūsu partneri"
+          }
+        },
+        "subtitle": {
+          "type": "Text",
+          "config": {
+            "label": "Subtitle",
+            "placeholder": "Sadarbojamies ar pasaulē vadošajiem..."
+          }
+        }
+      },
+      "items": {
+        "logo": {
+          "type": "Image",
+          "config": {
+            "label": "Partner Logo",
+            "constraint": {},
+            "thumbnails": []
+          }
+        }
+      }
+    }
+  ]
+}

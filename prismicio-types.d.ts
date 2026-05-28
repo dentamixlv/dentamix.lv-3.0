@@ -1413,6 +1413,79 @@ type HeroSliceVariation = HeroSliceDefault
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
 
 /**
+ * Primary content in *PartnerBlock → Default → Primary*
+ */
+export interface PartnerBlockSliceDefaultPrimary {
+	/**
+	 * Badge Text field in *PartnerBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pacientu drošība un tehnoloģijas
+	 * - **API ID Path**: partner_block.default.primary.badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *PartnerBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Mūsu partneri
+	 * - **API ID Path**: partner_block.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Subtitle field in *PartnerBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Sadarbojamies ar pasaulē vadošajiem...
+	 * - **API ID Path**: partner_block.default.primary.subtitle
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	subtitle: prismic.KeyTextField;
+}
+
+/**
+ * Primary content in *PartnerBlock → Items*
+ */
+export interface PartnerBlockSliceDefaultItem {
+	/**
+	 * Partner Logo field in *PartnerBlock → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: partner_block.items[].logo
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	logo: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for PartnerBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PartnerBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<PartnerBlockSliceDefaultPrimary>, Simplify<PartnerBlockSliceDefaultItem>>;
+
+/**
+ * Slice variation for *PartnerBlock*
+ */
+type PartnerBlockSliceVariation = PartnerBlockSliceDefault
+
+/**
+ * PartnerBlock Shared Slice
+ *
+ * - **API ID**: `partner_block`
+ * - **Description**: Renders a grid of partner logos with custom titles and countries.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type PartnerBlockSlice = prismic.SharedSlice<"partner_block", PartnerBlockSliceVariation>;
+
+/**
  * Primary content in *Pricelist → Default → Primary*
  */
 export interface PricelistSliceDefaultPrimary {
@@ -1750,6 +1823,11 @@ declare module "@prismicio/client" {
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,
 			HeroSliceDefault,
+			PartnerBlockSlice,
+			PartnerBlockSliceDefaultPrimary,
+			PartnerBlockSliceDefaultItem,
+			PartnerBlockSliceVariation,
+			PartnerBlockSliceDefault,
 			PricelistSlice,
 			PricelistSliceDefaultPrimary,
 			PricelistSliceVariation,

@@ -102,6 +102,38 @@ const getFallbackSlices = (langCode: string) => [
       date: item.date,
       rating: item.rating
     }))
+  },
+  {
+    slice_type: "partner_block" as const,
+    variation: "default" as const,
+    id: "fallback-partners",
+    primary: {
+      badge_text: langCode === 'en-us' ? "Patient Safety and Technology" : "Pacientu drošība un tehnoloģijas",
+      title: langCode === 'en-us' ? "Our Partners" : "Mūsu partneri",
+      subtitle: langCode === 'en-us' 
+        ? "We partner with the world's leading Swiss, German, and Finnish medical brands to guarantee excellence in every smile."
+        : "Sadarbojamies ar pasaulē vadošajiem Šveices, Vācijas un Somijas medicīnas zīmoliem, lai garantētu izcilību katrā smaidā."
+    },
+    items: [
+      {
+        logo: { url: "", alt: "" }
+      },
+      {
+        logo: { url: "", alt: "" }
+      },
+      {
+        logo: { url: "", alt: "" }
+      },
+      {
+        logo: { url: "", alt: "" }
+      },
+      {
+        logo: { url: "", alt: "" }
+      },
+      {
+        logo: { url: "", alt: "" }
+      }
+    ]
   }
 ];
 
@@ -166,95 +198,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
       {/* Dynamic Hero Section via SliceZone */}
       <SliceZone slices={activeSlices} components={components} />
 
-      {/* Partneri section */}
-      <section className="bg-white py-16 border-t border-[#efedec]/65">
-        <div className="max-w-7xl mx-auto px-6">
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariants}
-            className="text-center max-w-xl mx-auto mb-12"
-          >
-            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">{t.partnerTag}</span>
-            <h3 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">{t.partnerTitle}</h3>
-            <p className="text-xs text-[#6a5b5e] mt-2 font-medium">{t.partnerSub}</p>
-          </motion.div>
 
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainerVariants}
-            className="grid grid-cols-2 md:grid-cols-6 gap-6 items-center"
-          >
-            {/* Partner 1: Straumann */}
-            <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
-                <circle cx="20" cy="20" r="10" fill="none" stroke="currentColor" strokeWidth="2" />
-                <path d="M20 14v12M14 20h12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-                <text x="40" y="26" fontSize="16" fontWeight="900" letterSpacing="0.03em" className="font-sans">straumann</text>
-              </svg>
-              <span className="text-[8px] font-bold text-[#de7c8a]/60 uppercase tracking-widest mt-2">{langCode === 'en-us' ? 'Switzerland' : 'Šveice'}</span>
-            </motion.div>
-
-            {/* Partner 2: Planmeca */}
-            <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
-                <path d="M10 26 L18 14 L23 22 L28 16 L34 26" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-                <circle cx="18" cy="14" r="2" />
-                <circle cx="28" cy="16" r="2" />
-                <text x="44" y="26" fontSize="16" fontWeight="800" letterSpacing="0.08em" className="font-serif">PLANMECA</text>
-              </svg>
-              <span className="text-[8px] font-bold text-[#de7c8a]/60 uppercase tracking-widest mt-2">{langCode === 'en-us' ? 'Finland' : 'Somija'}</span>
-            </motion.div>
-
-            {/* Partner 3: Ivoclar */}
-            <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
-                <circle cx="15" cy="20" r="8" fill="none" stroke="currentColor" strokeWidth="2" opacity="0.6" />
-                <circle cx="24" cy="20" r="8" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="2 1.5" />
-                <text x="42" y="26" fontSize="18" fontWeight="700" letterSpacing="0.01em" className="font-sans">ivoclar</text>
-              </svg>
-              <span className="text-[8px] font-bold text-[#de7c8a]/60 uppercase tracking-widest mt-2">{langCode === 'en-us' ? 'Liechtenstein' : 'Lihtenšteina'}</span>
-            </motion.div>
-
-            {/* Partner 4: Geistlich */}
-            <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
-                <path d="M10 20 l4 -7 h8 l4 7 l-4 7 h-8 z" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                <path d="M14 13 l4 7 l-4 7" fill="none" stroke="currentColor" strokeWidth="1" />
-                <text x="36" y="26" fontSize="17" fontWeight="700" letterSpacing="-0.01em" className="font-serif italic font-bold">Geistlich</text>
-              </svg>
-              <span className="text-[8px] font-bold text-[#de7c8a]/60 uppercase tracking-widest mt-2">{langCode === 'en-us' ? 'Switzerland' : 'Šveice'}</span>
-            </motion.div>
-
-            {/* Partner 5: Curaprox */}
-            <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
-                <circle cx="15" cy="20" r="9" fill="none" stroke="currentColor" strokeWidth="1.5" />
-                <circle cx="15" cy="20" r="4.5" fill="currentColor" opacity="0.4" />
-                <circle cx="15" cy="14" r="1.5" fill="currentColor" />
-                <circle cx="15" cy="26" r="1.5" fill="currentColor" />
-                <circle cx="9" cy="20" r="1.5" fill="currentColor" />
-                <circle cx="21" cy="20" r="1.5" fill="currentColor" />
-                <text x="34" y="25" fontSize="15" fontWeight="900" letterSpacing="0.12em" className="font-sans">CURAPROX</text>
-              </svg>
-              <span className="text-[8px] font-bold text-[#de7c8a]/60 uppercase tracking-widest mt-2">{langCode === 'en-us' ? 'Switzerland' : 'Šveice'}</span>
-            </motion.div>
-
-            {/* Partner 6: 3M ESPE */}
-            <motion.div variants={fadeUpVariants} className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl h-28 flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group">
-              <svg className="h-6 w-full text-[#511B29] opacity-80 group-hover:opacity-100 group-hover:text-[#5d1726] transition-all" viewBox="0 0 160 40" fill="currentColor">
-                <rect x="6" y="10" width="22" height="18" rx="2" fill="currentColor" opacity="0.15" />
-                <text x="10" y="23" fontSize="11" fontWeight="900" className="font-sans">3M</text>
-                <text x="35" y="26" fontSize="16" fontWeight="800" letterSpacing="0.08em" className="font-serif">ESPE</text>
-              </svg>
-              <span className="text-[8px] font-bold text-[#de7c8a]/60 uppercase tracking-widest mt-2">{langCode === 'en-us' ? 'Germany' : 'Vācija'}</span>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
 
     </div>
   );
