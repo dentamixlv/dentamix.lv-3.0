@@ -36,3 +36,7 @@
 .hover-scale-102:hover {
   transform: scale(1.02) translateZ(0);
 }
+
+.nav-text-desktop {
+  font-size: 0.8125rem; /* 13px */
+}
