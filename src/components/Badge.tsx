@@ -26,7 +26,7 @@ export interface BadgeProps {
 
 const variantClasses: Record<BadgeVariant, string> = {
   default:
-    'bg-gray-100/90 border border-gray-200/80 text-gray-600',
+    'bg-[#de7c8a]/8 border border-[#de7c8a]/20 text-[#de7c8a]',
   primary:
     'bg-[#511B29]/10 border border-[#511B29]/20 text-[#511B29]',
   accent:
@@ -51,7 +51,7 @@ export default function Badge({
   variants,
 }: BadgeProps) {
   const baseClasses =
-    'inline-flex items-center px-3 py-1 rounded-full text-[0.5625rem] font-extrabold uppercase tracking-widest';
+    'inline-flex items-center px-3 py-1 rounded-full text-[0.625rem] font-extrabold uppercase tracking-widest';
 
   const allClasses = `${baseClasses} ${variantClasses[variant]} ${className}`.trim();
 
