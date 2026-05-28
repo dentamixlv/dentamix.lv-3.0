@@ -220,7 +220,7 @@ export default function CenasPage({ onBook, langCode = 'lv', customPriceData }: 
   } as const;
 
   return (
-    <div className="py-16 md:py-24 max-w-7xl mx-auto px-6" id="prices-page-view">
+    <div className="pt-8 pb-16 md:pt-12 md:pb-24 max-w-7xl mx-auto px-6" id="prices-page-view">
       {/* 1. Header with Badge */}
       <motion.div 
         initial="hidden"

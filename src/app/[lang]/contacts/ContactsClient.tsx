@@ -49,7 +49,7 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
   };
 
   return (
-    <div className="pt-16 pb-0 md:pt-24 md:pb-0 max-w-7xl mx-auto px-6">
+    <div className="pt-8 pb-0 md:pt-12 md:pb-0 max-w-7xl mx-auto px-6">
       <motion.div 
         initial="hidden"
         animate="visible"

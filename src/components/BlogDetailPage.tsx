@@ -35,7 +35,7 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="py-16 md:py-24 max-w-7xl mx-auto px-6"
+      className="pt-8 pb-16 md:pt-12 md:pb-24 max-w-7xl mx-auto px-6"
       id={`blog-detail-page-${post.id}`}
     >
       {/* Header Metadata block - Centered and full-width */}
@@ -43,7 +43,7 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
         <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
           {post.category}
         </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight mb-6 text-center w-full">
+        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight text-center w-full">
           {post.title}
         </h2>
         <p className="text-xs text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">

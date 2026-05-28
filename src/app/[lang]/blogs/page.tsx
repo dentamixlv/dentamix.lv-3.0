@@ -71,7 +71,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
-      <div className="pt-16 pb-8 md:pt-24 md:pb-12 max-w-7xl mx-auto px-6">
+      <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
             {locale === 'en-us' ? 'KNOWLEDGE & ADVICE' : 'ZINĀŠANAS UN PADOMI'}

@@ -266,7 +266,7 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="py-16 md:py-24 max-w-7xl mx-auto px-6"
+      className="pt-8 pb-16 md:pt-12 md:pb-24 max-w-7xl mx-auto px-6"
       id={`service-detail-page-${service.id}`}
     >
       {/* Centered Page Header */}
