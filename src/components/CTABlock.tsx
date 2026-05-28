@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { CalendarDays } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
 export interface CTABlockProps {
@@ -45,7 +45,7 @@ export default function CTABlock({
   const isTitleString = typeof title === 'string';
   const isDescString = typeof description === 'string';
 
-  const buttonClass = "btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0";
+  const buttonClass = "px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0";
   const hasCustomBg = style?.background || style?.backgroundColor;
 
   return (
@@ -86,13 +86,13 @@ export default function CTABlock({
         customButton
       ) : href ? (
         <Link href={href} className={buttonClass} id={id}>
-          <CalendarDays className="w-4 h-4" />
           {buttonText}
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </Link>
       ) : (
         <button onClick={onClick} className={buttonClass} id={id}>
-          <CalendarDays className="w-4 h-4" />
           {buttonText}
+          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </button>
       )}
     </motion.div>

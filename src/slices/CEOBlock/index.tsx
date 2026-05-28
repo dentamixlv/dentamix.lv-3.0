@@ -13,7 +13,7 @@ import Link from 'next/link';
 // Custom rich text components for biography
 const richTextComponents: JSXMapSerializer = {
   paragraph: ({ children }) => (
-    <p className="text-[#1b1c1b] text-base leading-relaxed font-normal mb-8">
+    <p className="text-[#1b1c1b] text-[12px] leading-relaxed font-normal mb-8">
       {children}
     </p>
   ),
@@ -83,7 +83,7 @@ export default function CEOBlock({ slice }: CEOBlockProps) {
   const bioContent = isFilled.richText(primary.biography) ? (
     <PrismicRichText field={primary.biography} components={richTextComponents} />
   ) : (
-    <p className="text-[#1b1c1b] text-base leading-relaxed font-normal mb-8">
+    <p className="text-[#1b1c1b] text-[12px] leading-relaxed font-normal mb-8">
       {defaultBioText}
     </p>
   );
@@ -127,7 +127,7 @@ export default function CEOBlock({ slice }: CEOBlockProps) {
               src={imageUrl}
               alt={imageAlt}
               fill
-              sizes="(max-width: 1024px) 100vw, 40vw"
+              unoptimized
               className="object-cover object-top hover:scale-[1.02] transition-transform duration-500"
               priority
             />

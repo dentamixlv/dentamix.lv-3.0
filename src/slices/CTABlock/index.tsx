@@ -4,7 +4,7 @@ import React from 'react';
 import { Content, isFilled } from "@prismicio/client";
 import { SliceComponentProps, PrismicRichText, JSXMapSerializer } from "@prismicio/react";
 import { useParams } from 'next/navigation';
-import { CalendarDays } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { PrismicNextLink } from '@prismicio/next';
 import Link from 'next/link';
 import ReusableCTABlock from '../../components/CTABlock';
@@ -73,20 +73,20 @@ export default function CTABlock({ slice }: CTABlockProps) {
   const customButton = isFilled.link(primary.button_link) ? (
     <PrismicNextLink
       field={primary.button_link}
-      className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
+      className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0"
       id="cta-block-btn"
     >
-      <CalendarDays className="w-4 h-4" />
       {buttonText}
+      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
     </PrismicNextLink>
   ) : (
     <Link
       href={isEn ? '/en/contacts' : '/kontakti'}
-      className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-xs font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
+      className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0"
       id="cta-block-btn"
     >
-      <CalendarDays className="w-4 h-4" />
       {buttonText}
+      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
     </Link>
   );
 
