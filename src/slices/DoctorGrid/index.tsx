@@ -6,8 +6,28 @@ import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
-import { Content } from '@prismicio/client';
-import { SliceComponentProps } from '@prismicio/react';
+
+interface DoctorGridItem {
+  badge_text?: string | null;
+  title?: string | null;
+  excerpt?: string | null;
+  link_text?: string | null;
+  link_url?: string | null;
+  book_text?: string | null;
+  book_url?: string | null;
+  image?: { url?: string; alt?: string } | null;
+}
+
+interface DoctorGridSlice {
+  primary: {
+    hideHeader?: boolean | null;
+  };
+  items: DoctorGridItem[];
+}
+
+interface DoctorGridProps {
+  slice: DoctorGridSlice;
+}
 
 const staggerContainerVariants = {
   hidden: {},
@@ -31,8 +51,6 @@ const fadeUpVariants = {
     }
   }
 } as const;
-
-type DoctorGridProps = SliceComponentProps<Content.DoctorGridSlice>;
 
 export default function DoctorGrid({ slice }: DoctorGridProps) {
   const params = useParams();
@@ -75,8 +93,8 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
             const profileUrl  = item.link_url || `${langPrefix}/doctors`;
             const bookText    = item.book_text || defaultBook;
             const bookUrl     = item.book_url || defaultContacts;
-            const imageSrc    = (item.image as any)?.url || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
-            const imageAlt    = (item.image as any)?.alt || nameText;
+            const imageSrc    = item.image?.url || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
+            const imageAlt    = item.image?.alt || nameText;
 
             return (
               <motion.div
