@@ -45,12 +45,12 @@ export function getPrismicLocale(lang?: string | string[]) {
 
 ---
 
-## 3. Middleware URL Normalization & Rewrite Rules
+## 3. Proxy (Request Interception) URL Normalization & Rewrite Rules
 
-To ensure clean, SEO-friendly URLs in Latvian and English, a custom `src/middleware.ts` handles routing behavior:
+To ensure clean, SEO-friendly URLs in Latvian and English, a custom `src/proxy.ts` handles routing behavior:
 
 ### A. Internal Rewrites for Latvian Slugs
-Instead of showing English folder names to Latvian visitors, the middleware rewrites clean Latvian paths to their internal Next.js equivalents:
+Instead of showing English folder names to Latvian visitors, the proxy rewrites clean Latvian paths to their internal Next.js equivalents:
 - `/pakalpojumi` $\rightarrow$ Rewrites internally to `/lv/services`
 - `/cenas` $\rightarrow$ Rewrites internally to `/lv/prices`
 - `/zobarsti` $\rightarrow$ Rewrites internally to `/lv/doctors`
@@ -59,11 +59,11 @@ Instead of showing English folder names to Latvian visitors, the middleware rewr
 
 ### B. Prismic Link Resolver Normalization
 Prismic's link resolver may output paths using the standard Prismic locale segment (e.g. `/en-us/privacy`).
-The middleware intercepts these paths and redirects them to clean English URLs:
+The proxy intercepts these paths and redirects them to clean English URLs:
 - `/en-us/*` $\rightarrow$ Redirects (307) to `/en/*`
 
 ### C. Default Fallback
-If the pathname does not start with `/en` or `/lv`, the middleware automatically rewrites the path internally to the `/lv` namespace.
+If the pathname does not start with `/en` or `/lv`, the proxy automatically rewrites the path internally to the `/lv` namespace.
 
 ---
 
