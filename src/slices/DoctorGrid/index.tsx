@@ -15,6 +15,7 @@ interface DoctorGridItem {
   link_url?: string | null;
   book_text?: string | null;
   book_url?: string | null;
+  book_url_blank?: boolean | null;
   show_book_button?: boolean | null;
   image?: { url?: string; alt?: string } | null;
 }
@@ -94,6 +95,9 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
             const profileUrl  = item.link_url || `${langPrefix}/doctors`;
             const bookText    = item.book_text || defaultBook;
             const bookUrl     = item.book_url || defaultContacts;
+            const bookUrlBlank = item.book_url_blank === true;
+            const isExternalBookUrl = bookUrl.startsWith('http://') || bookUrl.startsWith('https://') || bookUrl.startsWith('//');
+            const openBookBlank = bookUrlBlank || isExternalBookUrl;
             const showBookButton = item.show_book_button !== false;
             const imageSrc    = item.image?.url || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
             const imageAlt    = item.image?.alt || nameText;
@@ -145,6 +149,8 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                     {showBookButton && (
                       <Link
                         href={bookUrl}
+                        target={openBookBlank ? "_blank" : undefined}
+                        rel={openBookBlank ? "noopener noreferrer" : undefined}
                         className="px-4 py-2 text-sm font-bold text-[#511B29] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
                         id={`doctor-grid-book-btn-${idx}`}
                       >

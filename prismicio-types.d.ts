@@ -564,7 +564,7 @@ interface FooterDocumentData {
  */
 export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceBlockSlice | ServicePageSlice | DoctorBlockSlice | DoctorPageSlice | PricelistSlice | TestimonialCardSlice | ContactFormSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | DoctorPageSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice | DoctorGridSlice
 
 /**
  * Content for Homepage documents
@@ -689,7 +689,7 @@ interface MenuDocumentData {
  */
 export type MenuDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = HeroSlice | ServiceBlockSlice | ServicePageSlice | DoctorBlockSlice | DoctorPageSlice | PricelistSlice | TestimonialCardSlice | ContactFormSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice
+type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | DoctorPageSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice | DoctorGridSlice
 
 /**
  * Content for Page documents
@@ -1318,52 +1318,192 @@ type CeoBlockSliceVariation = CeoBlockSliceDefault
 export type CeoBlockSlice = prismic.SharedSlice<"ceo_block", CeoBlockSliceVariation>;
 
 /**
- * Primary content in *ContactForm → Default → Primary*
+ * Primary content in *ContactBlock → Items*
  */
-export interface ContactFormSliceDefaultPrimary {
+export interface ContactBlockSliceDefaultItem {
 	/**
-	 * Title field in *ContactForm → Default → Primary*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: Mūsu klīnikas un kontakti
-	 * - **API ID Path**: contact_form.default.primary.title
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	title: prismic.RichTextField;
-	
-	/**
-	 * Subtitle field in *ContactForm → Default → Primary*
+	 * Branch Badge / Type field in *ContactBlock → Items*
 	 *
 	 * - **Field Type**: Text
-	 * - **Placeholder**: Būsim priecīgi Jūs redzēt...
-	 * - **API ID Path**: contact_form.default.primary.subtitle
+	 * - **Placeholder**: Centrālā filiāle
+	 * - **API ID Path**: contact_block.items[].badge_text
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
-	subtitle: prismic.KeyTextField;
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Clinic Name field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Dentamix Rīga
+	 * - **API ID Path**: contact_block.items[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Phone Number field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: +371 29 459 999
+	 * - **API ID Path**: contact_block.items[].phone
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	phone: prismic.KeyTextField;
+	
+	/**
+	 * Address field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Brīvības iela 100, Rīga
+	 * - **API ID Path**: contact_block.items[].address
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	address: prismic.KeyTextField;
+	
+	/**
+	 * Email Address field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: riga@dentamix.lv
+	 * - **API ID Path**: contact_block.items[].email
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	email: prismic.KeyTextField;
+	
+	/**
+	 * Working Hours Section Title field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Darba laiks
+	 * - **API ID Path**: contact_block.items[].working_hours_label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	working_hours_label: prismic.KeyTextField;
+	
+	/**
+	 * Weekdays Text field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Darba dienās:
+	 * - **API ID Path**: contact_block.items[].weekday_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	weekday_text: prismic.KeyTextField;
+	
+	/**
+	 * Saturday Text field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Sestdien:
+	 * - **API ID Path**: contact_block.items[].saturday_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	saturday_text: prismic.KeyTextField;
+	
+	/**
+	 * Sunday Text field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Svētdien:
+	 * - **API ID Path**: contact_block.items[].sunday_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sunday_text: prismic.KeyTextField;
+	
+	/**
+	 * Weekday Hours field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 09:00 - 19:00
+	 * - **API ID Path**: contact_block.items[].weekday_hours
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	weekday_hours: prismic.KeyTextField;
+	
+	/**
+	 * Saturday Hours field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 10:00 - 15:00
+	 * - **API ID Path**: contact_block.items[].saturday_hours
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	saturday_hours: prismic.KeyTextField;
+	
+	/**
+	 * Sunday Hours field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Slēgts
+	 * - **API ID Path**: contact_block.items[].sunday_hours
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	sunday_hours: prismic.KeyTextField;
+	
+	/**
+	 * Accessibility Info Text field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Klīnika ir pilnībā pieejama ratiņkrēslā
+	 * - **API ID Path**: contact_block.items[].accessibility_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	accessibility_text: prismic.KeyTextField;
+	
+	/**
+	 * Google Maps Embed URL field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://www.google.com/maps/embed?pb=...
+	 * - **API ID Path**: contact_block.items[].gmaps_iframe_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	gmaps_iframe_url: prismic.KeyTextField;
+	
+	/**
+	 * Google Maps Direct Link / Share URL field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://maps.app.goo.gl/DvLgodzdiR5t2KQK8
+	 * - **API ID Path**: contact_block.items[].gmaps_direct_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	gmaps_direct_url: prismic.KeyTextField;
+	
+	/**
+	 * Waze Directions Link field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://www.waze.com/live-map/directions?to=...
+	 * - **API ID Path**: contact_block.items[].waze_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	waze_url: prismic.KeyTextField;
 }
 
 /**
- * Default variation for ContactForm Slice
+ * Default variation for ContactBlock Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default variation
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type ContactFormSliceDefault = prismic.SharedSliceVariation<"default", Simplify<ContactFormSliceDefaultPrimary>, never>;
+export type ContactBlockSliceDefault = prismic.SharedSliceVariation<"default", Record<string, never>, Simplify<ContactBlockSliceDefaultItem>>;
 
 /**
- * Slice variation for *ContactForm*
+ * Slice variation for *ContactBlock*
  */
-type ContactFormSliceVariation = ContactFormSliceDefault
+type ContactBlockSliceVariation = ContactBlockSliceDefault
 
 /**
- * ContactForm Shared Slice
+ * ContactBlock Shared Slice
  *
- * - **API ID**: `contact_form`
- * - **Description**: Renders clinic locations, details, and the appointment booking contact form.
+ * - **API ID**: `contact_block`
+ * - **Description**: Customizable contacts block showing repeatable clinic cards in a single-column list design.
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type ContactFormSlice = prismic.SharedSlice<"contact_form", ContactFormSliceVariation>;
+export type ContactBlockSlice = prismic.SharedSlice<"contact_block", ContactBlockSliceVariation>;
 
 /**
  * Primary content in *CTABlock → Default → Primary*
@@ -1545,6 +1685,152 @@ type DoctorBlockSliceVariation = DoctorBlockSliceDefault
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type DoctorBlockSlice = prismic.SharedSlice<"doctor_block", DoctorBlockSliceVariation>;
+
+/**
+ * Primary content in *DoctorGrid → Default → Primary*
+ */
+export interface DoctorGridSliceDefaultPrimary {
+	/**
+	 * Hide Header (use when PageTitle slice is above) field in *DoctorGrid → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: doctor_grid.default.primary.hideHeader
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	hideHeader: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *DoctorGrid → Items*
+ */
+export interface DoctorGridSliceDefaultItem {
+	/**
+	 * Badge / Role field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: SPECIĀLISTE
+	 * - **API ID Path**: doctor_grid.items[].badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Doctor Name field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Dr. Anna Bērziņa
+	 * - **API ID Path**: doctor_grid.items[].title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Short Bio / Excerpt field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pieredzējusi estētiskās zobārstniecības speciāliste...
+	 * - **API ID Path**: doctor_grid.items[].excerpt
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	excerpt: prismic.KeyTextField;
+	
+	/**
+	 * Profile Link Text field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Skatīt profilu
+	 * - **API ID Path**: doctor_grid.items[].link_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	link_text: prismic.KeyTextField;
+	
+	/**
+	 * Profile Link URL field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: /zobarsti/dr-anna-berzina
+	 * - **API ID Path**: doctor_grid.items[].link_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	link_url: prismic.KeyTextField;
+	
+	/**
+	 * Book Button Text field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pieteikties
+	 * - **API ID Path**: doctor_grid.items[].book_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	book_text: prismic.KeyTextField;
+	
+	/**
+	 * Book Button URL field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: /kontakti
+	 * - **API ID Path**: doctor_grid.items[].book_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	book_url: prismic.KeyTextField;
+	
+	/**
+	 * Open Booking URL in New Tab field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: doctor_grid.items[].book_url_blank
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	book_url_blank: prismic.BooleanField;
+	
+	/**
+	 * Show Book Button field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: doctor_grid.items[].show_book_button
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	show_book_button: prismic.BooleanField;
+	
+	/**
+	 * Doctor Photo field in *DoctorGrid → Items*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: doctor_grid.items[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Default variation for DoctorGrid Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default variation
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type DoctorGridSliceDefault = prismic.SharedSliceVariation<"default", Simplify<DoctorGridSliceDefaultPrimary>, Simplify<DoctorGridSliceDefaultItem>>;
+
+/**
+ * Slice variation for *DoctorGrid*
+ */
+type DoctorGridSliceVariation = DoctorGridSliceDefault
+
+/**
+ * DoctorGrid Shared Slice
+ *
+ * - **API ID**: `doctor_grid`
+ * - **Description**: Inline doctor cards grid for the /doctors page. Add each doctor as an item with image, name, role, excerpt, profile link and booking link.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type DoctorGridSlice = prismic.SharedSlice<"doctor_grid", DoctorGridSliceVariation>;
 
 /**
  * Primary content in *DoctorPage → Default → Primary*
@@ -1888,97 +2174,108 @@ type PricelistSliceVariation = PricelistSliceDefault
 export type PricelistSlice = prismic.SharedSlice<"pricelist", PricelistSliceVariation>;
 
 /**
- * Primary content in *ServiceBlock → Default → Primary*
+ * Primary content in *ServiceGrid → Default → Primary*
  */
-export interface ServiceBlockSliceDefaultPrimary {
+export interface ServiceGridSliceDefaultPrimary {
 	/**
-	 * Badge Text field in *ServiceBlock → Default → Primary*
+	 * Hide Header (use when PageTitle slice is above) field in *ServiceGrid → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: service_grid.default.primary.hideHeader
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	hideHeader: prismic.BooleanField;
+}
+
+/**
+ * Primary content in *ServiceGrid → Items*
+ */
+export interface ServiceGridSliceDefaultItem {
+	/**
+	 * Badge Text / Category field in *ServiceGrid → Items*
 	 *
 	 * - **Field Type**: Text
-	 * - **Placeholder**: Pakalpojumi
-	 * - **API ID Path**: service_block.default.primary.badge_text
+	 * - **Placeholder**: PAKALPOJUMS
+	 * - **API ID Path**: service_grid.items[].badge_text
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	badge_text: prismic.KeyTextField;
 	
 	/**
-	 * Title field in *ServiceBlock → Default → Primary*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: Augstākās klases zobārstniecība
-	 * - **API ID Path**: service_block.default.primary.title
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	title: prismic.RichTextField;
-	
-	/**
-	 * Subtitle field in *ServiceBlock → Default → Primary*
+	 * Service Name field in *ServiceGrid → Items*
 	 *
 	 * - **Field Type**: Text
-	 * - **Placeholder**: Pilns mūsdienīgu pakalpojumu spektrs...
-	 * - **API ID Path**: service_block.default.primary.subtitle
+	 * - **Placeholder**: Zobu higiēna
+	 * - **API ID Path**: service_grid.items[].title
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
-	subtitle: prismic.KeyTextField;
+	title: prismic.KeyTextField;
 	
 	/**
-	 * Link Text field in *ServiceBlock → Default → Primary*
+	 * Excerpt / Description field in *ServiceGrid → Items*
 	 *
 	 * - **Field Type**: Text
-	 * - **Placeholder**: Skatīt visus pakalpojumus
-	 * - **API ID Path**: service_block.default.primary.link_text
+	 * - **Placeholder**: Mutes dobuma veselības uzturēšanai...
+	 * - **API ID Path**: service_grid.items[].excerpt
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	excerpt: prismic.KeyTextField;
+	
+	/**
+	 * Link Text field in *ServiceGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Lasīt vairāk
+	 * - **API ID Path**: service_grid.items[].link_text
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	link_text: prismic.KeyTextField;
 	
 	/**
-	 * Link URL field in *ServiceBlock → Default → Primary*
+	 * Link URL field in *ServiceGrid → Items*
 	 *
-	 * - **Field Type**: Link
-	 * - **Placeholder**: Select page or enter URL
-	 * - **API ID Path**: service_block.default.primary.link_url
-	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 * - **Field Type**: Text
+	 * - **Placeholder**: /pakalpojumi/higiene
+	 * - **API ID Path**: service_grid.items[].link_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
-	link_url: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-}
-
-/**
- * Primary content in *ServiceBlock → Items*
- */
-export interface ServiceBlockSliceDefaultItem {
+	link_url: prismic.KeyTextField;
+	
 	/**
-	 * Service Document field in *ServiceBlock → Items*
+	 * Service Image field in *ServiceGrid → Items*
 	 *
-	 * - **Field Type**: Content Relationship
+	 * - **Field Type**: Image
 	 * - **Placeholder**: *None*
-	 * - **API ID Path**: service_block.items[].service
-	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
+	 * - **API ID Path**: service_grid.items[].image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
-	service: prismic.ContentRelationshipField<"service">;
+	image: prismic.ImageField<never>;
 }
 
 /**
- * Default variation for ServiceBlock Slice
+ * Default variation for ServiceGrid Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default variation
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type ServiceBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<ServiceBlockSliceDefaultPrimary>, Simplify<ServiceBlockSliceDefaultItem>>;
+export type ServiceGridSliceDefault = prismic.SharedSliceVariation<"default", Simplify<ServiceGridSliceDefaultPrimary>, Simplify<ServiceGridSliceDefaultItem>>;
 
 /**
- * Slice variation for *ServiceBlock*
+ * Slice variation for *ServiceGrid*
  */
-type ServiceBlockSliceVariation = ServiceBlockSliceDefault
+type ServiceGridSliceVariation = ServiceGridSliceDefault
 
 /**
- * ServiceBlock Shared Slice
+ * ServiceGrid Shared Slice
  *
- * - **API ID**: `service_block`
- * - **Description**: Featured services block with title, subtitle, and repeatable selected services.
+ * - **API ID**: `service_grid`
+ * - **Description**: Services grid cards with + add item in repeatable zone.
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type ServiceBlockSlice = prismic.SharedSlice<"service_block", ServiceBlockSliceVariation>;
+export type ServiceGridSlice = prismic.SharedSlice<"service_grid", ServiceGridSliceVariation>;
 
 /**
  * Primary content in *ServicePage → Default → Primary*
@@ -2038,6 +2335,17 @@ export type ServicePageSlice = prismic.SharedSlice<"service_page", ServicePageSl
  * Primary content in *TestimonialBlock → Default → Primary*
  */
 export interface TestimonialBlockSliceDefaultPrimary {
+	/**
+	 * Hide Header field in *TestimonialBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: testimonial_block.default.primary.hideHeader
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	hideHeader: prismic.BooleanField;
+	
 	/**
 	 * Badge Text field in *TestimonialBlock → Default → Primary*
 	 *
@@ -2316,10 +2624,10 @@ declare module "@prismicio/client" {
 			CeoBlockSliceDefaultPrimary,
 			CeoBlockSliceVariation,
 			CeoBlockSliceDefault,
-			ContactFormSlice,
-			ContactFormSliceDefaultPrimary,
-			ContactFormSliceVariation,
-			ContactFormSliceDefault,
+			ContactBlockSlice,
+			ContactBlockSliceDefaultItem,
+			ContactBlockSliceVariation,
+			ContactBlockSliceDefault,
 			CtaBlockSlice,
 			CtaBlockSliceDefaultPrimary,
 			CtaBlockSliceVariation,
@@ -2329,6 +2637,11 @@ declare module "@prismicio/client" {
 			DoctorBlockSliceDefaultItem,
 			DoctorBlockSliceVariation,
 			DoctorBlockSliceDefault,
+			DoctorGridSlice,
+			DoctorGridSliceDefaultPrimary,
+			DoctorGridSliceDefaultItem,
+			DoctorGridSliceVariation,
+			DoctorGridSliceDefault,
 			DoctorPageSlice,
 			DoctorPageSliceDefaultPrimary,
 			DoctorPageSliceDefaultItem,
@@ -2351,11 +2664,11 @@ declare module "@prismicio/client" {
 			PricelistSliceDefaultPrimary,
 			PricelistSliceVariation,
 			PricelistSliceDefault,
-			ServiceBlockSlice,
-			ServiceBlockSliceDefaultPrimary,
-			ServiceBlockSliceDefaultItem,
-			ServiceBlockSliceVariation,
-			ServiceBlockSliceDefault,
+			ServiceGridSlice,
+			ServiceGridSliceDefaultPrimary,
+			ServiceGridSliceDefaultItem,
+			ServiceGridSliceVariation,
+			ServiceGridSliceDefault,
 			ServicePageSlice,
 			ServicePageSliceDefaultPrimary,
 			ServicePageSliceDefaultItem,

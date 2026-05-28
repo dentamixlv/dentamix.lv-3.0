@@ -71,6 +71,15 @@
             "placeholder": "/kontakti"
           }
         },
+        "book_url_blank": {
+          "type": "Boolean",
+          "config": {
+            "label": "Open Booking URL in New Tab",
+            "placeholder_false": "Same Tab",
+            "placeholder_true": "New Tab (_blank)",
+            "default_value": false
+          }
+        },
         "show_book_button": {
           "type": "Boolean",
           "config": {
