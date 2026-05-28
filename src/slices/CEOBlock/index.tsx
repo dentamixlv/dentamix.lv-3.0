@@ -128,7 +128,7 @@ export default function CEOBlock({ slice }: CEOBlockProps) {
               alt={imageAlt}
               fill
               unoptimized
-              className="object-cover object-top hover:scale-[1.02] transition-transform duration-500"
+              className="object-cover object-top hover-scale-102"
               priority
             />
           </motion.div>

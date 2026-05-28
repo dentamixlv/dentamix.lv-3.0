@@ -13,3 +13,26 @@
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* Smooth, hardware-accelerated image scaling hover transitions */
+.hover-scale-103 {
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1) translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.group:hover .hover-scale-103 {
+  transform: scale(1.03) translateZ(0);
+}
+
+.hover-scale-102 {
+  transition: transform 500ms cubic-bezier(0.4, 0, 0.2, 1);
+  transform: scale(1) translateZ(0);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+.hover-scale-102:hover {
+  transform: scale(1.02) translateZ(0);
+}

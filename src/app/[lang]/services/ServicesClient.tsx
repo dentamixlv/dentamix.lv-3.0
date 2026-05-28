@@ -108,7 +108,7 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
                 alt={serv.title}
                 fill
                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 33vw, 30vw"
-                className="object-cover group-hover:scale-[1.03] transition-transform duration-500"
+                className="object-cover hover-scale-103"
               />
             </Link>
 
