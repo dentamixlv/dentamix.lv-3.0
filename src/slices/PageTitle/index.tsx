@@ -28,7 +28,7 @@ export default function PageTitle({ slice }: PageTitleProps) {
   const subtitle = primary.subtitle || '';
 
   return (
-    <div className="pt-16 pb-4 md:pt-24 md:pb-6 max-w-7xl mx-auto px-6">
+    <div className="pt-16 pb-8 md:pt-24 md:pb-12 max-w-7xl mx-auto px-6">
       <motion.div 
         initial="hidden"
         animate="visible"

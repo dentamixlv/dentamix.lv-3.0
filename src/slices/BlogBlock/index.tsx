@@ -149,7 +149,7 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
   };
 
   return (
-    <section className="bg-gradient-to-b from-[#fbf9f8] to-white pt-4 md:pt-6 pb-16 md:pb-24 border-t border-[#efedec]/60">
+    <section className="bg-gradient-to-b from-[#fbf9f8] to-white py-16 md:py-24">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Header Block */}
