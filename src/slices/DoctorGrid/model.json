@@ -71,6 +71,15 @@
             "placeholder": "/kontakti"
           }
         },
+        "show_book_button": {
+          "type": "Boolean",
+          "config": {
+            "label": "Show Book Button",
+            "placeholder_false": "Hidden",
+            "placeholder_true": "Visible",
+            "default_value": true
+          }
+        },
         "image": {
           "type": "Image",
           "config": {
