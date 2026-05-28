@@ -18,4 +18,5 @@ export const components = {
   page_title: dynamic(() => import("./PageTitle")),
   blog_block: dynamic(() => import("./BlogBlock")),
   blog_page: dynamic(() => import("./BlogPage")),
+  doctor_grid: dynamic(() => import("./DoctorGrid")),
 };

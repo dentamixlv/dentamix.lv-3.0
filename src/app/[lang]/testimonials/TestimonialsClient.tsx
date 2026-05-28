@@ -21,9 +21,10 @@ interface Testimonial {
 interface TestimonialsClientProps {
   langCode: string;
   customTestimonials?: Testimonial[] | null;
+  hideHeader?: boolean;
 }
 
-export default function TestimonialsClient({ langCode, customTestimonials }: TestimonialsClientProps) {
+export default function TestimonialsClient({ langCode, customTestimonials, hideHeader = false }: TestimonialsClientProps) {
   const router = useRouter();
   const langPrefix = langCode === 'en-us' ? '/en' : '';
 
@@ -35,7 +36,8 @@ export default function TestimonialsClient({ langCode, customTestimonials }: Tes
     <TestimonialsPage 
       onBook={handleBook} 
       langCode={langCode} 
-      customTestimonials={customTestimonials || undefined} 
+      customTestimonials={customTestimonials || undefined}
+      hideHeader={hideHeader}
     />
   );
 }

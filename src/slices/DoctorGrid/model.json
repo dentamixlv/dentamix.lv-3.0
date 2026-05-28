@@ -1,0 +1,85 @@
+{
+  "id": "doctor_grid",
+  "type": "SharedSlice",
+  "name": "DoctorGrid",
+  "description": "Inline doctor cards grid for the /doctors page. Add each doctor as an item with image, name, role, excerpt, profile link and booking link.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "hideHeader": {
+          "type": "Boolean",
+          "config": {
+            "label": "Hide Header (use when PageTitle slice is above)",
+            "placeholder_false": "Show",
+            "placeholder_true": "Hide",
+            "default_value": true
+          }
+        }
+      },
+      "items": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge / Role",
+            "placeholder": "SPECIĀLISTE"
+          }
+        },
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Doctor Name",
+            "placeholder": "Dr. Anna Bērziņa"
+          }
+        },
+        "excerpt": {
+          "type": "Text",
+          "config": {
+            "label": "Short Bio / Excerpt",
+            "placeholder": "Pieredzējusi estētiskās zobārstniecības speciāliste..."
+          }
+        },
+        "link_text": {
+          "type": "Text",
+          "config": {
+            "label": "Profile Link Text",
+            "placeholder": "Skatīt profilu"
+          }
+        },
+        "link_url": {
+          "type": "Text",
+          "config": {
+            "label": "Profile Link URL",
+            "placeholder": "/zobarsti/dr-anna-berzina"
+          }
+        },
+        "book_text": {
+          "type": "Text",
+          "config": {
+            "label": "Book Button Text",
+            "placeholder": "Pieteikties"
+          }
+        },
+        "book_url": {
+          "type": "Text",
+          "config": {
+            "label": "Book Button URL",
+            "placeholder": "/kontakti"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Doctor Photo",
+            "constraint": {},
+            "thumbnails": []
+          }
+        }
+      }
+    }
+  ]
+}

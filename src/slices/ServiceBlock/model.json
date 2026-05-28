@@ -11,6 +11,15 @@
       "version": "sktwi1xtmkfgx8627",
       "description": "Default variation",
       "primary": {
+        "hideHeader": {
+          "type": "Boolean",
+          "config": {
+            "label": "Hide Header",
+            "placeholder_false": "Show",
+            "placeholder_true": "Hide",
+            "default_value": true
+          }
+        },
         "badge_text": {
           "type": "Text",
           "config": {

@@ -81,6 +81,10 @@ export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
 
   const activeItems = items && items.length > 0 ? items : defaultItems;
 
+  const hideHeaderValue = (slice.primary as any).hideHeader !== null && (slice.primary as any).hideHeader !== undefined 
+    ? (slice.primary as any).hideHeader 
+    : false;
+
   const sectionButton = isFilled.link(primary.link_url) ? (
     <PrismicNextLink
       field={primary.link_url}
@@ -101,31 +105,37 @@ export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
     </Link>
   );
 
+  const sectionClass = hideHeaderValue
+    ? 'bg-gradient-to-b from-white to-[#fbf9f8] pt-2 pb-0 md:pt-4 md:pb-0'
+    : 'bg-gradient-to-b from-white to-[#fbf9f8] py-16 md:py-24 border-t border-[#efedec]/60';
+
   return (
-    <section className="bg-gradient-to-b from-white to-[#fbf9f8] py-16 md:py-24 border-t border-[#efedec]/60">
+    <section className={sectionClass}>
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* Header Block */}
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeUpVariants}
-          className="text-center max-w-xl mx-auto mb-16"
-        >
-          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
-            {badgeText}
-          </span>
-          <h2 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
-            {title}
-          </h2>
-          <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
-            {subtitle}
-          </p>
-        </motion.div>
+        {!hideHeaderValue && (
+          <motion.div
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            variants={fadeUpVariants}
+            className="text-center max-w-xl mx-auto mb-16"
+          >
+            <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+              {badgeText}
+            </span>
+            <h2 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
+              {title}
+            </h2>
+            <p className="text-xs text-[#6a5b5e] mt-2 font-medium">
+              {subtitle}
+            </p>
+          </motion.div>
+        )}
 
         {/* Grid cards */}
-        <motion.div 
+        <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
@@ -140,9 +150,9 @@ export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
             const dateText = item.date || '';
 
             return (
-              <motion.div 
+              <motion.div
                 variants={fadeUpVariants}
-                key={idx} 
+                key={idx}
                 className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group h-full"
                 id={`testimonial-card-${idx}`}
               >
@@ -169,7 +179,7 @@ export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
                     <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors">
                       {authorName}
                     </h3>
-                    
+
                     <p className="text-xs text-[#6a5b5e] leading-relaxed mt-3 font-normal">
                       {storyText}
                     </p>

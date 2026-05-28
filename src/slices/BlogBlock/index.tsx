@@ -130,8 +130,12 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
       : 'Speciālistu ieteikumi, jaunākās tehnoloģijas un praktiski padomi smaida aprūpei.'
   };
 
+  const sectionClass = hideHeaderValue
+    ? 'bg-gradient-to-b from-[#fbf9f8] to-white pt-2 pb-0 md:pt-4 md:pb-0'
+    : 'bg-gradient-to-b from-[#fbf9f8] to-white py-16 md:py-24';
+
   return (
-    <section className="bg-gradient-to-b from-[#fbf9f8] to-white py-16 md:py-24">
+    <section className={sectionClass}>
       <div className="max-w-7xl mx-auto px-6">
 
         {/* Header Block */}

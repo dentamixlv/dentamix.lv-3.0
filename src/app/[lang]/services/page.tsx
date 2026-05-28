@@ -73,5 +73,20 @@ export default async function Page({ params }: PageProps) {
     console.warn("No services in Prismic, using fallback data.");
   }
 
-  return <ServicesClient langCode={locale} customServices={services} />;
+  return (
+    <>
+      <div className="pt-16 pb-8 md:pt-24 md:pb-12 max-w-7xl mx-auto px-6">
+        <div className="text-center max-w-2xl mx-auto">
+          <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+            {locale === 'en-us' ? 'SERVICES' : 'PAKALPOJUMI'}
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
+            {locale === 'en-us' ? 'Our Services' : 'Mūsu pakalpojumi'}
+          </h1>
+        </div>
+      </div>
+      <ServicesClient langCode={locale} customServices={services} hideHeader={true} />
+    </>
+  );
 }
+
