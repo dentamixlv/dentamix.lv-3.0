@@ -80,6 +80,10 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
                 labelSaturday: c.label_saturday || undefined,
                 labelSunday: c.label_sunday || undefined,
                 accessibilityAlert: c.accessibility_alert || undefined,
+                mapTitle: c.map_title || undefined,
+                mapUrl: c.map_url || undefined,
+                wazeTitle: c.waze_title || undefined,
+                wazeUrl: c.waze_url || undefined,
               }))
           : undefined,
         copyrightText: doc.data.copyright_text || undefined,

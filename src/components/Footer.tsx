@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { MapPin, Phone, Mail } from 'lucide-react';
+import { MapPin, Phone, Mail, Map, Navigation } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -25,6 +25,10 @@ interface FooterProps {
     labelSaturday?: string;
     labelSunday?: string;
     accessibilityAlert?: string;
+    mapTitle?: string;
+    mapUrl?: string;
+    wazeTitle?: string;
+    wazeUrl?: string;
   }>;
   copyrightText?: string;
   privacyPolicyLabel?: string;
@@ -71,8 +75,10 @@ export default function Footer({
         address: c.address,
         phone: c.phone,
         email: c.email,
-        gmapsLink: c.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.address)}` : undefined,
-        waze: c.address ? `https://waze.com/ul?q=${encodeURIComponent(c.address)}` : undefined,
+        gmapsLink: c.mapUrl || (c.address ? `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(c.address)}` : undefined),
+        waze: c.wazeUrl || (c.address ? `https://waze.com/ul?q=${encodeURIComponent(c.address)}` : undefined),
+        mapTitle: c.mapTitle,
+        wazeTitle: c.wazeTitle,
         workHours: {
           weekdays: c.workHoursWeekdays ? `P. - Pk.: ${c.workHoursWeekdays}` : '',
           saturday: c.workHoursSaturday ? `S.: ${c.workHoursSaturday}` : '',
@@ -88,6 +94,8 @@ export default function Footer({
       }))
     : getClinics(isEn ? 'en-us' : 'lv').map((clinic) => ({
         ...clinic,
+        mapTitle: undefined,
+        wazeTitle: undefined,
         workHours: {
           weekdays: clinic.workHours.weekdays,
           saturday: clinic.workHours.saturday,
@@ -188,34 +196,32 @@ export default function Footer({
                       <span className="font-medium">{clinic.email}</span>
                     </span>
                   )}
-                  <div className="flex items-center gap-3 mt-1">
-                    {clinic.gmapsLink && (
+                  {clinic.gmapsLink && (
+                    <span className="flex items-center gap-2">
+                      <Map className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
                       <a 
                         href={clinic.gmapsLink}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 hover:text-[#de7c8a] transition-colors duration-200 w-fit text-xs"
+                        className="hover:text-white hover:underline transition-colors duration-200 font-medium"
                       >
-                        <svg className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        <span className="font-medium">{t.map}</span>
+                        {clinic.mapTitle || t.map}
                       </a>
-                    )}
-                    {clinic.waze && (
+                    </span>
+                  )}
+                  {clinic.waze && (
+                    <span className="flex items-center gap-2">
+                      <Navigation className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
                       <a 
                         href={clinic.waze}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-1.5 hover:text-[#de7c8a] transition-colors duration-200 w-fit text-xs"
+                        className="hover:text-white hover:underline transition-colors duration-200 font-medium"
                       >
-                        <svg className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" viewBox="0 0 24 24" fill="currentColor">
-                          <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
-                        <span className="font-medium">Waze</span>
+                        {clinic.wazeTitle || 'Waze'}
                       </a>
-                    )}
-                  </div>
+                    </span>
+                  )}
                 </div>
               </div>
             ))}

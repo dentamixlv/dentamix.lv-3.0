@@ -117,11 +117,25 @@
             "placeholder": "https://maps.app.goo.gl/DvLgodzdiR5t2KQK8"
           }
         },
+        "map_title": {
+          "type": "Text",
+          "config": {
+            "label": "Map Link Title",
+            "placeholder": "Karte / Google Maps"
+          }
+        },
         "waze_url": {
           "type": "Text",
           "config": {
             "label": "Waze Directions Link",
-            "placeholder": "https://www.waze.com/live-map/directions?to=..."
+            "placeholder": "https://waze.com/ul/hud1k9wgd7"
+          }
+        },
+        "waze_title": {
+          "type": "Text",
+          "config": {
+            "label": "Waze Link Title",
+            "placeholder": "Waze"
           }
         }
       }

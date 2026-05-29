@@ -21,7 +21,9 @@ interface ContactBlockItem {
   accessibility_text?: string | null;
   gmaps_iframe_url?: string | null;
   gmaps_direct_url?: string | null;
+  map_title?: string | null;
   waze_url?: string | null;
+  waze_title?: string | null;
 }
 
 interface ContactBlockSlice {
@@ -91,6 +93,8 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
           const rawMapUrl   = item.gmaps_iframe_url || '';
           const rawDirectUrl = item.gmaps_direct_url || '';
           const wazeUrl     = item.waze_url || '';
+          const mapTitle    = item.map_title || '';
+          const wazeTitle   = item.waze_title || '';
 
           // Check if the user entered a direct share URL instead of an iframe embed URL
           const isShareLink = rawMapUrl.includes('maps.app.goo.gl') || (rawMapUrl.includes('google.com/maps') && !rawMapUrl.includes('embed'));
@@ -190,7 +194,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                           rel="noopener noreferrer" 
                           className="hover:text-[#5d1726] hover:underline transition-colors font-medium"
                         >
-                          {isEn ? 'Google Maps' : 'Karte'}
+                          {mapTitle || (isEn ? 'Google Maps' : 'Karte')}
                         </a>
                       </p>
                     )}
@@ -205,7 +209,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                           rel="noopener noreferrer" 
                           className="hover:text-[#5d1726] hover:underline transition-colors font-medium"
                         >
-                          Waze
+                          {wazeTitle || 'Waze'}
                         </a>
                       </p>
                     )}

@@ -122,6 +122,34 @@
                 "label": "Accessibility Alert Message",
                 "placeholder": "e.g., Klīnika ir pilnībā pieejama ratiņkrēslā"
               }
+            },
+            "map_title": {
+              "type": "Text",
+              "config": {
+                "label": "Map Link Title",
+                "placeholder": "Karte / Google Maps"
+              }
+            },
+            "map_url": {
+              "type": "Text",
+              "config": {
+                "label": "Map Link URL",
+                "placeholder": "https://maps.app.goo.gl/..."
+              }
+            },
+            "waze_title": {
+              "type": "Text",
+              "config": {
+                "label": "Waze Link Title",
+                "placeholder": "Waze"
+              }
+            },
+            "waze_url": {
+              "type": "Text",
+              "config": {
+                "label": "Waze Link URL",
+                "placeholder": "https://waze.com/ul/hud1k9wgd7"
+              }
             }
           }
         }
