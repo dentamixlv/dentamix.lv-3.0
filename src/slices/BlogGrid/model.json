@@ -1,7 +1,7 @@
 {
-  "id": "blog_block",
+  "id": "blog_grid",
   "type": "SharedSlice",
-  "name": "BlogBlock",
+  "name": "BlogGrid",
   "description": "Renders blog card previews from inline items or queries Prismic blog posts dynamically if empty.",
   "variations": [
     {

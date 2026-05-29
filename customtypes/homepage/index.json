@@ -52,7 +52,7 @@
             "page_title": {
               "type": "SharedSlice"
             },
-            "blog_block": {
+            "blog_grid": {
               "type": "SharedSlice"
             },
             "blog_page": {

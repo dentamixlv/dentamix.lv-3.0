@@ -15,7 +15,7 @@ export const components = {
   testimonial_block: dynamic(() => import("./TestimonialBlock")),
   partner_block: dynamic(() => import("./PartnerBlock")),
   page_title: dynamic(() => import("./PageTitle")),
-  blog_block: dynamic(() => import("./BlogBlock")),
+  blog_grid: dynamic(() => import("./BlogGrid")),
   blog_page: dynamic(() => import("./BlogPage")),
   doctor_grid: dynamic(() => import("./DoctorGrid")),
 };

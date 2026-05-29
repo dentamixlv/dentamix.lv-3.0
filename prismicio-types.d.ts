@@ -444,7 +444,7 @@ interface FooterDocumentData {
  */
 export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice | DoctorGridSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice
 
 /**
  * Content for Homepage documents
@@ -569,7 +569,7 @@ interface MenuDocumentData {
  */
 export type MenuDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice | DoctorGridSlice
+type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice
 
 /**
  * Content for Page documents
@@ -892,108 +892,108 @@ export type TestimonialDocument<Lang extends string = string> = prismic.PrismicD
 export type AllDocumentTypes = BlogPostDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument;
 
 /**
- * Primary content in *BlogBlock → Default → Primary*
+ * Primary content in *BlogGrid → Default → Primary*
  */
-export interface BlogBlockSliceDefaultPrimary {
+export interface BlogGridSliceDefaultPrimary {
 	/**
-	 * Hide Header field in *BlogBlock → Default → Primary*
+	 * Hide Header field in *BlogGrid → Default → Primary*
 	 *
 	 * - **Field Type**: Boolean
 	 * - **Placeholder**: *None*
 	 * - **Default Value**: true
-	 * - **API ID Path**: blog_block.default.primary.hideHeader
+	 * - **API ID Path**: blog_grid.default.primary.hideHeader
 	 * - **Documentation**: https://prismic.io/docs/fields/boolean
 	 */
 	hideHeader: prismic.BooleanField;
 }
 
 /**
- * Primary content in *BlogBlock → Items*
+ * Primary content in *BlogGrid → Items*
  */
-export interface BlogBlockSliceDefaultItem {
+export interface BlogGridSliceDefaultItem {
 	/**
-	 * Badge Text / Category field in *BlogBlock → Items*
+	 * Badge Text / Category field in *BlogGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: PADOMS
-	 * - **API ID Path**: blog_block.items[].badge_text
+	 * - **API ID Path**: blog_grid.items[].badge_text
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	badge_text: prismic.KeyTextField;
 	
 	/**
-	 * Title field in *BlogBlock → Items*
+	 * Title field in *BlogGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Zobu balināšana: viss, kas jāzina
-	 * - **API ID Path**: blog_block.items[].title
+	 * - **API ID Path**: blog_grid.items[].title
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	title: prismic.KeyTextField;
 	
 	/**
-	 * Excerpt / Description field in *BlogBlock → Items*
+	 * Excerpt / Description field in *BlogGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Praktiski padomi drošai zobu balināšanai...
-	 * - **API ID Path**: blog_block.items[].excerpt
+	 * - **API ID Path**: blog_grid.items[].excerpt
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	excerpt: prismic.KeyTextField;
 	
 	/**
-	 * Link Text field in *BlogBlock → Items*
+	 * Link Text field in *BlogGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Lasīt rakstu
-	 * - **API ID Path**: blog_block.items[].link_text
+	 * - **API ID Path**: blog_grid.items[].link_text
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	link_text: prismic.KeyTextField;
 	
 	/**
-	 * Link URL field in *BlogBlock → Items*
+	 * Link URL field in *BlogGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: /en/blogs/some-post
-	 * - **API ID Path**: blog_block.items[].link_url
+	 * - **API ID Path**: blog_grid.items[].link_url
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	link_url: prismic.KeyTextField;
 	
 	/**
-	 * Custom Image (Optional Override) field in *BlogBlock → Items*
+	 * Custom Image (Optional Override) field in *BlogGrid → Items*
 	 *
 	 * - **Field Type**: Image
 	 * - **Placeholder**: *None*
-	 * - **API ID Path**: blog_block.items[].image
+	 * - **API ID Path**: blog_grid.items[].image
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	image: prismic.ImageField<never>;
 }
 
 /**
- * Default variation for BlogBlock Slice
+ * Default variation for BlogGrid Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default variation
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type BlogBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<BlogBlockSliceDefaultPrimary>, Simplify<BlogBlockSliceDefaultItem>>;
+export type BlogGridSliceDefault = prismic.SharedSliceVariation<"default", Simplify<BlogGridSliceDefaultPrimary>, Simplify<BlogGridSliceDefaultItem>>;
 
 /**
- * Slice variation for *BlogBlock*
+ * Slice variation for *BlogGrid*
  */
-type BlogBlockSliceVariation = BlogBlockSliceDefault
+type BlogGridSliceVariation = BlogGridSliceDefault
 
 /**
- * BlogBlock Shared Slice
+ * BlogGrid Shared Slice
  *
- * - **API ID**: `blog_block`
+ * - **API ID**: `blog_grid`
  * - **Description**: Renders blog card previews from inline items or queries Prismic blog posts dynamically if empty.
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type BlogBlockSlice = prismic.SharedSlice<"blog_block", BlogBlockSliceVariation>;
+export type BlogGridSlice = prismic.SharedSlice<"blog_grid", BlogGridSliceVariation>;
 
 /**
  * Primary content in *BlogPage → Default → Primary*
@@ -1536,6 +1536,67 @@ export interface DoctorBlockSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	workplace_title: prismic.KeyTextField;
+	
+	/**
+	 * CTA Badge Text field in *DoctorBlock → Doctor Detail → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pieraksts atvērts
+	 * - **API ID Path**: doctor_block.default.primary.cta_badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cta_badge_text: prismic.KeyTextField;
+	
+	/**
+	 * CTA Title field in *DoctorBlock → Doctor Detail → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pieteikties uz vizīti
+	 * - **API ID Path**: doctor_block.default.primary.cta_title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cta_title: prismic.KeyTextField;
+	
+	/**
+	 * CTA Description field in *DoctorBlock → Doctor Detail → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Piesakieties vizītei vai konsultācijai...
+	 * - **API ID Path**: doctor_block.default.primary.cta_description
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cta_description: prismic.KeyTextField;
+	
+	/**
+	 * CTA Button Text field in *DoctorBlock → Doctor Detail → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pieteikties vizītei
+	 * - **API ID Path**: doctor_block.default.primary.cta_button_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	cta_button_text: prismic.KeyTextField;
+	
+	/**
+	 * CTA URL Link field in *DoctorBlock → Doctor Detail → Primary*
+	 *
+	 * - **Field Type**: Link
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: doctor_block.default.primary.cta_link
+	 * - **Documentation**: https://prismic.io/docs/fields/link
+	 */
+	cta_link: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
+	
+	/**
+	 * Open CTA link in new tab field in *DoctorBlock → Doctor Detail → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: doctor_block.default.primary.cta_link_blank
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	cta_link_blank: prismic.BooleanField;
 }
 
 /**
@@ -2452,11 +2513,11 @@ declare module "@prismicio/client" {
 			TestimonialDocument,
 			TestimonialDocumentData,
 			AllDocumentTypes,
-			BlogBlockSlice,
-			BlogBlockSliceDefaultPrimary,
-			BlogBlockSliceDefaultItem,
-			BlogBlockSliceVariation,
-			BlogBlockSliceDefault,
+			BlogGridSlice,
+			BlogGridSliceDefaultPrimary,
+			BlogGridSliceDefaultItem,
+			BlogGridSliceVariation,
+			BlogGridSliceDefault,
 			BlogPageSlice,
 			BlogPageSliceDefaultPrimary,
 			BlogPageSliceDefaultItem,

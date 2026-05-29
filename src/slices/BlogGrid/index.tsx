@@ -36,9 +36,9 @@ const fadeUpVariants = {
   }
 } as const;
 
-type BlogBlockProps = SliceComponentProps<Content.BlogBlockSlice>;
+type BlogGridProps = SliceComponentProps<Content.BlogGridSlice>;
 
-export default function BlogBlock({ slice }: BlogBlockProps) {
+export default function BlogGrid({ slice }: BlogGridProps) {
   const params = useParams();
   const langList = params?.lang;
   const langCode = Array.isArray(langList) && langList.length > 0 ? (langList[0] === 'en' ? 'en-us' : 'lv') : 'lv';
@@ -109,7 +109,7 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
           }
         }
       } catch (e) {
-        console.warn("Failed to load blog posts in BlogBlock, using local fallback data.", e);
+        console.warn("Failed to load blog posts in BlogGrid, using local fallback data.", e);
         setPosts(getBlogPosts(langCode).slice(0, 3));
       }
     };
