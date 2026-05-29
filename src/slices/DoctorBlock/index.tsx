@@ -5,7 +5,7 @@ import { motion } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import { Content, isFilled } from "@prismicio/client";
 import { SliceComponentProps, PrismicRichText } from "@prismicio/react";
 import { PrismicNextLink } from '@prismicio/next';
@@ -13,6 +13,7 @@ import { PrismicNextLink } from '@prismicio/next';
 import { getDoctors } from '../../data';
 import { Doctor } from '../../types';
 import { createClient } from '../../prismicio';
+import DoctorProfilePage from '../../components/DoctorProfilePage';
 
 const staggerContainerVariants = {
   hidden: {},
@@ -41,10 +42,91 @@ type DoctorBlockProps = SliceComponentProps<Content.DoctorBlockSlice>;
 
 export default function DoctorBlock({ slice }: DoctorBlockProps) {
   const params = useParams();
+  const router = useRouter();
   const langList = params?.lang;
   const langCode = Array.isArray(langList) && langList.length > 0 ? (langList[0] === 'en' ? 'en-us' : 'lv') : 'lv';
   const langPrefix = langCode === 'en-us' ? '/en' : '';
   const isEn = langCode === 'en-us';
+
+  // If this is the detail variation, render DoctorProfilePage directly
+  if (slice.variation === 'detail') {
+    const doctorId = typeof params?.id === 'string' ? params.id : '';
+    const fallbackDoc = getDoctors(langCode).find(d => d.id === doctorId);
+
+    const name = slice.primary.name || fallbackDoc?.name || '';
+    const category = slice.primary.category || fallbackDoc?.category || '';
+    const role = slice.primary.role || fallbackDoc?.role || '';
+    const description = slice.primary.description || fallbackDoc?.description || '';
+    
+    const fullBioText = Array.isArray(slice.primary.fullBio) && slice.primary.fullBio.length > 0
+      ? slice.primary.fullBio.map((block: any) => block.text).join('\n')
+      : (typeof slice.primary.fullBio === 'string' ? slice.primary.fullBio : fallbackDoc?.fullBio || '');
+
+    const detailedBio = slice.primary.detailedBio || fallbackDoc?.detailedBio || null;
+    const image = slice.primary.image?.url || fallbackDoc?.image || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
+    const workplaceTitle = slice.primary.workplace_title || fallbackDoc?.workplaceTitle || undefined;
+
+    const items = slice.items || [];
+    const hasItems = items.length > 0 && items.some(item => item.text);
+
+    const specializations = hasItems
+      ? items.filter(item => item.item_type === 'Specialization' && item.text).map(item => item.text as string)
+      : (fallbackDoc?.specializations || []);
+
+    const education = hasItems
+      ? items.filter(item => item.item_type === 'Education' && item.text).map(item => item.text as string)
+      : (fallbackDoc?.education || []);
+
+    const qualifications = hasItems
+      ? items.filter(item => item.item_type === 'Qualification' && item.text).map(item => item.text as string)
+      : (fallbackDoc?.qualifications || []);
+
+    const workplaces = hasItems
+      ? items.filter(item => item.item_type === 'Workplace' && item.text).map(item => item.text as string)
+      : (fallbackDoc?.workplaces || (fallbackDoc?.workplace ? [fallbackDoc.workplace] : []));
+
+    const languages = hasItems
+      ? items.filter(item => item.item_type === 'Language' && item.text).map(item => item.text as string)
+      : (fallbackDoc?.languages || []);
+
+    const embeddedSlices = (slice.primary as any).embeddedSlices || [];
+
+    const doctorObj: Doctor = {
+      id: doctorId || 'doctor-detail',
+      name,
+      title: name,
+      category,
+      role,
+      description,
+      fullBio: fullBioText,
+      detailedBio,
+      image,
+      specializations,
+      education,
+      qualifications,
+      workplaces,
+      languages,
+      workplaceTitle,
+      slices: embeddedSlices
+    };
+
+    const handleBack = () => {
+      router.push(langCode === 'en-us' ? '/en/doctors' : '/zobarsti');
+    };
+
+    const handleBook = () => {
+      router.push(langCode === 'en-us' ? '/en/contacts' : '/kontakti');
+    };
+
+    return (
+      <DoctorProfilePage
+        doctor={doctorObj}
+        onBack={handleBack}
+        onBook={handleBook}
+        langCode={langCode}
+      />
+    );
+  }
 
   const [doctors, setDoctors] = useState<Doctor[]>([]);
 

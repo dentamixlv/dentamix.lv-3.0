@@ -21,8 +21,10 @@ export const DOCTORS_LV: Doctor[] = [
       'Starptautiskais estētiskās restaurācijas kurss, Heidelberga, Vācija (2015)',
       'Advanced Smile Makeover masterclass, Cīrihe, Šveice (2018)'
     ],
+    qualifications: [],
     languages: ['Latviešu', 'Angļu', 'Krievu'],
-    workplace: 'Rīga, Ādaži'
+    workplace: 'Rīga, Ādaži',
+    workplaces: ['Rīga', 'Ādaži']
   },
   {
     id: 'dr-janis-kalnins',
@@ -41,12 +43,15 @@ export const DOCTORS_LV: Doctor[] = [
       'Mutes gļotādas plastiskā ķirurģija'
     ],
     education: [
-      'RSU Medicīnas fakultāte un rezidentūra Sejas-žokļu ķirurģijā (2010)',
+      'RSU Medicīnas fakultāte un rezidentūra Sejas-žokļu ķirurģijā (2010)'
+    ],
+    qualifications: [
       'Implantoloģijas tālākizglītība, Gēteborga, Zviedrija (2013)',
       'ITI (International Team for Implantology) biedrs kopš 2014. gada'
     ],
     languages: ['Latviešu', 'Angļu', 'Krievu', 'Vācu'],
-    workplace: 'Rīga'
+    workplace: 'Rīga',
+    workplaces: ['Rīga']
   },
   {
     id: 'dr-liga-ozolina',
@@ -55,7 +60,7 @@ export const DOCTORS_LV: Doctor[] = [
     category: 'ORTODONTE',
     role: 'ZOBĀRSTE, ORTODONTE',
     description: 'Eksperte sakodiena korekcijā gan bērniem, gan pieaugušajiem. Strādā ar klasiskajām brekešu sistēmām, kā arī modernajām neredzamajām kapēm (aligners), radot pārliecinošus un veselīgus smaidus.',
-    fullBio: 'Dr. Līga Ozoliņa ir smaidu māksliniece, kas specializējas modernajā un funkcionālajā ortodontijā. Viņa tic, ka taisns sakodiens ir ne tikai vizuāli pievilcīgs, bet arī kritiski svarīgs visas mutes dobuma un stājas veselībai. Dr. Ozoliņa ir sertificēta darbam ar vadošajām neredzamo kapu (aligners) sistēmām un regulāri pilnveidojas Eiropas Ortodontu asociācijas kursos. Viņa izstrādā individuālus plānus pacientiem jebkurā vecumā, palīdzot iegūt harmonisku smaidu vieglā, patīkamā un nesāpīgā veidā.',
+    fullBio: 'Dr. Līga Ozoliņa ir smaidu māksliniece, kas specializējas modernajā un funkcionālajā ortodontijā. Viņa tic, ka taisns sakodiens ir ne tikai vizuāli pievilcīgs, bet arī kritiski svarīgs visas mutes dobuma un stājas veselībai. Dr. Ozoliņa ir sertificēta darbam ar vadošajām neredzamo kapu (aligners) sistēmām un regulāri pilnveidojas Eiropas Ortodontu asociācijas kursos. Viņa izstrādā individuālus plānus pacientiem jebkurā age, palīdzot iegūt harmonisku smaidu vieglā, patīkamā un nesāpīgā veidā.',
     image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800',
     specializations: [
       'Neredzamās ortodontiskās kapes (Aligners)',
@@ -68,8 +73,10 @@ export const DOCTORS_LV: Doctor[] = [
       'Sertificēta Aligners (Invisalign & Spark) praktizētāja (2016)',
       'Eiropas Ortodontu asociācijas (EOS) aktīva biedre'
     ],
+    qualifications: [],
     languages: ['Latviešu', 'Angļu'],
-    workplace: 'Ādaži'
+    workplace: 'Ādaži',
+    workplaces: ['Ādaži']
   },
   {
     id: 'dr-janis-berzins',
@@ -91,8 +98,10 @@ export const DOCTORS_LV: Doctor[] = [
       'Doktora grāds zobārstniecībā, RSU (2006)',
       'Zobārstniecības lāzeru un augsto tehnoloģiju sertifikāts, Vīne, Austrija (2009)'
     ],
+    qualifications: [],
     languages: ['Latviešu', 'Angļu', 'Vācu', 'Krievu'],
-    workplace: 'Rīga, Ādaži'
+    workplace: 'Rīga, Ādaži',
+    workplaces: ['Rīga', 'Ādaži']
   }
 ];
 
@@ -117,8 +126,10 @@ export const DOCTORS_EN: Doctor[] = [
       'International Course in Aesthetic Restoration, Heidelberg, Germany (2015)',
       'Advanced Smile Makeover masterclass, Zurich, Switzerland (2018)'
     ],
+    qualifications: [],
     languages: ['Latvian', 'English', 'Russian'],
-    workplace: 'Riga, Adazi'
+    workplace: 'Riga, Adazi',
+    workplaces: ['Riga', 'Adazi']
   },
   {
     id: 'dr-janis-kalnins',
@@ -137,12 +148,15 @@ export const DOCTORS_EN: Doctor[] = [
       'Oral mucosal plastic surgery'
     ],
     education: [
-      'RSU Faculty of Medicine and Residency in Maxillofacial Surgery (2010)',
+      'RSU Faculty of Medicine and Residency in Maxillofacial Surgery (2010)'
+    ],
+    qualifications: [
       'Further education in Implantology, Gothenburg, Sweden (2013)',
       'ITI (International Team for Implantology) member since 2014'
     ],
     languages: ['Latvian', 'English', 'Russian', 'German'],
-    workplace: 'Riga'
+    workplace: 'Riga',
+    workplaces: ['Riga']
   },
   {
     id: 'dr-liga-ozolina',
@@ -164,8 +178,10 @@ export const DOCTORS_EN: Doctor[] = [
       'Certified Aligners (Invisalign & Spark) practitioner (2016)',
       'Active member of the European Orthodontic Society (EOS)'
     ],
+    qualifications: [],
     languages: ['Latvian', 'English'],
-    workplace: 'Adazi'
+    workplace: 'Adazi',
+    workplaces: ['Adazi']
   },
   {
     id: 'dr-janis-berzins',
@@ -187,7 +203,9 @@ export const DOCTORS_EN: Doctor[] = [
       'Doctoral degree in Dentistry, RSU (2006)',
       'Dental lasers and high technology certificate, Vienna, Austria (2009)'
     ],
+    qualifications: [],
     languages: ['Latvian', 'English', 'German', 'Russian'],
-    workplace: 'Riga, Adazi'
+    workplace: 'Riga, Adazi',
+    workplaces: ['Riga', 'Adazi']
   }
 ];

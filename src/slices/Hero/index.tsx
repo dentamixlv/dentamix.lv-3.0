@@ -103,7 +103,7 @@ export default function Hero({ slice }: HeroProps) {
         {/* Premium Care badge */}
         <Badge
           text={premiumTag}
-          variant="default"
+          variant="gray"
           animated
           variants={fadeUpVariants}
           className="mb-4"

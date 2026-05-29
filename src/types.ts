@@ -11,6 +11,11 @@ export interface Doctor {
   education: string[];
   languages: string[];
   workplace?: string;
+  detailedBio?: any;
+  qualifications?: string[];
+  workplaces?: string[];
+  workplaceTitle?: string;
+  slices?: any[];
 }
 
 export interface Service {

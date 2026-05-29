@@ -1,5 +1,7 @@
 import React from 'react';
 import { notFound } from 'next/navigation';
+import { SliceZone } from '@prismicio/react';
+import { components } from '../../../../slices';
 import { createClient } from '../../../../prismicio';
 import DoctorProfileClient from './DoctorProfileClient';
 import { getPrismicLocale } from '../../page';
@@ -16,6 +18,20 @@ export async function generateMetadata({ params }: PageProps) {
   const { id, lang } = await params;
   const locale = getPrismicLocale(lang);
   const client = createClient();
+
+  // Try custom page metadata first
+  try {
+    const pageDoc = await client.getByUID('page', id, { lang: locale });
+    if (pageDoc) {
+      const pageData = pageDoc.data as any;
+      return {
+        title: pageData.meta_title || `${pageData.title || id} | Dentamic`,
+        description: pageData.meta_description || '',
+      };
+    }
+  } catch (e) {
+    // Ignore and fall back to doctor document
+  }
 
   let doctor = null;
   try {
@@ -55,6 +71,48 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
+  // 1. Try to find a custom 'page' document for this doctor (dynamic slice-based page)
+  let slices = null;
+  try {
+    const doc = await client.getByUID('page', id, { lang: locale });
+    slices = doc?.data?.slices || null;
+  } catch (e) {
+    // Ignore and fall back to structured doctor profile
+  }
+
+  if (slices && slices.length > 0) {
+    const doctorDetailSliceIndex = slices.findIndex(
+      (s: any) => s.slice_type === 'doctor_block' && s.variation === 'detail'
+    );
+
+    if (doctorDetailSliceIndex !== -1) {
+      const doctorDetailSlice = { ...slices[doctorDetailSliceIndex] };
+      // All other slices that are NOT DoctorBlock or PageTitle are embedded slices (e.g. TestimonialBlock)
+      const embeddedSlices = slices.filter(
+        (s: any, idx: number) => 
+          idx !== doctorDetailSliceIndex && 
+          s.slice_type !== 'page_title'
+      );
+
+      doctorDetailSlice.primary = {
+        ...doctorDetailSlice.primary,
+        embeddedSlices: embeddedSlices
+      };
+
+      // Now we only render PageTitle and DoctorBlock at the top level
+      const topLevelSlices = slices.filter(
+        (s: any, idx: number) => 
+          idx === doctorDetailSliceIndex || 
+          s.slice_type === 'page_title'
+      ).map((s: any) => s.slice_type === 'doctor_block' && s.variation === 'detail' ? doctorDetailSlice : s);
+
+      return <SliceZone slices={topLevelSlices} components={components} />;
+    }
+
+    return <SliceZone slices={slices} components={components} />;
+  }
+
+  // 2. Fallback: structured doctor profile document
   let doctor = null;
   try {
     const doc = await client.getByUID('doctor', id, { lang: locale });
@@ -78,7 +136,15 @@ export default async function Page({ params }: PageProps) {
         languages: Array.isArray(doc.data.languages) 
           ? doc.data.languages.map((l: any) => l.item || '') 
           : [],
-        workplace: fallbackDoc?.workplace || (locale === 'en-us' ? 'Riga' : 'Rīga')
+        workplace: fallbackDoc?.workplace || (locale === 'en-us' ? 'Riga' : 'Rīga'),
+        detailedBio: doc.data.detailedBio || null,
+        qualifications: Array.isArray(doc.data.qualifications)
+          ? doc.data.qualifications.map((q: any) => q.item || '')
+          : [],
+        workplaces: Array.isArray(doc.data.workplaces) && doc.data.workplaces.length > 0
+          ? doc.data.workplaces.map((w: any) => w.item || '')
+          : (fallbackDoc?.workplaces || (fallbackDoc?.workplace ? [fallbackDoc.workplace] : [locale === 'en-us' ? 'Riga' : 'Rīga'])),
+        workplaceTitle: doc.data.workplace_title || undefined
       };
     }
   } catch (error) {

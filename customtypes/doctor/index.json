@@ -96,6 +96,49 @@
             }
           }
         }
+      },
+      "detailedBio": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Detailed Biography (Under Doctor Text)",
+          "placeholder": "Enter detailed text like in a blog post...",
+          "multi": "paragraph,preformatted,heading2,heading3,strong,em,hyperlink"
+        }
+      },
+      "workplace_title": {
+        "type": "Text",
+        "config": {
+          "label": "Workplace Section Title",
+          "placeholder": "Darba vieta"
+        }
+      },
+      "workplaces": {
+        "type": "Group",
+        "config": {
+          "label": "Workplaces",
+          "fields": {
+            "item": {
+              "type": "Text",
+              "config": {
+                "label": "Workplace Item"
+              }
+            }
+          }
+        }
+      },
+      "qualifications": {
+        "type": "Group",
+        "config": {
+          "label": "Additional Qualifications",
+          "fields": {
+            "item": {
+              "type": "Text",
+              "config": {
+                "label": "Qualification Item"
+              }
+            }
+          }
+        }
       }
     }
   }

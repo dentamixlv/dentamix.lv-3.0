@@ -3,6 +3,9 @@
 import { ArrowLeft, Award, GraduationCap, Languages, CalendarDays, MapPin } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
+import { SliceZone } from '@prismicio/react';
+import { PrismicRichText } from '@prismicio/react';
+import { components } from '../slices';
 import { Doctor } from '../types';
 import { getTestimonials } from '../data';
 import TestimonialCard from './TestimonialCard';
@@ -84,8 +87,22 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
             </p>
           </div>
 
+          {/* Under doctor detailed text */}
+          {doctor.detailedBio && (
+            <div className="text-base text-[#6a5b5e] leading-relaxed space-y-6 mt-6">
+              <PrismicRichText field={doctor.detailedBio} />
+            </div>
+          )}
+
+          {/* Dynamic embedded slices (like TestimonialBlock or others) */}
+          {doctor.slices && doctor.slices.length > 0 && (
+            <div className="pt-8 border-t border-[#efedec]/60">
+              <SliceZone slices={doctor.slices} components={components} />
+            </div>
+          )}
+
           {/* Testimonial Cards Section */}
-          {doctorTestimonials.length > 0 && (
+          {(!doctor.slices || !doctor.slices.some(s => s.slice_type === 'testimonial_block' || s.slice_type === 'testimonial_card')) && doctorTestimonials.length > 0 && (
             <div className="space-y-6 pt-8 border-t border-[#efedec]/60">
               <h4 className="text-sm font-bold uppercase tracking-wider text-[#511B29]">
                 {isEn ? 'Patient Reviews' : 'Pacientu atsauksmes'}
@@ -153,30 +170,14 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
             </div>
 
             {/* Education */}
-            {doctor.education.length > 0 && (
+            {doctor.education && doctor.education.length > 0 && (
               <div className="space-y-3">
                 <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
                   <GraduationCap className="w-4 h-4 text-[#de7c8a]" />
                   {t.education}
                 </h3>
                 <ul className="space-y-2 text-sm text-[#6a5b5e]">
-                  <li className="flex gap-2">
-                    <span className="text-[#de7c8a] font-bold">•</span>
-                    <span>{doctor.education[0]}</span>
-                  </li>
-                </ul>
-              </div>
-            )}
-
-            {/* Additional Qualifications */}
-            {doctor.education.length > 1 && (
-              <div className="space-y-3">
-                <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
-                  <Award className="w-4 h-4 text-[#de7c8a]" />
-                  {t.additionalQual}
-                </h3>
-                <ul className="space-y-2 text-sm text-[#6a5b5e]">
-                  {doctor.education.slice(1).map((edu, index) => (
+                  {doctor.education.map((edu, index) => (
                     <li key={index} className="flex gap-2">
                       <span className="text-[#de7c8a] font-bold">•</span>
                       <span>{edu}</span>
@@ -186,18 +187,45 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
               </div>
             )}
 
+            {/* Additional Qualifications */}
+            {doctor.qualifications && doctor.qualifications.length > 0 && (
+              <div className="space-y-3">
+                <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
+                  <Award className="w-4 h-4 text-[#de7c8a]" />
+                  {t.additionalQual}
+                </h3>
+                <ul className="space-y-2 text-sm text-[#6a5b5e]">
+                  {doctor.qualifications.map((qual, index) => (
+                    <li key={index} className="flex gap-2">
+                      <span className="text-[#de7c8a] font-bold">•</span>
+                      <span>{qual}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+
             {/* Workplace */}
-            {doctor.workplace && (
+            {((doctor.workplaces && doctor.workplaces.length > 0) || doctor.workplace) && (
               <div className="space-y-3">
                 <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
                   <MapPin className="w-4 h-4 text-[#de7c8a]" />
-                  {t.workplace}
+                  {doctor.workplaceTitle || t.workplace}
                 </h3>
                 <ul className="space-y-2 text-sm text-[#6a5b5e]">
-                  <li className="flex gap-2">
-                    <span className="text-[#de7c8a] font-bold">•</span>
-                    <span>{doctor.workplace}</span>
-                  </li>
+                  {doctor.workplaces && doctor.workplaces.length > 0 ? (
+                    doctor.workplaces.map((wp, index) => (
+                      <li key={index} className="flex gap-2">
+                        <span className="text-[#de7c8a] font-bold">•</span>
+                        <span>{wp}</span>
+                      </li>
+                    ))
+                  ) : (
+                    <li className="flex gap-2">
+                      <span className="text-[#de7c8a] font-bold">•</span>
+                      <span>{doctor.workplace}</span>
+                    </li>
+                  )}
                 </ul>
               </div>
             )}
@@ -208,10 +236,14 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
                 <Languages className="w-4 h-4 text-[#de7c8a]" />
                 {t.languages}
               </h3>
-              <p className="text-sm text-[#6a5b5e] font-semibold leading-relaxed pt-1 flex items-start gap-2">
-                <span className="text-[#de7c8a] font-bold shrink-0">•</span>
-                <span>{doctor.languages.join(', ')}</span>
-              </p>
+              <ul className="space-y-2 text-sm text-[#6a5b5e]">
+                {doctor.languages.map((lang, index) => (
+                  <li key={index} className="flex gap-2">
+                    <span className="text-[#de7c8a] font-bold">•</span>
+                    <span>{lang}</span>
+                  </li>
+                ))}
+              </ul>
             </div>
           </div>
         </motion.div>

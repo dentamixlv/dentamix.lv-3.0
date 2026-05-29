@@ -6,7 +6,7 @@ import { motion, type Variants } from 'motion/react';
 /**
  * Badge variants for color styling.
  */
-export type BadgeVariant = 'default' | 'primary' | 'accent';
+export type BadgeVariant = 'default' | 'primary' | 'accent' | 'gray';
 
 /**
  * Badge component props.
@@ -31,6 +31,8 @@ const variantClasses: Record<BadgeVariant, string> = {
     'bg-[#511B29]/10 border border-[#511B29]/20 text-[#511B29]',
   accent:
     'bg-emerald-50 border border-emerald-200 text-emerald-700',
+  gray:
+    'bg-[#6A5B5E]/8 border border-[#6A5B5E]/20 text-[#6A5B5E]',
 };
 
 /**

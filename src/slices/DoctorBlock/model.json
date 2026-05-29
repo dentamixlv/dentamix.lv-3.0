@@ -59,6 +59,97 @@
           }
         }
       }
+    },
+    {
+      "id": "detail",
+      "name": "Doctor Detail",
+      "docURL": "...",
+      "version": "default",
+      "description": "Renders a detailed profile page for a single doctor",
+      "primary": {
+        "name": {
+          "type": "Text",
+          "config": {
+            "label": "Name",
+            "placeholder": "Dr. Jānis Kalniņš"
+          }
+        },
+        "category": {
+          "type": "Text",
+          "config": {
+            "label": "Category",
+            "placeholder": "ĶIRURGS"
+          }
+        },
+        "role": {
+          "type": "Text",
+          "config": {
+            "label": "Role",
+            "placeholder": "ZOBĀRSTS, ĶIRURGS"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Short Description",
+            "placeholder": "Sertificēts mutes, sejas..."
+          }
+        },
+        "fullBio": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Full Biography (Upper text with vertical line)",
+            "placeholder": "Dr. Jānis Kalniņš ir augsti sertificēts...",
+            "single": "paragraph,strong,em,hyperlink"
+          }
+        },
+        "detailedBio": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Detailed Biography (Under doctor text)",
+            "placeholder": "Enter detailed text like in a blog post...",
+            "multi": "paragraph,preformatted,heading2,heading3,strong,em,hyperlink"
+          }
+        },
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Photo",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "workplace_title": {
+          "type": "Text",
+          "config": {
+            "label": "Workplace Section Title",
+            "placeholder": "Darba vieta"
+          }
+        }
+      },
+      "items": {
+        "item_type": {
+          "type": "Select",
+          "config": {
+            "label": "Item Type",
+            "options": [
+              "Specialization",
+              "Education",
+              "Qualification",
+              "Workplace",
+              "Language"
+            ],
+            "default_value": "Specialization"
+          }
+        },
+        "text": {
+          "type": "Text",
+          "config": {
+            "label": "Text Content",
+            "placeholder": "e.g., Dental implants or Latvian"
+          }
+        }
+      }
     }
   ]
 }
