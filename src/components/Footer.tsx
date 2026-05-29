@@ -177,50 +177,54 @@ export default function Footer({
                 </h5>
                 
                 <div className="flex flex-col gap-2 text-sm text-[#989999]">
+                  {clinic.phone && (
+                    <a 
+                      href={`tel:${clinic.phone.replace(/\s+/g, '')}`} 
+                      className="flex items-center gap-2 text-white hover:text-[#de7c8a] transition-colors duration-200 w-fit"
+                    >
+                      <Phone className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
+                      <span className="font-mono font-bold">{clinic.phone}</span>
+                    </a>
+                  )}
                   <span className="flex items-start gap-2">
                     <MapPin className="w-3.5 h-3.5 mt-0.5 shrink-0 text-[#de7c8a]" />
                     <span className="leading-relaxed hover:text-white transition-colors duration-200">{clinic.address}</span>
                   </span>
-                  {clinic.phone && (
-                    <a 
-                      href={`tel:${clinic.phone.replace(/\s+/g, '')}`} 
-                      className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
-                    >
-                      <Phone className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
-                      <span className="font-mono font-bold text-[#511B29]">{clinic.phone}</span>
-                    </a>
-                  )}
                   {clinic.email && (
                     <span className="flex items-center gap-2">
                       <Mail className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
                       <span className="font-medium">{clinic.email}</span>
                     </span>
                   )}
-                  {clinic.gmapsLink && (
-                    <span className="flex items-center gap-2">
-                      <Map className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
-                      <a 
-                        href={clinic.gmapsLink}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white hover:underline transition-colors duration-200 font-medium"
-                      >
-                        {clinic.mapTitle || t.map}
-                      </a>
-                    </span>
-                  )}
-                  {clinic.waze && (
-                    <span className="flex items-center gap-2">
-                      <Navigation className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
-                      <a 
-                        href={clinic.waze}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-white hover:underline transition-colors duration-200 font-medium"
-                      >
-                        {clinic.wazeTitle || 'Waze'}
-                      </a>
-                    </span>
+                  {(clinic.gmapsLink || clinic.waze) && (
+                    <div className="flex items-center gap-4 mt-1">
+                      {clinic.gmapsLink && (
+                        <span className="flex items-center gap-2">
+                          <Map className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
+                          <a 
+                            href={clinic.gmapsLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-white hover:underline transition-colors duration-200 font-medium"
+                          >
+                            {clinic.mapTitle || t.map}
+                          </a>
+                        </span>
+                      )}
+                      {clinic.waze && (
+                        <span className="flex items-center gap-2">
+                          <Navigation className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
+                          <a 
+                            href={clinic.waze}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-white hover:underline transition-colors duration-200 font-medium"
+                          >
+                            {clinic.wazeTitle || 'Waze'}
+                          </a>
+                        </span>
+                      )}
+                    </div>
                   )}
                 </div>
               </div>
