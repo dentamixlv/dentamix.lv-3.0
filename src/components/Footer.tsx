@@ -187,7 +187,7 @@ export default function Footer({
                       className="flex items-center gap-2 hover:text-[#de7c8a] transition-colors duration-200 w-fit"
                     >
                       <Phone className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
-                      <span className="font-mono font-medium">{clinic.phone}</span>
+                      <span className="font-mono font-bold text-[#511B29]">{clinic.phone}</span>
                     </a>
                   )}
                   {clinic.email && (

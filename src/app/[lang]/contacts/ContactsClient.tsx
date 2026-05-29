@@ -195,11 +195,11 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
                         {labels.workingHours}
                       </p>
                       <div className="space-y-2 pl-5 font-medium text-sm">
-                        <p className="flex justify-between max-w-xs">
+                        <p className="flex justify-between w-full">
                           <span>{labels.workingDays}</span>
                           <span className="text-right">{clinic.workHours.weekdays.split(': ')[1]}</span>
                         </p>
-                        <p className="flex justify-between max-w-xs">
+                        <p className="flex justify-between w-full">
                           <span>{labels.sat}</span>
                           {clinic.workHours.saturday.includes('Slēgts') || clinic.workHours.saturday.includes('Closed') ? (
                             <span className="text-red-500 text-right">{isEn ? 'Closed' : 'Slēgts'}</span>
@@ -207,7 +207,7 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
                             <span className="text-right">{clinic.workHours.saturday.split(': ')[1]}</span>
                           )}
                         </p>
-                        <p className="flex justify-between max-w-xs">
+                        <p className="flex justify-between w-full">
                           <span>{labels.sun}</span>
                           <span className="text-red-500 text-right">{isEn ? 'Closed' : 'Slēgts'}</span>
                         </p>

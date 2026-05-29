@@ -153,7 +153,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                   <div className="space-y-4 my-6 text-sm text-[#6A5B5E]">
                     {/* Phone */}
                     {phoneVal && (
-                      <p className="flex items-center gap-2 font-medium text-[#6A5B5E] hover:text-[#5d1726]/80 transition-colors">
+                      <p className="flex items-center gap-2 font-bold text-[#511B29] hover:text-[#5d1726]/80 transition-colors">
                         <Phone className="w-4 h-4 text-[#de7c8a] shrink-0" />
                         <span>{phoneVal}</span>
                       </p>
@@ -223,13 +223,13 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                         </p>
                         <div className="space-y-2 pl-5 font-medium text-sm">
                           {wdText && (
-                            <p className="flex justify-between max-w-xs">
+                            <p className="flex justify-between w-full">
                               <span>{wdText}</span>
                               <span className="text-right">{wdHours}</span>
                             </p>
                           )}
                           {satText && (
-                            <p className="flex justify-between max-w-xs">
+                            <p className="flex justify-between w-full">
                               <span>{satText}</span>
                               <span className={satHours.toLowerCase().includes('slēgts') || satHours.toLowerCase().includes('closed') ? 'text-red-500 text-right' : 'text-right'}>
                                 {satHours}
@@ -237,7 +237,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                             </p>
                           )}
                           {sunText && (
-                            <p className="flex justify-between max-w-xs">
+                            <p className="flex justify-between w-full">
                               <span>{sunText}</span>
                               <span className={sunHours.toLowerCase().includes('slēgts') || sunHours.toLowerCase().includes('closed') ? 'text-red-500 text-right' : 'text-right'}>
                                 {sunHours}
