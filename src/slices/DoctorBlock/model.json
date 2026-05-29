@@ -6,95 +6,11 @@
   "variations": [
     {
       "id": "default",
-      "name": "Default",
-      "docURL": "...",
-      "version": "sktwi1xtmkfgx8627",
-      "description": "Default variation",
-      "primary": {
-        "badge_text": {
-          "type": "Text",
-          "config": {
-            "label": "Badge Text",
-            "placeholder": "Zobārsti"
-          }
-        },
-        "title": {
-          "type": "StructuredText",
-          "config": {
-            "label": "Title",
-            "placeholder": "Vadošie speciālisti",
-            "allowTargetBlank": true,
-            "single": "heading2,heading3"
-          }
-        },
-        "subtitle": {
-          "type": "Text",
-          "config": {
-            "label": "Subtitle",
-            "placeholder": "Profesionāli speciālisti..."
-          }
-        },
-        "link_text": {
-          "type": "Text",
-          "config": {
-            "label": "Link Text",
-            "placeholder": "Skatīt visus speciālistus"
-          }
-        },
-        "link_url": {
-          "type": "Link",
-          "config": {
-            "label": "Link URL",
-            "placeholder": "Select page or enter URL"
-          }
-        }
-      },
-      "items": {
-        "doctor": {
-          "type": "Link",
-          "config": {
-            "label": "Doctor Document",
-            "select": "document",
-            "customtypes": ["doctor"]
-          }
-        }
-      }
-    },
-    {
-      "id": "detail",
       "name": "Doctor Detail",
       "docURL": "...",
       "version": "default",
       "description": "Renders a detailed profile page for a single doctor",
       "primary": {
-        "name": {
-          "type": "Text",
-          "config": {
-            "label": "Name",
-            "placeholder": "Dr. Jānis Kalniņš"
-          }
-        },
-        "category": {
-          "type": "Text",
-          "config": {
-            "label": "Category",
-            "placeholder": "ĶIRURGS"
-          }
-        },
-        "role": {
-          "type": "Text",
-          "config": {
-            "label": "Role",
-            "placeholder": "ZOBĀRSTS, ĶIRURGS"
-          }
-        },
-        "description": {
-          "type": "Text",
-          "config": {
-            "label": "Short Description",
-            "placeholder": "Sertificēts mutes, sejas..."
-          }
-        },
         "fullBio": {
           "type": "StructuredText",
           "config": {

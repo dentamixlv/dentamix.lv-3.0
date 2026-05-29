@@ -7,7 +7,6 @@ export const components = {
   service_grid: dynamic(() => import("./ServiceGrid")),
   service_page: dynamic(() => import("./ServicePage")),
   doctor_block: dynamic(() => import("./DoctorBlock")),
-  doctor_page: dynamic(() => import("./DoctorPage")),
   pricelist: dynamic(() => import("./Pricelist")),
   testimonial_card: dynamic(() => import("./TestimonialCard")),
   contact_block: dynamic(() => import("./ContactBlock")),

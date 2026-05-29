@@ -38,3 +38,73 @@ export function getBlogPosts(lang: string): BlogPost[] {
 }
 
 export { getTestimonials };
+
+export function extractDoctorFromPage(pageDoc: any): Doctor | null {
+  if (!pageDoc || !pageDoc.data || !Array.isArray(pageDoc.data.slices)) return null;
+  
+  const slice = pageDoc.data.slices.find(
+    (s: any) => s.slice_type === 'doctor_block'
+  );
+  if (!slice) return null;
+
+  const name = slice.primary.name || '';
+  const category = slice.primary.category || '';
+  const role = slice.primary.role || '';
+  const description = slice.primary.description || '';
+  
+  const fullBioText = Array.isArray(slice.primary.fullBio) && slice.primary.fullBio.length > 0
+    ? slice.primary.fullBio.map((block: any) => block.text).join('\n')
+    : (typeof slice.primary.fullBio === 'string' ? slice.primary.fullBio : '');
+
+  const detailedBio = slice.primary.detailedBio || null;
+  const image = slice.primary.image?.url || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
+  const workplaceTitle = slice.primary.workplace_title || undefined;
+
+  const items = slice.items || [];
+  const hasItems = items.length > 0 && items.some((item: any) => item.text);
+
+  const specializations = hasItems
+    ? items.filter((item: any) => item.item_type === 'Specialization' && item.text).map((item: any) => item.text as string)
+    : [];
+
+  const education = hasItems
+    ? items.filter((item: any) => item.item_type === 'Education' && item.text).map((item: any) => item.text as string)
+    : [];
+
+  const qualifications = hasItems
+    ? items.filter((item: any) => item.item_type === 'Qualification' && item.text).map((item: any) => item.text as string)
+    : [];
+
+  const workplaces = hasItems
+    ? items.filter((item: any) => item.item_type === 'Workplace' && item.text).map((item: any) => item.text as string)
+    : [];
+
+  const languages = hasItems
+    ? items.filter((item: any) => item.item_type === 'Language' && item.text).map((item: any) => item.text as string)
+    : [];
+
+  // Look for other slices on this page (like TestimonialBlock) to embed
+  const embeddedSlices = pageDoc.data.slices.filter(
+    (s: any) => s !== slice && s.slice_type !== 'page_title'
+  );
+
+  return {
+    id: pageDoc.uid || 'doctor-detail',
+    name,
+    title: name,
+    category,
+    role,
+    description,
+    fullBio: fullBioText,
+    detailedBio,
+    image,
+    specializations,
+    education,
+    qualifications,
+    workplaces,
+    languages,
+    workplaceTitle,
+    slices: embeddedSlices
+  };
+}
+

@@ -4,6 +4,7 @@ import { components } from '../../../slices';
 import { createClient } from '../../../prismicio';
 import DoctorsClient from './DoctorsClient';
 import { getPrismicLocale } from '../page';
+import { extractDoctorFromPage } from '../../../data';
 
 interface PageProps {
   params: Promise<{
@@ -56,21 +57,12 @@ export default async function Page({ params }: PageProps) {
   // 2. Fallback to querying doctor cards dynamically
   let doctors = null;
   try {
-    const documents = await client.getAllByType('doctor', { lang: locale });
-    if (documents && documents.length > 0) {
-      doctors = documents.map(d => ({
-        id: d.uid!,
-        name: d.data.name || '',
-        title: d.data.name || '',
-        category: d.data.category || '',
-        role: d.data.role || '',
-        description: d.data.description || '',
-        fullBio: Array.isArray(d.data.fullBio) ? (d.data.fullBio[0] as any)?.text || '' : (d.data.fullBio as any) || '',
-        image: d.data.image?.url || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800',
-        specializations: Array.isArray(d.data.specializations) ? d.data.specializations.map((s: any) => s.item || '') : [],
-        education: Array.isArray(d.data.education) ? d.data.education.map((e: any) => e.item || '') : [],
-        languages: Array.isArray(d.data.languages) ? d.data.languages.map((l: any) => l.item || '') : [],
-      }));
+    const documents = await client.getAllByType('page', { lang: locale });
+    const extracted = documents
+      .map(d => extractDoctorFromPage(d))
+      .filter((d): d is any => d !== null);
+    if (extracted.length > 0) {
+      doctors = extracted;
     }
   } catch (error) {
     console.warn("No doctors in Prismic, using fallback data.");

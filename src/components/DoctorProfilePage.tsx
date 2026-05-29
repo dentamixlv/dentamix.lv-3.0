@@ -64,19 +64,6 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
       className="pt-8 pb-16 md:pt-12 md:pb-24 max-w-7xl mx-auto px-6"
       id={`doctor-profile-page-${doctor.id}`}
     >
-      {/* Header Metadata block - Centered and full-width */}
-      <motion.div variants={fadeUpVariants} className="text-center w-full mb-12 animate-fade-in">
-        <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
-          {doctor.category === 'SPECIĀLISTE' || doctor.category === 'SPECIALIST' ? doctor.role : doctor.category}
-        </span>
-        <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight text-center w-full">
-          {doctor.name}
-        </h2>
-        <p className="text-base text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
-          {doctor.description}
-        </p>
-      </motion.div>
-
       {/* Article Content Grid */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start text-left">
         {/* Main Content (Bio) */}

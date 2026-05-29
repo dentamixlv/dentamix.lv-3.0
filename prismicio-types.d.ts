@@ -153,240 +153,6 @@ interface BlogPostDocumentData {
 export type BlogPostDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<BlogPostDocumentData>, "blog_post", Lang>;
 
 /**
- * Item in *Doctor → Specializations*
- */
-export interface DoctorDocumentDataSpecializationsItem {
-	/**
-	 * Specialization Item field in *Doctor → Specializations*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.specializations[].item
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	item: prismic.KeyTextField;
-}
-
-/**
- * Item in *Doctor → Education & Courses*
- */
-export interface DoctorDocumentDataEducationItem {
-	/**
-	 * Education Item field in *Doctor → Education & Courses*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.education[].item
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	item: prismic.KeyTextField;
-}
-
-/**
- * Item in *Doctor → Spoken Languages*
- */
-export interface DoctorDocumentDataLanguagesItem {
-	/**
-	 * Language field in *Doctor → Spoken Languages*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.languages[].item
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	item: prismic.KeyTextField;
-}
-
-/**
- * Item in *Doctor → Workplaces*
- */
-export interface DoctorDocumentDataWorkplacesItem {
-	/**
-	 * Workplace Item field in *Doctor → Workplaces*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.workplaces[].item
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	item: prismic.KeyTextField;
-}
-
-/**
- * Item in *Doctor → Additional Qualifications*
- */
-export interface DoctorDocumentDataQualificationsItem {
-	/**
-	 * Qualification Item field in *Doctor → Additional Qualifications*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.qualifications[].item
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	item: prismic.KeyTextField;
-}
-
-/**
- * Content for Doctor documents
- */
-interface DoctorDocumentData {
-	/**
-	 * Name field in *Doctor*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Dr. Anna Bērziņa
-	 * - **API ID Path**: doctor.name
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	name: prismic.KeyTextField;
-	
-	/**
-	 * Category field in *Doctor*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: SPECIĀLISTE or ĶIRURGS
-	 * - **API ID Path**: doctor.category
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	category: prismic.KeyTextField;
-	
-	/**
-	 * Role field in *Doctor*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: ZOBĀRSTE
-	 * - **API ID Path**: doctor.role
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	role: prismic.KeyTextField;
-	
-	/**
-	 * Short Description field in *Doctor*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Short summary of the doctor...
-	 * - **API ID Path**: doctor.description
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	description: prismic.KeyTextField;
-	
-	/**
-	 * Full Biography field in *Doctor*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: Long professional bio for the detail modal...
-	 * - **API ID Path**: doctor.fullBio
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	fullBio: prismic.RichTextField;
-	
-	/**
-	 * Photo field in *Doctor*
-	 *
-	 * - **Field Type**: Image
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.image
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/image
-	 */
-	image: prismic.ImageField<never>;
-	
-	/**
-	 * Specializations field in *Doctor*
-	 *
-	 * - **Field Type**: Group
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.specializations[]
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-	 */
-	specializations: prismic.GroupField<Simplify<DoctorDocumentDataSpecializationsItem>>;
-	
-	/**
-	 * Education & Courses field in *Doctor*
-	 *
-	 * - **Field Type**: Group
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.education[]
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-	 */
-	education: prismic.GroupField<Simplify<DoctorDocumentDataEducationItem>>;
-	
-	/**
-	 * Spoken Languages field in *Doctor*
-	 *
-	 * - **Field Type**: Group
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.languages[]
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-	 */
-	languages: prismic.GroupField<Simplify<DoctorDocumentDataLanguagesItem>>;
-	
-	/**
-	 * Detailed Biography (Under Doctor Text) field in *Doctor*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: Enter detailed text like in a blog post...
-	 * - **API ID Path**: doctor.detailedBio
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	detailedBio: prismic.RichTextField;
-	
-	/**
-	 * Workplace Section Title field in *Doctor*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Darba vieta
-	 * - **API ID Path**: doctor.workplace_title
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	workplace_title: prismic.KeyTextField;
-	
-	/**
-	 * Workplaces field in *Doctor*
-	 *
-	 * - **Field Type**: Group
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.workplaces[]
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-	 */
-	workplaces: prismic.GroupField<Simplify<DoctorDocumentDataWorkplacesItem>>;
-	
-	/**
-	 * Additional Qualifications field in *Doctor*
-	 *
-	 * - **Field Type**: Group
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor.qualifications[]
-	 * - **Tab**: Main
-	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
-	 */
-	qualifications: prismic.GroupField<Simplify<DoctorDocumentDataQualificationsItem>>;
-}
-
-/**
- * Doctor document from Prismic
- *
- * - **API ID**: `doctor`
- * - **Repeatable**: `true`
- * - **Documentation**: https://prismic.io/docs/content-modeling
- *
- * @typeParam Lang - Language API ID of the document.
- */
-export type DoctorDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<DoctorDocumentData>, "doctor", Lang>;
-
-/**
  * Item in *Footer → Clinics*
  */
 export interface FooterDocumentDataClinicsItem {
@@ -678,7 +444,7 @@ interface FooterDocumentData {
  */
 export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | DoctorPageSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice | DoctorGridSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice | DoctorGridSlice
 
 /**
  * Content for Homepage documents
@@ -803,7 +569,7 @@ interface MenuDocumentData {
  */
 export type MenuDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | DoctorPageSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice | DoctorGridSlice
+type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogBlockSlice | BlogPageSlice | DoctorGridSlice
 
 /**
  * Content for Page documents
@@ -1123,7 +889,7 @@ interface TestimonialDocumentData {
  */
 export type TestimonialDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<TestimonialDocumentData>, "testimonial", Lang>;
 
-export type AllDocumentTypes = BlogPostDocument | DoctorDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument;
+export type AllDocumentTypes = BlogPostDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument;
 
 /**
  * Primary content in *BlogBlock → Default → Primary*
@@ -1728,134 +1494,15 @@ type CtaBlockSliceVariation = CtaBlockSliceDefault
 export type CtaBlockSlice = prismic.SharedSlice<"cta_block", CtaBlockSliceVariation>;
 
 /**
- * Primary content in *DoctorBlock → Default → Primary*
- */
-export interface DoctorBlockSliceDefaultPrimary {
-	/**
-	 * Badge Text field in *DoctorBlock → Default → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Zobārsti
-	 * - **API ID Path**: doctor_block.default.primary.badge_text
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	badge_text: prismic.KeyTextField;
-	
-	/**
-	 * Title field in *DoctorBlock → Default → Primary*
-	 *
-	 * - **Field Type**: Rich Text
-	 * - **Placeholder**: Vadošie speciālisti
-	 * - **API ID Path**: doctor_block.default.primary.title
-	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
-	 */
-	title: prismic.RichTextField;
-	
-	/**
-	 * Subtitle field in *DoctorBlock → Default → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Profesionāli speciālisti...
-	 * - **API ID Path**: doctor_block.default.primary.subtitle
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	subtitle: prismic.KeyTextField;
-	
-	/**
-	 * Link Text field in *DoctorBlock → Default → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Skatīt visus speciālistus
-	 * - **API ID Path**: doctor_block.default.primary.link_text
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	link_text: prismic.KeyTextField;
-	
-	/**
-	 * Link URL field in *DoctorBlock → Default → Primary*
-	 *
-	 * - **Field Type**: Link
-	 * - **Placeholder**: Select page or enter URL
-	 * - **API ID Path**: doctor_block.default.primary.link_url
-	 * - **Documentation**: https://prismic.io/docs/fields/link
-	 */
-	link_url: prismic.LinkField<string, string, unknown, prismic.FieldState, never>;
-}
-
-/**
- * Primary content in *DoctorBlock → Items*
- */
-export interface DoctorBlockSliceDefaultItem {
-	/**
-	 * Doctor Document field in *DoctorBlock → Items*
-	 *
-	 * - **Field Type**: Content Relationship
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor_block.items[].doctor
-	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-	 */
-	doctor: prismic.ContentRelationshipField<"doctor">;
-}
-
-/**
- * Default variation for DoctorBlock Slice
- *
- * - **API ID**: `default`
- * - **Description**: Default variation
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type DoctorBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<DoctorBlockSliceDefaultPrimary>, Simplify<DoctorBlockSliceDefaultItem>>;
-
-/**
  * Primary content in *DoctorBlock → Doctor Detail → Primary*
  */
-export interface DoctorBlockSliceDetailPrimary {
-	/**
-	 * Name field in *DoctorBlock → Doctor Detail → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Dr. Jānis Kalniņš
-	 * - **API ID Path**: doctor_block.detail.primary.name
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	name: prismic.KeyTextField;
-	
-	/**
-	 * Category field in *DoctorBlock → Doctor Detail → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: ĶIRURGS
-	 * - **API ID Path**: doctor_block.detail.primary.category
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	category: prismic.KeyTextField;
-	
-	/**
-	 * Role field in *DoctorBlock → Doctor Detail → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: ZOBĀRSTS, ĶIRURGS
-	 * - **API ID Path**: doctor_block.detail.primary.role
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	role: prismic.KeyTextField;
-	
-	/**
-	 * Short Description field in *DoctorBlock → Doctor Detail → Primary*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Sertificēts mutes, sejas...
-	 * - **API ID Path**: doctor_block.detail.primary.description
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	description: prismic.KeyTextField;
-	
+export interface DoctorBlockSliceDefaultPrimary {
 	/**
 	 * Full Biography (Upper text with vertical line) field in *DoctorBlock → Doctor Detail → Primary*
 	 *
 	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: Dr. Jānis Kalniņš ir augsti sertificēts...
-	 * - **API ID Path**: doctor_block.detail.primary.fullBio
+	 * - **API ID Path**: doctor_block.default.primary.fullBio
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
 	fullBio: prismic.RichTextField;
@@ -1865,7 +1512,7 @@ export interface DoctorBlockSliceDetailPrimary {
 	 *
 	 * - **Field Type**: Rich Text
 	 * - **Placeholder**: Enter detailed text like in a blog post...
-	 * - **API ID Path**: doctor_block.detail.primary.detailedBio
+	 * - **API ID Path**: doctor_block.default.primary.detailedBio
 	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
 	 */
 	detailedBio: prismic.RichTextField;
@@ -1875,7 +1522,7 @@ export interface DoctorBlockSliceDetailPrimary {
 	 *
 	 * - **Field Type**: Image
 	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor_block.detail.primary.image
+	 * - **API ID Path**: doctor_block.default.primary.image
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	image: prismic.ImageField<never>;
@@ -1885,7 +1532,7 @@ export interface DoctorBlockSliceDetailPrimary {
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Darba vieta
-	 * - **API ID Path**: doctor_block.detail.primary.workplace_title
+	 * - **API ID Path**: doctor_block.default.primary.workplace_title
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	workplace_title: prismic.KeyTextField;
@@ -1894,7 +1541,7 @@ export interface DoctorBlockSliceDetailPrimary {
 /**
  * Primary content in *DoctorBlock → Items*
  */
-export interface DoctorBlockSliceDetailItem {
+export interface DoctorBlockSliceDefaultItem {
 	/**
 	 * Item Type field in *DoctorBlock → Items*
 	 *
@@ -1920,16 +1567,16 @@ export interface DoctorBlockSliceDetailItem {
 /**
  * Doctor Detail variation for DoctorBlock Slice
  *
- * - **API ID**: `detail`
+ * - **API ID**: `default`
  * - **Description**: Renders a detailed profile page for a single doctor
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type DoctorBlockSliceDetail = prismic.SharedSliceVariation<"detail", Simplify<DoctorBlockSliceDetailPrimary>, Simplify<DoctorBlockSliceDetailItem>>;
+export type DoctorBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<DoctorBlockSliceDefaultPrimary>, Simplify<DoctorBlockSliceDefaultItem>>;
 
 /**
  * Slice variation for *DoctorBlock*
  */
-type DoctorBlockSliceVariation = DoctorBlockSliceDefault | DoctorBlockSliceDetail
+type DoctorBlockSliceVariation = DoctorBlockSliceDefault
 
 /**
  * DoctorBlock Shared Slice
@@ -2085,60 +1732,6 @@ type DoctorGridSliceVariation = DoctorGridSliceDefault
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type DoctorGridSlice = prismic.SharedSlice<"doctor_grid", DoctorGridSliceVariation>;
-
-/**
- * Primary content in *DoctorPage → Default → Primary*
- */
-export interface DoctorPageSliceDefaultPrimary {
-	/**
-	 * Hide Header field in *DoctorPage → Default → Primary*
-	 *
-	 * - **Field Type**: Boolean
-	 * - **Placeholder**: *None*
-	 * - **Default Value**: true
-	 * - **API ID Path**: doctor_page.default.primary.hideHeader
-	 * - **Documentation**: https://prismic.io/docs/fields/boolean
-	 */
-	hideHeader: prismic.BooleanField;
-}
-
-/**
- * Primary content in *DoctorPage → Items*
- */
-export interface DoctorPageSliceDefaultItem {
-	/**
-	 * Doctor Document field in *DoctorPage → Items*
-	 *
-	 * - **Field Type**: Content Relationship
-	 * - **Placeholder**: *None*
-	 * - **API ID Path**: doctor_page.items[].doctor
-	 * - **Documentation**: https://prismic.io/docs/fields/content-relationship
-	 */
-	doctor: prismic.ContentRelationshipField<"doctor">;
-}
-
-/**
- * Default variation for DoctorPage Slice
- *
- * - **API ID**: `default`
- * - **Description**: Default variation
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type DoctorPageSliceDefault = prismic.SharedSliceVariation<"default", Simplify<DoctorPageSliceDefaultPrimary>, Simplify<DoctorPageSliceDefaultItem>>;
-
-/**
- * Slice variation for *DoctorPage*
- */
-type DoctorPageSliceVariation = DoctorPageSliceDefault
-
-/**
- * DoctorPage Shared Slice
- *
- * - **API ID**: `doctor_page`
- * - **Description**: Renders the full team grid of dentist profiles on the doctors page.
- * - **Documentation**: https://prismic.io/docs/slices
- */
-export type DoctorPageSlice = prismic.SharedSlice<"doctor_page", DoctorPageSliceVariation>;
 
 /**
  * Primary content in *Hero → Default → Primary*
@@ -2840,13 +2433,6 @@ declare module "@prismicio/client" {
 		export type {
 			BlogPostDocument,
 			BlogPostDocumentData,
-			DoctorDocument,
-			DoctorDocumentData,
-			DoctorDocumentDataSpecializationsItem,
-			DoctorDocumentDataEducationItem,
-			DoctorDocumentDataLanguagesItem,
-			DoctorDocumentDataWorkplacesItem,
-			DoctorDocumentDataQualificationsItem,
 			FooterDocument,
 			FooterDocumentData,
 			FooterDocumentDataClinicsItem,
@@ -2891,21 +2477,13 @@ declare module "@prismicio/client" {
 			DoctorBlockSlice,
 			DoctorBlockSliceDefaultPrimary,
 			DoctorBlockSliceDefaultItem,
-			DoctorBlockSliceDetailPrimary,
-			DoctorBlockSliceDetailItem,
 			DoctorBlockSliceVariation,
 			DoctorBlockSliceDefault,
-			DoctorBlockSliceDetail,
 			DoctorGridSlice,
 			DoctorGridSliceDefaultPrimary,
 			DoctorGridSliceDefaultItem,
 			DoctorGridSliceVariation,
 			DoctorGridSliceDefault,
-			DoctorPageSlice,
-			DoctorPageSliceDefaultPrimary,
-			DoctorPageSliceDefaultItem,
-			DoctorPageSliceVariation,
-			DoctorPageSliceDefault,
 			HeroSlice,
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,

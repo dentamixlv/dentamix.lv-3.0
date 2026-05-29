@@ -5,7 +5,7 @@ import { components } from '../../../../slices';
 import { createClient } from '../../../../prismicio';
 import DoctorProfileClient from './DoctorProfileClient';
 import { getPrismicLocale } from '../../page';
-import { getDoctors } from '../../../../data';
+import { getDoctors, extractDoctorFromPage } from '../../../../data';
 
 interface PageProps {
   params: Promise<{
@@ -19,31 +19,20 @@ export async function generateMetadata({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  // Try custom page metadata first
+  let doctor = null;
+
+  // Try custom page first
   try {
     const pageDoc = await client.getByUID('page', id, { lang: locale });
     if (pageDoc) {
-      const pageData = pageDoc.data as any;
-      return {
-        title: pageData.meta_title || `${pageData.title || id} | Dentamic`,
-        description: pageData.meta_description || '',
-      };
+      doctor = extractDoctorFromPage(pageDoc);
     }
   } catch (e) {
-    // Ignore and fall back to doctor document
+    // Ignore and fall back to local doctors database
   }
 
-  let doctor = null;
-  try {
-    const doc = await client.getByUID('doctor', id, { lang: locale });
-    if (doc) {
-      doctor = {
-        name: doc.data.name || '',
-        description: doc.data.description || '',
-      };
-    }
-  } catch (e) {
-    // Fallback
+  // Fallback to local doctors database if not found in custom page
+  if (!doctor) {
     const fallbackDoc = getDoctors(locale).find(d => d.id === id);
     if (fallbackDoc) {
       doctor = {
@@ -82,7 +71,7 @@ export default async function Page({ params }: PageProps) {
 
   if (slices && slices.length > 0) {
     const doctorDetailSliceIndex = slices.findIndex(
-      (s: any) => s.slice_type === 'doctor_block' && s.variation === 'detail'
+      (s: any) => s.slice_type === 'doctor_block'
     );
 
     if (doctorDetailSliceIndex !== -1) {
@@ -104,7 +93,7 @@ export default async function Page({ params }: PageProps) {
         (s: any, idx: number) => 
           idx === doctorDetailSliceIndex || 
           s.slice_type === 'page_title'
-      ).map((s: any) => s.slice_type === 'doctor_block' && s.variation === 'detail' ? doctorDetailSlice : s);
+      ).map((s: any) => s.slice_type === 'doctor_block' ? doctorDetailSlice : s);
 
       return <SliceZone slices={topLevelSlices} components={components} />;
     }
@@ -112,52 +101,31 @@ export default async function Page({ params }: PageProps) {
     return <SliceZone slices={slices} components={components} />;
   }
 
-  // 2. Fallback: structured doctor profile document
-  let doctor = null;
-  try {
-    const doc = await client.getByUID('doctor', id, { lang: locale });
-    if (doc) {
-      const fallbackDoc = getDoctors(locale).find(d => d.id === id);
-      doctor = {
-        id: doc.uid!,
-        name: doc.data.name || '',
-        title: doc.data.name || '',
-        category: doc.data.category || '',
-        role: doc.data.role || '',
-        description: doc.data.description || '',
-        fullBio: Array.isArray(doc.data.fullBio) ? (doc.data.fullBio[0] as any)?.text || '' : (doc.data.fullBio as any) || '',
-        image: doc.data.image?.url || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800',
-        specializations: Array.isArray(doc.data.specializations) 
-          ? doc.data.specializations.map((s: any) => s.item || '') 
-          : [],
-        education: Array.isArray(doc.data.education) 
-          ? doc.data.education.map((e: any) => e.item || '') 
-          : [],
-        languages: Array.isArray(doc.data.languages) 
-          ? doc.data.languages.map((l: any) => l.item || '') 
-          : [],
-        workplace: fallbackDoc?.workplace || (locale === 'en-us' ? 'Riga' : 'Rīga'),
-        detailedBio: doc.data.detailedBio || null,
-        qualifications: Array.isArray(doc.data.qualifications)
-          ? doc.data.qualifications.map((q: any) => q.item || '')
-          : [],
-        workplaces: Array.isArray(doc.data.workplaces) && doc.data.workplaces.length > 0
-          ? doc.data.workplaces.map((w: any) => w.item || '')
-          : (fallbackDoc?.workplaces || (fallbackDoc?.workplace ? [fallbackDoc.workplace] : [locale === 'en-us' ? 'Riga' : 'Rīga'])),
-        workplaceTitle: doc.data.workplace_title || undefined
-      };
-    }
-  } catch (error) {
-    console.warn(`Doctor profile UID "${id}" not found in Prismic, using fallback data.`);
-  }
-
-  if (!doctor) {
-    doctor = getDoctors(locale).find(d => d.id === id) || null;
-  }
+  // 2. Fallback: static doctor data
+  const doctor = getDoctors(locale).find(d => d.id === id) || null;
 
   if (!doctor) {
     notFound();
   }
 
-  return <DoctorProfileClient doctor={doctor} langCode={locale} />;
+  return (
+    <>
+      <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
+        <div className="text-center max-w-2xl mx-auto">
+          <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">
+            {doctor.category === 'SPECIĀLISTE' || doctor.category === 'SPECIALIST' ? doctor.role : doctor.category}
+          </span>
+          <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
+            {doctor.name}
+          </h1>
+          {doctor.description && (
+            <p className="text-base text-[#6a5b5e] mt-2 font-medium">
+              {doctor.description}
+            </p>
+          )}
+        </div>
+      </div>
+      <DoctorProfileClient doctor={doctor} langCode={locale} />
+    </>
+  );
 }

@@ -28,9 +28,6 @@
             "doctor_block": {
               "type": "SharedSlice"
             },
-            "doctor_page": {
-              "type": "SharedSlice"
-            },
             "pricelist": {
               "type": "SharedSlice"
             },
