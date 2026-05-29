@@ -146,7 +146,7 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                       {profileText}
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </Link>
-                    {showBookButton && (
+                    {showBookButton ? (
                       <Link
                         href={bookUrl}
                         target={openBookBlank ? "_blank" : undefined}
@@ -156,6 +156,13 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
                       >
                         {bookText}
                       </Link>
+                    ) : (
+                      <span
+                        className="px-4 py-2 text-sm font-bold text-[#8e8385] bg-[#efedec] rounded-full cursor-not-allowed select-none"
+                        id={`doctor-grid-book-btn-inactive-${idx}`}
+                      >
+                        {bookText}
+                      </span>
                     )}
                   </div>
                 </div>
