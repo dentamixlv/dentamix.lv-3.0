@@ -3,7 +3,7 @@
 import React from 'react';
 import { motion } from 'motion/react';
 import { Star, Quote, Heart, ArrowRight } from 'lucide-react';
-import { useParams } from 'next/navigation';
+import { useParams, usePathname } from 'next/navigation';
 import { Content, isFilled } from "@prismicio/client";
 import { SliceComponentProps } from "@prismicio/react";
 import { PrismicNextLink } from '@prismicio/next';
@@ -37,6 +37,7 @@ type TestimonialBlockProps = SliceComponentProps<Content.TestimonialBlockSlice>;
 export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
   const { primary, items } = slice;
   const params = useParams();
+  const pathname = usePathname();
   const langList = params?.lang;
   const isEn = Array.isArray(langList) && langList.length > 0 && langList[0] === 'en';
   const langPrefix = isEn ? '/en' : '';
@@ -81,9 +82,13 @@ export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
 
   const activeItems = items && items.length > 0 ? items : defaultItems;
 
-  const hideHeaderValue = (slice.primary as any).hideHeader !== null && (slice.primary as any).hideHeader !== undefined 
-    ? (slice.primary as any).hideHeader 
-    : false;
+  const isHomepage = pathname === '/' || pathname === '/lv' || pathname === '/en' || pathname === '/en-us';
+
+  const hideHeaderValue = isHomepage 
+    ? false 
+    : ((slice.primary as any).hideHeader !== null && (slice.primary as any).hideHeader !== undefined 
+      ? (slice.primary as any).hideHeader 
+      : false);
 
   const sectionButton = isFilled.link(primary.link_url) ? (
     <PrismicNextLink
@@ -106,7 +111,7 @@ export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
   );
 
   const sectionClass = hideHeaderValue
-    ? 'bg-gradient-to-b from-white to-[#fbf9f8] pt-2 pb-0 md:pt-4 md:pb-0'
+    ? 'bg-gradient-to-b from-white to-[#fbf9f8] pt-2 pb-16 md:pt-4 md:pb-24'
     : 'bg-gradient-to-b from-white to-[#fbf9f8] py-16 md:py-24 border-t border-[#efedec]/60';
 
   return (
@@ -120,15 +125,15 @@ export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
             whileInView="visible"
             viewport={{ once: true }}
             variants={fadeUpVariants}
-            className="text-center max-w-xl mx-auto mb-16"
+            className="text-center max-w-xl mx-auto mb-12"
           >
             <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
               {badgeText}
             </span>
-            <h2 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
+            <h3 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
               {title}
-            </h2>
-            <p className="text-base text-[#6a5b5e] mt-2 font-medium">
+            </h3>
+            <p className="text-sm md:text-base text-[#6a5b5e] mt-2 font-medium">
               {subtitle}
             </p>
           </motion.div>
