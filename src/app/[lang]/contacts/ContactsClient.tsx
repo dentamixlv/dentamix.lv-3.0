@@ -124,10 +124,13 @@ export default function ContactsClient({ langCode }: ContactsClientProps) {
                 <div className="space-y-4 my-6 text-sm text-[#6A5B5E]">
                   {/* Phone */}
                   {clinic.phone && (
-                    <p className="flex items-center gap-2 font-medium text-[#6A5B5E] hover:text-[#5d1726]/80 transition-colors">
+                    <a 
+                      href={`tel:${clinic.phone.replace(/\s+/g, '')}`}
+                      className="flex items-center gap-2 font-bold text-[#511B29] hover:text-[#5d1726]/80 transition-colors w-fit"
+                    >
                       <Phone className="w-4 h-4 text-[#de7c8a] shrink-0" />
                       <span>{clinic.phone}</span>
-                    </p>
+                    </a>
                   )}
 
                   {/* Address */}

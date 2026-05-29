@@ -153,10 +153,13 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                   <div className="space-y-4 my-6 text-sm text-[#6A5B5E]">
                     {/* Phone */}
                     {phoneVal && (
-                      <p className="flex items-center gap-2 font-bold text-[#511B29] hover:text-[#5d1726]/80 transition-colors">
+                      <a 
+                        href={`tel:${phoneVal.replace(/\s+/g, '')}`}
+                        className="flex items-center gap-2 font-bold text-[#511B29] hover:text-[#5d1726]/80 transition-colors w-fit"
+                      >
                         <Phone className="w-4 h-4 text-[#de7c8a] shrink-0" />
                         <span>{phoneVal}</span>
-                      </p>
+                      </a>
                     )}
                     {/* Address */}
                     {addressVal && (
