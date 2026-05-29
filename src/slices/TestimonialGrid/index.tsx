@@ -22,9 +22,9 @@ interface Testimonial {
   story: string;
 }
 
-type TestimonialCardProps = SliceComponentProps<Content.TestimonialCardSlice, { isEmbedded?: boolean }>;
+type TestimonialGridProps = SliceComponentProps<Content.TestimonialGridSlice, { isEmbedded?: boolean }>;
 
-export default function TestimonialCard({ slice, context }: TestimonialCardProps) {
+export default function TestimonialGrid({ slice, context }: TestimonialGridProps) {
   const router = useRouter();
   const params = useParams();
   const langList = params?.lang;

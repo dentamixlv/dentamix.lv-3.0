@@ -99,7 +99,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
           )}
 
           {/* Testimonial Cards Section */}
-          {(!doctor.slices || !doctor.slices.some(s => s.slice_type === 'testimonial_block' || s.slice_type === 'testimonial_card')) && doctorTestimonials.length > 0 && (
+          {(!doctor.slices || !doctor.slices.some(s => s.slice_type === 'testimonial_block' || s.slice_type === 'testimonial_grid')) && doctorTestimonials.length > 0 && (
             <div className="space-y-6 pt-8 border-t border-[#efedec]/60">
               <h4 className="text-sm font-bold uppercase tracking-wider text-[#511B29]">
                 {isEn ? 'Patient Reviews' : 'Pacientu atsauksmes'}

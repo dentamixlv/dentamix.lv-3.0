@@ -1,7 +1,7 @@
 {
-  "id": "testimonial_card",
+  "id": "testimonial_grid",
   "type": "SharedSlice",
-  "name": "TestimonialCard",
+  "name": "TestimonialGrid",
   "description": "Renders testimonial cards from inline items or queries Prismic testimonial documents if empty.",
   "variations": [
     {

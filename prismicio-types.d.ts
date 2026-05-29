@@ -444,7 +444,7 @@ interface FooterDocumentData {
  */
 export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialGridSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice
 
 /**
  * Content for Homepage documents
@@ -569,7 +569,7 @@ interface MenuDocumentData {
  */
 export type MenuDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialCardSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice
+type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | DoctorBlockSlice | PricelistSlice | TestimonialGridSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice
 
 /**
  * Content for Page documents
@@ -2384,98 +2384,98 @@ type TestimonialBlockSliceVariation = TestimonialBlockSliceDefault
 export type TestimonialBlockSlice = prismic.SharedSlice<"testimonial_block", TestimonialBlockSliceVariation>;
 
 /**
- * Primary content in *TestimonialCard → Default → Primary*
+ * Primary content in *TestimonialGrid → Default → Primary*
  */
-export interface TestimonialCardSliceDefaultPrimary {
+export interface TestimonialGridSliceDefaultPrimary {
 	/**
-	 * Hide Header field in *TestimonialCard → Default → Primary*
+	 * Hide Header field in *TestimonialGrid → Default → Primary*
 	 *
 	 * - **Field Type**: Boolean
 	 * - **Placeholder**: *None*
 	 * - **Default Value**: true
-	 * - **API ID Path**: testimonial_card.default.primary.hideHeader
+	 * - **API ID Path**: testimonial_grid.default.primary.hideHeader
 	 * - **Documentation**: https://prismic.io/docs/fields/boolean
 	 */
 	hideHeader: prismic.BooleanField;
 }
 
 /**
- * Primary content in *TestimonialCard → Items*
+ * Primary content in *TestimonialGrid → Items*
  */
-export interface TestimonialCardSliceDefaultItem {
+export interface TestimonialGridSliceDefaultItem {
 	/**
-	 * Author Name field in *TestimonialCard → Items*
+	 * Author Name field in *TestimonialGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Juris K.
-	 * - **API ID Path**: testimonial_card.items[].author
+	 * - **API ID Path**: testimonial_grid.items[].author
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	author: prismic.KeyTextField;
 	
 	/**
-	 * Treatment Type field in *TestimonialCard → Items*
+	 * Treatment Type field in *TestimonialGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: Zobu implantācija
-	 * - **API ID Path**: testimonial_card.items[].treatment
+	 * - **API ID Path**: testimonial_grid.items[].treatment
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	treatment: prismic.KeyTextField;
 	
 	/**
-	 * Rating (1-5) field in *TestimonialCard → Items*
+	 * Rating (1-5) field in *TestimonialGrid → Items*
 	 *
 	 * - **Field Type**: Number
 	 * - **Placeholder**: 5
-	 * - **API ID Path**: testimonial_card.items[].rating
+	 * - **API ID Path**: testimonial_grid.items[].rating
 	 * - **Documentation**: https://prismic.io/docs/fields/number
 	 */
 	rating: prismic.NumberField;
 	
 	/**
-	 * Date field in *TestimonialCard → Items*
+	 * Date field in *TestimonialGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: 10. Maijs, 2026
-	 * - **API ID Path**: testimonial_card.items[].date
+	 * - **API ID Path**: testimonial_grid.items[].date
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	date: prismic.KeyTextField;
 	
 	/**
-	 * Detailed Story field in *TestimonialCard → Items*
+	 * Detailed Story field in *TestimonialGrid → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: The implant surgery was completely painless...
-	 * - **API ID Path**: testimonial_card.items[].story
+	 * - **API ID Path**: testimonial_grid.items[].story
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	story: prismic.KeyTextField;
 }
 
 /**
- * Default variation for TestimonialCard Slice
+ * Default variation for TestimonialGrid Slice
  *
  * - **API ID**: `default`
  * - **Description**: Default variation
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type TestimonialCardSliceDefault = prismic.SharedSliceVariation<"default", Simplify<TestimonialCardSliceDefaultPrimary>, Simplify<TestimonialCardSliceDefaultItem>>;
+export type TestimonialGridSliceDefault = prismic.SharedSliceVariation<"default", Simplify<TestimonialGridSliceDefaultPrimary>, Simplify<TestimonialGridSliceDefaultItem>>;
 
 /**
- * Slice variation for *TestimonialCard*
+ * Slice variation for *TestimonialGrid*
  */
-type TestimonialCardSliceVariation = TestimonialCardSliceDefault
+type TestimonialGridSliceVariation = TestimonialGridSliceDefault
 
 /**
- * TestimonialCard Shared Slice
+ * TestimonialGrid Shared Slice
  *
- * - **API ID**: `testimonial_card`
+ * - **API ID**: `testimonial_grid`
  * - **Description**: Renders testimonial cards from inline items or queries Prismic testimonial documents if empty.
  * - **Documentation**: https://prismic.io/docs/slices
  */
-export type TestimonialCardSlice = prismic.SharedSlice<"testimonial_card", TestimonialCardSliceVariation>;
+export type TestimonialGridSlice = prismic.SharedSlice<"testimonial_grid", TestimonialGridSliceVariation>;
 
 declare module "@prismicio/client" {
 	interface CreateClient {
@@ -2577,11 +2577,11 @@ declare module "@prismicio/client" {
 			TestimonialBlockSliceDefaultItem,
 			TestimonialBlockSliceVariation,
 			TestimonialBlockSliceDefault,
-			TestimonialCardSlice,
-			TestimonialCardSliceDefaultPrimary,
-			TestimonialCardSliceDefaultItem,
-			TestimonialCardSliceVariation,
-			TestimonialCardSliceDefault
+			TestimonialGridSlice,
+			TestimonialGridSliceDefaultPrimary,
+			TestimonialGridSliceDefaultItem,
+			TestimonialGridSliceVariation,
+			TestimonialGridSliceDefault
 		}
 	}
 }

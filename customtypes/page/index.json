@@ -31,7 +31,7 @@
             "pricelist": {
               "type": "SharedSlice"
             },
-            "testimonial_card": {
+            "testimonial_grid": {
               "type": "SharedSlice"
             },
             "contact_block": {
