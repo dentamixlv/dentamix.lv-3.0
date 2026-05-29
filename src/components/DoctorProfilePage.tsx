@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeft, Award, GraduationCap, Languages, CalendarDays, MapPin } from 'lucide-react';
+import { ArrowLeft, Award, GraduationCap, Languages, MapPin } from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import { SliceZone } from '@prismicio/react';
@@ -9,6 +9,7 @@ import { components } from '../slices';
 import { Doctor } from '../types';
 import { getTestimonials } from '../data';
 import TestimonialCard from './TestimonialCard';
+import CTABlock from './CTABlock';
 
 interface DoctorProfilePageProps {
   doctor: Doctor;
@@ -53,8 +54,17 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
     bookDesc: isEn 
       ? 'Book a consultation with this specialist online. The scheduling process takes less than a minute.' 
       : 'Piesakieties vizītei vai konsultācijai pie šī speciālista tiešsaistē. Pieteikšanās aizņem mazāk par minūti.',
-    bookBtn: isEn ? 'Request Appointment' : 'Pieteikties vizītei'
+    bookBtn: isEn ? 'Request Appointment' : 'Pieteikties vizītei',
+    bookBadge: isEn ? 'Booking open' : 'Pieraksts atvērts'
   };
+
+  // CTA values — use Prismic fields if set, else hardcoded defaults
+  const ctaBadge = doctor.ctaBadgeText || t.bookBadge;
+  const ctaTitle = doctor.ctaTitle || t.bookTitle;
+  const ctaDesc = doctor.ctaDescription || t.bookDesc;
+  const ctaButtonText = doctor.ctaButtonText || t.bookBtn;
+  const ctaLink = doctor.ctaLink || undefined;
+  const ctaLinkBlank = doctor.ctaLinkBlank ?? false;
 
   return (
     <motion.div 
@@ -105,23 +115,18 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
             </div>
           )}
 
-          {/* Booking Invite Box matching Blog style card */}
-          <div className="p-6 bg-[#fbf9f8] rounded-2xl border border-[#efedec] mt-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-            <div className="space-y-1 text-center sm:text-left">
-              <h4 className="text-sm font-bold uppercase tracking-wider text-[#511B29]">
-                {t.bookTitle}
-              </h4>
-              <p className="text-sm md:text-base text-[#6a5b5e] leading-relaxed">
-                {t.bookDesc}
-              </p>
-            </div>
-            <button
-              onClick={onBook}
-              className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-6 py-3 rounded-full text-sm font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
-            >
-              <CalendarDays className="w-4 h-4" />
-              {t.bookBtn}
-            </button>
+          {/* CTA Block — redesigned using reusable CTABlock component */}
+          <div className="mt-8">
+            <CTABlock
+              badgeText={ctaBadge}
+              title={ctaTitle}
+              description={ctaDesc}
+              buttonText={ctaButtonText}
+              onClick={!ctaLink ? onBook : undefined}
+              href={ctaLink}
+              targetBlank={ctaLinkBlank}
+              id="doctor-profile-cta-btn"
+            />
           </div>
         </motion.div>
 

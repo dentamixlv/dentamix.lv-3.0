@@ -64,6 +64,15 @@ export default function DoctorBlock({ slice }: DoctorBlockProps) {
 
   const embeddedSlices = (slice.primary as any).embeddedSlices || [];
 
+  // CTA fields from Prismic (fallback to undefined = DoctorProfilePage uses hardcoded defaults)
+  const ctaBadgeText = (slice.primary as any).cta_badge_text || undefined;
+  const ctaTitle = (slice.primary as any).cta_title || undefined;
+  const ctaDescription = (slice.primary as any).cta_description || undefined;
+  const ctaButtonText = (slice.primary as any).cta_button_text || undefined;
+  const ctaLinkRaw = (slice.primary as any).cta_link;
+  const ctaLink = ctaLinkRaw?.url || undefined;
+  const ctaLinkBlank = (slice.primary as any).cta_link_blank ?? undefined;
+
   const doctorObj: Doctor = {
     id: doctorId || 'doctor-detail',
     name,
@@ -80,7 +89,13 @@ export default function DoctorBlock({ slice }: DoctorBlockProps) {
     workplaces,
     languages,
     workplaceTitle,
-    slices: embeddedSlices
+    slices: embeddedSlices,
+    ctaBadgeText,
+    ctaTitle,
+    ctaDescription,
+    ctaButtonText,
+    ctaLink,
+    ctaLinkBlank,
   };
 
   const handleBack = () => {

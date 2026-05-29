@@ -12,6 +12,7 @@ export interface CTABlockProps {
   buttonText?: string;
   onClick?: () => void;
   href?: string;
+  targetBlank?: boolean;
   id?: string;
   className?: string;
   customButton?: React.ReactNode;
@@ -37,6 +38,7 @@ export default function CTABlock({
   buttonText,
   onClick,
   href,
+  targetBlank,
   id,
   className = '',
   customButton,
@@ -85,7 +87,7 @@ export default function CTABlock({
       {customButton ? (
         customButton
       ) : href ? (
-        <Link href={href} className={buttonClass} id={id}>
+        <Link href={href} className={buttonClass} id={id} {...(targetBlank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
           {buttonText}
           <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
         </Link>

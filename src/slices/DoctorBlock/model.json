@@ -41,6 +41,50 @@
             "label": "Workplace Section Title",
             "placeholder": "Darba vieta"
           }
+        },
+        "cta_badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "CTA Badge Text",
+            "placeholder": "Pieraksts atvērts"
+          }
+        },
+        "cta_title": {
+          "type": "Text",
+          "config": {
+            "label": "CTA Title",
+            "placeholder": "Pieteikties uz vizīti"
+          }
+        },
+        "cta_description": {
+          "type": "Text",
+          "config": {
+            "label": "CTA Description",
+            "placeholder": "Piesakieties vizītei vai konsultācijai..."
+          }
+        },
+        "cta_button_text": {
+          "type": "Text",
+          "config": {
+            "label": "CTA Button Text",
+            "placeholder": "Pieteikties vizītei"
+          }
+        },
+        "cta_link": {
+          "type": "Link",
+          "config": {
+            "label": "CTA URL Link",
+            "allowTargetBlank": true
+          }
+        },
+        "cta_link_blank": {
+          "type": "Boolean",
+          "config": {
+            "label": "Open CTA link in new tab",
+            "default_value": false,
+            "placeholder_true": "Yes",
+            "placeholder_false": "No"
+          }
         }
       },
       "items": {

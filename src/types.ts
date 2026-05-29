@@ -16,6 +16,12 @@ export interface Doctor {
   workplaces?: string[];
   workplaceTitle?: string;
   slices?: any[];
+  ctaBadgeText?: string;
+  ctaTitle?: string;
+  ctaDescription?: string;
+  ctaButtonText?: string;
+  ctaLink?: string;
+  ctaLinkBlank?: boolean;
 }
 
 export interface Service {
