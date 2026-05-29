@@ -12,9 +12,10 @@ interface TestimonialsPageProps {
   langCode?: string;
   customTestimonials?: Testimonial[];
   hideHeader?: boolean;
+  isEmbedded?: boolean;
 }
 
-export default function TestimonialsPage({ onBook, langCode = 'lv', customTestimonials, hideHeader = false }: TestimonialsPageProps) {
+export default function TestimonialsPage({ onBook, langCode = 'lv', customTestimonials, hideHeader = false, isEmbedded = false }: TestimonialsPageProps) {
   const isEn = langCode === 'en-us';
 
   const testimonialsData: Testimonial[] = customTestimonials || [
@@ -130,7 +131,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
   } as const;
 
   return (
-    <div className={`${hideHeader ? 'pt-2 pb-0 md:pt-4 md:pb-0' : 'pt-8 pb-16 md:pt-12 md:pb-24'} max-w-7xl mx-auto px-6`} id="testimonials-page-view">
+    <div className={isEmbedded ? "pt-2 pb-0" : `${hideHeader ? 'pt-2 pb-0 md:pt-4 md:pb-0' : 'pt-8 pb-16 md:pt-12 md:pb-24'} max-w-7xl mx-auto px-6`} id="testimonials-page-view">
       {/* 1. Header with same badge and style */}
       {!hideHeader && (
         <motion.div 
@@ -159,7 +160,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
+        className={isEmbedded ? "grid grid-cols-1 md:grid-cols-2 gap-6" : "grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"}
       >
         {testimonialsData.length > 0 ? (
           testimonialsData.map((item) => (

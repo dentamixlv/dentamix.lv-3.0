@@ -114,7 +114,7 @@ export default function BlogBlock({ slice }: BlogBlockProps) {
       }
     };
     fetchPosts();
-  }, [hasInlineItems, inlineItems, langCode, isEn]);
+  }, [hasInlineItems, slice.items, langCode, isEn]);
 
   const readPostLabel = isEn ? 'Read Article' : 'Lasīt rakstu';
 

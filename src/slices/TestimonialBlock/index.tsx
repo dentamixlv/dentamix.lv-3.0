@@ -32,9 +32,10 @@ const fadeUpVariants = {
   }
 } as const;
 
-type TestimonialBlockProps = SliceComponentProps<Content.TestimonialBlockSlice>;
+type TestimonialBlockProps = SliceComponentProps<Content.TestimonialBlockSlice, { isEmbedded?: boolean }>;
 
-export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
+export default function TestimonialBlock({ slice, context }: TestimonialBlockProps) {
+  const isEmbedded = context?.isEmbedded === true;
   const { primary, items } = slice;
   const params = useParams();
   const pathname = usePathname();
@@ -113,6 +114,85 @@ export default function TestimonialBlock({ slice }: TestimonialBlockProps) {
   const sectionClass = hideHeaderValue
     ? 'bg-gradient-to-b from-white to-[#fbf9f8] pt-2 pb-16 md:pt-4 md:pb-24'
     : 'bg-gradient-to-b from-white to-[#fbf9f8] py-16 md:py-24 border-t border-[#efedec]/60';
+
+  if (isEmbedded) {
+    return (
+      <div className="pt-8 space-y-6">
+        {/* Header Block for Embedded View */}
+        {!hideHeaderValue && (
+          <div>
+            <h4 className="text-sm font-bold uppercase tracking-wider text-[#511B29]">
+              {title}
+            </h4>
+          </div>
+        )}
+
+        {/* Grid cards - 2 columns for embedded view */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainerVariants}
+          className="grid grid-cols-1 md:grid-cols-2 gap-6"
+        >
+          {activeItems.map((item, idx) => {
+            const taglineText = item.tagline || (isEn ? 'Premium Care' : 'Premium Aprūpe');
+            const ratingValue = item.rating !== null && item.rating !== undefined ? Number(item.rating) : 5;
+            const authorName = item.author || 'Pacients';
+            const storyText = item.testimonial_text || '';
+            const dateText = item.date || '';
+
+            return (
+              <motion.div
+                variants={fadeUpVariants}
+                key={idx}
+                className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-shadow duration-300 flex flex-col justify-between group h-full"
+                id={`testimonial-card-${idx}`}
+              >
+                {/* Upper Card visual block with only stars */}
+                <div className="relative bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/25 overflow-hidden border-b border-[#efedec] flex flex-col items-center justify-center py-6 px-6 text-center shrink-0">
+                  <div className="absolute top-4 right-4 text-[#f2dde1]/30 group-hover:text-[#de7c8a]/15 transition-all duration-300">
+                    <Quote className="w-8 h-8 transform scale-x-[-1]" />
+                  </div>
+
+                  {/* Stars Rating */}
+                  <div className="z-10 flex gap-1 justify-center text-[#de7c8a]">
+                    {Array.from({ length: Math.min(5, Math.max(1, ratingValue)) }).map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#de7c8a] stroke-[#de7c8a]" />
+                    ))}
+                  </div>
+                </div>
+
+                {/* Card content */}
+                <div className="p-6 flex flex-col justify-between flex-grow">
+                  <div>
+                    <span className="text-[0.625rem] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
+                      {taglineText}
+                    </span>
+                    <h3 className="text-lg font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors">
+                      {authorName}
+                    </h3>
+
+                    <p className="text-sm text-[#6a5b5e] leading-relaxed mt-2.5 font-normal">
+                      {storyText}
+                    </p>
+                  </div>
+
+                  {/* Footer date block */}
+                  <div className="mt-6 pt-4 border-t border-[#efedec]/60 flex items-center">
+                    <div className="flex items-center gap-1.5 text-slate-400">
+                      <Heart className="w-3 h-3 text-[#de7c8a] fill-[#de7c8a]/20" />
+                      <span className="text-[0.625rem] font-semibold text-slate-500">{dateText}</span>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+      </div>
+    );
+  }
 
   return (
     <section className={sectionClass}>

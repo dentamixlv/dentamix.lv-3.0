@@ -21,11 +21,11 @@ export default function BlogPage({ slice }: BlogPageProps) {
   const [posts, setPosts] = useState<BlogPost[] | null>(null);
 
   // Check if items are provided inline
-  const inlineItems = slice.items || [];
-  const hasInlineItems = inlineItems.length > 0 && inlineItems.some(item => item.title || item.excerpt || isFilled.link(item.link_url));
+  const hasInlineItems = slice.items && slice.items.length > 0 && slice.items.some(item => item.title || item.excerpt || isFilled.link(item.link_url));
 
   useEffect(() => {
     const fetchPosts = async () => {
+      const inlineItems = slice.items || [];
       try {
         const client = createClient();
         
@@ -97,7 +97,7 @@ export default function BlogPage({ slice }: BlogPageProps) {
       }
     };
     fetchPosts();
-  }, [hasInlineItems, inlineItems, langCode, isEn]);
+  }, [hasInlineItems, slice.items, langCode, isEn]);
 
   const hideHeaderValue = slice.primary.hideHeader !== null && slice.primary.hideHeader !== undefined 
     ? slice.primary.hideHeader 

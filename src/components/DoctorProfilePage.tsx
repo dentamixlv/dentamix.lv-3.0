@@ -61,7 +61,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
-      className="pt-8 pb-16 md:pt-12 md:pb-24 max-w-7xl mx-auto px-6"
+      className="pt-2 pb-16 md:pt-4 md:pb-24 max-w-7xl mx-auto px-6"
       id={`doctor-profile-page-${doctor.id}`}
     >
       {/* Article Content Grid */}
@@ -84,7 +84,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
           {/* Dynamic embedded slices (like TestimonialBlock or others) */}
           {doctor.slices && doctor.slices.length > 0 && (
             <div className="pt-8 border-t border-[#efedec]/60">
-              <SliceZone slices={doctor.slices} components={components} />
+              <SliceZone slices={doctor.slices} components={components} context={{ isEmbedded: true }} />
             </div>
           )}
 

@@ -15,6 +15,18 @@ const nextConfig: NextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "*.prismic.io",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "prismic-io.s3.amazonaws.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
 };

@@ -20,11 +20,11 @@ export default function ServicePage({ slice }: ServicePageProps) {
   const [services, setServices] = useState<Service[] | null>(null);
 
   // Check if items are provided (linked service documents)
-  const linkedItems = slice.items || [];
-  const hasLinkedServices = linkedItems.length > 0 && linkedItems.some(item => isFilled.link(item.service));
+  const hasLinkedServices = slice.items && slice.items.length > 0 && slice.items.some(item => isFilled.link(item.service));
 
   useEffect(() => {
     const fetchServices = async () => {
+      const linkedItems = slice.items || [];
       try {
         const client = createClient();
         let docs = [];
@@ -64,7 +64,7 @@ export default function ServicePage({ slice }: ServicePageProps) {
       }
     };
     fetchServices();
-  }, [hasLinkedServices, linkedItems, langCode]);
+  }, [hasLinkedServices, slice.items, langCode]);
 
   const hideHeaderValue = slice.primary.hideHeader !== null && slice.primary.hideHeader !== undefined 
     ? slice.primary.hideHeader 

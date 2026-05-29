@@ -22,9 +22,9 @@ interface Testimonial {
   story: string;
 }
 
-type TestimonialCardProps = SliceComponentProps<Content.TestimonialCardSlice>;
+type TestimonialCardProps = SliceComponentProps<Content.TestimonialCardSlice, { isEmbedded?: boolean }>;
 
-export default function TestimonialCard({ slice }: TestimonialCardProps) {
+export default function TestimonialCard({ slice, context }: TestimonialCardProps) {
   const router = useRouter();
   const params = useParams();
   const langList = params?.lang;
@@ -89,12 +89,15 @@ export default function TestimonialCard({ slice }: TestimonialCardProps) {
     ? slice.primary.hideHeader 
     : true;
 
+  const isEmbedded = context?.isEmbedded === true;
+
   return (
     <TestimonialsPage 
       onBook={handleBook} 
       langCode={langCode} 
       customTestimonials={testimonials} 
       hideHeader={hideHeaderValue}
+      isEmbedded={isEmbedded}
     />
   );
 }
