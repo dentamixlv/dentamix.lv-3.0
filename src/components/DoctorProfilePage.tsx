@@ -133,7 +133,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
         {/* Info Sidebar */}
         <motion.div variants={fadeUpVariants} className="space-y-6">
           {/* Doctor Portrait Image in Sidebar */}
-          <div className="relative aspect-[3/2] rounded-3xl overflow-hidden border border-[#efedec] bg-[#fbf9f8] shadow-sm">
+          <div className="relative aspect-[3/2] rounded-3xl overflow-hidden border border-[#efedec] bg-[#fbf9f8] shadow-sm hover:shadow-xl transition-shadow duration-300">
             <Image
               src={doctor.image}
               alt={doctor.name}
