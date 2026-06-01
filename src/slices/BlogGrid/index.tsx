@@ -162,8 +162,7 @@ export default function BlogGrid({ slice }: BlogGridProps) {
         {/* Blogs cards list grid */}
         <motion.div 
           initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          animate="visible"
           variants={staggerContainerVariants}
           className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"
         >
