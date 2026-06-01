@@ -91,7 +91,7 @@ export default function Hero({ slice }: HeroProps) {
           className="object-cover object-center scale-105"
           priority
         />
-        <div className="absolute inset-0 bg-white/80" />
+        <div className="absolute inset-0 bg-white/65" />
       </div>
 
       <motion.div
