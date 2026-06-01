@@ -157,8 +157,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
       {/* 3. Testimonial Cards Layout matching Doctors / Services Grid Style */}
       <motion.div 
         initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
+        animate="visible"
         variants={staggerContainer}
         className={isEmbedded ? "grid grid-cols-1 md:grid-cols-2 gap-6" : "grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10"}
       >
