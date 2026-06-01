@@ -1,0 +1,50 @@
+{
+  "id": "faq_block",
+  "type": "SharedSlice",
+  "name": "FAQBlock",
+  "description": "FAQ Accordion Block with badge, title, and repeatable Q&A items.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "default",
+      "description": "Renders dynamic FAQ accordion lists.",
+      "primary": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge Text",
+            "placeholder": "Biežāk uzdotie jautājumi"
+          }
+        },
+        "title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Title",
+            "placeholder": "Noderīga informācija & FAQ",
+            "allowTargetBlank": true,
+            "single": "heading1,heading2,heading3,heading4,heading5,heading6"
+          }
+        }
+      },
+      "items": {
+        "question": {
+          "type": "Text",
+          "config": {
+            "label": "Question",
+            "placeholder": "Kā pieteikties vizītei klīnikā?"
+          }
+        },
+        "answer": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Answer",
+            "placeholder": "Enter answer description here...",
+            "multi": "paragraph,strong,em,hyperlink"
+          }
+        }
+      }
+    }
+  ]
+}

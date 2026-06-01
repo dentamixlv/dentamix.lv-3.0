@@ -63,6 +63,9 @@
             },
             "doctor_grid": {
               "type": "SharedSlice"
+            },
+            "faq_block": {
+              "type": "SharedSlice"
             }
           }
         }

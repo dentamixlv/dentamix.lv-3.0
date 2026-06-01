@@ -149,6 +149,55 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         { id: 'contacts', label: isEn ? 'Contacts' : 'Kontakti' }
       ];
 
+  const [underlineStyle, setUnderlineStyle] = useState<React.CSSProperties>({
+    left: 0,
+    width: 0,
+    opacity: 0,
+    transition: 'none'
+  });
+  const linkRefs = React.useRef<{ [key: string]: HTMLAnchorElement | null }>({});
+  const isInitial = React.useRef(true);
+  const activeItemId = navItems.find(item => isActive(item.id))?.id;
+
+  React.useEffect(() => {
+    const updatePosition = (immediate = false) => {
+      if (!activeItemId) {
+        setUnderlineStyle(prev => ({ ...prev, opacity: 0 }));
+        return;
+      }
+
+      const activeEl = linkRefs.current[activeItemId];
+      if (activeEl) {
+        const left = activeEl.offsetLeft;
+        const width = activeEl.offsetWidth;
+
+        setUnderlineStyle({
+          left,
+          width,
+          opacity: 1,
+          transition: (isInitial.current || immediate)
+            ? 'none'
+            : 'left 0.3s cubic-bezier(0.25, 1, 0.5, 1), width 0.3s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease'
+        });
+      }
+    };
+
+    // Give browser time to layout and paint, particularly during dynamic loads/hydration
+    const timer = setTimeout(() => {
+      updatePosition();
+      if (isInitial.current) {
+        isInitial.current = false;
+      }
+    }, 50);
+
+    const handleResize = () => updatePosition(true);
+    window.addEventListener('resize', handleResize);
+    return () => {
+      clearTimeout(timer);
+      window.removeEventListener('resize', handleResize);
+    };
+  }, [activeItemId]);
+
   return (
     <header className="sticky top-0 z-40 w-full bg-[#511B29] backdrop-blur-md border-b border-[#5d1726]/30">
       <div className="max-w-7xl mx-auto px-6 h-20 lg:h-24 flex items-center justify-between">
@@ -174,12 +223,13 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-5 xl:gap-7">
+        <nav className="hidden lg:flex items-center gap-5 xl:gap-7 relative">
           {navItems.map((item) => {
             const active = isActive(item.id);
             return (
               <Link
                 key={item.id}
+                ref={(el) => { linkRefs.current[item.id] = el; }}
                 href={getPath(item.id)}
                 className={`relative py-2 nav-text-desktop font-bold uppercase tracking-widest transition-colors cursor-pointer ${
                   active ? 'text-[#de7c8a]' : 'text-white/75 hover:text-white'
@@ -187,13 +237,6 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
                 id={`nav-item-${item.id}`}
               >
                 {item.label}
-                {active && (
-                  <motion.div
-                    layoutId="activeNavIndicator"
-                    className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#de7c8a]"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
               </Link>
             );
           })}
@@ -216,6 +259,12 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
               EN
             </Link>
           )}
+
+          {/* Underline Indicator */}
+          <div
+            className="absolute bottom-0 h-[2px] bg-[#de7c8a]"
+            style={underlineStyle}
+          />
         </nav>
 
         {/* Header CTA Button & Mobile Trigger */}

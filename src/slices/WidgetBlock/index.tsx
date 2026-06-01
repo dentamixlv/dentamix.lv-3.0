@@ -1,14 +1,13 @@
 'use client';
 
 import React from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Image from 'next/image';
 import { motion } from 'motion/react';
 import * as LucideIcons from 'lucide-react';
 
 import { getDoctors } from '../../data';
 import { Doctor, GroupedWidget } from '../../types';
-import ReusableCTABlock from '../../components/CTABlock';
 
 export interface WidgetBlockSliceDefaultItem {
   widget_title?: string | null;
@@ -20,13 +19,6 @@ export interface WidgetBlockSlice {
   slice_type: "widget_block";
   primary: {
     image?: any;
-    workplace_title?: string | null;
-    cta_badge_text?: string | null;
-    cta_title?: string | null;
-    cta_description?: string | null;
-    cta_button_text?: string | null;
-    cta_link?: any;
-    cta_link_blank?: boolean | null;
   };
   items: WidgetBlockSliceDefaultItem[];
 }
@@ -38,13 +30,11 @@ type WidgetBlockProps = {
 
 export default function WidgetBlock({ slice, context }: WidgetBlockProps) {
   const params = useParams();
-  const router = useRouter();
   const langList = params?.lang;
   const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
   const langCode = isEn ? 'en-us' : 'lv';
 
   let doctorId = typeof params?.id === 'string' ? params.id : '';
-  const isAboutPage = !params?.id;
   if (!doctorId) {
     doctorId = 'dr-janis-berzins';
   }
@@ -110,27 +100,6 @@ export default function WidgetBlock({ slice, context }: WidgetBlockProps) {
     }
   }
 
-  // CTA values
-  const t = {
-    bookTitle: isEn ? 'Book an Appointment' : 'Pieteikties uz vizīti',
-    bookDesc: isEn 
-      ? 'Book a consultation online.' 
-      : 'Piesakieties vizītei vai konsultācijai tiešsaistē.',
-    bookBtn: isEn ? 'Book' : 'Pieteikties',
-    bookBadge: isEn ? 'Booking open' : 'Pieraksts atvērts'
-  };
-
-  const ctaBadge = slice.primary.cta_badge_text || t.bookBadge;
-  const ctaTitle = slice.primary.cta_title || t.bookTitle;
-  const ctaDesc = slice.primary.cta_description || t.bookDesc;
-  const ctaButtonText = slice.primary.cta_button_text || t.bookBtn;
-  const ctaLink = slice.primary.cta_link?.url || undefined;
-  const ctaLinkBlank = slice.primary.cta_link_blank ?? false;
-
-  const handleBook = () => {
-    router.push(langCode === 'en-us' ? '/en/contacts' : '/kontakti');
-  };
-
   const fadeUpVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -161,8 +130,14 @@ export default function WidgetBlock({ slice, context }: WidgetBlockProps) {
       {groupedWidgets.length > 0 && (
         <div className="bg-white border border-[#efedec] rounded-3xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 space-y-6">
           {groupedWidgets.map((widget, idx) => {
-            const name = widget.icon.charAt(0).toUpperCase() + widget.icon.slice(1);
-            const IconComponent = (LucideIcons as any)[name] || (LucideIcons as any)[widget.icon] || LucideIcons.Award;
+            const toPascalCase = (str: string) => {
+              return str
+                .split('-')
+                .map(part => part.charAt(0).toUpperCase() + part.slice(1))
+                .join('');
+            };
+            const pascalName = toPascalCase(widget.icon);
+            const IconComponent = (LucideIcons as any)[pascalName] || LucideIcons.Award;
             return (
               <div key={idx} className="space-y-3">
                 <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
@@ -180,22 +155,6 @@ export default function WidgetBlock({ slice, context }: WidgetBlockProps) {
               </div>
             );
           })}
-        </div>
-      )}
-
-      {/* Booking CTA (only if not about page, or if cta fields are explicitly set) */}
-      {(!isAboutPage || slice.primary.cta_title) && (
-        <div className="mt-8">
-          <ReusableCTABlock
-            badgeText={ctaBadge}
-            title={ctaTitle}
-            description={ctaDesc}
-            buttonText={ctaButtonText}
-            onClick={!ctaLink ? handleBook : undefined}
-            href={ctaLink}
-            targetBlank={ctaLinkBlank}
-            id="doctor-profile-cta-btn"
-          />
         </div>
       )}
     </motion.div>

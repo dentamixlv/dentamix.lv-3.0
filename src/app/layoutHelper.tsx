@@ -41,20 +41,34 @@ export function renderPageLayout(
   // Slices above the layout grid (e.g. PageTitle, Hero)
   const topSlices = slices.slice(0, firstLayoutIndex);
 
+  const bottomSliceTypes = [
+    'cta_block',
+    'testimonial_block',
+    'testimonial_grid',
+    'partner_block',
+    'contact_block',
+    'doctor_grid',
+    'service_grid',
+    'blog_grid'
+  ];
+
   // Slices inside the main left content column
   const leftColumnSlices = slices.filter((s, idx) => 
     idx >= firstLayoutIndex && 
-    idx !== widgetBlockIndex && 
-    idx < widgetBlockIndex
+    s.slice_type !== 'widget_block' &&
+    !(idx > widgetBlockIndex && bottomSliceTypes.includes(s.slice_type))
   );
 
   // The sidebar widget slice
   const rightColumnSlice = slices[widgetBlockIndex];
 
   // Slices below the layout grid (e.g. bottom CTABlocks, footer content)
-  const bottomSlices = slices.slice(widgetBlockIndex + 1);
+  const bottomSlices = slices.filter((s, idx) => 
+    idx > widgetBlockIndex && 
+    bottomSliceTypes.includes(s.slice_type)
+  );
 
-  const pbClass = bottomSlices.length > 0 ? "pb-8 md:pb-12" : "pb-16 md:pb-24";
+  const pbClass = (bottomSlices.length > 0 || options?.showBackButton) ? "pb-8 md:pb-12" : "pb-16 md:pb-24";
 
   return (
     <>
@@ -89,22 +103,22 @@ export function renderPageLayout(
           </div>
         </div>
 
-        {/* Back Button underneath column grid */}
-        {options?.showBackButton && options.backButtonHref && (
-          <div className="mt-10 text-center">
-            <Link 
-              href={options.backButtonHref}
-              className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
-            >
-              <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
-              {options.backButtonText || 'Back'}
-            </Link>
-          </div>
-        )}
       </div>
 
       {bottomSlices.length > 0 && (
         <SliceZone slices={bottomSlices} components={pageComponents} context={{ isBottom: true }} />
+      )}
+
+      {options?.showBackButton && options.backButtonHref && (
+        <div className="max-w-7xl mx-auto px-6 pt-8 pb-16 md:pb-24 text-center">
+          <Link 
+            href={options.backButtonHref}
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
+            {options.backButtonText || 'Back'}
+          </Link>
+        </div>
       )}
     </>
   );

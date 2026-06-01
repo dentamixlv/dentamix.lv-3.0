@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { CalendarDays, ShieldCheck, Sparkles, Activity, Scissors, Droplet, Heart, HelpCircle } from 'lucide-react';
+
 
 export interface PriceItem {
   category: string;
@@ -265,38 +265,6 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
         </div>
       )}
 
-      {/* 4. Bottom Quality Standard Guarantee Box */}
-      <motion.div 
-        initial="hidden"
-        animate="visible"
-        variants={fadeUpVariants}
-        className="mt-16 bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/20 border border-[#efedec] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8"
-      >
-        <div className="space-y-3 max-w-2xl">
-          <div className="flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-full bg-emerald-500" />
-            <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a]">
-              {isEn ? 'Guaranteed Quality' : 'Garantēta Kvalitāte'}
-            </span>
-          </div>
-          <h4 className="text-xl font-serif font-bold text-[#511B29] tracking-tight">
-            {isEn ? 'Would you like to receive a full, detailed estimate?' : 'Vai vēlaties saņemt pilnu, detalizētu tāmi?'}
-          </h4>
-          <p className="text-sm md:text-base text-[#6a5b5e] leading-relaxed">
-            {isEn
-              ? 'An individual treatment plan detailing all steps and costs is prepared for each patient after the initial examination and 3D X-ray. There are no hidden fees, and the estimate is valid for 3 months.'
-              : 'Ikvienam pacientam pēc pirmreizējās apskates un 3D rentgenuzņēmuma izveides tiek sagatavots individuāls ārstēšanas plāns, kurā detalizēti atrunāti visi soļi un izmaksas. Nav slēptu izmaksu, un tāme ir derīga 3 mēnešus no izveides brīža.'}
-          </p>
-        </div>
-        <button
-          onClick={onBook}
-          className="btn inline-flex items-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-sm font-bold cursor-pointer shadow-lg shadow-[#511B29]/15 shrink-0"
-          id="prices-cta-booking-btn"
-        >
-          <CalendarDays className="w-4 h-4" />
-          {isEn ? 'Book a Consultation' : 'Pierakstīties konsultācijai'}
-        </button>
-      </motion.div>
     </div>
   );
 }
