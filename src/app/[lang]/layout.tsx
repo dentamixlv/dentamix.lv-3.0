@@ -1,23 +1,9 @@
 import React from 'react';
-import { Manrope, Playfair_Display } from 'next/font/google';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { createClient } from '../../prismicio';
 import { getPrismicLocale } from './page';
-import '../globals.css';
-
-const manrope = Manrope({
-  subsets: ['latin'],
-  variable: '--font-manrope',
-  weight: ['400', '500', '600', '700', '800'],
-});
-
-const playfairDisplay = Playfair_Display({
-  subsets: ['latin'],
-  variable: '--font-playfair',
-  weight: ['400', '500', '600', '700', '800', '900'],
-});
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -98,33 +84,31 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   }
 
   return (
-    <html lang={htmlLang} className={`${manrope.variable} ${playfairDisplay.variable}`}>
-      <body className="antialiased text-[#1a1718] bg-[#fbf9f8] flex flex-col min-h-screen">
-        <Header 
-          logoText={menuData?.logoText}
-          logoImage={menuData?.logoImage}
-          phoneNumber={menuData?.phoneNumber}
-          bookingButtonText={menuData?.bookingButtonText}
-          menuLinks={menuData?.menuLinks}
-        />
-        <main className="flex-grow">
-          {children}
-        </main>
-        <Footer 
-          logoText={footerData?.logoText}
-          logoImage={footerData?.logoImage}
-          description={footerData?.description}
-          clinicsTitle={footerData?.clinicsTitle}
-          workingHoursTitle={footerData?.workingHoursTitle}
-          clinics={footerData?.clinics}
-          copyrightText={footerData?.copyrightText}
-          privacyPolicyLabel={footerData?.privacyPolicyLabel}
-          privacyPolicyLink={footerData?.privacyPolicyLink}
-          cookiePolicyLabel={footerData?.cookiePolicyLabel}
-          cookiePolicyLink={footerData?.cookiePolicyLink}
-        />
-        <SpeedInsights />
-      </body>
-    </html>
+    <>
+      <Header 
+        logoText={menuData?.logoText}
+        logoImage={menuData?.logoImage}
+        phoneNumber={menuData?.phoneNumber}
+        bookingButtonText={menuData?.bookingButtonText}
+        menuLinks={menuData?.menuLinks}
+      />
+      <main className="flex-grow">
+        {children}
+      </main>
+      <Footer 
+        logoText={footerData?.logoText}
+        logoImage={footerData?.logoImage}
+        description={footerData?.description}
+        clinicsTitle={footerData?.clinicsTitle}
+        workingHoursTitle={footerData?.workingHoursTitle}
+        clinics={footerData?.clinics}
+        copyrightText={footerData?.copyrightText}
+        privacyPolicyLabel={footerData?.privacyPolicyLabel}
+        privacyPolicyLink={footerData?.privacyPolicyLink}
+        cookiePolicyLabel={footerData?.cookiePolicyLabel}
+        cookiePolicyLink={footerData?.cookiePolicyLink}
+      />
+      <SpeedInsights />
+    </>
   );
 }

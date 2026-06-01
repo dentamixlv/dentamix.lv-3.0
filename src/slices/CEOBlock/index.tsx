@@ -62,7 +62,7 @@ export default function CEOBlock({ slice }: CEOBlockProps) {
   const params = useParams();
 
   const langList = params?.lang;
-  const isEn = Array.isArray(langList) && langList.length > 0 && langList[0] === 'en';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
   const langPrefix = isEn ? '/en' : '';
 
   const leaderTag = primary.leader_tag || (isEn ? 'Clinic Director and Leading Specialist' : 'Klīnikas vadītājs un vadošais speciālists');
@@ -121,7 +121,7 @@ export default function CEOBlock({ slice }: CEOBlockProps) {
           
           <motion.div 
             variants={slideInLeftVariants}
-            className="lg:col-span-5 w-full aspect-square lg:aspect-[2/3] max-h-[450px] lg:max-h-[580px] rounded-2xl overflow-hidden border border-[#efedec] shadow-md bg-[#fbf9f8] relative"
+            className="lg:col-span-5 w-full aspect-[3/4] lg:aspect-[2/3] max-h-[480px] lg:max-h-[580px] rounded-2xl overflow-hidden border border-[#efedec] shadow-md bg-[#fbf9f8] relative"
           >
             <Image
               src={imageUrl}

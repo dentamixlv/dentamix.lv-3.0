@@ -28,7 +28,8 @@ export default function TestimonialGrid({ slice, context }: TestimonialGridProps
   const router = useRouter();
   const params = useParams();
   const langList = params?.lang;
-  const langCode = Array.isArray(langList) && langList.length > 0 ? (langList[0] === 'en' ? 'en-us' : 'lv') : 'lv';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
+  const langCode = isEn ? 'en-us' : 'lv';
 
   const [testimonials, setTestimonials] = useState<Testimonial[] | undefined>(undefined);
 

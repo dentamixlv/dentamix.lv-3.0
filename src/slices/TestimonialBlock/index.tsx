@@ -40,7 +40,7 @@ export default function TestimonialBlock({ slice, context }: TestimonialBlockPro
   const params = useParams();
   const pathname = usePathname();
   const langList = params?.lang;
-  const isEn = Array.isArray(langList) && langList.length > 0 && langList[0] === 'en';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
   const langPrefix = isEn ? '/en' : '';
 
   const badgeText = primary.badge_text || (isEn ? 'TESTIMONIALS' : 'PACIENTU ATSAUKSMES');

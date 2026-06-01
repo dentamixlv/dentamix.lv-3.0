@@ -41,9 +41,9 @@ type BlogGridProps = SliceComponentProps<Content.BlogGridSlice>;
 export default function BlogGrid({ slice }: BlogGridProps) {
   const params = useParams();
   const langList = params?.lang;
-  const langCode = Array.isArray(langList) && langList.length > 0 ? (langList[0] === 'en' ? 'en-us' : 'lv') : 'lv';
-  const langPrefix = langCode === 'en-us' ? '/en' : '';
-  const isEn = langCode === 'en-us';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
+  const langCode = isEn ? 'en-us' : 'lv';
+  const langPrefix = isEn ? '/en' : '';
 
   const [posts, setPosts] = useState<BlogPost[]>([]);
 
@@ -198,13 +198,11 @@ export default function BlogGrid({ slice }: BlogGridProps) {
                     <span className="text-[0.625rem] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
                       {post.category}
                     </span>
-                    <div className="min-h-[3.5rem] flex flex-col justify-start">
                       <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-2">
                         <Link href={postUrl}>
                           {post.title}
                         </Link>
                       </h3>
-                    </div>
                     <p className="text-base text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
                       {post.description}
                     </p>

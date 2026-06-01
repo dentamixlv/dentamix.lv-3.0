@@ -67,8 +67,8 @@ export default function Hero({ slice }: HeroProps) {
   const params = useParams();
 
   const langList = params?.lang;
-  const isEn = Array.isArray(langList) && langList.length > 0 && langList[0] === 'en';
-  const langPrefix = isEn ? `/${langList[0]}` : '';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
+  const langPrefix = isEn ? '/en' : '';
 
   const premiumTag = primary.premium_tag || (isEn ? 'Premium Care' : 'Premium Care');
   const ctaText = primary.cta_text || (isEn ? 'Book a Visit' : 'Pierakstīties vizītei');

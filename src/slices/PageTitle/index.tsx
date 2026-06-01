@@ -21,7 +21,7 @@ export default function PageTitle({ slice }: PageTitleProps) {
   const { primary } = slice;
   const params = useParams();
   const langList = params?.lang;
-  const isEn = Array.isArray(langList) && langList.length > 0 && langList[0] === 'en';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
 
   const badgeText = primary.badge_text || (isEn ? 'DENTAMIC ADVANTAGES' : 'DENTAMIC PRIEKŠROCĪBAS');
   const title = primary.title || (isEn ? 'Page Title' : 'Lapas virsraksts');

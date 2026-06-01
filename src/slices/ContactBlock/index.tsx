@@ -61,8 +61,8 @@ const fadeUpVariants = {
 export default function ContactBlock({ slice }: ContactBlockProps) {
   const params = useParams();
   const langList = params?.lang;
-  const langCode = Array.isArray(langList) && langList.length > 0 ? (langList[0] === 'en' ? 'en-us' : 'lv') : 'lv';
-  const isEn = langCode === 'en-us';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
+  const langCode = isEn ? 'en-us' : 'lv';
 
   const sectionClass = 'pt-2 pb-0 md:pt-4 md:pb-0';
 

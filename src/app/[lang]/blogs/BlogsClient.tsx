@@ -105,13 +105,11 @@ export default function BlogsClient({ langCode, customBlogPosts, hideHeader = fa
                 <span className="text-[0.625rem] uppercase font-bold tracking-widest text-[#de7c8a] block mb-1">
                   {post.category}
                 </span>
-                <div className="min-h-[3.5rem] flex flex-col justify-start">
-                  <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-2">
-                    <Link href={`${langPrefix}/blogs/${post.id}`}>
-                      {post.title}
-                    </Link>
-                  </h3>
-                </div>
+                <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-2">
+                  <Link href={`${langPrefix}/blogs/${post.id}`}>
+                    {post.title}
+                  </Link>
+                </h3>
                 <p className="text-base text-[#6a5b5e] leading-relaxed mt-3 font-normal line-clamp-3">
                   {post.description}
                 </p>

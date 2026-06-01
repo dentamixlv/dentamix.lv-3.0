@@ -97,7 +97,7 @@ export default function PartnerBlock({ slice }: PartnerBlockProps) {
   const params = useParams();
   
   const langList = params?.lang;
-  const isEn = Array.isArray(langList) && langList.length > 0 && langList[0] === 'en';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
 
   const badgeText = primary.badge_text || (isEn ? 'Patient Safety and Technology' : 'Pacientu drošība un tehnoloģijas');
   const title = primary.title || (isEn ? 'Our Partners' : 'Mūsu partneri');

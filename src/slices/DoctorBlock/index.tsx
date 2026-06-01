@@ -15,7 +15,8 @@ export default function DoctorBlock({ slice }: DoctorBlockProps) {
   const params = useParams();
   const router = useRouter();
   const langList = params?.lang;
-  const langCode = Array.isArray(langList) && langList.length > 0 ? (langList[0] === 'en' ? 'en-us' : 'lv') : 'lv';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
+  const langCode = isEn ? 'en-us' : 'lv';
 
   const doctorId = typeof params?.id === 'string' ? params.id : '';
   const fallbackDoc = getDoctors(langCode).find(d => d.id === doctorId);

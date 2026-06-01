@@ -15,7 +15,8 @@ type ServicePageProps = SliceComponentProps<Content.ServicePageSlice>;
 export default function ServicePage({ slice }: ServicePageProps) {
   const params = useParams();
   const langList = params?.lang;
-  const langCode = Array.isArray(langList) && langList.length > 0 ? (langList[0] === 'en' ? 'en-us' : 'lv') : 'lv';
+  const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
+  const langCode = isEn ? 'en-us' : 'lv';
 
   const [services, setServices] = useState<Service[] | null>(null);
 
