@@ -111,9 +111,13 @@ export default function TestimonialBlock({ slice, context }: TestimonialBlockPro
     </Link>
   );
 
+  const bgClass = isHomepage
+    ? 'bg-white'
+    : 'bg-gradient-to-b from-white to-[#fbf9f8]';
+
   const sectionClass = hideHeaderValue
-    ? 'bg-gradient-to-b from-white to-[#fbf9f8] pt-2 pb-16 md:pt-4 md:pb-24'
-    : 'bg-gradient-to-b from-white to-[#fbf9f8] py-16 md:py-24 border-t border-[#efedec]/60';
+    ? `${bgClass} pt-2 pb-16 md:pt-4 md:pb-24`
+    : `${bgClass} py-16 md:py-24 border-t border-[#efedec]/60`;
 
   if (isEmbedded) {
     return (

@@ -106,7 +106,7 @@ export default function PartnerBlock({ slice }: PartnerBlockProps) {
     : 'Sadarbojamies ar pasaulē vadošajiem Šveices, Vācijas un Somijas medicīnas zīmoliem, lai garantētu izcilību katrā smaidā.');
 
   return (
-    <section className="bg-white py-16 md:py-24 border-t border-[#efedec]/65">
+    <section className="bg-[#FCFAF9] py-16 md:py-24 border-t border-[#efedec]/65">
       <div className="max-w-7xl mx-auto px-6">
         <motion.div
           initial="hidden"
