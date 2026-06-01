@@ -11,13 +11,6 @@
       "version": "default",
       "description": "Renders dynamic FAQ accordion lists.",
       "primary": {
-        "badge_text": {
-          "type": "Text",
-          "config": {
-            "label": "Badge Text",
-            "placeholder": "Biežāk uzdotie jautājumi"
-          }
-        },
         "title": {
           "type": "StructuredText",
           "config": {

@@ -12,7 +12,6 @@ export interface FAQBlockSliceItem {
 export interface FAQBlockSlice {
   slice_type: "faq_block";
   primary: {
-    badge_text?: string | null;
     title?: any;
   };
   items: FAQBlockSliceItem[];
@@ -44,14 +43,8 @@ export default function FAQBlock({ slice }: FAQBlockProps) {
   const { primary, items } = slice;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
-  const badgeText = primary.badge_text || "FAQ";
-
   return (
     <div className="w-full mt-12 pt-8 border-t border-[#efedec]/80" id="faq-slice-view">
-      <span className="text-[10px] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-2.5 block">
-        {badgeText}
-      </span>
-      
       {primary.title && (
         <PrismicRichText field={primary.title} components={titleSerializer} />
       )}
