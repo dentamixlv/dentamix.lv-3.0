@@ -42,8 +42,12 @@ export default async function Page({ params }: PageProps) {
     try {
       document = await client.getByUID('page', uid, { lang: locale });
     } catch (e) {
-      const fallbackUid = uid === 'zobarsti' ? 'doctors' : 'zobarsti';
-      document = await client.getByUID('page', fallbackUid, { lang: locale });
+      try {
+        document = await client.getByUID('page', 'zobardti', { lang: locale });
+      } catch (e2) {
+        const fallbackUid = uid === 'zobarsti' ? 'doctors' : 'zobarsti';
+        document = await client.getByUID('page', fallbackUid, { lang: locale });
+      }
     }
     slices = document?.data?.slices || null;
   } catch (error) {

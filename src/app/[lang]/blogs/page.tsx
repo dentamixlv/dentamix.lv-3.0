@@ -46,29 +46,6 @@ export default async function Page({ params }: PageProps) {
     return <SliceZone slices={slices} components={components} />;
   }
 
-  // 2. Fallback to querying blog post cards dynamically
-  let blogPosts = null;
-  try {
-    const documents = await client.getAllByType('blog_post', { lang: locale });
-    if (documents && documents.length > 0) {
-      blogPosts = documents.map(d => ({
-        id: d.uid!,
-        title: d.data.title || '',
-        category: d.data.category || '',
-        description: d.data.description || '',
-        detailedContent: Array.isArray(d.data.detailedContent) 
-          ? d.data.detailedContent.map((p: any) => p.text || '')
-          : [],
-        image: d.data.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800',
-        date: d.data.date || '',
-        author: d.data.author || '',
-        readTime: d.data.readTime || '4 MIN'
-      }));
-    }
-  } catch (error) {
-    console.warn("No blog posts in Prismic, using fallback data.");
-  }
-
   return (
     <>
       <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
@@ -81,7 +58,7 @@ export default async function Page({ params }: PageProps) {
           </h1>
         </div>
       </div>
-      <BlogsClient langCode={locale} customBlogPosts={blogPosts} hideHeader={true} />
+      <BlogsClient langCode={locale} customBlogPosts={null} hideHeader={true} />
     </>
   );
 }

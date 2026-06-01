@@ -53,26 +53,6 @@ export default async function Page({ params }: PageProps) {
     return <SliceZone slices={slices} components={components} />;
   }
 
-  // 2. Fallback to querying service cards dynamically
-  let services = null;
-  try {
-    const documents = await client.getAllByType('service', { lang: locale });
-    if (documents && documents.length > 0) {
-      services = documents.map(d => ({
-        id: d.uid!,
-        title: d.data.title || '',
-        description: d.data.description || '',
-        detailedInfo: Array.isArray(d.data.detailedInfo) ? (d.data.detailedInfo[0] as any)?.text || '' : (d.data.detailedInfo as any) || '',
-        priceRange: d.data.priceRange || '',
-        duration: d.data.duration || '',
-        iconName: d.data.iconName || 'Sparkles',
-        image: d.data.image?.url || 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=800',
-      }));
-    }
-  } catch (error) {
-    console.warn("No services in Prismic, using fallback data.");
-  }
-
   return (
     <>
       <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
@@ -85,7 +65,7 @@ export default async function Page({ params }: PageProps) {
           </h1>
         </div>
       </div>
-      <ServicesClient langCode={locale} customServices={services} hideHeader={true} />
+      <ServicesClient langCode={locale} customServices={null} hideHeader={true} />
     </>
   );
 }

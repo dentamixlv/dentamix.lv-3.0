@@ -33,34 +33,17 @@ export async function generateMetadata({ params }: PageProps) {
     // Ignore
   }
 
-  try {
-    const doc = await client.getByUID('service', id, { lang: locale });
-    if (doc) {
-      service = {
-        title: doc.data.title || '',
-        description: doc.data.description || '',
-      };
-    }
-  } catch (e) {
-    const fallbackService = getServices(locale).find((s) => s.id === id);
-    if (fallbackService) {
-      service = {
-        title: fallbackService.title,
-        description: fallbackService.description,
-      };
-    }
-  }
-
-  if (!service) {
+  const fallbackService = getServices(locale).find((s) => s.id === id);
+  if (fallbackService) {
+    const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
     return {
-      title: 'Pakalpojums nav atrasts | Dentamic',
+      title: `${fallbackService.title} | ${suffix}`,
+      description: fallbackService.description,
     };
   }
 
-  const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
   return {
-    title: `${service.title} | ${suffix}`,
-    description: service.description,
+    title: 'Pakalpojums nav atrasts | Dentamic',
   };
 }
 
@@ -86,28 +69,7 @@ export default async function Page({ params }: PageProps) {
     });
   }
 
-  let service = null;
-  try {
-    const doc = await client.getByUID('service', id, { lang: locale });
-    if (doc) {
-      service = {
-        id: doc.uid!,
-        title: doc.data.title || '',
-        description: doc.data.description || '',
-        detailedInfo: Array.isArray(doc.data.detailedInfo) ? (doc.data.detailedInfo[0] as any)?.text || '' : (doc.data.detailedInfo as any) || '',
-        priceRange: doc.data.priceRange || '',
-        duration: doc.data.duration || '',
-        iconName: doc.data.iconName || 'Sparkles',
-        image: doc.data.image?.url || 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=800',
-      };
-    }
-  } catch (error) {
-    console.warn(`Prismic service UID "${id}" not found, using fallback data.`);
-  }
-
-  if (!service) {
-    service = getServices(locale).find((s) => s.id === id) || null;
-  }
+  const service = getServices(locale).find((s) => s.id === id) || null;
 
   if (!service) {
     notFound();

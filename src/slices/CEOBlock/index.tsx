@@ -65,7 +65,12 @@ export default function CEOBlock({ slice }: CEOBlockProps) {
   const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
   const langPrefix = isEn ? '/en' : '';
 
-  const leaderTag = primary.leader_tag || (isEn ? 'Clinic Director and Leading Specialist' : 'Klīnikas vadītājs un vadošais speciālists');
+  const rawLeaderTag = primary.leader_tag;
+  const leaderTagText = Array.isArray(rawLeaderTag)
+    ? rawLeaderTag.map((block: any) => block.text).join(' ')
+    : (typeof rawLeaderTag === 'string' ? rawLeaderTag : '');
+
+  const leaderTag = leaderTagText || (isEn ? 'Clinic Director and Leading Specialist' : 'Klīnikas vadītājs un vadošais speciālists');
   const name = primary.name || 'Dr. Jānis Bērziņš';
   const linkText = primary.link_text || (isEn ? 'Learn More' : 'Uzzināt vairāk');
   

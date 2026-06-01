@@ -53,29 +53,6 @@ export default async function Page({ params }: PageProps) {
     return <SliceZone slices={slices} components={components} />;
   }
 
-  // 2. Fallback to querying testimonial cards dynamically
-  let testimonials = null;
-  try {
-    const documents = await client.getAllByType('testimonial', { lang: locale });
-    if (documents && documents.length > 0) {
-      testimonials = documents.map(d => ({
-        id: d.uid!,
-        author: d.data.author || '',
-        initials: d.data.initials || 'PT',
-        bgColor: d.data.bgColor || 'bg-[#511B29] text-white',
-        treatment: d.data.treatment || '',
-        doctor: d.data.doctor || '',
-        rating: Number(d.data.rating) || 5,
-        date: d.data.date || '',
-        advTag: d.data.advTag || '',
-        quote: d.data.quote || '',
-        story: d.data.story || ''
-      }));
-    }
-  } catch (error) {
-    console.warn("No testimonials in Prismic, using fallback data.");
-  }
-
   return (
     <>
       <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
@@ -88,7 +65,7 @@ export default async function Page({ params }: PageProps) {
           </h1>
         </div>
       </div>
-      <TestimonialsClient langCode={locale} customTestimonials={testimonials} hideHeader={true} />
+      <TestimonialsClient langCode={locale} customTestimonials={null} hideHeader={true} />
     </>
   );
 }
