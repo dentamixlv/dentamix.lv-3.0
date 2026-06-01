@@ -68,7 +68,9 @@ export function renderPageLayout(
     bottomSliceTypes.includes(s.slice_type)
   );
 
-  const pbClass = (bottomSlices.length > 0 || options?.showBackButton) ? "pb-8 md:pb-12" : "pb-16 md:pb-24";
+  const pbClass = (bottomSlices.length === 0 && options?.showBackButton)
+    ? "pb-8 md:pb-12"
+    : "pb-16 md:pb-24";
 
   return (
     <>

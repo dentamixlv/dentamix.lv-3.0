@@ -131,7 +131,7 @@ export default function TestimonialsPage({ onBook, langCode = 'lv', customTestim
   } as const;
 
   return (
-    <div className={isEmbedded ? "pt-2 pb-0" : `${hideHeader ? 'pt-2 pb-0 md:pt-4 md:pb-0' : 'pt-8 pb-16 md:pt-12 md:pb-24'} max-w-7xl mx-auto px-6`} id="testimonials-page-view">
+    <div className={isEmbedded ? "pt-2 pb-0" : `${hideHeader ? 'pt-2 pb-16 md:pt-4 md:pb-24' : 'pt-8 pb-16 md:pt-12 md:pb-24'} max-w-7xl mx-auto px-6`} id="testimonials-page-view">
       {/* 1. Header with same badge and style */}
       {!hideHeader && (
         <motion.div 

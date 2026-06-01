@@ -50,6 +50,16 @@ export default async function Page({ params }: PageProps) {
   }
 
   if (slices && slices.length > 0) {
+    const lastSlice = slices[slices.length - 1];
+    if (lastSlice.slice_type === 'cta_block') {
+      const mainSlices = slices.slice(0, -1);
+      return (
+        <>
+          <SliceZone slices={mainSlices} components={components} />
+          <SliceZone slices={[lastSlice]} components={components} context={{ isBottom: true }} />
+        </>
+      );
+    }
     return <SliceZone slices={slices} components={components} />;
   }
 

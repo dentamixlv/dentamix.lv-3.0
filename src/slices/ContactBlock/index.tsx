@@ -64,7 +64,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
   const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
   const langCode = isEn ? 'en-us' : 'lv';
 
-  const sectionClass = 'pt-2 pb-0 md:pt-4 md:pb-0';
+  const sectionClass = 'pt-2 pb-16 md:pt-4 md:pb-24';
 
   return (
     <div className={`${sectionClass} max-w-7xl mx-auto px-6`}>

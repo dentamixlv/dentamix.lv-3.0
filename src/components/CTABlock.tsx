@@ -56,7 +56,7 @@ export default function CTABlock({
       animate="visible"
       variants={fadeUpVariants}
       style={style}
-      className={`${hasCustomBg ? '' : 'bg-gradient-to-br from-[#fbf9f8] to-[#f2dde1]/25'} border border-[#efedec] rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm hover:shadow-xl transition-shadow duration-300 ${className}`}
+      className={`${hasCustomBg ? 'border border-[#efedec]' : 'bg-[#fbf9f8] border border-[#efedec]'} rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm hover:shadow-xl transition-shadow duration-300 ${className}`}
     >
       <div className="space-y-3 max-w-2xl text-center md:text-left w-full">
         {/* Badge text */}

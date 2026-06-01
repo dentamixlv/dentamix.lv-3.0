@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { ArrowLeft, Clock, Check, ShieldCheck, Sparkles, Droplet, Scissors, Activity, CalendarDays, ChevronDown } from 'lucide-react';
 import { motion } from 'motion/react';
 import { Service } from '../types';
+import CTABlock from './CTABlock';
 interface ServiceDetailPageProps {
   service: Service;
   onBack: () => void;
@@ -397,29 +398,16 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
       </div>
 
       {/* Main Full-Width CTA Section centered below detail block */}
-      <motion.div 
-        variants={fadeUpVariants}
-        className="mt-12 pt-8 border-t border-[#efedec]/65 flex flex-col sm:flex-row items-center justify-between gap-6"
-      >
-        <div className="text-center sm:text-left">
-          <h4 className="text-sm md:text-base font-bold text-[#511B29]">
-            {t.ctaTitle}
-          </h4>
-          <p className="text-sm text-[#6a5b5e] mt-1">
-            {t.ctaDesc}
-          </p>
-        </div>
-        <div className="flex gap-4 w-full sm:w-auto">
-          <button
-            onClick={onBookService}
-            className="btn flex-1 sm:flex-none inline-flex items-center justify-center gap-2 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] transition-all text-white px-8 py-4 rounded-full text-sm font-bold shadow-lg shadow-[#511B29]/20 cursor-pointer"
-            id={`book-specific-service-${service.id}`}
-          >
-            <CalendarDays className="w-4 h-4" />
-            {t.bookBtn}
-          </button>
-        </div>
-      </motion.div>
+      <div className="mt-12">
+        <CTABlock
+          badgeText={isEn ? 'APPOINTMENT' : 'PIERAKSTS'}
+          title={t.ctaTitle}
+          description={t.ctaDesc}
+          buttonText={t.bookBtn}
+          onClick={onBookService}
+          id={`book-specific-service-${service.id}`}
+        />
+      </div>
 
       {/* 3. FAQ Section */}
       <motion.div variants={fadeUpVariants} className="mt-16 md:mt-24 pt-12 border-t border-[#efedec]">

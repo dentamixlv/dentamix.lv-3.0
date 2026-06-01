@@ -111,19 +111,19 @@ export default function CTABlock({ slice, context }: CTABlockProps) {
     );
   }
 
-  const paddingClass = isBottom
-    ? "pt-2 pb-16 md:pt-4 md:pb-24"
-    : "py-16 md:py-24";
+  const paddingClass = "py-16 md:py-24";
 
   return (
-    <div className={`max-w-7xl mx-auto px-6 ${paddingClass}`}>
-      <ReusableCTABlock
-        badgeText={badgeText}
-        title={<PrismicRichText field={primary.title} components={richTextComponents} />}
-        description={<PrismicRichText field={primary.description} components={richTextComponents} />}
-        customButton={customButton}
-        style={style}
-      />
-    </div>
+    <section className="w-full bg-white border-y border-[#efedec]">
+      <div className={`max-w-7xl mx-auto px-6 ${paddingClass}`}>
+        <ReusableCTABlock
+          badgeText={badgeText}
+          title={<PrismicRichText field={primary.title} components={richTextComponents} />}
+          description={<PrismicRichText field={primary.description} components={richTextComponents} />}
+          customButton={customButton}
+          style={style}
+        />
+      </div>
+    </section>
   );
 }

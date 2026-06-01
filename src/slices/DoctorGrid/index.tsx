@@ -66,8 +66,8 @@ export default function DoctorGrid({ slice }: DoctorGridProps) {
     : true;
 
   const sectionClass = hideHeaderValue
-    ? 'bg-gradient-to-b from-[#fbf9f8] to-white pt-2 pb-16 md:pt-4 md:pb-24'
-    : 'bg-gradient-to-b from-[#fbf9f8] to-white py-16 md:py-24';
+    ? 'bg-[#fbf9f8] pt-2 pb-16 md:pt-4 md:pb-24'
+    : 'bg-[#fbf9f8] py-16 md:py-24';
 
   const defaultViewProfile = isEn ? 'View Profile' : 'Skatīt profilu';
   const defaultBook = isEn ? 'Book' : 'Pieteikties';
