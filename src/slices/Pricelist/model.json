@@ -11,20 +11,11 @@
       "version": "sktwi1xtmkfgx8627",
       "description": "Default variation",
       "primary": {
-        "title": {
-          "type": "StructuredText",
-          "config": {
-            "label": "Title",
-            "placeholder": "Caurspīdīgas cenas un kvalitāte",
-            "allowTargetBlank": true,
-            "single": "heading2,heading3"
-          }
-        },
-        "subtitle": {
+        "info": {
           "type": "Text",
           "config": {
-            "label": "Subtitle",
-            "placeholder": "Skaidrs un saprotams cenrādis..."
+            "label": "Info",
+            "placeholder": "Price block added"
           }
         }
       },

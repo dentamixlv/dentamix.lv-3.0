@@ -45,6 +45,9 @@ export default function Pricelist({ slice }: PricelistProps) {
       onBook={handleBook} 
       langCode={langCode} 
       priceItems={priceItems} 
+      hideHeader={true}
     />
   );
 }
+
+
