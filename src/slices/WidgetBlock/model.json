@@ -1,32 +1,16 @@
 {
-  "id": "doctor_block",
+  "id": "widget_block",
   "type": "SharedSlice",
-  "name": "DoctorBlock",
-  "description": "Featured doctors block with title, subtitle, and repeatable selected doctors.",
+  "name": "WidgetBlock",
+  "description": "Bio page block with customizable sidebar widgets.",
   "variations": [
     {
       "id": "default",
-      "name": "Doctor Detail",
+      "name": "Widget Detail",
       "docURL": "...",
       "version": "default",
-      "description": "Renders a detailed profile page for a single doctor",
+      "description": "Renders a detailed bio profile page with dynamic sidebar widgets",
       "primary": {
-        "fullBio": {
-          "type": "StructuredText",
-          "config": {
-            "label": "Full Biography (Upper text with vertical line)",
-            "placeholder": "Dr. Jānis Kalniņš ir augsti sertificēts...",
-            "single": "paragraph,strong,em,hyperlink"
-          }
-        },
-        "detailedBio": {
-          "type": "StructuredText",
-          "config": {
-            "label": "Detailed Biography (Under doctor text)",
-            "placeholder": "Enter detailed text like in a blog post...",
-            "multi": "paragraph,preformatted,heading2,heading3,strong,em,hyperlink"
-          }
-        },
         "image": {
           "type": "Image",
           "config": {
@@ -88,25 +72,25 @@
         }
       },
       "items": {
-        "item_type": {
-          "type": "Select",
+        "widget_title": {
+          "type": "Text",
           "config": {
-            "label": "Item Type",
-            "options": [
-              "Specialization",
-              "Education",
-              "Qualification",
-              "Workplace",
-              "Language"
-            ],
-            "default_value": "Specialization"
+            "label": "Widget Title",
+            "placeholder": "e.g., Specialitātes, Izglītība"
+          }
+        },
+        "widget_icon": {
+          "type": "Text",
+          "config": {
+            "label": "Widget Icon (Lucide name)",
+            "placeholder": "e.g., Award, GraduationCap, MapPin, Languages"
           }
         },
         "text": {
           "type": "Text",
           "config": {
             "label": "Text Content",
-            "placeholder": "e.g., Dental implants or Latvian"
+            "placeholder": "e.g., Zobu implantācija"
           }
         }
       }

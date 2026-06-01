@@ -4,6 +4,8 @@ import { createClient } from '../../../../prismicio';
 import BlogPostClient from './BlogPostClient';
 import { getPrismicLocale } from '../../page';
 import { getBlogPosts } from '../../../../data';
+import { renderPageLayout } from '../../../layoutHelper';
+import { components } from '../../../../slices';
 
 interface PageProps {
   params: Promise<{
@@ -18,6 +20,19 @@ export async function generateMetadata({ params }: PageProps) {
   const client = createClient();
 
   let post = null;
+  // Try custom page first
+  try {
+    const pageDoc = await client.getByUID('page', id, { lang: locale });
+    if (pageDoc && pageDoc.data && (pageDoc.data as any).meta_title) {
+      return {
+        title: (pageDoc.data as any).meta_title,
+        description: (pageDoc.data as any).meta_description || '',
+      };
+    }
+  } catch (e) {
+    // Ignore
+  }
+
   try {
     const doc = await client.getByUID('blog_post', id, { lang: locale });
     if (doc) {
@@ -54,6 +69,23 @@ export default async function Page({ params }: PageProps) {
   const { id, lang } = await params;
   const locale = getPrismicLocale(lang);
   const client = createClient();
+
+  // 1. Try to find a custom 'page' document for this blog post (dynamic slice-based page)
+  let slices = null;
+  try {
+    const doc = await client.getByUID('page', id, { lang: locale });
+    slices = doc?.data?.slices || null;
+  } catch (e) {
+    // Ignore
+  }
+
+  if (slices && slices.length > 0) {
+    return renderPageLayout(slices, components, {
+      showBackButton: true,
+      backButtonText: locale === 'en-us' ? 'Back to Blog' : 'Atpakaļ uz blogu',
+      backButtonHref: locale === 'en-us' ? '/en/blogs' : '/blogs',
+    });
+  }
 
   let post = null;
   try {

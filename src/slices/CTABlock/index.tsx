@@ -60,7 +60,7 @@ const richTextComponents: JSXMapSerializer = {
  */
 type CTABlockProps = SliceComponentProps<Content.CtaBlockSlice>;
 
-export default function CTABlock({ slice }: CTABlockProps) {
+export default function CTABlock({ slice, context }: CTABlockProps) {
   const { primary } = slice;
   const params = useParams();
 
@@ -94,8 +94,29 @@ export default function CTABlock({ slice }: CTABlockProps) {
     backgroundColor: primary.background_color,
   } : undefined;
 
+  const isEmbedded = (context as any)?.isEmbedded === true;
+  const isBottom = (context as any)?.isBottom === true;
+
+  if (isEmbedded) {
+    return (
+      <div className="mt-8">
+        <ReusableCTABlock
+          badgeText={badgeText}
+          title={<PrismicRichText field={primary.title} components={richTextComponents} />}
+          description={<PrismicRichText field={primary.description} components={richTextComponents} />}
+          customButton={customButton}
+          style={style}
+        />
+      </div>
+    );
+  }
+
+  const paddingClass = isBottom
+    ? "pt-2 pb-16 md:pt-4 md:pb-24"
+    : "py-16 md:py-24";
+
   return (
-    <div className="max-w-7xl mx-auto px-6 py-16 md:py-24">
+    <div className={`max-w-7xl mx-auto px-6 ${paddingClass}`}>
       <ReusableCTABlock
         badgeText={badgeText}
         title={<PrismicRichText field={primary.title} components={richTextComponents} />}

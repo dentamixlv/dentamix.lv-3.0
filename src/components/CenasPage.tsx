@@ -119,8 +119,27 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
     categoriesMap[cat].push(item);
   });
 
+  const slugify = (text: string) => {
+    return text
+      .toLowerCase()
+      .replace(/ā/g, 'a')
+      .replace(/ē/g, 'e')
+      .replace(/ī/g, 'i')
+      .replace(/ū/g, 'u')
+      .replace(/ō/g, 'o')
+      .replace(/č/g, 'c')
+      .replace(/š/g, 's')
+      .replace(/ž/g, 'z')
+      .replace(/ļ/g, 'l')
+      .replace(/ņ/g, 'n')
+      .replace(/ķ/g, 'k')
+      .replace(/ģ/g, 'g')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/(^-|-$)+/g, '');
+  };
+
   const groupedCategories: GroupedCategory[] = orderedCategoryNames.map(catName => {
-    const id = categoryIds[catName] || 'diagnostika';
+    const id = categoryIds[catName] || slugify(catName) || 'category';
     return {
       id,
       title: isEn ? (categoryTranslations[catName]?.en || catName) : (categoryTranslations[catName]?.lv || catName),

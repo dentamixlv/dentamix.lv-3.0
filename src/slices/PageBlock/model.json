@@ -1,0 +1,34 @@
+{
+  "id": "page_block",
+  "type": "SharedSlice",
+  "name": "PageBlock",
+  "description": "Modular main content block with styled excerpt and body text.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "default",
+      "description": "Renders modular main content (styled excerpt + body text)",
+      "primary": {
+        "excerpt": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Excerpt (Styled with vertical line on the left)",
+            "placeholder": "Enter introductory text...",
+            "single": "paragraph,strong,em,hyperlink"
+          }
+        },
+        "content": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Detailed Content",
+            "placeholder": "Enter detailed description paragraphs...",
+            "multi": "paragraph,preformatted,heading2,heading3,strong,em,hyperlink"
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

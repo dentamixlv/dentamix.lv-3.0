@@ -25,7 +25,7 @@
             "service_page": {
               "type": "SharedSlice"
             },
-            "doctor_block": {
+            "widget_block": {
               "type": "SharedSlice"
             },
             "pricelist": {
@@ -50,6 +50,9 @@
               "type": "SharedSlice"
             },
             "page_title": {
+              "type": "SharedSlice"
+            },
+            "page_block": {
               "type": "SharedSlice"
             },
             "blog_grid": {

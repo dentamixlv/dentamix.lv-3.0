@@ -1,4 +1,4 @@
-import { Doctor, Service, Clinic, BlogPost } from './types';
+import { Doctor, Service, Clinic, BlogPost, GroupedWidget } from './types';
 
 import { DOCTORS_LV, DOCTORS_EN } from './data/doctors';
 import { SERVICES_LV, SERVICES_EN } from './data/services';
@@ -43,45 +43,94 @@ export function extractDoctorFromPage(pageDoc: any): Doctor | null {
   if (!pageDoc || !pageDoc.data || !Array.isArray(pageDoc.data.slices)) return null;
   
   const slice = pageDoc.data.slices.find(
-    (s: any) => s.slice_type === 'doctor_block'
+    (s: any) => s.slice_type === 'widget_block'
   );
   if (!slice) return null;
 
-  const name = slice.primary.name || '';
-  const category = slice.primary.category || '';
-  const role = slice.primary.role || '';
-  const description = slice.primary.description || '';
-  
-  const fullBioText = Array.isArray(slice.primary.fullBio) && slice.primary.fullBio.length > 0
-    ? slice.primary.fullBio.map((block: any) => block.text).join('\n')
-    : (typeof slice.primary.fullBio === 'string' ? slice.primary.fullBio : '');
+  const doctorId = pageDoc.uid || '';
+  const langCode = pageDoc.lang || 'lv';
+  const fallbackDoc = getDoctors(langCode).find(d => d.id === doctorId);
 
-  const detailedBio = slice.primary.detailedBio || null;
-  const image = slice.primary.image?.url || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
-  const workplaceTitle = slice.primary.workplace_title || undefined;
+  const formatUidToName = (uid: string) => {
+    return uid
+      .split('-')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  };
+
+  const name = fallbackDoc?.name || formatUidToName(doctorId);
+  const category = fallbackDoc?.category || '';
+  const role = fallbackDoc?.role || '';
+  const description = fallbackDoc?.description || '';
+  
+  const pageBlockSlice = pageDoc.data.slices.find(
+    (s: any) => s.slice_type === 'page_block'
+  );
+
+  const fullBioText = pageBlockSlice && Array.isArray(pageBlockSlice.primary.excerpt) && pageBlockSlice.primary.excerpt.length > 0
+    ? pageBlockSlice.primary.excerpt.map((block: any) => block.text).join('\n')
+    : (typeof pageBlockSlice?.primary.excerpt === 'string' ? pageBlockSlice.primary.excerpt : fallbackDoc?.fullBio || '');
+
+  const detailedBio = pageBlockSlice?.primary.content || fallbackDoc?.detailedBio || null;
+  const image = slice.primary.image?.url || fallbackDoc?.image || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
+  const workplaceTitle = slice.primary.workplace_title || fallbackDoc?.workplaceTitle || undefined;
 
   const items = slice.items || [];
-  const hasItems = items.length > 0 && items.some((item: any) => item.text);
+  const hasItems = items.length > 0 && items.some((item: any) => item.text && item.widget_title);
 
-  const specializations = hasItems
-    ? items.filter((item: any) => item.item_type === 'Specialization' && item.text).map((item: any) => item.text as string)
-    : [];
-
-  const education = hasItems
-    ? items.filter((item: any) => item.item_type === 'Education' && item.text).map((item: any) => item.text as string)
-    : [];
-
-  const qualifications = hasItems
-    ? items.filter((item: any) => item.item_type === 'Qualification' && item.text).map((item: any) => item.text as string)
-    : [];
-
-  const workplaces = hasItems
-    ? items.filter((item: any) => item.item_type === 'Workplace' && item.text).map((item: any) => item.text as string)
-    : [];
-
-  const languages = hasItems
-    ? items.filter((item: any) => item.item_type === 'Language' && item.text).map((item: any) => item.text as string)
-    : [];
+  // Group repeatable widgets dynamically
+  const groupedWidgets: GroupedWidget[] = [];
+  if (hasItems) {
+    items.forEach((item: any) => {
+      if (!item.text || !item.widget_title) return;
+      const title = item.widget_title.trim();
+      const icon = item.widget_icon?.trim() || 'Award';
+      
+      let group = groupedWidgets.find(g => g.title === title);
+      if (!group) {
+        group = { title, icon, items: [] };
+        groupedWidgets.push(group);
+      }
+      group.items.push(item.text.trim());
+    });
+  } else if (fallbackDoc) {
+    if (fallbackDoc.specializations && fallbackDoc.specializations.length > 0) {
+      groupedWidgets.push({
+        title: langCode === 'en-us' ? 'Specializations' : 'Specialitātes',
+        icon: 'Award',
+        items: fallbackDoc.specializations
+      });
+    }
+    if (fallbackDoc.education && fallbackDoc.education.length > 0) {
+      groupedWidgets.push({
+        title: langCode === 'en-us' ? 'Education' : 'Izglītība',
+        icon: 'GraduationCap',
+        items: fallbackDoc.education
+      });
+    }
+    if (fallbackDoc.qualifications && fallbackDoc.qualifications.length > 0) {
+      groupedWidgets.push({
+        title: langCode === 'en-us' ? 'Additional Qualifications' : 'Papildus kvalifikācija',
+        icon: 'Award',
+        items: fallbackDoc.qualifications
+      });
+    }
+    const workplaces = fallbackDoc.workplaces || (fallbackDoc.workplace ? [fallbackDoc.workplace] : []);
+    if (workplaces.length > 0) {
+      groupedWidgets.push({
+        title: fallbackDoc.workplaceTitle || (langCode === 'en-us' ? 'Workplace' : 'Darba vieta'),
+        icon: 'MapPin',
+        items: workplaces
+      });
+    }
+    if (fallbackDoc.languages && fallbackDoc.languages.length > 0) {
+      groupedWidgets.push({
+        title: langCode === 'en-us' ? 'Languages' : 'Valodas',
+        icon: 'Languages',
+        items: fallbackDoc.languages
+      });
+    }
+  }
 
   // Look for other slices on this page (like TestimonialBlock) to embed
   const embeddedSlices = pageDoc.data.slices.filter(
@@ -89,7 +138,7 @@ export function extractDoctorFromPage(pageDoc: any): Doctor | null {
   );
 
   return {
-    id: pageDoc.uid || 'doctor-detail',
+    id: doctorId || 'doctor-detail',
     name,
     title: name,
     category,
@@ -98,13 +147,12 @@ export function extractDoctorFromPage(pageDoc: any): Doctor | null {
     fullBio: fullBioText,
     detailedBio,
     image,
-    specializations,
-    education,
-    qualifications,
-    workplaces,
-    languages,
+    specializations: fallbackDoc?.specializations || [],
+    education: fallbackDoc?.education || [],
+    languages: fallbackDoc?.languages || [],
     workplaceTitle,
-    slices: embeddedSlices
+    slices: embeddedSlices,
+    widgets: groupedWidgets
   };
 }
 

@@ -6,6 +6,7 @@ import { createClient } from '../../../../prismicio';
 import DoctorProfileClient from './DoctorProfileClient';
 import { getPrismicLocale } from '../../page';
 import { getDoctors, extractDoctorFromPage } from '../../../../data';
+import { renderPageLayout } from '../../../layoutHelper';
 
 interface PageProps {
   params: Promise<{
@@ -70,35 +71,11 @@ export default async function Page({ params }: PageProps) {
   }
 
   if (slices && slices.length > 0) {
-    const doctorDetailSliceIndex = slices.findIndex(
-      (s: any) => s.slice_type === 'doctor_block'
-    );
-
-    if (doctorDetailSliceIndex !== -1) {
-      const doctorDetailSlice = { ...slices[doctorDetailSliceIndex] };
-      // All other slices that are NOT DoctorBlock or PageTitle are embedded slices (e.g. TestimonialBlock)
-      const embeddedSlices = slices.filter(
-        (s: any, idx: number) => 
-          idx !== doctorDetailSliceIndex && 
-          s.slice_type !== 'page_title'
-      );
-
-      doctorDetailSlice.primary = {
-        ...doctorDetailSlice.primary,
-        embeddedSlices: embeddedSlices
-      };
-
-      // Now we only render PageTitle and DoctorBlock at the top level
-      const topLevelSlices = slices.filter(
-        (s: any, idx: number) => 
-          idx === doctorDetailSliceIndex || 
-          s.slice_type === 'page_title'
-      ).map((s: any) => s.slice_type === 'doctor_block' ? doctorDetailSlice : s);
-
-      return <SliceZone slices={topLevelSlices} components={components} />;
-    }
-
-    return <SliceZone slices={slices} components={components} />;
+    return renderPageLayout(slices, components, {
+      showBackButton: true,
+      backButtonText: locale === 'en-us' ? 'Back to Dentists' : 'Atpakaļ pie zobārstiem',
+      backButtonHref: locale === 'en-us' ? '/en/doctors' : '/zobarsti',
+    });
   }
 
   // 2. Fallback: static doctor data

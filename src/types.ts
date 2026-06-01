@@ -1,3 +1,9 @@
+export interface GroupedWidget {
+  title: string;
+  icon: string;
+  items: string[];
+}
+
 export interface Doctor {
   id: string;
   name: string;
@@ -22,6 +28,7 @@ export interface Doctor {
   ctaButtonText?: string;
   ctaLink?: string;
   ctaLinkBlank?: boolean;
+  widgets?: GroupedWidget[];
 }
 
 export interface Service {

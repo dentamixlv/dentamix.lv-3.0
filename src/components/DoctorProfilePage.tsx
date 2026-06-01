@@ -1,12 +1,13 @@
 'use client';
 
-import { ArrowLeft, Award, GraduationCap, Languages, MapPin } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
+import * as LucideIcons from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import { SliceZone } from '@prismicio/react';
 import { PrismicRichText } from '@prismicio/react';
 import { components } from '../slices';
-import { Doctor } from '../types';
+import { Doctor, GroupedWidget } from '../types';
 import { getTestimonials } from '../data';
 import TestimonialCard from './TestimonialCard';
 import CTABlock from './CTABlock';
@@ -16,9 +17,10 @@ interface DoctorProfilePageProps {
   onBack: () => void;
   onBook: () => void;
   langCode?: string;
+  hideBack?: boolean;
 }
 
-export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = 'lv' }: DoctorProfilePageProps) {
+export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = 'lv', hideBack = false }: DoctorProfilePageProps) {
   const isEn = langCode === 'en-us';
 
   const allTestimonials = getTestimonials(langCode);
@@ -27,6 +29,49 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
     const targetDoc = doctor.name.toLowerCase().replace(/ā/g, 'a').replace(/ī/g, 'i').replace(/š/g, 's').replace(/ņ/g, 'n').replace(/ē/g, 'e').replace(/ž/g, 'z').replace(/č/g, 'c').replace(/ļ/g, 'l');
     return itemDoc.includes(targetDoc) || targetDoc.includes(itemDoc);
   });
+
+  // Dynamically resolve widgets list, backing up with local doctor properties if empty
+  const widgets: GroupedWidget[] = [];
+  if (doctor.widgets && doctor.widgets.length > 0) {
+    widgets.push(...doctor.widgets);
+  } else {
+    if (doctor.specializations && doctor.specializations.length > 0) {
+      widgets.push({
+        title: isEn ? 'Specializations' : 'Specialitātes',
+        icon: 'Award',
+        items: doctor.specializations
+      });
+    }
+    if (doctor.education && doctor.education.length > 0) {
+      widgets.push({
+        title: isEn ? 'Education' : 'Izglītība',
+        icon: 'GraduationCap',
+        items: doctor.education
+      });
+    }
+    if (doctor.qualifications && doctor.qualifications.length > 0) {
+      widgets.push({
+        title: isEn ? 'Additional Qualifications' : 'Papildus kvalifikācija',
+        icon: 'Award',
+        items: doctor.qualifications
+      });
+    }
+    const workplaces = doctor.workplaces || (doctor.workplace ? [doctor.workplace] : []);
+    if (workplaces.length > 0) {
+      widgets.push({
+        title: doctor.workplaceTitle || (isEn ? 'Workplace' : 'Darba vieta'),
+        icon: 'MapPin',
+        items: workplaces
+      });
+    }
+    if (doctor.languages && doctor.languages.length > 0) {
+      widgets.push({
+        title: isEn ? 'Languages' : 'Valodas',
+        icon: 'Languages',
+        items: doctor.languages
+      });
+    }
+  }
 
   const fadeUpVariants = {
     hidden: { opacity: 0 },
@@ -145,112 +190,43 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
 
           {/* Credentials Card */}
           <div className="bg-white border border-[#efedec] rounded-3xl p-6 md:p-8 shadow-sm hover:shadow-xl transition-shadow duration-300 space-y-6">
-            {/* Specializations */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
-                <Award className="w-4 h-4 text-[#de7c8a]" />
-                {t.specializations}
-              </h3>
-              <ul className="space-y-2 text-sm text-[#6a5b5e]">
-                {doctor.specializations.map((spec, index) => (
-                  <li key={index} className="flex gap-2">
-                    <span className="text-[#de7c8a] font-bold">•</span>
-                    <span>{spec}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            {/* Education */}
-            {doctor.education && doctor.education.length > 0 && (
-              <div className="space-y-3">
-                <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
-                  <GraduationCap className="w-4 h-4 text-[#de7c8a]" />
-                  {t.education}
-                </h3>
-                <ul className="space-y-2 text-sm text-[#6a5b5e]">
-                  {doctor.education.map((edu, index) => (
-                    <li key={index} className="flex gap-2">
-                      <span className="text-[#de7c8a] font-bold">•</span>
-                      <span>{edu}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Additional Qualifications */}
-            {doctor.qualifications && doctor.qualifications.length > 0 && (
-              <div className="space-y-3">
-                <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
-                  <Award className="w-4 h-4 text-[#de7c8a]" />
-                  {t.additionalQual}
-                </h3>
-                <ul className="space-y-2 text-sm text-[#6a5b5e]">
-                  {doctor.qualifications.map((qual, index) => (
-                    <li key={index} className="flex gap-2">
-                      <span className="text-[#de7c8a] font-bold">•</span>
-                      <span>{qual}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-
-            {/* Workplace */}
-            {((doctor.workplaces && doctor.workplaces.length > 0) || doctor.workplace) && (
-              <div className="space-y-3">
-                <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
-                  <MapPin className="w-4 h-4 text-[#de7c8a]" />
-                  {doctor.workplaceTitle || t.workplace}
-                </h3>
-                <ul className="space-y-2 text-sm text-[#6a5b5e]">
-                  {doctor.workplaces && doctor.workplaces.length > 0 ? (
-                    doctor.workplaces.map((wp, index) => (
-                      <li key={index} className="flex gap-2">
+            {widgets.map((widget, idx) => {
+              // Resolve Lucide icon component dynamically (handles lowercase/PascalCase formats)
+              const name = widget.icon.charAt(0).toUpperCase() + widget.icon.slice(1);
+              const IconComponent = (LucideIcons as any)[name] || (LucideIcons as any)[widget.icon] || LucideIcons.Award;
+              return (
+                <div key={idx} className="space-y-3">
+                  <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
+                    <IconComponent className="w-4 h-4 text-[#de7c8a]" />
+                    {widget.title}
+                  </h3>
+                  <ul className="space-y-2 text-sm text-[#6a5b5e]">
+                    {widget.items.map((item, itemIdx) => (
+                      <li key={itemIdx} className="flex gap-2">
                         <span className="text-[#de7c8a] font-bold">•</span>
-                        <span>{wp}</span>
+                        <span>{item}</span>
                       </li>
-                    ))
-                  ) : (
-                    <li className="flex gap-2">
-                      <span className="text-[#de7c8a] font-bold">•</span>
-                      <span>{doctor.workplace}</span>
-                    </li>
-                  )}
-                </ul>
-              </div>
-            )}
-
-            {/* Languages */}
-            <div className="space-y-3">
-              <h3 className="text-sm font-serif font-bold text-[#511B29] tracking-tight flex items-center gap-2 border-b border-[#efedec] pb-2">
-                <Languages className="w-4 h-4 text-[#de7c8a]" />
-                {t.languages}
-              </h3>
-              <ul className="space-y-2 text-sm text-[#6a5b5e]">
-                {doctor.languages.map((lang, index) => (
-                  <li key={index} className="flex gap-2">
-                    <span className="text-[#de7c8a] font-bold">•</span>
-                    <span>{lang}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+                    ))}
+                  </ul>
+                </div>
+              );
+            })}
           </div>
         </motion.div>
       </div>
 
       {/* Back Button underneath */}
-      <div className="mt-10 text-center">
-        <button 
-          onClick={onBack}
-          className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
-        >
-          <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
-          {t.back}
-        </button>
-      </div>
+      {!hideBack && (
+        <div className="mt-10 text-center">
+          <button 
+            onClick={onBack}
+            className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
+          >
+            <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
+            {t.back}
+          </button>
+        </div>
+      )}
     </motion.div>
   );
 }
