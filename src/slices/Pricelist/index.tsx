@@ -21,7 +21,7 @@ export default function Pricelist({ slice }: PricelistProps) {
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        const response = await fetch('/api/prices');
+        const response = await fetch(`/api/prices?lang=${langCode}`);
         if (!response.ok) {
           throw new Error('Failed to fetch prices');
         }

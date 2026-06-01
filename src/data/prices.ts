@@ -29,9 +29,12 @@ export function formatPrice(priceStr: string): string {
   return trimmed;
 }
 
-export async function getPricesFromGoogleSheets(): Promise<PriceItem[]> {
+export async function getPricesFromGoogleSheets(locale: string = 'lv'): Promise<PriceItem[]> {
   try {
-    const csvUrl = process.env.GOOGLE_SHEETS_CSV_URL || "https://docs.google.com/spreadsheets/d/1JmbSDGtun5V56kYeEj9T8LbORPKMkrZ2dRh5IB3kirU/export?format=csv";
+    const isEn = locale === 'en-us' || locale === 'en';
+    const csvUrl = isEn
+      ? (process.env.GOOGLE_SHEETS_CSV_URL_EN || "https://docs.google.com/spreadsheets/d/1JmbSDGtun5V56kYeEj9T8LbORPKMkrZ2dRh5IB3kirU/export?format=csv&gid=54843142")
+      : (process.env.GOOGLE_SHEETS_CSV_URL_LV || "https://docs.google.com/spreadsheets/d/1JmbSDGtun5V56kYeEj9T8LbORPKMkrZ2dRh5IB3kirU/export?format=csv&gid=0");
     
     // Cast options to bypass fetch extensions typing issues in some environments
     const fetchOptions: any = {

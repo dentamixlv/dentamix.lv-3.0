@@ -78,7 +78,7 @@ export default async function Page({ params }: PageProps) {
   // 2. Standalone fallback (using Google Sheets fetching)
   let initialPriceItems = [];
   try {
-    initialPriceItems = await getPricesFromGoogleSheets();
+    initialPriceItems = await getPricesFromGoogleSheets(locale);
   } catch (error) {
     console.warn("Failed to fetch Google Sheets prices server-side, client-side fallback will be used.", error);
   }

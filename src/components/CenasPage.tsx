@@ -20,6 +20,7 @@ interface CenasPageProps {
 }
 
 const categoryTranslations: Record<string, { lv: string; en: string }> = {
+  // Latvian Keys
   'Zobu diagnostika un izmeklēšana': { lv: 'Zobu diagnostika un izmeklēšana', en: 'Diagnostics & Examination' },
   'Zobu ārstēšana': { lv: 'Zobu ārstēšana', en: 'Dental Treatment' },
   'Zobu kanālu ārstēšana': { lv: 'Zobu kanālu ārstēšana', en: 'Root Canal Treatment' },
@@ -30,7 +31,29 @@ const categoryTranslations: Record<string, { lv: string; en: string }> = {
   'Zobu implanti': { lv: 'Zobu implanti', en: 'Dental Implants' },
   'Zobu protezēšana uz implantiem': { lv: 'Zobu protezēšana uz implantiem', en: 'Prosthodontics on Implants' },
   'Zobu protezēšana': { lv: 'Zobu protezēšana', en: 'Dental Prosthetics' },
-  'Zobu kapes': { lv: 'Zobu kapes', en: 'Dental Trays & Aligners' }
+  'Zobu kapes': { lv: 'Zobu kapes', en: 'Dental Trays & Aligners' },
+
+  // English Keys
+  'Diagnostics & Examination': { lv: 'Zobu diagnostika un izmeklēšana', en: 'Diagnostics & Examination' },
+  'Diagnostics & Exam': { lv: 'Zobu diagnostika un izmeklēšana', en: 'Diagnostics & Examination' },
+  'Dental Treatment': { lv: 'Zobu ārstēšana', en: 'Dental Treatment' },
+  'Treatment': { lv: 'Zobu ārstēšana', en: 'Dental Treatment' },
+  'Root Canal Treatment': { lv: 'Zobu kanālu ārstēšana', en: 'Root Canal Treatment' },
+  'Root Canals': { lv: 'Zobu kanālu ārstēšana', en: 'Root Canal Treatment' },
+  'Oral Hygiene': { lv: 'Zobu higiēna', en: 'Oral Hygiene' },
+  'Teeth Whitening': { lv: 'Zobu balināšana', en: 'Teeth Whitening' },
+  'Pediatric Dentistry': { lv: 'Bērnu zobārstniecība', en: 'Pediatric Dentistry' },
+  'Pediatric': { lv: 'Bērnu zobārstniecība', en: 'Pediatric Dentistry' },
+  'Oral Surgery & Extraction': { lv: 'Zobu ķirurģija / ekstrakcija', en: 'Oral Surgery & Extraction' },
+  'Oral Surgery': { lv: 'Zobu ķirurģija / ekstrakcija', en: 'Oral Surgery & Extraction' },
+  'Dental Implants': { lv: 'Zobu implanti', en: 'Dental Implants' },
+  'Implants': { lv: 'Zobu implanti', en: 'Dental Implants' },
+  'Prosthodontics on Implants': { lv: 'Zobu protezēšana uz implantiem', en: 'Prosthodontics on Implants' },
+  'Prosthodontics': { lv: 'Zobu protezēšana uz implantiem', en: 'Prosthodontics on Implants' },
+  'Dental Prosthetics': { lv: 'Zobu protezēšana', en: 'Dental Prosthetics' },
+  'Prosthetics': { lv: 'Zobu protezēšana', en: 'Dental Prosthetics' },
+  'Dental Trays & Aligners': { lv: 'Zobu kapes', en: 'Dental Trays & Aligners' },
+  'Dental Trays': { lv: 'Zobu kapes', en: 'Dental Trays & Aligners' }
 };
 
 interface GroupedCategory {
@@ -44,6 +67,7 @@ interface GroupedCategory {
 }
 
 const categoryIds: Record<string, string> = {
+  // Latvian Names
   'Zobu diagnostika un izmeklēšana': 'diagnostika',
   'Zobu ārstēšana': 'arstesana',
   'Zobu kanālu ārstēšana': 'kanali',
@@ -54,7 +78,29 @@ const categoryIds: Record<string, string> = {
   'Zobu implanti': 'implanti',
   'Zobu protezēšana uz implantiem': 'protezesana-implanti',
   'Zobu protezēšana': 'protezesana',
-  'Zobu kapes': 'kapes'
+  'Zobu kapes': 'kapes',
+
+  // English Names & Variations
+  'Diagnostics & Examination': 'diagnostika',
+  'Diagnostics & Exam': 'diagnostika',
+  'Dental Treatment': 'arstesana',
+  'Treatment': 'arstesana',
+  'Root Canal Treatment': 'kanali',
+  'Root Canals': 'kanali',
+  'Oral Hygiene': 'higiena',
+  'Teeth Whitening': 'balinasana',
+  'Pediatric Dentistry': 'bernu',
+  'Pediatric': 'bernu',
+  'Oral Surgery & Extraction': 'kirurgija',
+  'Oral Surgery': 'kirurgija',
+  'Dental Implants': 'implanti',
+  'Implants': 'implanti',
+  'Prosthodontics on Implants': 'protezesana-implanti',
+  'Prosthodontics': 'protezesana-implanti',
+  'Dental Prosthetics': 'protezesana',
+  'Prosthetics': 'protezesana',
+  'Dental Trays & Aligners': 'kapes',
+  'Dental Trays': 'kapes'
 };
 
 export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hideHeader = false }: CenasPageProps) {
@@ -164,7 +210,7 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
                     </div>
                     {/* Price Tag styled aligned nicely */}
                     {item.price && (
-                      <div className="flex items-center sm:text-right shrink-0">
+                      <div className="flex items-center self-end sm:self-auto sm:text-right shrink-0">
                         <span className="text-sm font-mono font-extrabold text-[#511B29] bg-[#f2dde1]/35 px-4 py-2 rounded-full border border-[#d9c1c2]/20">
                           {item.price}
                         </span>
@@ -191,7 +237,7 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
                       <div className="h-4 w-1/3 bg-slate-100 rounded-full" />
                       <div className="h-3 w-2/3 bg-slate-100 rounded-full" />
                     </div>
-                    <div className="h-8 w-20 bg-slate-100 rounded-full shrink-0" />
+                    <div className="h-8 w-20 bg-slate-100 rounded-full self-end sm:self-auto shrink-0" />
                   </div>
                 ))}
               </div>
