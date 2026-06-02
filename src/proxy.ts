@@ -4,6 +4,7 @@ import type { NextRequest } from 'next/server';
 
 export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  console.log("[PROXY] Pathname:", pathname);
 
   // Skip static files, api routes, image optimization, and slicemachine
   if (
@@ -303,3 +304,5 @@ export const config = {
     '/((?!_next/static|_next/image|favicon.ico).*)',
   ],
 };
+
+export default proxy;
