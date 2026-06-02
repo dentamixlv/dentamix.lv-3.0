@@ -69,7 +69,7 @@ export function renderPageLayout(
   );
 
   const pbClass = (bottomSlices.length === 0 && options?.showBackButton)
-    ? "pb-8 md:pb-12"
+    ? "pb-0"
     : "pb-16 md:pb-24";
 
   return (
@@ -110,9 +110,9 @@ export function renderPageLayout(
       {bottomSlices.length > 0 && (
         <SliceZone slices={bottomSlices} components={pageComponents} context={{ isBottom: true }} />
       )}
-
+      
       {options?.showBackButton && options.backButtonHref && (
-        <div className="max-w-7xl mx-auto px-6 pt-8 pb-16 md:pb-24 text-center">
+        <div className="max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-16 md:pb-24 text-center">
           <Link 
             href={options.backButtonHref}
             className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"

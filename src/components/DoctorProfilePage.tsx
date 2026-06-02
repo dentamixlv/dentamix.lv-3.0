@@ -217,7 +217,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
 
       {/* Back Button underneath */}
       {!hideBack && (
-        <div className="mt-10 text-center">
+        <div className="mt-16 md:mt-24 text-center">
           <button 
             onClick={onBack}
             className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"

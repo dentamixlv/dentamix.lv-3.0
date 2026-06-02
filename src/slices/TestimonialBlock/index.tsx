@@ -125,9 +125,15 @@ export default function TestimonialBlock({ slice, context }: TestimonialBlockPro
         {/* Header Block for Embedded View */}
         {!hideHeaderValue && (
           <div>
-            <h4 className="text-sm font-bold uppercase tracking-wider text-[#511B29]">
-              {title}
-            </h4>
+            {isHomepage ? (
+              <h4 className="text-sm font-bold uppercase tracking-wider text-[#511B29]">
+                {title}
+              </h4>
+            ) : (
+              <h3 className="text-base md:text-lg font-serif font-medium text-[#511B29] leading-relaxed border-l-2 border-[#de7c8a] pl-4">
+                {title}
+              </h3>
+            )}
           </div>
         )}
 
@@ -204,23 +210,37 @@ export default function TestimonialBlock({ slice, context }: TestimonialBlockPro
 
         {/* Header Block */}
         {!hideHeaderValue && (
-          <motion.div
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={fadeUpVariants}
-            className="text-center max-w-xl mx-auto mb-12"
-          >
-            <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
-              {badgeText}
-            </span>
-            <h3 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
-              {title}
-            </h3>
-            <p className="text-sm md:text-base text-[#6a5b5e] mt-2 font-medium">
-              {subtitle}
-            </p>
-          </motion.div>
+          isHomepage ? (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUpVariants}
+              className="text-center max-w-xl mx-auto mb-12"
+            >
+              <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block">
+                {badgeText}
+              </span>
+              <h3 className="text-3xl font-serif font-bold text-[#511B29] mt-2 tracking-tight">
+                {title}
+              </h3>
+              <p className="text-sm md:text-base text-[#6a5b5e] mt-2 font-medium">
+                {subtitle}
+              </p>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={fadeUpVariants}
+              className="text-left mb-8"
+            >
+              <h3 className="text-base md:text-lg font-serif font-medium text-[#511B29] leading-relaxed border-l-2 border-[#de7c8a] pl-4">
+                {title}
+              </h3>
+            </motion.div>
+          )
         )}
 
         {/* Grid cards */}
