@@ -36,10 +36,11 @@
           }
         },
         "text": {
-          "type": "Text",
+          "type": "StructuredText",
           "config": {
             "label": "Text Content",
-            "placeholder": "e.g., Zobu implantācija"
+            "placeholder": "e.g., Zobu implantācija",
+            "single": "paragraph,strong,em,hyperlink"
           }
         }
       }

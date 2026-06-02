@@ -8,6 +8,21 @@ import * as LucideIcons from 'lucide-react';
 
 import { getDoctors } from '../../data';
 import { Doctor, GroupedWidget } from '../../types';
+import { PrismicRichText, JSXMapSerializer } from '@prismicio/react';
+
+const richTextComponents: JSXMapSerializer = {
+  paragraph: ({ children }) => <span className="inline">{children}</span>,
+  hyperlink: ({ node, children }) => (
+    <a 
+      href={node.data.url} 
+      target={node.data.target} 
+      rel="noopener noreferrer" 
+      className="text-[#de7c8a] hover:underline font-semibold"
+    >
+      {children}
+    </a>
+  )
+};
 
 export interface WidgetBlockSliceDefaultItem {
   widget_title?: string | null;
@@ -43,13 +58,21 @@ export default function WidgetBlock({ slice, context }: WidgetBlockProps) {
   const image = slice.primary.image?.url || fallbackDoc?.image || 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=800';
 
   const items = slice.items || [];
-  const hasItems = items.length > 0 && items.some(item => item.text && item.widget_title);
+  const hasItems = items.length > 0 && items.some(item => {
+    const hasText = Array.isArray(item.text)
+      ? item.text.length > 0 && item.text.some((b: any) => b.text)
+      : !!item.text;
+    return hasText && item.widget_title;
+  });
 
   // Group repeatable widgets dynamically
   const groupedWidgets: GroupedWidget[] = [];
   if (hasItems) {
     items.forEach(item => {
-      if (!item.text || !item.widget_title) return;
+      const hasText = Array.isArray(item.text)
+        ? item.text.length > 0 && item.text.some((b: any) => b.text)
+        : !!item.text;
+      if (!hasText || !item.widget_title) return;
       const title = item.widget_title.trim();
       const icon = item.widget_icon?.trim() || 'Award';
       
@@ -58,7 +81,8 @@ export default function WidgetBlock({ slice, context }: WidgetBlockProps) {
         group = { title, icon, items: [] };
         groupedWidgets.push(group);
       }
-      group.items.push(item.text.trim());
+      const val = typeof item.text === 'string' ? item.text.trim() : item.text;
+      group.items.push(val);
     });
   } else if (fallbackDoc) {
     // Reconstruct widgets from local fallback database
@@ -148,7 +172,13 @@ export default function WidgetBlock({ slice, context }: WidgetBlockProps) {
                   {widget.items.map((item, itemIdx) => (
                     <li key={itemIdx} className="flex gap-2">
                       <span className="text-[#de7c8a] font-bold">•</span>
-                      <span>{item}</span>
+                      {typeof item === 'string' ? (
+                        <span>{item}</span>
+                      ) : (
+                        <span className="inline-block rich-text-widget-item">
+                          <PrismicRichText field={item} components={richTextComponents} />
+                        </span>
+                      )}
                     </li>
                   ))}
                 </ul>

@@ -1,7 +1,7 @@
 export interface GroupedWidget {
   title: string;
   icon: string;
-  items: string[];
+  items: (string | any)[];
 }
 
 export interface Doctor {

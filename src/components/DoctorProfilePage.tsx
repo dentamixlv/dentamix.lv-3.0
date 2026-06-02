@@ -12,6 +12,20 @@ import { getTestimonials } from '../data';
 import TestimonialCard from './TestimonialCard';
 import CTABlock from './CTABlock';
 
+const richTextComponents = {
+  paragraph: ({ children }: any) => <span className="inline">{children}</span>,
+  hyperlink: ({ node, children }: any) => (
+    <a 
+      href={node.data.url} 
+      target={node.data.target} 
+      rel="noopener noreferrer" 
+      className="text-[#de7c8a] hover:underline font-semibold"
+    >
+      {children}
+    </a>
+  )
+};
+
 interface DoctorProfilePageProps {
   doctor: Doctor;
   onBack: () => void;
@@ -204,7 +218,13 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
                     {widget.items.map((item, itemIdx) => (
                       <li key={itemIdx} className="flex gap-2">
                         <span className="text-[#de7c8a] font-bold">•</span>
-                        <span>{item}</span>
+                        {typeof item === 'string' ? (
+                          <span>{item}</span>
+                        ) : (
+                          <span className="inline-block rich-text-widget-item">
+                            <PrismicRichText field={item} components={richTextComponents} />
+                          </span>
+                        )}
                       </li>
                     ))}
                   </ul>

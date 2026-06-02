@@ -76,13 +76,21 @@ export function extractDoctorFromPage(pageDoc: any): Doctor | null {
   const workplaceTitle = slice.primary.workplace_title || fallbackDoc?.workplaceTitle || undefined;
 
   const items = slice.items || [];
-  const hasItems = items.length > 0 && items.some((item: any) => item.text && item.widget_title);
+  const hasItems = items.length > 0 && items.some((item: any) => {
+    const hasText = Array.isArray(item.text)
+      ? item.text.length > 0 && item.text.some((b: any) => b.text)
+      : !!item.text;
+    return hasText && item.widget_title;
+  });
 
   // Group repeatable widgets dynamically
   const groupedWidgets: GroupedWidget[] = [];
   if (hasItems) {
     items.forEach((item: any) => {
-      if (!item.text || !item.widget_title) return;
+      const hasText = Array.isArray(item.text)
+        ? item.text.length > 0 && item.text.some((b: any) => b.text)
+        : !!item.text;
+      if (!hasText || !item.widget_title) return;
       const title = item.widget_title.trim();
       const icon = item.widget_icon?.trim() || 'Award';
       
@@ -91,7 +99,8 @@ export function extractDoctorFromPage(pageDoc: any): Doctor | null {
         group = { title, icon, items: [] };
         groupedWidgets.push(group);
       }
-      group.items.push(item.text.trim());
+      const val = typeof item.text === 'string' ? item.text.trim() : item.text;
+      group.items.push(val);
     });
   } else if (fallbackDoc) {
     if (fallbackDoc.specializations && fallbackDoc.specializations.length > 0) {
