@@ -57,19 +57,23 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start text-left">
         {/* Main Content */}
         <motion.div variants={fadeUpVariants} className="lg:col-span-2 space-y-6">
-          <div className="space-y-6">
-            {post.detailedContent.map((paragraph, idx) => (
-              <p
-                key={idx}
-                className={
-                  idx === 0
-                    ? "text-base md:text-lg font-serif font-medium text-[#511B29] leading-relaxed border-l-2 border-[#de7c8a] pl-4"
-                    : "text-base md:text-lg font-normal text-slate-800 leading-relaxed"
-                }
-              >
-                {paragraph}
-              </p>
-            ))}
+          <div>
+            {post.detailedContent.map((paragraph, idx) => {
+              const trimmed = paragraph.trim();
+              const isListItem = trimmed.startsWith('-') || trimmed.startsWith('•') || trimmed.startsWith('*') || /^\d+[\.\)]/.test(trimmed);
+              const baseClass = idx === 0
+                ? "text-base md:text-lg font-serif font-medium text-[#511B29] leading-relaxed border-l-2 border-[#de7c8a] pl-4"
+                : "text-base md:text-lg font-normal text-slate-800 leading-relaxed";
+              const spacingClass = isListItem ? "mb-1.5 last:mb-0" : "mb-4 last:mb-0";
+              return (
+                <p
+                  key={idx}
+                  className={`${baseClass} ${spacingClass}`}
+                >
+                  {paragraph}
+                </p>
+              );
+            })}
           </div>
 
           <div className="p-6 bg-[#fbf9f8] rounded-2xl border border-[#efedec] mt-8">

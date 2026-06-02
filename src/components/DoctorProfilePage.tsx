@@ -4,8 +4,7 @@ import { ArrowLeft } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
-import { SliceZone } from '@prismicio/react';
-import { PrismicRichText } from '@prismicio/react';
+import { SliceZone, PrismicRichText, JSXMapSerializer } from '@prismicio/react';
 import { components } from '../slices';
 import { Doctor, GroupedWidget } from '../types';
 import { getTestimonials } from '../data';
@@ -24,6 +23,31 @@ const richTextComponents = {
       {children}
     </a>
   )
+};
+
+const detailedBioSerializer: JSXMapSerializer = {
+  paragraph: ({ node, children }: any) => {
+    const text = node?.text || '';
+    const trimmed = text.trim();
+    if (
+      trimmed.startsWith('-') || 
+      trimmed.startsWith('•') || 
+      trimmed.startsWith('*') || 
+      /^\d+[\.\)]/.test(trimmed)
+    ) {
+      return <p className="mb-1.5 last:mb-0">{children}</p>;
+    }
+    return <p className="mb-4 last:mb-0">{children}</p>;
+  },
+  list: ({ children }) => <ul className="list-disc pl-6 mb-4 space-y-1.5">{children}</ul>,
+  oList: ({ children }) => <ol className="list-decimal pl-6 mb-4 space-y-1.5">{children}</ol>,
+  listItem: ({ children }) => <li className="leading-relaxed">{children}</li>,
+  heading1: ({ children }) => <h1 className="text-3xl font-serif font-bold text-[#511B29] mt-8 mb-4">{children}</h1>,
+  heading2: ({ children }) => <h2 className="text-2xl font-serif font-bold text-[#511B29] mt-6 mb-3">{children}</h2>,
+  heading3: ({ children }) => <h3 className="text-xl font-serif font-bold text-[#511B29] mt-5 mb-2">{children}</h3>,
+  heading4: ({ children }) => <h4 className="text-lg font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h4>,
+  heading5: ({ children }) => <h5 className="text-base font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h5>,
+  heading6: ({ children }) => <h6 className="text-sm font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h6>,
 };
 
 interface DoctorProfilePageProps {
@@ -146,8 +170,8 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
 
           {/* Under doctor detailed text */}
           {doctor.detailedBio && (
-            <div className="text-base text-[#6a5b5e] leading-relaxed space-y-6 mt-6">
-              <PrismicRichText field={doctor.detailedBio} />
+            <div className="text-base text-[#6a5b5e] leading-relaxed mt-6">
+              <PrismicRichText field={doctor.detailedBio} components={detailedBioSerializer} />
             </div>
           )}
 
