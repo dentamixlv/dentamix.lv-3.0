@@ -1,48 +1,27 @@
-'use client';
-
-import React, { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import React from 'react';
+import { headers } from 'next/headers';
 import { createClient } from '../../prismicio';
 import { renderPageLayout } from '../layoutHelper';
 import { components } from '../../slices';
 
-export default function NotFound() {
-  const pathname = usePathname();
-  const [slices, setSlices] = useState<any[] | null>(null);
-  const [loading, setLoading] = useState(true);
+export default async function NotFound() {
+  const headersList = await headers();
+  const pathname = headersList.get('x-invoke-path') || headersList.get('referer') || '';
 
-  const isEn = pathname.startsWith('/en/') || pathname === '/en';
+  const isEn = pathname.includes('/en/') || pathname.endsWith('/en');
   const locale = isEn ? 'en-us' : 'lv';
   const uid = isEn ? '404-en' : '404-lv';
 
-  useEffect(() => {
-    const fetchNotFoundPage = async () => {
-      try {
-        const client = createClient();
-        const document = await client.getByUID('page', uid, { lang: locale });
-        if (document?.data?.slices) {
-          setSlices(document.data.slices);
-        }
-      } catch (error) {
-        console.error('Error fetching 404 page from Prismic:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
+  try {
+    const client = createClient();
+    const document = await client.getByUID('page', uid, { lang: locale });
+    const slices = document?.data?.slices;
 
-    fetchNotFoundPage();
-  }, [uid, locale]);
-
-  if (loading) {
-    return (
-      <div className="min-h-[50vh] flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#de7c8a]"></div>
-      </div>
-    );
-  }
-
-  if (slices && slices.length > 0) {
-    return <>{renderPageLayout(slices, components)}</>;
+    if (slices && slices.length > 0) {
+      return <>{renderPageLayout(slices, components)}</>;
+    }
+  } catch (error) {
+    console.error('Error fetching 404 page from Prismic:', error);
   }
 
   // Fallback UI if Prismic fetch fails or has no slices
