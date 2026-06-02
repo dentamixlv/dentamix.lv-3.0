@@ -45,9 +45,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
     if (normalizedId === 'about' || normalizedId === 'par-mums') {
       return isEn ? '/en/about' : '/par-mums';
     }
-    if (normalizedId === 'privacy' || normalizedId === 'privatuma-politika') {
-      return isEn ? '/en/privacy' : '/privatuma-politika';
-    }
+
     
     return `${langPrefix}/${normalizedId}`;
   };
@@ -72,9 +70,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
     if (normalizedId === 'about' || normalizedId === 'par-mums') {
       return pathname === '/about' || pathname === '/lv/about' || pathname === '/par-mums' || pathname === '/lv/par-mums' || pathname === '/en/about' || pathname === '/en/par-mums';
     }
-    if (normalizedId === 'privacy' || normalizedId === 'privatuma-politika') {
-      return pathname === '/privacy' || pathname === '/lv/privacy' || pathname === '/privatuma-politika' || pathname === '/lv/privatuma-politika' || pathname === '/en/privacy';
-    }
+
     return pathname.endsWith(`/${normalizedId}`);
   };
 
@@ -89,7 +85,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'atsauksmes') target = 'testimonials';
         else if (remaining === 'kontakti') target = 'contacts';
         else if (remaining === 'par-mums') target = 'about';
-        else if (remaining === 'privatuma-politika') target = 'privacy';
+
         return `/en/${target}`;
       } else if (pathname === '/lv') {
         return '/en';
@@ -106,7 +102,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'atsauksmes') target = 'testimonials';
         else if (remaining === 'kontakti') target = 'contacts';
         else if (remaining === 'par-mums') target = 'about';
-        else if (remaining === 'privatuma-politika') target = 'privacy';
+
         return `/en${target ? '/' + target : ''}`;
       }
     } else {
@@ -119,7 +115,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'testimonials') target = 'atsauksmes';
         else if (remaining === 'contacts') target = 'kontakti';
         else if (remaining === 'about') target = 'par-mums';
-        else if (remaining === 'privacy') target = 'privatuma-politika';
+
         return `/${target}`;
       } else if (pathname === '/en') {
         return '/';
@@ -131,7 +127,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'prices') target = 'cenas';
         else if (remaining === 'testimonials') target = 'atsauksmes';
         else if (remaining === 'contacts') target = 'kontakti';
-        else if (remaining === 'privacy') target = 'privatuma-politika';
+
         return `/${target}`;
       }
     }
