@@ -203,35 +203,7 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 307);
   }
 
-  // 11.5. Cookie policy routing
-  // Redirect /cookies (or /lv/cookies) to /sikdatnu-politika for Latvian locale
-  if (pathname === '/cookies') {
-    const url = request.nextUrl.clone();
-    url.pathname = '/sikdatnu-politika';
-    return NextResponse.redirect(url, 307);
-  }
-  if (pathname === '/lv/cookies') {
-    const url = request.nextUrl.clone();
-    url.pathname = '/sikdatnu-politika';
-    return NextResponse.redirect(url, 307);
-  }
-  // Rewrite /sikdatnu-politika (or /lv/sikdatnu-politika) to /lv/cookies internally
-  if (pathname === '/sikdatnu-politika') {
-    const url = request.nextUrl.clone();
-    url.pathname = '/lv/cookies';
-    return NextResponse.rewrite(url);
-  }
-  if (pathname === '/lv/sikdatnu-politika') {
-    const url = request.nextUrl.clone();
-    url.pathname = '/lv/cookies';
-    return NextResponse.rewrite(url);
-  }
-  // EN locale - redirect /en/sikdatnu-politika to /en/cookies
-  if (pathname === '/en/sikdatnu-politika') {
-    const url = request.nextUrl.clone();
-    url.pathname = '/en/cookies';
-    return NextResponse.redirect(url, 307);
-  }
+
 
   // 11b. Privacy policy routing
   // Redirect /privacy (or /lv/privacy) to /privatuma-politika for Latvian locale
