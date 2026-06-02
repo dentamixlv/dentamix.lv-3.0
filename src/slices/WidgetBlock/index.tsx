@@ -14,8 +14,8 @@ const richTextComponents: JSXMapSerializer = {
   paragraph: ({ children }) => <span className="inline">{children}</span>,
   hyperlink: ({ node, children }) => (
     <a 
-      href={node.data.url} 
-      target={node.data.target} 
+      href={(node.data as any).url} 
+      target={(node.data as any).target} 
       rel="noopener noreferrer" 
       className="text-[#de7c8a] hover:underline font-semibold"
     >
