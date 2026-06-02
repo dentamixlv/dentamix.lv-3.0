@@ -152,11 +152,11 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
   });
 
   const fadeUpVariants = {
-    hidden: { opacity: 0, y: 6 },
+    hidden: { opacity: 0, y: 12 },
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { type: 'tween' as const, ease: 'easeOut', duration: 0.45 }
+      transition: { type: 'tween' as const, ease: 'easeOut', duration: 0.55 }
     }
   } as const;
 

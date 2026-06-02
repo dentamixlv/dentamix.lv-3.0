@@ -16,10 +16,11 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
   const isEn = langCode === 'en-us';
 
   const fadeUpVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 12 },
     visible: { 
       opacity: 1, 
-      transition: { type: 'tween', ease: 'easeOut', duration: 0.45 }
+      y: 0,
+      transition: { type: 'tween' as const, ease: 'easeOut', duration: 0.55 }
     }
   } as const;
 

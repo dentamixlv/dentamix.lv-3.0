@@ -3,6 +3,7 @@ import { SliceZone } from '@prismicio/react';
 import { components } from '../slices';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
+import { PageStaggerWrapper, PageStaggerItem } from '../components/PageStaggerWrapper';
 
 export interface PageLayoutOptions {
   showBackButton?: boolean;
@@ -30,7 +31,13 @@ export function renderPageLayout(
 
   // If no WidgetBlock (sidebar) is present, render everything full-width sequentially
   if (widgetBlockIndex === -1) {
-    return <SliceZone slices={slices} components={pageComponents} />;
+    return (
+      <PageStaggerWrapper>
+        <PageStaggerItem>
+          <SliceZone slices={slices} components={pageComponents} />
+        </PageStaggerItem>
+      </PageStaggerWrapper>
+    );
   }
 
   // Find the index of the first layout block
@@ -73,12 +80,14 @@ export function renderPageLayout(
     : "pb-16 md:pb-24";
 
   return (
-    <>
+    <PageStaggerWrapper>
       {topSlices.length > 0 && (
-        <SliceZone slices={topSlices} components={pageComponents} />
+        <PageStaggerItem>
+          <SliceZone slices={topSlices} components={pageComponents} />
+        </PageStaggerItem>
       )}
 
-      <div className={`max-w-7xl mx-auto px-6 pt-2 md:pt-4 ${pbClass}`}>
+      <PageStaggerItem className={`max-w-7xl mx-auto px-6 pt-2 md:pt-4 ${pbClass}`}>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start text-left">
           {/* Main Left Content Column */}
           <div className="lg:col-span-2 space-y-8">
@@ -104,15 +113,16 @@ export function renderPageLayout(
             />
           </div>
         </div>
-
-      </div>
+      </PageStaggerItem>
 
       {bottomSlices.length > 0 && (
-        <SliceZone slices={bottomSlices} components={pageComponents} context={{ isBottom: true }} />
+        <PageStaggerItem>
+          <SliceZone slices={bottomSlices} components={pageComponents} context={{ isBottom: true }} />
+        </PageStaggerItem>
       )}
       
       {options?.showBackButton && options.backButtonHref && (
-        <div className="max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-16 md:pb-24 text-center">
+        <PageStaggerItem className="max-w-7xl mx-auto px-6 pt-16 md:pt-24 pb-16 md:pb-24 text-center">
           <Link 
             href={options.backButtonHref}
             className="inline-flex items-center gap-2 text-sm font-bold text-[#6a5b5e] hover:text-[#511B29] transition-colors cursor-pointer"
@@ -120,8 +130,8 @@ export function renderPageLayout(
             <ArrowLeft className="w-4 h-4 text-[#de7c8a]" />
             {options.backButtonText || 'Back'}
           </Link>
-        </div>
+        </PageStaggerItem>
       )}
-    </>
+    </PageStaggerWrapper>
   );
 }

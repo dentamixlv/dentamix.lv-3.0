@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { PrismicRichText, JSXMapSerializer } from "@prismicio/react";
 import { ChevronDown } from 'lucide-react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export interface FAQBlockSliceItem {
   question?: string | null;
@@ -39,6 +40,29 @@ const answerSerializer: JSXMapSerializer = {
   ),
 };
 
+const staggerContainerVariants = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.08,
+      delayChildren: 0.05
+    }
+  }
+} as const;
+
+const fadeUpVariants = {
+  hidden: { opacity: 0, y: 10 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      type: 'tween' as const,
+      ease: 'easeOut',
+      duration: 0.45
+    }
+  }
+} as const;
+
 export default function FAQBlock({ slice }: FAQBlockProps) {
   const { primary, items } = slice;
   const [openIndex, setOpenIndex] = useState<number | null>(null);
@@ -50,7 +74,13 @@ export default function FAQBlock({ slice }: FAQBlockProps) {
       )}
 
       {items && items.length > 0 && (
-        <div className="space-y-3.5 mt-6">
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={staggerContainerVariants}
+          className="space-y-3.5 mt-6"
+        >
           {items.map((item, index) => {
             const question = item.question || "";
             const hasAnswer = Array.isArray(item.answer) && item.answer.length > 0 && item.answer.some((b: any) => b.text);
@@ -59,9 +89,10 @@ export default function FAQBlock({ slice }: FAQBlockProps) {
             if (!question && !hasAnswer) return null;
 
             return (
-              <div 
-                key={index} 
-                className="bg-white border border-[#efedec] rounded-2xl overflow-hidden transition-all duration-300 hover:shadow-sm"
+              <motion.div 
+                key={index}
+                variants={fadeUpVariants}
+                className="bg-white border border-[#efedec] rounded-2xl overflow-hidden transition-shadow duration-300 hover:shadow-sm"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : index)}
@@ -74,15 +105,26 @@ export default function FAQBlock({ slice }: FAQBlockProps) {
                     <ChevronDown className="w-3.5 h-3.5" />
                   </span>
                 </button>
-                {isOpen && hasAnswer && (
-                  <div className="px-4 pb-4 pt-1 border-t border-[#efedec]/40 bg-[#fbf9f8]/10">
-                    <PrismicRichText field={item.answer} components={answerSerializer} />
-                  </div>
-                )}
-              </div>
+                <AnimatePresence initial={false}>
+                  {isOpen && hasAnswer && (
+                    <motion.div
+                      key="answer"
+                      initial={{ height: 0, opacity: 0, y: -6 }}
+                      animate={{ height: 'auto', opacity: 1, y: 0 }}
+                      exit={{ height: 0, opacity: 0, y: -6 }}
+                      transition={{ type: 'tween', ease: 'easeOut', duration: 0.35 }}
+                      className="overflow-hidden"
+                    >
+                      <div className="px-4 pb-4 pt-1 border-t border-[#efedec]/40 bg-[#fbf9f8]/10">
+                        <PrismicRichText field={item.answer} components={answerSerializer} />
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       )}
     </div>
   );

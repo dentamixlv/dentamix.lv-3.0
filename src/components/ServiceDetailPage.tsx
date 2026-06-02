@@ -247,10 +247,11 @@ export default function ServiceDetailPage({ service, onBack, onBookService, lang
   };
 
   const fadeUpVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 0, y: 12 },
     visible: { 
       opacity: 1, 
-      transition: { type: 'tween', ease: 'easeOut', duration: 0.45 }
+      y: 0,
+      transition: { type: 'tween' as const, ease: 'easeOut', duration: 0.55 }
     }
   } as const;
 
