@@ -203,6 +203,35 @@ export function proxy(request: NextRequest) {
     return NextResponse.redirect(url, 307);
   }
 
+  // Redirect policy pages
+  // Redirect /en/privatuma-politika to /en/privacy-policy
+  if (
+    pathname === '/en/privatuma-politika' ||
+    pathname === '/en/privacy' ||
+    pathname === '/privacy-policy' ||
+    pathname === '/lv/privacy-policy' ||
+    pathname === '/privacy' ||
+    pathname === '/lv/privacy'
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/en/privacy-policy';
+    return NextResponse.redirect(url, 307);
+  }
+
+  // Redirect /en/sikdatnu-politika to /en/cookie-policy
+  if (
+    pathname === '/en/sikdatnu-politika' ||
+    pathname === '/en/cookies' ||
+    pathname === '/cookie-policy' ||
+    pathname === '/lv/cookie-policy' ||
+    pathname === '/cookies' ||
+    pathname === '/lv/cookies'
+  ) {
+    const url = request.nextUrl.clone();
+    url.pathname = '/en/cookie-policy';
+    return NextResponse.redirect(url, 307);
+  }
+
 
 
 

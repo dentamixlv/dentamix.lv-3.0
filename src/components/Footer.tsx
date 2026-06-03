@@ -312,13 +312,13 @@ export default function Footer({
           <p>© {new Date().getFullYear()} {copyrightText || `Dentamic. ${t.allRightsReserved}`}</p>
           <div className="flex gap-6">
             <Link
-              href={resolveLink(privacyPolicyLink) || (isEn ? '/en/privacy' : '/privatuma-politika')}
+              href={resolveLink(privacyPolicyLink) || (isEn ? '/en/privacy-policy' : '/privatuma-politika')}
               className="hover:text-white transition-colors duration-200 cursor-pointer"
             >
               {privacyPolicyLabel || (isEn ? 'Privacy Policy' : 'Privātuma politika')}
             </Link>
             <Link
-              href={resolveLink(cookiePolicyLink) || (isEn ? '/en/cookies' : '/sikdatnu-politika')}
+              href={resolveLink(cookiePolicyLink) || (isEn ? '/en/cookie-policy' : '/sikdatnu-politika')}
               className="hover:text-white transition-colors duration-200 cursor-pointer"
             >
               {cookiePolicyLabel || (isEn ? 'Cookie Policy' : 'Sīkdatņu politika')}

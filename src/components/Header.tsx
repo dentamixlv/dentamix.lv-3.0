@@ -85,6 +85,8 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'atsauksmes') target = 'testimonials';
         else if (remaining === 'kontakti') target = 'contacts';
         else if (remaining === 'par-mums') target = 'about';
+        else if (remaining === 'privatuma-politika') target = 'privacy-policy';
+        else if (remaining === 'sikdatnu-politika') target = 'cookie-policy';
 
         return `/en/${target}`;
       } else if (pathname === '/lv') {
@@ -102,6 +104,8 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'atsauksmes') target = 'testimonials';
         else if (remaining === 'kontakti') target = 'contacts';
         else if (remaining === 'par-mums') target = 'about';
+        else if (remaining === 'privatuma-politika') target = 'privacy-policy';
+        else if (remaining === 'sikdatnu-politika') target = 'cookie-policy';
 
         return `/en${target ? '/' + target : ''}`;
       }
@@ -115,6 +119,8 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'testimonials') target = 'atsauksmes';
         else if (remaining === 'contacts') target = 'kontakti';
         else if (remaining === 'about') target = 'par-mums';
+        else if (remaining === 'privacy-policy' || remaining === 'privacy') target = 'privatuma-politika';
+        else if (remaining === 'cookie-policy' || remaining === 'cookies') target = 'sikdatnu-politika';
 
         return `/${target}`;
       } else if (pathname === '/en') {
@@ -127,6 +133,8 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         else if (remaining === 'prices') target = 'cenas';
         else if (remaining === 'testimonials') target = 'atsauksmes';
         else if (remaining === 'contacts') target = 'kontakti';
+        else if (remaining === 'privacy-policy' || remaining === 'privacy') target = 'privatuma-politika';
+        else if (remaining === 'cookie-policy' || remaining === 'cookies') target = 'sikdatnu-politika';
 
         return `/${target}`;
       }
