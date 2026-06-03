@@ -4,7 +4,9 @@ import type { NextRequest } from 'next/server';
 
 function handleRequest(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log("[PROXY] Pathname:", pathname);
+
+  const requestHeaders = new Headers(request.headers);
+  requestHeaders.set('x-pathname', pathname);
 
   // Skip static files, api routes, image optimization, and slicemachine
   if (
@@ -13,7 +15,7 @@ function handleRequest(request: NextRequest) {
     pathname.startsWith('/slice-simulator') ||
     pathname.includes('.')
   ) {
-    return NextResponse.next();
+    return NextResponse.next({ request: { headers: requestHeaders } });
   }
 
   // Normalize en-us to en (e.g. resolved paths from Prismic link fields)
@@ -49,22 +51,22 @@ function handleRequest(request: NextRequest) {
   if (pathname === '/pakalpojumi') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/services';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname.startsWith('/pakalpojumi/')) {
     const url = request.nextUrl.clone();
     url.pathname = `/lv/services/${pathname.substring('/pakalpojumi/'.length)}`;
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname === '/lv/pakalpojumi') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/services';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname.startsWith('/lv/pakalpojumi/')) {
     const url = request.nextUrl.clone();
     url.pathname = `/lv/services/${pathname.substring('/lv/pakalpojumi/'.length)}`;
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
 
   // 3. Redirect /prices (or /lv/prices) to /cenas for Latvian locale
@@ -83,12 +85,12 @@ function handleRequest(request: NextRequest) {
   if (pathname === '/cenas') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/prices';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname === '/lv/cenas') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/prices';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
 
   // 5. Redirect /testimonials (or /lv/testimonials) to /atsauksmes for Latvian locale
@@ -107,12 +109,12 @@ function handleRequest(request: NextRequest) {
   if (pathname === '/atsauksmes') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/testimonials';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname === '/lv/atsauksmes') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/testimonials';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
 
   // 7. Redirect /contacts (or /lv/contacts) to /kontakti for Latvian locale
@@ -131,12 +133,12 @@ function handleRequest(request: NextRequest) {
   if (pathname === '/kontakti') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/contacts';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname === '/lv/kontakti') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/contacts';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
 
   // 9. Redirect /doctors (or /lv/doctors) to /zobarsti for Latvian locale
@@ -189,12 +191,12 @@ function handleRequest(request: NextRequest) {
   if (pathname === '/par-mums') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/about';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname === '/lv/par-mums') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/about';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   // EN locale - redirect /en/par-mums to /en/about
   if (pathname === '/en/par-mums') {
@@ -240,7 +242,7 @@ function handleRequest(request: NextRequest) {
   if (pathname === '/zobarsti') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/doctors';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname === '/lv/zobarsti') {
     const url = request.nextUrl.clone();
