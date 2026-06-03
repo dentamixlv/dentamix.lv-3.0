@@ -2,7 +2,7 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function proxy(request: NextRequest) {
+function handleRequest(request: NextRequest) {
   const { pathname } = request.nextUrl;
   console.log("[PROXY] Pathname:", pathname);
 
@@ -269,6 +269,18 @@ export function proxy(request: NextRequest) {
   }
 
   return NextResponse.next();
+}
+
+export function proxy(request: NextRequest) {
+  const response = handleRequest(request);
+
+  // Inject HTTP security headers
+  response.headers.set('X-Frame-Options', 'SAMEORIGIN');
+  response.headers.set('X-Content-Type-Options', 'nosniff');
+  response.headers.set('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.headers.set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+
+  return response;
 }
 
 export const config = {
