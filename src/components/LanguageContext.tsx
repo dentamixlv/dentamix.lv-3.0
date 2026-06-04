@@ -16,11 +16,13 @@ const LanguageContext = createContext<LanguageContextType>({
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [altLangUrl, setAltLangUrl] = useState<string | null>(null);
   const pathname = usePathname();
+  const [lastPathname, setLastPathname] = useState(pathname);
 
-  // Reset the alt URL whenever the pathname changes, so other pages don't inherit it
-  useEffect(() => {
+  // Reset the translation URL immediately during rendering when navigation occurs
+  if (pathname !== lastPathname) {
+    setLastPathname(pathname);
     setAltLangUrl(null);
-  }, [pathname]);
+  }
 
   return (
     <LanguageContext.Provider value={{ altLangUrl, setAltLangUrl }}>
