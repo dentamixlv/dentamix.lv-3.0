@@ -4,6 +4,7 @@ import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { createClient } from '../../prismicio';
 import { getPrismicLocale } from './page';
+import { LanguageProvider } from '../../components/LanguageContext';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -84,7 +85,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
   }
 
   return (
-    <>
+    <LanguageProvider>
       <Header 
         logoText={menuData?.logoText}
         logoImage={menuData?.logoImage}
@@ -109,6 +110,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         cookiePolicyLink={footerData?.cookiePolicyLink}
       />
       <SpeedInsights />
-    </>
+    </LanguageProvider>
   );
 }

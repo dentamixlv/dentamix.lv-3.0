@@ -5,6 +5,7 @@ import { createClient } from '../../../prismicio';
 import { getPrismicLocale } from '../page';
 import { renderPageLayout } from '../../layoutHelper';
 import { constructMetadata, SEOStructuredData, getAlternativeLanguageRedirect } from '../../seoHelper';
+import { LanguageUpdater } from '../../../components/LanguageContext';
 
 interface PageProps {
   params: Promise<{
@@ -56,6 +57,18 @@ export default async function Page({ params }: PageProps) {
     }
   }
 
+  let alternateLanguageUrl = null;
+  if (document && Array.isArray(document.alternate_languages)) {
+    const alt = document.alternate_languages.find((a: any) => a.lang === (locale === 'en-us' ? 'lv' : 'en-us'));
+    if (alt && alt.uid) {
+      if (locale === 'en-us') {
+        alternateLanguageUrl = `/${alt.uid}`;
+      } else {
+        alternateLanguageUrl = `/en/${alt.uid}`;
+      }
+    }
+  }
+
   if (document && document.data?.slices && document.data.slices.length > 0) {
     const title = document.data.meta_title || 'Dentamic';
     const description = document.data.meta_description || '';
@@ -63,6 +76,7 @@ export default async function Page({ params }: PageProps) {
 
     return (
       <>
+        <LanguageUpdater url={alternateLanguageUrl} />
         <SEOStructuredData
           id={`page-${uid}`}
           title={title}

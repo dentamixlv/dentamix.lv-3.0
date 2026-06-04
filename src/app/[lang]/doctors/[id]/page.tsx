@@ -8,6 +8,7 @@ import { getPrismicLocale } from '../../page';
 import { getDoctors, extractDoctorFromPage } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
 import { constructMetadata, SEOStructuredData, getAlternativeLanguageRedirect } from '../../../seoHelper';
+import { LanguageUpdater } from '../../../../components/LanguageContext';
 
 interface PageProps {
   params: Promise<{
@@ -84,6 +85,18 @@ export default async function Page({ params }: PageProps) {
     }
   }
 
+  let alternateLanguageUrl = null;
+  if (pageDoc && Array.isArray(pageDoc.alternate_languages)) {
+    const alt = pageDoc.alternate_languages.find((a: any) => a.lang === (locale === 'en-us' ? 'lv' : 'en-us'));
+    if (alt && alt.uid) {
+      if (locale === 'en-us') {
+        alternateLanguageUrl = `/zobarsti/${alt.uid}`;
+      } else {
+        alternateLanguageUrl = `/en/doctors/${alt.uid}`;
+      }
+    }
+  }
+
   const doctor = getDoctors(locale).find(d => d.id === id) || null;
 
   const defaultTitle = doctor ? `${doctor.name} | ${locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība'}` : 'Dentamic';
@@ -94,6 +107,7 @@ export default async function Page({ params }: PageProps) {
   if (slices && slices.length > 0) {
     return (
       <>
+        <LanguageUpdater url={alternateLanguageUrl} />
         <SEOStructuredData
           id={`doctor-${id}`}
           title={title}
@@ -115,6 +129,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
+      <LanguageUpdater url={alternateLanguageUrl} />
       <SEOStructuredData
         id={`doctor-${id}`}
         title={title}

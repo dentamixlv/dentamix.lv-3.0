@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { useParams, usePathname } from 'next/navigation';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useLanguage } from './LanguageContext';
 
 interface HeaderProps {
   logoText?: string;
@@ -20,6 +21,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const params = useParams();
   const pathname = usePathname();
+  const { altLangUrl } = useLanguage();
 
   const langList = params?.lang;
   const isEn = langList === 'en' || (Array.isArray(langList) && langList[0] === 'en');
@@ -75,6 +77,15 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
   };
 
   const getLanguagePath = (targetLang: 'lv' | 'en') => {
+    if (altLangUrl) {
+      if (targetLang === 'en' && altLangUrl.startsWith('/en')) {
+        return altLangUrl;
+      }
+      if (targetLang === 'lv' && !altLangUrl.startsWith('/en')) {
+        return altLangUrl;
+      }
+    }
+
     if (targetLang === 'en') {
       if (pathname.startsWith('/lv/')) {
         const remaining = pathname.substring(4);

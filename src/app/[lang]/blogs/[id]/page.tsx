@@ -7,6 +7,7 @@ import { getBlogPosts } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
 import { components } from '../../../../slices';
 import { constructMetadata, SEOStructuredData, getAlternativeLanguageRedirect } from '../../../seoHelper';
+import { LanguageUpdater } from '../../../../components/LanguageContext';
 
 interface PageProps {
   params: Promise<{
@@ -68,6 +69,18 @@ export default async function Page({ params }: PageProps) {
     }
   }
 
+  let alternateLanguageUrl = null;
+  if (pageDoc && Array.isArray(pageDoc.alternate_languages)) {
+    const alt = pageDoc.alternate_languages.find((a: any) => a.lang === (locale === 'en-us' ? 'lv' : 'en-us'));
+    if (alt && alt.uid) {
+      if (locale === 'en-us') {
+        alternateLanguageUrl = `/blogs/${alt.uid}`;
+      } else {
+        alternateLanguageUrl = `/en/blogs/${alt.uid}`;
+      }
+    }
+  }
+
   const post = getBlogPosts(locale).find(p => p.id === id) || null;
 
   const title = pageDoc?.data?.meta_title || (post ? `${post.title} | ${locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība'}` : 'Dentamic');
@@ -77,6 +90,7 @@ export default async function Page({ params }: PageProps) {
   if (slices && slices.length > 0) {
     return (
       <>
+        <LanguageUpdater url={alternateLanguageUrl} />
         <SEOStructuredData
           id={`blog-${id}`}
           title={title}
@@ -98,6 +112,7 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
+      <LanguageUpdater url={alternateLanguageUrl} />
       <SEOStructuredData
         id={`blog-${id}`}
         title={title}
