@@ -1,0 +1,30 @@
+{
+  "id": "settings",
+  "label": "Settings",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "favicon": {
+        "type": "Image",
+        "config": {
+          "label": "Favicon",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "main_color": {
+        "type": "Color",
+        "config": {
+          "label": "Main Color"
+        }
+      },
+      "header_color": {
+        "type": "Color",
+        "config": {
+          "label": "Header Color"
+        }
+      }
+    }
+  }
+}

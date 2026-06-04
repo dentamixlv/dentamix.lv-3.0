@@ -977,7 +977,56 @@ interface TestimonialDocumentData {
  */
 export type TestimonialDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<TestimonialDocumentData>, "testimonial", Lang>;
 
-export type AllDocumentTypes = BlogPostDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument;
+/**
+ * Content for Settings documents
+ */
+export interface SettingsDocumentData {
+	/**
+	 * Favicon field in *Settings*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.favicon
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	favicon: prismic.ImageField<never>;
+	
+	/**
+	 * Main Color field in *Settings*
+	 *
+	 * - **Field Type**: Color
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.main_color
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/color
+	 */
+	main_color: prismic.ColorField;
+	
+	/**
+	 * Header Color field in *Settings*
+	 *
+	 * - **Field Type**: Color
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.header_color
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/color
+	 */
+	header_color: prismic.ColorField;
+}
+
+/**
+ * Settings document from Prismic
+ *
+ * - **API ID**: `settings`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type SettingsDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<SettingsDocumentData>, "settings", Lang>;
+
+export type AllDocumentTypes = BlogPostDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | PriceItemDocument | ServiceDocument | TestimonialDocument | SettingsDocument;
 
 /**
  * Primary content in *BlogGrid → Default → Primary*
@@ -2600,6 +2649,8 @@ declare module "@prismicio/client" {
 			ServiceDocumentData,
 			TestimonialDocument,
 			TestimonialDocumentData,
+			SettingsDocument,
+			SettingsDocumentData,
 			AllDocumentTypes,
 			BlogGridSlice,
 			BlogGridSliceDefaultPrimary,
