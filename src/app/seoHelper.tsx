@@ -101,3 +101,45 @@ export function constructMetadata(
     },
   };
 }
+
+/**
+ * Resolves the correct alternative language URL for a missing document.
+ * Queries the document in the alternative locale, reads its alternate_languages reference,
+ * and builds the correct path segment.
+ */
+export async function getAlternativeLanguageRedirect({
+  client,
+  id,
+  currentLocale,
+  pageType = 'page',
+  routeType,
+}: {
+  client: any;
+  id: string;
+  currentLocale: string;
+  pageType?: string;
+  routeType: 'services' | 'page' | 'doctors' | 'blogs';
+}): Promise<string | null> {
+  try {
+    const otherLocale = currentLocale === 'en-us' ? 'lv' : 'en-us';
+    const otherDoc = await client.getByUID(pageType, id, { lang: otherLocale });
+    if (otherDoc && Array.isArray(otherDoc.alternate_languages)) {
+      const alt = otherDoc.alternate_languages.find((a: any) => a.lang === currentLocale);
+      if (alt && alt.uid) {
+        if (currentLocale === 'en-us') {
+          if (routeType === 'page') return `/en/${alt.uid}`;
+          return `/en/${routeType}/${alt.uid}`;
+        } else {
+          if (routeType === 'services') return `/pakalpojumi/${alt.uid}`;
+          if (routeType === 'doctors') return `/zobarsti/${alt.uid}`;
+          if (routeType === 'blogs') return `/blogs/${alt.uid}`;
+          return `/${alt.uid}`;
+        }
+      }
+    }
+  } catch (e) {
+    // Ignore and return null
+  }
+  return null;
+}
+

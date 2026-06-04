@@ -1,12 +1,12 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { createClient } from '../../../../prismicio';
 import ServiceClient from './ServiceClient';
 import { getPrismicLocale } from '../../page';
 import { getServices } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
 import { components } from '../../../../slices';
-import { constructMetadata, SEOStructuredData } from '../../../seoHelper';
+import { constructMetadata, SEOStructuredData, getAlternativeLanguageRedirect } from '../../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -53,6 +53,19 @@ export default async function Page({ params }: PageProps) {
     slices = pageDoc?.data?.slices || null;
   } catch (e) {
     // Ignore
+  }
+
+  if (!pageDoc) {
+    const redirectUrl = await getAlternativeLanguageRedirect({
+      client,
+      id,
+      currentLocale: locale,
+      pageType: 'page',
+      routeType: 'services',
+    });
+    if (redirectUrl) {
+      redirect(redirectUrl);
+    }
   }
 
   const service = getServices(locale).find((s) => s.id === id) || null;

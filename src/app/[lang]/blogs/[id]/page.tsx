@@ -1,12 +1,12 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { createClient } from '../../../../prismicio';
 import BlogPostClient from './BlogPostClient';
 import { getPrismicLocale } from '../../page';
 import { getBlogPosts } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
 import { components } from '../../../../slices';
-import { constructMetadata, SEOStructuredData } from '../../../seoHelper';
+import { constructMetadata, SEOStructuredData, getAlternativeLanguageRedirect } from '../../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -53,6 +53,19 @@ export default async function Page({ params }: PageProps) {
     slices = pageDoc?.data?.slices || null;
   } catch (e) {
     // Ignore
+  }
+
+  if (!pageDoc) {
+    const redirectUrl = await getAlternativeLanguageRedirect({
+      client,
+      id,
+      currentLocale: locale,
+      pageType: 'page',
+      routeType: 'blogs',
+    });
+    if (redirectUrl) {
+      redirect(redirectUrl);
+    }
   }
 
   const post = getBlogPosts(locale).find(p => p.id === id) || null;

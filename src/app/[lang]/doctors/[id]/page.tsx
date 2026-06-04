@@ -1,5 +1,5 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { SliceZone } from '@prismicio/react';
 import { components } from '../../../../slices';
 import { createClient } from '../../../../prismicio';
@@ -7,7 +7,7 @@ import DoctorProfileClient from './DoctorProfileClient';
 import { getPrismicLocale } from '../../page';
 import { getDoctors, extractDoctorFromPage } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
-import { constructMetadata, SEOStructuredData } from '../../../seoHelper';
+import { constructMetadata, SEOStructuredData, getAlternativeLanguageRedirect } from '../../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -69,6 +69,19 @@ export default async function Page({ params }: PageProps) {
     slices = pageDoc?.data?.slices || null;
   } catch (e) {
     // Ignore and fall back to structured doctor profile
+  }
+
+  if (!pageDoc) {
+    const redirectUrl = await getAlternativeLanguageRedirect({
+      client,
+      id,
+      currentLocale: locale,
+      pageType: 'page',
+      routeType: 'doctors',
+    });
+    if (redirectUrl) {
+      redirect(redirectUrl);
+    }
   }
 
   const doctor = getDoctors(locale).find(d => d.id === id) || null;

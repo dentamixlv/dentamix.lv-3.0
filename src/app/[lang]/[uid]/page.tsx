@@ -1,10 +1,10 @@
 import React from 'react';
-import { notFound } from 'next/navigation';
+import { notFound, redirect } from 'next/navigation';
 import { components } from '../../../slices';
 import { createClient } from '../../../prismicio';
 import { getPrismicLocale } from '../page';
 import { renderPageLayout } from '../../layoutHelper';
-import { constructMetadata, SEOStructuredData } from '../../seoHelper';
+import { constructMetadata, SEOStructuredData, getAlternativeLanguageRedirect } from '../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -41,6 +41,19 @@ export default async function Page({ params }: PageProps) {
     document = await client.getByUID('page', uid, { lang: locale });
   } catch (error) {
     console.warn(`Prismic document of type page with UID "${uid}" not found.`, error);
+  }
+
+  if (!document) {
+    const redirectUrl = await getAlternativeLanguageRedirect({
+      client,
+      id: uid,
+      currentLocale: locale,
+      pageType: 'page',
+      routeType: 'page',
+    });
+    if (redirectUrl) {
+      redirect(redirectUrl);
+    }
   }
 
   if (document && document.data?.slices && document.data.slices.length > 0) {
