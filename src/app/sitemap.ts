@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getServices, getBlogPosts, getDoctors } from '../data';
+import { createClient } from '../prismicio';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://dentamix.lv';
@@ -91,6 +92,50 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'weekly',
       priority: 0.6,
     });
+  }
+
+  // Add dynamic custom Prismic pages (filtering out static paths, services, doctors, and blogs)
+  try {
+    const client = createClient();
+    const prismicPages = await client.getAllByType('page');
+    
+    for (const pageDoc of prismicPages) {
+      const uid = pageDoc.uid;
+      const lang = pageDoc.lang; // 'lv' or 'en-us'
+
+      // Skip if the page matches one of our known core static routes or other dynamic content
+      const isStaticOrKnown = staticPaths.some(p => p.en === `/${uid}` || p.lv === `/${uid}`) ||
+        services.some(s => s.id === uid) ||
+        doctors.some(d => d.id === uid) ||
+        blogs.some(b => b.id === uid) ||
+        // Fallback checks for common routing equivalents
+        uid === 'home' || uid === 'sakums' ||
+        uid === 'zobardti'; // fallback doctor list uid
+
+      if (isStaticOrKnown) continue;
+
+      const lastModifiedDate = pageDoc.last_publication_date
+        ? new Date(pageDoc.last_publication_date)
+        : new Date();
+
+      if (lang === 'en-us') {
+        entries.push({
+          url: `${baseUrl}/en/${uid}`,
+          lastModified: lastModifiedDate,
+          changeFrequency: 'weekly',
+          priority: 0.5,
+        });
+      } else {
+        entries.push({
+          url: `${baseUrl}/${uid}`,
+          lastModified: lastModifiedDate,
+          changeFrequency: 'weekly',
+          priority: 0.5,
+        });
+      }
+    }
+  } catch (error) {
+    console.warn("Failed to fetch Prismic custom pages for sitemap.", error);
   }
 
   return entries;
