@@ -5,6 +5,7 @@ import { createClient } from '../../../prismicio';
 import DoctorsClient from './DoctorsClient';
 import { getPrismicLocale } from '../page';
 import { extractDoctorFromPage } from '../../../data';
+import { constructMetadata, SEOStructuredData } from '../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -15,18 +16,34 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { lang } = await params;
   const locale = getPrismicLocale(lang);
+  const client = createClient();
 
-  if (locale === 'en-us') {
-    return {
-      title: 'Our Dentists | Dentamic Dental Clinic',
-      description: 'Meet our professional dental team. High clinical precision and compassionate care in Riga and Adazi.',
-    };
+  const uid = locale === 'en-us' ? 'doctors' : 'zobarsti';
+  let document = null;
+  try {
+    try {
+      document = await client.getByUID('page', uid, { lang: locale });
+    } catch (e) {
+      try {
+        document = await client.getByUID('page', 'zobardti', { lang: locale });
+      } catch (e2) {
+        const fallbackUid = uid === 'zobarsti' ? 'doctors' : 'zobarsti';
+        document = await client.getByUID('page', fallbackUid, { lang: locale });
+      }
+    }
+  } catch (error) {
+    // Ignore and fallback
   }
 
-  return {
+  const fallback = locale === 'en-us' ? {
+    title: 'Our Dentists | Dentamic Dental Clinic',
+    description: 'Meet our professional dental team. High clinical precision and compassionate care in Riga and Adazi.',
+  } : {
     title: 'Mūsu komanda | Dentamic zobārstniecība',
     description: 'Profesionāli speciālisti, kas apvieno klīnisko precizitāti un personalizētu, iejūtīgu aprūpi.',
   };
+
+  return constructMetadata(document?.data, locale, fallback);
 }
 
 export default async function Page({ params }: PageProps) {
@@ -34,11 +51,10 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  // 1. Try to load dynamic page content from slices first
   let slices = null;
+  let document = null;
   try {
     const uid = locale === 'en-us' ? 'doctors' : 'zobarsti';
-    let document;
     try {
       document = await client.getByUID('page', uid, { lang: locale });
     } catch (e) {
@@ -54,23 +70,40 @@ export default async function Page({ params }: PageProps) {
     console.warn("No Prismic page document for 'doctors' found, falling back to standalone doctors list.");
   }
 
-  if (slices && slices.length > 0) {
-    return <SliceZone slices={slices} components={components} />;
-  }
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Our Dentists | Dentamic Dental Clinic' : 'Mūsu komanda | Dentamic zobārstniecība');
+  const description = document?.data?.meta_description || '';
+  const imageUrl = document?.data?.schema_image?.url || null;
 
-  // 2. Fallback to querying doctor cards dynamically
   let doctors = null;
-  try {
-    const documents = await client.getAllByType('page', { lang: locale });
-    const extracted = documents
-      .map(d => extractDoctorFromPage(d))
-      .filter((d): d is any => d !== null);
-    if (extracted.length > 0) {
-      doctors = extracted;
+  if (!slices || slices.length === 0) {
+    try {
+      const documents = await client.getAllByType('page', { lang: locale });
+      const extracted = documents
+        .map(d => extractDoctorFromPage(d))
+        .filter((d): d is any => d !== null);
+      if (extracted.length > 0) {
+        doctors = extracted;
+      }
+    } catch (error) {
+      console.warn("No doctors in Prismic, using fallback data.");
     }
-  } catch (error) {
-    console.warn("No doctors in Prismic, using fallback data.");
   }
 
-  return <DoctorsClient langCode={locale} customDoctors={doctors} />;
+  const content = slices && slices.length > 0 ? (
+    <SliceZone slices={slices} components={components} />
+  ) : (
+    <DoctorsClient langCode={locale} customDoctors={doctors} />
+  );
+
+  return (
+    <>
+      <SEOStructuredData
+        id="doctors"
+        title={title}
+        description={description}
+        imageUrl={imageUrl}
+      />
+      {content}
+    </>
+  );
 }

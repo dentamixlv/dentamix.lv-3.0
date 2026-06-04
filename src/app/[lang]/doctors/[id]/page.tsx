@@ -7,6 +7,7 @@ import DoctorProfileClient from './DoctorProfileClient';
 import { getPrismicLocale } from '../../page';
 import { getDoctors, extractDoctorFromPage } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
+import { constructMetadata, SEOStructuredData } from '../../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -20,11 +21,12 @@ export async function generateMetadata({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
+  let pageDoc = null;
   let doctor = null;
 
   // Try custom page first
   try {
-    const pageDoc = await client.getByUID('page', id, { lang: locale });
+    pageDoc = await client.getByUID('page', id, { lang: locale });
     if (pageDoc) {
       doctor = extractDoctorFromPage(pageDoc);
     }
@@ -43,17 +45,16 @@ export async function generateMetadata({ params }: PageProps) {
     }
   }
 
-  if (!doctor) {
-    return {
-      title: 'Zobārsts nav atrasts | Dentamic',
-    };
-  }
-
   const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
-  return {
+  const fallback = doctor ? {
     title: `${doctor.name} | ${suffix}`,
-    description: doctor.description,
+    description: doctor.description || '',
+  } : {
+    title: locale === 'en-us' ? 'Dentist Not Found | Dentamic' : 'Zobārsts nav atrasts | Dentamic',
+    description: '',
   };
+
+  return constructMetadata(pageDoc?.data, locale, fallback);
 }
 
 export default async function Page({ params }: PageProps) {
@@ -61,25 +62,39 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  // 1. Try to find a custom 'page' document for this doctor (dynamic slice-based page)
   let slices = null;
+  let pageDoc = null;
   try {
-    const doc = await client.getByUID('page', id, { lang: locale });
-    slices = doc?.data?.slices || null;
+    pageDoc = await client.getByUID('page', id, { lang: locale });
+    slices = pageDoc?.data?.slices || null;
   } catch (e) {
     // Ignore and fall back to structured doctor profile
   }
 
-  if (slices && slices.length > 0) {
-    return renderPageLayout(slices, components, {
-      showBackButton: true,
-      backButtonText: locale === 'en-us' ? 'Back to Dentists' : 'Atpakaļ pie zobārstiem',
-      backButtonHref: locale === 'en-us' ? '/en/doctors' : '/zobarsti',
-    });
-  }
-
-  // 2. Fallback: static doctor data
   const doctor = getDoctors(locale).find(d => d.id === id) || null;
+
+  const defaultTitle = doctor ? `${doctor.name} | ${locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība'}` : 'Dentamic';
+  const title = pageDoc?.data?.meta_title || defaultTitle;
+  const description = pageDoc?.data?.meta_description || doctor?.description || '';
+  const imageUrl = pageDoc?.data?.schema_image?.url || null;
+
+  if (slices && slices.length > 0) {
+    return (
+      <>
+        <SEOStructuredData
+          id={`doctor-${id}`}
+          title={title}
+          description={description}
+          imageUrl={imageUrl}
+        />
+        {renderPageLayout(slices, components, {
+          showBackButton: true,
+          backButtonText: locale === 'en-us' ? 'Back to Dentists' : 'Atpakaļ pie zobārstiem',
+          backButtonHref: locale === 'en-us' ? '/en/doctors' : '/zobarsti',
+        })}
+      </>
+    );
+  }
 
   if (!doctor) {
     notFound();
@@ -87,6 +102,12 @@ export default async function Page({ params }: PageProps) {
 
   return (
     <>
+      <SEOStructuredData
+        id={`doctor-${id}`}
+        title={title}
+        description={description}
+        imageUrl={imageUrl}
+      />
       <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto">
           <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block text-center">

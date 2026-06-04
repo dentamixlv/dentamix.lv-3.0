@@ -70,6 +70,38 @@
           }
         }
       }
+    },
+    "SEO": {
+      "meta_title": {
+        "type": "Text",
+        "config": {
+          "label": "SEO Title",
+          "placeholder": "Enter page title for search engines"
+        }
+      },
+      "meta_description": {
+        "type": "Text",
+        "config": {
+          "label": "SEO Description",
+          "placeholder": "Enter page description for search engines"
+        }
+      },
+      "schema_image": {
+        "type": "Image",
+        "config": {
+          "label": "Schema.org Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "og_image": {
+        "type": "Image",
+        "config": {
+          "label": "Social Share Image (OpenGraph/Twitter)",
+          "constraint": {},
+          "thumbnails": []
+        }
+      }
     }
   }
 }

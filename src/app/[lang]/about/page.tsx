@@ -5,6 +5,7 @@ import { createClient } from '../../../prismicio';
 import AboutClient from './AboutClient';
 import { getPrismicLocale } from '../page';
 import { renderPageLayout } from '../../layoutHelper';
+import { constructMetadata, SEOStructuredData } from '../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -17,36 +18,28 @@ export async function generateMetadata({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
+  const uid = locale === 'en-us' ? 'about' : 'par-mums';
+  let document = null;
   try {
-    const uid = locale === 'en-us' ? 'about' : 'par-mums';
-    let document;
     try {
       document = await client.getByUID('page', uid, { lang: locale });
     } catch (e) {
       const fallbackUid = uid === 'par-mums' ? 'about' : 'par-mums';
       document = await client.getByUID('page', fallbackUid, { lang: locale });
     }
-    if (document && document.data && document.data.meta_title) {
-      return {
-        title: document.data.meta_title,
-        description: document.data.meta_description || '',
-      };
-    }
   } catch (error) {
-    // Ignore and use default metadata
+    // Ignore and fallback
   }
 
-  if (locale === 'en-us') {
-    return {
-      title: 'About Us | Dentamic Dental Clinic',
-      description: 'Learn about Dentamic - a modern dental clinic combining advanced technology with personalized care in Riga and Adazi.',
-    };
-  }
-
-  return {
+  const fallback = locale === 'en-us' ? {
+    title: 'About Us | Dentamic Dental Clinic',
+    description: 'Learn about Dentamic - a modern dental clinic combining advanced technology with personalized care in Riga and Adazi.',
+  } : {
     title: 'Par Mums | Dentamic zobārstniecība',
     description: 'Uzziniet par Dentamic - mūsdienīgu zobārstniecības klīniku, kas apvieno jaunākās tehnoloģijas un individuālu pieeju.',
   };
+
+  return constructMetadata(document?.data, locale, fallback);
 }
 
 export default async function Page({ params }: PageProps) {
@@ -55,9 +48,9 @@ export default async function Page({ params }: PageProps) {
   const client = createClient();
 
   let slices = null;
+  let document = null;
   try {
     const uid = locale === 'en-us' ? 'about' : 'par-mums';
-    let document;
     try {
       document = await client.getByUID('page', uid, { lang: locale });
     } catch (e) {
@@ -69,9 +62,25 @@ export default async function Page({ params }: PageProps) {
     console.warn("No about/par-mums page found in Prismic, falling back to static about view.");
   }
 
-  if (slices && slices.length > 0) {
-    return renderPageLayout(slices, components);
-  }
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'About Us | Dentamic Dental Clinic' : 'Par Mums | Dentamic zobārstniecība');
+  const description = document?.data?.meta_description || '';
+  const imageUrl = document?.data?.schema_image?.url || null;
 
-  return <AboutClient />;
+  const content = slices && slices.length > 0 ? (
+    renderPageLayout(slices, components)
+  ) : (
+    <AboutClient />
+  );
+
+  return (
+    <>
+      <SEOStructuredData
+        id="about"
+        title={title}
+        description={description}
+        imageUrl={imageUrl}
+      />
+      {content}
+    </>
+  );
 }

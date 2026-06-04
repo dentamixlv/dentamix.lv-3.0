@@ -4,6 +4,7 @@ import { components } from '../../../slices';
 import { createClient } from '../../../prismicio';
 import BlogsClient from './BlogsClient';
 import { getPrismicLocale } from '../page';
+import { constructMetadata, SEOStructuredData } from '../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -14,18 +15,24 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { lang } = await params;
   const locale = getPrismicLocale(lang);
+  const client = createClient();
 
-  if (locale === 'en-us') {
-    return {
-      title: 'Dentamic Blog | Knowledge & Dental Advice',
-      description: 'Specialist advice, latest technologies, and practical tips for successful oral care and a healthy smile.',
-    };
+  let document = null;
+  try {
+    document = await client.getByUID('page', 'blogs', { lang: locale });
+  } catch (error) {
+    // Ignore and fallback
   }
 
-  return {
+  const fallback = locale === 'en-us' ? {
+    title: 'Dentamic Blog | Knowledge & Dental Advice',
+    description: 'Specialist advice, latest technologies, and practical tips for successful oral care and a healthy smile.',
+  } : {
     title: 'Blogs un padomi | Dentamic zobārstniecība',
     description: 'Speciālistu ieteikumi, jaunākās tehnoloģijas un praktiski padomi smaida aprūpei.',
   };
+
+  return constructMetadata(document?.data, locale, fallback);
 }
 
 export default async function Page({ params }: PageProps) {
@@ -33,30 +40,34 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  // 1. Try to load dynamic page content from slices first
   let slices = null;
+  let document = null;
   try {
-    const document = await client.getByUID('page', 'blogs', { lang: locale });
+    document = await client.getByUID('page', 'blogs', { lang: locale });
     slices = document?.data?.slices || null;
   } catch (error) {
     console.warn("No Prismic page document for 'blogs' found, falling back to standalone blog posts list.");
   }
 
-  if (slices && slices.length > 0) {
-    const lastSlice = slices[slices.length - 1];
-    if (lastSlice.slice_type === 'cta_block') {
-      const mainSlices = slices.slice(0, -1);
-      return (
-        <>
-          <SliceZone slices={mainSlices} components={components} />
-          <SliceZone slices={[lastSlice]} components={components} context={{ isBottom: true }} />
-        </>
-      );
-    }
-    return <SliceZone slices={slices} components={components} />;
-  }
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Dentamic Blog | Knowledge & Dental Advice' : 'Blogs un padomi | Dentamic zobārstniecība');
+  const description = document?.data?.meta_description || '';
+  const imageUrl = document?.data?.schema_image?.url || null;
 
-  return (
+  const content = slices && slices.length > 0 ? (
+    (() => {
+      const lastSlice = slices[slices.length - 1];
+      if (lastSlice.slice_type === 'cta_block') {
+        const mainSlices = slices.slice(0, -1);
+        return (
+          <>
+            <SliceZone slices={mainSlices} components={components} />
+            <SliceZone slices={[lastSlice]} components={components} context={{ isBottom: true }} />
+          </>
+        );
+      }
+      return <SliceZone slices={slices} components={components} />;
+    })()
+  ) : (
     <>
       <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto">
@@ -69,6 +80,18 @@ export default async function Page({ params }: PageProps) {
         </div>
       </div>
       <BlogsClient langCode={locale} customBlogPosts={null} hideHeader={true} />
+    </>
+  );
+
+  return (
+    <>
+      <SEOStructuredData
+        id="blogs"
+        title={title}
+        description={description}
+        imageUrl={imageUrl}
+      />
+      {content}
     </>
   );
 }

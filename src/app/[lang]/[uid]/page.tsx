@@ -4,6 +4,7 @@ import { components } from '../../../slices';
 import { createClient } from '../../../prismicio';
 import { getPrismicLocale } from '../page';
 import { renderPageLayout } from '../../layoutHelper';
+import { constructMetadata, SEOStructuredData } from '../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -17,22 +18,17 @@ export async function generateMetadata({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
+  let document = null;
   try {
-    const document = await client.getByUID('page', uid, { lang: locale });
-    const data = document?.data as any;
-    if (document && data && data.meta_title) {
-      return {
-        title: data.meta_title,
-        description: data.meta_description || '',
-      };
-    }
+    document = await client.getByUID('page', uid, { lang: locale });
   } catch (error) {
-    // Ignore and fallback to default page metadata
+    // Ignore and fallback
   }
 
-  return {
+  return constructMetadata(document?.data, locale, {
     title: 'Dentamic',
-  };
+    description: '',
+  });
 }
 
 export default async function Page({ params }: PageProps) {
@@ -40,15 +36,29 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
+  let document = null;
   try {
-    const document = await client.getByUID('page', uid, { lang: locale });
-    const slices = document?.data?.slices || null;
-
-    if (slices && slices.length > 0) {
-      return renderPageLayout(slices, components);
-    }
+    document = await client.getByUID('page', uid, { lang: locale });
   } catch (error) {
     console.warn(`Prismic document of type page with UID "${uid}" not found.`, error);
+  }
+
+  if (document && document.data?.slices && document.data.slices.length > 0) {
+    const title = document.data.meta_title || 'Dentamic';
+    const description = document.data.meta_description || '';
+    const imageUrl = document.data.schema_image?.url || null;
+
+    return (
+      <>
+        <SEOStructuredData
+          id={`page-${uid}`}
+          title={title}
+          description={description}
+          imageUrl={imageUrl}
+        />
+        {renderPageLayout(document.data.slices, components)}
+      </>
+    );
   }
 
   notFound();

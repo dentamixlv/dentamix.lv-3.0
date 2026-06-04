@@ -4,6 +4,7 @@ import { components } from '../../../slices';
 import { createClient } from '../../../prismicio';
 import TestimonialsClient from './TestimonialsClient';
 import { getPrismicLocale } from '../page';
+import { constructMetadata, SEOStructuredData } from '../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -14,18 +15,30 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps) {
   const { lang } = await params;
   const locale = getPrismicLocale(lang);
+  const client = createClient();
 
-  if (locale === 'en-us') {
-    return {
-      title: 'Patient Testimonials | Dentamic Dental Clinic',
-      description: 'Read reviews and smile stories from our happy patients at Dentamic Dental Clinic.',
-    };
+  const uid = locale === 'en-us' ? 'testimonials' : 'atsauksmes';
+  let document = null;
+  try {
+    try {
+      document = await client.getByUID('page', uid, { lang: locale });
+    } catch (e) {
+      const fallbackUid = uid === 'atsauksmes' ? 'testimonials' : 'atsauksmes';
+      document = await client.getByUID('page', fallbackUid, { lang: locale });
+    }
+  } catch (error) {
+    // Ignore and fallback
   }
 
-  return {
+  const fallback = locale === 'en-us' ? {
+    title: 'Patient Testimonials | Dentamic Dental Clinic',
+    description: 'Read reviews and smile stories from our happy patients at Dentamic Dental Clinic.',
+  } : {
     title: 'Atsauksmes | Dentamic zobārstniecība',
     description: 'Pacientu patiesas atsauksmes un stāsti par veikto zobu labošanu un estētisko restaurāciju.',
   };
+
+  return constructMetadata(document?.data, locale, fallback);
 }
 
 export default async function Page({ params }: PageProps) {
@@ -33,11 +46,10 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  // 1. Try to load dynamic page content from slices first
   let slices = null;
+  let document = null;
   try {
     const uid = locale === 'en-us' ? 'testimonials' : 'atsauksmes';
-    let document;
     try {
       document = await client.getByUID('page', uid, { lang: locale });
     } catch (e) {
@@ -49,11 +61,13 @@ export default async function Page({ params }: PageProps) {
     console.warn("No Prismic page document for 'testimonials' found, falling back to standalone testimonials list.");
   }
 
-  if (slices && slices.length > 0) {
-    return <SliceZone slices={slices} components={components} />;
-  }
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Patient Testimonials | Dentamic Dental Clinic' : 'Atsauksmes | Dentamic zobārstniecība');
+  const description = document?.data?.meta_description || '';
+  const imageUrl = document?.data?.schema_image?.url || null;
 
-  return (
+  const content = slices && slices.length > 0 ? (
+    <SliceZone slices={slices} components={components} />
+  ) : (
     <>
       <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
         <div className="text-center max-w-2xl mx-auto">
@@ -66,6 +80,18 @@ export default async function Page({ params }: PageProps) {
         </div>
       </div>
       <TestimonialsClient langCode={locale} customTestimonials={null} hideHeader={true} />
+    </>
+  );
+
+  return (
+    <>
+      <SEOStructuredData
+        id="testimonials"
+        title={title}
+        description={description}
+        imageUrl={imageUrl}
+      />
+      {content}
     </>
   );
 }

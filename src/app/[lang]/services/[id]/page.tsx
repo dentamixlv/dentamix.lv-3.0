@@ -6,6 +6,7 @@ import { getPrismicLocale } from '../../page';
 import { getServices } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
 import { components } from '../../../../slices';
+import { constructMetadata, SEOStructuredData } from '../../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -19,32 +20,25 @@ export async function generateMetadata({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  let service = null;
-  // Try custom page first
+  let pageDoc = null;
   try {
-    const pageDoc = await client.getByUID('page', id, { lang: locale });
-    if (pageDoc && pageDoc.data && (pageDoc.data as any).meta_title) {
-      return {
-        title: (pageDoc.data as any).meta_title,
-        description: (pageDoc.data as any).meta_description || '',
-      };
-    }
+    pageDoc = await client.getByUID('page', id, { lang: locale });
   } catch (e) {
     // Ignore
   }
 
   const fallbackService = getServices(locale).find((s) => s.id === id);
-  if (fallbackService) {
-    const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
-    return {
-      title: `${fallbackService.title} | ${suffix}`,
-      description: fallbackService.description,
-    };
-  }
+  const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
 
-  return {
-    title: 'Pakalpojums nav atrasts | Dentamic',
+  const fallback = fallbackService ? {
+    title: `${fallbackService.title} | ${suffix}`,
+    description: fallbackService.description || '',
+  } : {
+    title: locale === 'en-us' ? 'Service Not Found | Dentamic' : 'Pakalpojums nav atrasts | Dentamic',
+    description: '',
   };
+
+  return constructMetadata(pageDoc?.data, locale, fallback);
 }
 
 export default async function Page({ params }: PageProps) {
@@ -52,28 +46,53 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  // 1. Try to find a custom 'page' document for this service (dynamic slice-based page)
   let slices = null;
+  let pageDoc = null;
   try {
-    const doc = await client.getByUID('page', id, { lang: locale });
-    slices = doc?.data?.slices || null;
+    pageDoc = await client.getByUID('page', id, { lang: locale });
+    slices = pageDoc?.data?.slices || null;
   } catch (e) {
     // Ignore
   }
 
-  if (slices && slices.length > 0) {
-    return renderPageLayout(slices, components, {
-      showBackButton: true,
-      backButtonText: locale === 'en-us' ? 'Back to Services' : 'Atpakaļ uz pakalpojumiem',
-      backButtonHref: locale === 'en-us' ? '/en/services' : '/pakalpojumi',
-    });
-  }
-
   const service = getServices(locale).find((s) => s.id === id) || null;
+
+  const defaultTitle = service ? `${service.title} | ${locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība'}` : 'Dentamic';
+  const title = pageDoc?.data?.meta_title || defaultTitle;
+  const description = pageDoc?.data?.meta_description || service?.description || '';
+  const imageUrl = pageDoc?.data?.schema_image?.url || null;
+
+  if (slices && slices.length > 0) {
+    return (
+      <>
+        <SEOStructuredData
+          id={`service-${id}`}
+          title={title}
+          description={description}
+          imageUrl={imageUrl}
+        />
+        {renderPageLayout(slices, components, {
+          showBackButton: true,
+          backButtonText: locale === 'en-us' ? 'Back to Services' : 'Atpakaļ uz pakalpojumiem',
+          backButtonHref: locale === 'en-us' ? '/en/services' : '/pakalpojumi',
+        })}
+      </>
+    );
+  }
 
   if (!service) {
     notFound();
   }
 
-  return <ServiceClient service={service} langCode={locale} />;
+  return (
+    <>
+      <SEOStructuredData
+        id={`service-${id}`}
+        title={title}
+        description={description}
+        imageUrl={imageUrl}
+      />
+      <ServiceClient service={service} langCode={locale} />
+    </>
+  );
 }

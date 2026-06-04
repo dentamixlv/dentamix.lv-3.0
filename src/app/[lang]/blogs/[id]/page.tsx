@@ -6,6 +6,7 @@ import { getPrismicLocale } from '../../page';
 import { getBlogPosts } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
 import { components } from '../../../../slices';
+import { constructMetadata, SEOStructuredData } from '../../../seoHelper';
 
 interface PageProps {
   params: Promise<{
@@ -19,32 +20,25 @@ export async function generateMetadata({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  let post = null;
-  // Try custom page first
+  let pageDoc = null;
   try {
-    const pageDoc = await client.getByUID('page', id, { lang: locale });
-    if (pageDoc && pageDoc.data && (pageDoc.data as any).meta_title) {
-      return {
-        title: (pageDoc.data as any).meta_title,
-        description: (pageDoc.data as any).meta_description || '',
-      };
-    }
+    pageDoc = await client.getByUID('page', id, { lang: locale });
   } catch (e) {
     // Ignore
   }
 
   const fallbackPost = getBlogPosts(locale).find(p => p.id === id);
-  if (fallbackPost) {
-    const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
-    return {
-      title: `${fallbackPost.title} | ${suffix}`,
-      description: fallbackPost.description,
-    };
-  }
+  const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
 
-  return {
-    title: 'Raksts nav atrasts | Dentamic',
+  const fallback = fallbackPost ? {
+    title: `${fallbackPost.title} | ${suffix}`,
+    description: fallbackPost.description || '',
+  } : {
+    title: locale === 'en-us' ? 'Article Not Found | Dentamic' : 'Raksts nav atrasts | Dentamic',
+    description: '',
   };
+
+  return constructMetadata(pageDoc?.data, locale, fallback);
 }
 
 export default async function Page({ params }: PageProps) {
@@ -52,28 +46,52 @@ export default async function Page({ params }: PageProps) {
   const locale = getPrismicLocale(lang);
   const client = createClient();
 
-  // 1. Try to find a custom 'page' document for this blog post (dynamic slice-based page)
   let slices = null;
+  let pageDoc = null;
   try {
-    const doc = await client.getByUID('page', id, { lang: locale });
-    slices = doc?.data?.slices || null;
+    pageDoc = await client.getByUID('page', id, { lang: locale });
+    slices = pageDoc?.data?.slices || null;
   } catch (e) {
     // Ignore
   }
 
-  if (slices && slices.length > 0) {
-    return renderPageLayout(slices, components, {
-      showBackButton: true,
-      backButtonText: locale === 'en-us' ? 'Back to Blog' : 'Atpakaļ uz blogu',
-      backButtonHref: locale === 'en-us' ? '/en/blogs' : '/blogs',
-    });
-  }
-
   const post = getBlogPosts(locale).find(p => p.id === id) || null;
+
+  const title = pageDoc?.data?.meta_title || (post ? `${post.title} | ${locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība'}` : 'Dentamic');
+  const description = pageDoc?.data?.meta_description || post?.description || '';
+  const imageUrl = pageDoc?.data?.schema_image?.url || null;
+
+  if (slices && slices.length > 0) {
+    return (
+      <>
+        <SEOStructuredData
+          id={`blog-${id}`}
+          title={title}
+          description={description}
+          imageUrl={imageUrl}
+        />
+        {renderPageLayout(slices, components, {
+          showBackButton: true,
+          backButtonText: locale === 'en-us' ? 'Back to Blog' : 'Atpakaļ uz blogu',
+          backButtonHref: locale === 'en-us' ? '/en/blogs' : '/blogs',
+        })}
+      </>
+    );
+  }
 
   if (!post) {
     notFound();
   }
 
-  return <BlogPostClient post={post} langCode={locale} />;
+  return (
+    <>
+      <SEOStructuredData
+        id={`blog-${id}`}
+        title={title}
+        description={description}
+        imageUrl={imageUrl}
+      />
+      <BlogPostClient post={post} langCode={locale} />
+    </>
+  );
 }

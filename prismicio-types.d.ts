@@ -460,6 +460,50 @@ interface HomepageDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/slices
 	 */
 	slices: prismic.SliceZone<HomepageDocumentDataSlicesSlice>;
+
+	/**
+	 * SEO Title field in *Homepage*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Enter page title for search engines
+	 * - **API ID Path**: homepage.meta_title
+	 * - **Tab**: SEO
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+
+	/**
+	 * SEO Description field in *Homepage*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Enter page description for search engines
+	 * - **API ID Path**: homepage.meta_description
+	 * - **Tab**: SEO
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+
+	/**
+	 * Schema.org Image field in *Homepage*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: homepage.schema_image
+	 * - **Tab**: SEO
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	schema_image: prismic.ImageField<never>;
+
+	/**
+	 * Social Share Image (OpenGraph/Twitter) field in *Homepage*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: homepage.og_image
+	 * - **Tab**: SEO
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	og_image: prismic.ImageField<never>;
 }
 
 /**
@@ -585,6 +629,50 @@ interface PageDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/slices
 	 */
 	slices: prismic.SliceZone<PageDocumentDataSlicesSlice>;
+
+	/**
+	 * SEO Title field in *Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Enter page title for search engines
+	 * - **API ID Path**: page.meta_title
+	 * - **Tab**: SEO
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_title: prismic.KeyTextField;
+
+	/**
+	 * SEO Description field in *Page*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Enter page description for search engines
+	 * - **API ID Path**: page.meta_description
+	 * - **Tab**: SEO
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	meta_description: prismic.KeyTextField;
+
+	/**
+	 * Schema.org Image field in *Page*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: page.schema_image
+	 * - **Tab**: SEO
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	schema_image: prismic.ImageField<never>;
+
+	/**
+	 * Social Share Image (OpenGraph/Twitter) field in *Page*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: page.og_image
+	 * - **Tab**: SEO
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	og_image: prismic.ImageField<never>;
 }
 
 /**
