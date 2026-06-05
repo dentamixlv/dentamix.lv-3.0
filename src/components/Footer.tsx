@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { MapPin, Phone, Mail, Map, Navigation } from 'lucide-react';
+import { MapPin, Phone, Mail, Map, Navigation, Star } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -29,6 +29,8 @@ interface FooterProps {
     mapUrl?: string;
     wazeTitle?: string;
     wazeUrl?: string;
+    reviewTitle?: string;
+    reviewUrl?: string;
   }>;
   copyrightText?: string;
   privacyPolicyLabel?: string;
@@ -90,12 +92,16 @@ export default function Footer({
           sunday: c.labelSunday || t.sunday,
           closed: t.closed,
         },
-        accessibilityAlert: c.accessibilityAlert
+        accessibilityAlert: c.accessibilityAlert,
+        reviewTitle: c.reviewTitle,
+        reviewUrl: c.reviewUrl
       }))
     : getClinics(isEn ? 'en-us' : 'lv').map((clinic) => ({
         ...clinic,
         mapTitle: undefined,
         wazeTitle: undefined,
+        reviewTitle: undefined,
+        reviewUrl: undefined,
         workHours: {
           weekdays: clinic.workHours.weekdays,
           saturday: clinic.workHours.saturday,
@@ -196,8 +202,8 @@ export default function Footer({
                       <span className="font-medium">{clinic.email}</span>
                     </span>
                   )}
-                  {(clinic.gmapsLink || clinic.waze) && (
-                    <div className="flex items-center gap-4 mt-1">
+                  {(clinic.gmapsLink || clinic.waze || clinic.reviewUrl) && (
+                    <div className="flex items-center gap-4 mt-1 flex-wrap">
                       {clinic.gmapsLink && (
                         <span className="flex items-center gap-2">
                           <Map className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
@@ -221,6 +227,19 @@ export default function Footer({
                             className="hover:text-white hover:underline transition-colors duration-200 font-medium"
                           >
                             {clinic.wazeTitle || 'Waze'}
+                          </a>
+                        </span>
+                      )}
+                      {clinic.reviewUrl && (
+                        <span className="flex items-center gap-2">
+                          <Star className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
+                          <a 
+                            href={clinic.reviewUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hover:text-white hover:underline transition-colors duration-200 font-medium"
+                          >
+                            {clinic.reviewTitle || (isEn ? 'Write a review' : 'Pievieno atsauksmi')}
                           </a>
                         </span>
                       )}

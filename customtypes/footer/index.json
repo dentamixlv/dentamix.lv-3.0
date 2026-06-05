@@ -150,6 +150,20 @@
                 "label": "Waze Link URL",
                 "placeholder": "https://waze.com/ul/hud1k9wgd7"
               }
+            },
+            "review_title": {
+              "type": "Text",
+              "config": {
+                "label": "Review Link Title",
+                "placeholder": "Pievieno atsauksmi"
+              }
+            },
+            "review_url": {
+              "type": "Text",
+              "config": {
+                "label": "Review Link URL",
+                "placeholder": "https://search.google.com/local/writereview?placeid=..."
+              }
             }
           }
         }

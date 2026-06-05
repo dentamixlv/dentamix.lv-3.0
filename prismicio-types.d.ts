@@ -201,6 +201,26 @@ export interface FooterDocumentDataClinicsItem {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	waze_url: prismic.KeyTextField;
+	
+	/**
+	 * Review Link Title field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pievieno atsauksmi
+	 * - **API ID Path**: footer.clinics[].review_title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	review_title: prismic.KeyTextField;
+	
+	/**
+	 * Review Link URL field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://search.google.com/local/writereview?placeid=...
+	 * - **API ID Path**: footer.clinics[].review_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	review_url: prismic.KeyTextField;
 }
 
 /**

@@ -71,6 +71,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
                 mapUrl: c.map_url || undefined,
                 wazeTitle: c.waze_title || undefined,
                 wazeUrl: c.waze_url || undefined,
+                reviewTitle: c.review_title || undefined,
+                reviewUrl: c.review_url || undefined,
               }))
           : undefined,
         copyrightText: doc.data.copyright_text || undefined,
