@@ -1,0 +1,34 @@
+{
+  "id": "photo_block",
+  "type": "SharedSlice",
+  "name": "PhotoBlock",
+  "description": "Renders images in a 2-column card layout matching the testimonials card border and mouseover styles.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "sktwi1xtmkfgx8627",
+      "description": "Default variation",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Title",
+            "placeholder": "Pacientu atsauksmes"
+          }
+        }
+      },
+      "items": {
+        "image": {
+          "type": "Image",
+          "config": {
+            "label": "Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        }
+      }
+    }
+  ]
+}

@@ -66,6 +66,9 @@
             },
             "faq_block": {
               "type": "SharedSlice"
+            },
+            "photo_block": {
+              "type": "SharedSlice"
             }
           }
         }

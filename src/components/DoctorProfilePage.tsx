@@ -224,6 +224,7 @@ export default function DoctorProfilePage({ doctor, onBack, onBook, langCode = '
               fill
               sizes="(max-width: 1024px) 100vw, 30vw"
               className="object-cover select-none"
+              priority
             />
           </div>
 
