@@ -69,12 +69,14 @@ export default function CTABlock({ slice, context }: CTABlockProps) {
 
   const badgeText = primary.badge_text || (isEn ? 'Share Your Experience' : 'Dalieties pieredzē');
   const buttonText = primary.button_text || (isEn ? 'Book a Visit' : 'Pierakstīties vizītei');
+  const targetBlank = (primary as any).target_blank === true;
 
   const customButton = isFilled.link(primary.button_link) ? (
     <PrismicNextLink
       field={primary.button_link}
       className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0"
       id="cta-block-btn"
+      {...(targetBlank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
       {buttonText}
       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -84,6 +86,7 @@ export default function CTABlock({ slice, context }: CTABlockProps) {
       href={isEn ? '/en/contacts' : '/kontakti'}
       className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0"
       id="cta-block-btn"
+      {...(targetBlank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
     >
       {buttonText}
       <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />

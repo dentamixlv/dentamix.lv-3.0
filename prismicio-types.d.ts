@@ -1226,6 +1226,17 @@ export interface CtaBlockSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/color
 	 */
 	background_color: prismic.ColorField;
+	
+	/**
+	 * Open Link in New Window field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: cta_block.default.primary.target_blank
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	target_blank: prismic.BooleanField;
 }
 
 /**

@@ -55,6 +55,15 @@
           "config": {
             "label": "Background Color"
           }
+        },
+        "target_blank": {
+          "type": "Boolean",
+          "config": {
+            "label": "Open Link in New Window",
+            "placeholder_false": "Same Tab",
+            "placeholder_true": "New Tab (_blank)",
+            "default_value": false
+          }
         }
       },
       "items": {}
