@@ -74,39 +74,57 @@ export const ingest = action({
     const errors: string[] = [];
 
     for (const chunk of args.chunks) {
-      try {
-        const res = await fetch(embedUrl, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${apiKey}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
+      let res = null;
+      let data: any = null;
+      let success = false;
+      let retries = 3;
+
+      while (retries > 0 && !success) {
+        try {
+          res = await fetch(embedUrl, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${apiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              text: chunk.text,
+            }),
+          });
+
+          if (!res.ok) {
+            const errText = await res.text();
+            throw new Error(`Embedding API status ${res.status}: ${errText}`);
+          }
+
+          data = await res.json();
+          if (!data.data || data.data.length === 0) {
+            throw new Error(`Invalid response structure: ${JSON.stringify(data)}`);
+          }
+
+          success = true;
+        } catch (err: any) {
+          retries--;
+          if (retries > 0) {
+            await new Promise((resolve) => setTimeout(resolve, 300));
+          } else {
+            errors.push(`[Source: ${chunk.source}] ${err.message || String(err)}`);
+          }
+        }
+      }
+
+      if (success && data) {
+        try {
+          const embedding: number[] = data.data[0];
+          await ctx.runMutation(api.documents.insert, {
             text: chunk.text,
-          }),
-        });
-
-        if (!res.ok) {
-          const errText = await res.text();
-          throw new Error(`Embedding API status ${res.status}: ${errText}`);
+            source: chunk.source,
+            embedding,
+          });
+          count++;
+        } catch (err: any) {
+          errors.push(`[Source: ${chunk.source}] Database insert error: ${err.message || String(err)}`);
         }
-
-        const data: any = await res.json();
-        // The worker returns the direct AI run response which has a top-level data field containing the embeddings
-        if (!data.data || data.data.length === 0) {
-          throw new Error(`Invalid response structure: ${JSON.stringify(data)}`);
-        }
-        
-        const embedding: number[] = data.data[0];
-
-        await ctx.runMutation(api.documents.insert, {
-          text: chunk.text,
-          source: chunk.source,
-          embedding,
-        });
-        count++;
-      } catch (err: any) {
-        errors.push(err.message || String(err));
       }
     }
 

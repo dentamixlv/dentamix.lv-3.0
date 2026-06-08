@@ -1,23 +1,10 @@
-import { NextResponse } from "next/server";
-import { ConvexHttpClient } from "convex/browser";
-import { api } from "../../../../convex/_generated/api";
-import { createClient } from "../../../prismicio";
+const apiKey = "dmx_0c315c5120302b1f8eb4f94bfa293c6f14798e1f57e5e7e00e8bc1ff3519c5c9"; // Secured Bearer key for the worker
+const embedUrl = "https://dentamix-ai-chat.girts-kizenbahs.workers.dev/embeddings";
 
-export const dynamic = "force-dynamic";
+function extractTextFromPrismic(obj) {
+  const texts = [];
 
-function sanitizeText(text: string): string {
-  if (!text) return "";
-  return text
-    .replace(/\u00a0/g, " ") // replace non-breaking space with regular space
-    .replace(/\u200b/g, "")  // remove zero-width space
-    .replace(/\u00ad/g, "")  // remove soft hyphen
-    .replace(/[\x00-\x08\x0B\x0C\x0E-\x1F\x7F]/g, ""); // remove control characters
-}
-
-function extractTextFromPrismic(obj: any): string[] {
-  const texts: string[] = [];
-
-  function traverse(node: any) {
+  function traverse(node) {
     if (!node) return;
     if (typeof node === "string") {
       const trimmed = node.trim();
@@ -29,7 +16,7 @@ function extractTextFromPrismic(obj: any): string[] {
     if (Array.isArray(node)) {
       const isRichText = node.length > 0 && node.every(item => item && typeof item.type === "string" && typeof item.text === "string");
       if (isRichText) {
-        const fullText = node.map((item: any) => item.text).join("\n").trim();
+        const fullText = node.map((item) => item.text).join("\n").trim();
         if (fullText) {
           texts.push(fullText);
         }
@@ -54,7 +41,7 @@ function extractTextFromPrismic(obj: any): string[] {
   return texts;
 }
 
-function getPublicUrl(type: string, uid: string | null, lang: string): string {
+function getPublicUrl(type, uid, lang) {
   const isEn = lang === 'en-us';
   const prefix = isEn ? '/en' : '';
   
@@ -63,7 +50,7 @@ function getPublicUrl(type: string, uid: string | null, lang: string): string {
   }
   
   if (type === 'page' && uid) {
-    const staticMap: Record<string, { en: string; lv: string }> = {
+    const staticMap = {
       'about': { en: '/about', lv: '/par-mums' },
       'par-mums': { en: '/about', lv: '/par-mums' },
       'services': { en: '/services', lv: '/pakalpojumi' },
@@ -120,8 +107,8 @@ function getPublicUrl(type: string, uid: string | null, lang: string): string {
   return prefix || '/';
 }
 
-function splitParagraph(text: string, maxLength: number): string[] {
-  const parts: string[] = [];
+function splitParagraph(text, maxLength) {
+  const parts = [];
   let remaining = text;
   
   while (remaining.length > maxLength) {
@@ -140,15 +127,15 @@ function splitParagraph(text: string, maxLength: number): string[] {
   return parts;
 }
 
-function buildChunks(paragraphs: string[], title: string, url: string, langName: string): string[] {
-  const chunks: string[] = [];
+function buildChunks(paragraphs, title, url, langName) {
+  const chunks = [];
   const maxChunkLength = 1200;
   
   let currentChunk = `Klīnika: Dentamix\nLapa: ${title} (${langName})\nSaite: ${url}\nSaturs:\n`;
   const headerLength = currentChunk.length;
   const maxContentLength = maxChunkLength - headerLength;
 
-  const flatParagraphs: string[] = [];
+  const flatParagraphs = [];
   for (const para of paragraphs) {
     if (para.length > maxContentLength) {
       const splitParas = splitParagraph(para, maxContentLength - 50);
@@ -177,40 +164,33 @@ function buildChunks(paragraphs: string[], title: string, url: string, langName:
   return chunks;
 }
 
-export async function GET(request: Request) {
-  if (request.method === "HEAD") {
-    return new Response(null, { status: 200 });
-  }
-  const warnings: string[] = [];
-  try {
-    const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL || "";
-    if (!convexUrl) {
-      throw new Error("NEXT_PUBLIC_CONVEX_URL environment variable is not defined");
-    }
-
-    const convex = new ConvexHttpClient(convexUrl);
-    const client = createClient();
-    
-    // Fetch all documents of all locales
-    const documents = await client.dangerouslyGetAll({ lang: "*" });
-    const chunks: { text: string; source: string }[] = [];
+fetch('https://dentamix-v30.cdn.prismic.io/api/v2')
+  .then(r => r.json())
+  .then(apiData => {
+    const masterRef = apiData.refs.find(r => r.isMasterRef).ref;
+    const url = `https://dentamix-v30.cdn.prismic.io/api/v2/documents/search?ref=${masterRef}&lang=*&pageSize=100`;
+    return fetch(url);
+  })
+  .then(r => r.json())
+  .then(async res => {
+    const documents = res.results;
+    const chunks = [];
 
     for (const doc of documents) {
       const langName = doc.lang === 'en-us' ? 'English' : 'Latvian';
 
-      // 1. Process layout elements (Footer)
       if (doc.type === 'footer') {
         const logoText = doc.data?.logo_text || '';
         const description = doc.data?.description || '';
         const clinics = doc.data?.clinics || [];
 
         if (description) {
-          const text = sanitizeText(`Klīnika: Dentamix (Vispārīgā informācija) (${langName})\nApraksts: ${description}\nLogo: ${logoText}`);
+          const text = `Klīnika: Dentamix (Vispārīgā informācija) (${langName})\nApraksts: ${description}\nLogo: ${logoText}`;
           chunks.push({ text, source: `footer:${doc.lang}` });
         }
 
         for (const clinic of clinics) {
-          const text = sanitizeText(`Klīnika: ${clinic.name || 'Dentamix'} (Valoda: ${langName})
+          const text = `Klīnika: ${clinic.name || 'Dentamix'} (Valoda: ${langName})
 Adrese: ${clinic.address || ''}
 Tālrunis: ${clinic.phone || ''}
 E-pasts: ${clinic.email || ''}
@@ -218,20 +198,18 @@ Darba laiks:
 - Darba dienas: ${clinic.work_hours_weekdays || ''}
 - Sestdienas: ${clinic.work_hours_saturday || ''}
 - Svētdienas: ${clinic.work_hours_sunday || ''}
-${clinic.accessibility_alert ? `Piezīme par pieejamību: ${clinic.accessibility_alert}` : ''}`);
+${clinic.accessibility_alert ? `Piezīme par pieejamību: ${clinic.accessibility_alert}` : ''}`;
           chunks.push({ text, source: `footer:clinic:${clinic.name || 'info'}:${doc.lang}` });
         }
         continue;
       }
 
-      // Skip non-searchable document types (e.g. menus, settings)
       if (['menu', 'settings'].includes(doc.type)) {
         continue;
       }
 
-      // 2. Process page and homepage documents
       const title = doc.data?.meta_title || doc.data?.title || doc.uid || doc.type;
-      const url = getPublicUrl(doc.type, doc.uid, doc.lang);
+      const docUrl = getPublicUrl(doc.type, doc.uid, doc.lang);
       const paragraphs = extractTextFromPrismic(doc.data);
 
       const filteredParas = paragraphs.filter(p => {
@@ -247,39 +225,41 @@ ${clinic.accessibility_alert ? `Piezīme par pieejamību: ${clinic.accessibility
                p !== 'View services';
       });
 
-      const docChunks = buildChunks(filteredParas, title, url, langName);
+      const docChunks = buildChunks(filteredParas, title, docUrl, langName);
       for (const text of docChunks) {
-        chunks.push({ text: sanitizeText(text), source: url });
+        chunks.push({ text, source: docUrl });
       }
     }
 
-    if (chunks.length === 0) {
-      return NextResponse.json({
-        success: true,
-        count: 0,
-        message: "No document chunks were created. Check Prismic connection.",
-        warnings
-      });
+    const targets = ['/atsauksmes', '/zobarsti/marika-veldre', '/pakalpojumi/zobu-kirurgija', '/en/services/pediatric-dentistry', '/privatuma-politika'];
+    
+    for (const target of targets) {
+      const matched = chunks.filter(c => c.source === target);
+      console.log(`\nTesting chunks for ${target}...`);
+      for (let i = 0; i < matched.length; i++) {
+        const chunk = matched[i];
+        try {
+          const res = await fetch(embedUrl, {
+            method: "POST",
+            headers: {
+              "Authorization": `Bearer ${apiKey}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              text: chunk.text,
+            }),
+          });
+          const resJson = await res.json();
+          if (res.ok) {
+            console.log(`  Chunk #${i+1}: OK!`);
+          } else {
+            console.log(`  Chunk #${i+1}: FAIL! status=${res.status}, error=${JSON.stringify(resJson)}`);
+            console.log(`  Text: ${JSON.stringify(chunk.text)}`);
+          }
+        } catch (e) {
+          console.log(`  Chunk #${i+1}: FETCH ERROR: ${e.message}`);
+        }
+      }
     }
-
-    // Call the Convex Ingestion Action
-    const result: any = await convex.action(api.documents.ingest, { chunks });
-
-    return NextResponse.json({
-      success: true,
-      count: result.count,
-      errors: result.errors,
-      warnings
-    });
-  } catch (error: any) {
-    console.error("Ingestion failed:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        error: error.message || String(error),
-        warnings
-      },
-      { status: 500 }
-    );
-  }
-}
+  })
+  .catch(console.error);
