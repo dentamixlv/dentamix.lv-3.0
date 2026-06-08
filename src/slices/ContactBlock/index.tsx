@@ -64,6 +64,11 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
   const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
   const langCode = isEn ? 'en-us' : 'lv';
 
+  const isClosed = (hours: string) => {
+    const h = hours.toLowerCase();
+    return h.includes('slēgts') || h.includes('closed') || h.includes('slegts') || h === '-';
+  };
+
   const sectionClass = 'pt-2 pb-16 md:pt-4 md:pb-24';
 
   return (
@@ -228,13 +233,13 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                           {wdText && (
                             <p className="flex justify-between w-full">
                               <span>{wdText}</span>
-                              <span className="text-right">{wdHours}</span>
+                              <span className={`text-right font-bold ${isClosed(wdHours) ? 'text-[#6A5B5E]' : 'text-[#511B29]'}`}>{wdHours}</span>
                             </p>
                           )}
                           {satText && (
                             <p className="flex justify-between w-full">
                               <span>{satText}</span>
-                              <span className={satHours.toLowerCase().includes('slēgts') || satHours.toLowerCase().includes('closed') ? 'text-red-500 text-right' : 'text-right'}>
+                              <span className={`text-right ${isClosed(satHours) ? 'text-[#6A5B5E]' : 'text-[#511B29]'}`}>
                                 {satHours}
                               </span>
                             </p>
@@ -242,7 +247,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                           {sunText && (
                             <p className="flex justify-between w-full">
                               <span>{sunText}</span>
-                              <span className={sunHours.toLowerCase().includes('slēgts') || sunHours.toLowerCase().includes('closed') ? 'text-red-500 text-right' : 'text-right'}>
+                              <span className={`text-right ${isClosed(sunHours) ? 'text-[#6A5B5E]' : 'text-[#511B29]'}`}>
                                 {sunHours}
                               </span>
                             </p>

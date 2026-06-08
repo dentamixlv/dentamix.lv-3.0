@@ -22,6 +22,12 @@ export interface BadgeProps {
   animated?: boolean;
   /** Custom motion variants (required if animated is true). */
   variants?: Variants;
+  /** Optional custom text size class. */
+  textSize?: string;
+  /** Optional custom font weight class. */
+  fontWeight?: string;
+  /** Whether to render as plain text without background/border/padding. Defaults to false. */
+  plain?: boolean;
 }
 
 const variantClasses: Record<BadgeVariant, string> = {
@@ -33,6 +39,13 @@ const variantClasses: Record<BadgeVariant, string> = {
     'bg-emerald-50 border border-emerald-200 text-emerald-700',
   gray:
     'bg-[#6A5B5E]/8 border border-[#6A5B5E]/20 text-[#6A5B5E]',
+};
+
+const textColorClasses: Record<BadgeVariant, string> = {
+  default: 'text-[#de7c8a]',
+  primary: 'text-[#511B29]',
+  accent: 'text-emerald-700',
+  gray: 'text-[#6A5B5E]',
 };
 
 /**
@@ -51,11 +64,16 @@ export default function Badge({
   className = '',
   animated = false,
   variants,
+  textSize = 'text-[0.625rem]',
+  fontWeight = 'font-extrabold',
+  plain = false,
 }: BadgeProps) {
-  const baseClasses =
-    'inline-flex items-center px-3 py-1 rounded-full text-[0.625rem] font-extrabold uppercase tracking-widest';
+  const baseClasses = plain
+    ? `inline-flex items-center ${textSize} ${fontWeight} uppercase tracking-widest`
+    : `inline-flex items-center px-3 py-1 rounded-full ${textSize} ${fontWeight} uppercase tracking-widest`;
 
-  const allClasses = `${baseClasses} ${variantClasses[variant]} ${className}`.trim();
+  const variantStyle = plain ? textColorClasses[variant] : variantClasses[variant];
+  const allClasses = `${baseClasses} ${variantStyle} ${className}`.trim();
 
   if (animated && variants) {
     return (
