@@ -252,7 +252,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                           {wdText && (
                             <p className="flex justify-between w-full">
                               <span>{wdText}</span>
-                              <span className={`text-right font-bold ${isClosed(wdHours) ? 'text-[#6A5B5E]' : 'text-[#511B29]'}`}>{wdHours}</span>
+                              <span className={`text-right ${isClosed(wdHours) ? 'text-[#6A5B5E]' : 'text-[#511B29]'}`}>{wdHours}</span>
                             </p>
                           )}
                           {satText && (
