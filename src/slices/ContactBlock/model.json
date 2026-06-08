@@ -110,20 +110,6 @@
             "placeholder": "https://www.google.com/maps/embed?pb=..."
           }
         },
-        "gmaps_direct_url": {
-          "type": "Text",
-          "config": {
-            "label": "Google Maps Direct Link / Share URL",
-            "placeholder": "https://maps.app.goo.gl/DvLgodzdiR5t2KQK8"
-          }
-        },
-        "map_title": {
-          "type": "Text",
-          "config": {
-            "label": "Map Link Title",
-            "placeholder": "Karte / Google Maps"
-          }
-        },
         "waze_url": {
           "type": "Text",
           "config": {

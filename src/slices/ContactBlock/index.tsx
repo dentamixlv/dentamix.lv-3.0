@@ -20,8 +20,6 @@ interface ContactBlockItem {
   sunday_hours?: string | null;
   accessibility_text?: string | null;
   gmaps_iframe_url?: string | null;
-  gmaps_direct_url?: string | null;
-  map_title?: string | null;
   waze_url?: string | null;
   waze_title?: string | null;
   review_url?: string | null;
@@ -98,9 +96,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
           const sunHours    = item.sunday_hours || '';
           const accText     = item.accessibility_text || '';
           const rawMapUrl   = item.gmaps_iframe_url || '';
-          const rawDirectUrl = item.gmaps_direct_url || '';
           const wazeUrl     = item.waze_url || '';
-          const mapTitle    = item.map_title || '';
           const wazeTitle   = item.waze_title || '';
           const reviewUrl   = item.review_url || '';
           const reviewTitle = item.review_title || '';
@@ -109,7 +105,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
           const isShareLink = rawMapUrl.includes('maps.app.goo.gl') || (rawMapUrl.includes('google.com/maps') && !rawMapUrl.includes('embed'));
 
           const mapUrl = isShareLink ? '' : rawMapUrl;
-          const directUrl = rawDirectUrl || (isShareLink ? rawMapUrl : '');
+          const directUrl = isShareLink ? rawMapUrl : '';
 
           return (
             <motion.div 
@@ -206,7 +202,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                           rel="noopener noreferrer" 
                           className="hover:text-[#5d1726] hover:underline transition-colors font-medium"
                         >
-                          {mapTitle || (isEn ? 'Google Maps' : 'Karte')}
+                          {isEn ? 'Google Maps' : 'Karte'}
                         </a>
                       </p>
                     )}
