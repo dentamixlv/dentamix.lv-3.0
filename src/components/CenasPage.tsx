@@ -204,8 +204,8 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
               className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-300"
             >
               {/* Category Header */}
-              <div className="bg-[#fbf9f8] px-6 py-5 md:px-8 border-b border-[#efedec] flex items-center gap-3">
-                <h3 className="text-lg font-serif font-bold text-[#511B29] tracking-tight">
+              <div className="bg-[#511B29] px-6 py-5 md:px-8 border-b border-[#5d1726]/30 flex items-center gap-3">
+                <h3 className="text-lg font-serif font-bold text-white tracking-tight">
                   {cat.title}
                 </h3>
               </div>
@@ -246,8 +246,8 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
         <div className="space-y-12">
           {[...Array(3)].map((_, i) => (
             <div key={i} className="bg-white border border-[#efedec] rounded-3xl overflow-hidden shadow-sm animate-pulse">
-              <div className="bg-[#fbf9f8] px-6 py-5 md:px-8 border-b border-[#efedec] flex items-center gap-3">
-                <div className="h-5 w-48 bg-slate-100 rounded-full" />
+              <div className="bg-[#511B29] px-6 py-5 md:px-8 border-b border-[#5d1726]/30 flex items-center gap-3">
+                <div className="h-5 w-48 bg-white/20 rounded-full" />
               </div>
               <div className="p-6 md:p-8 space-y-6">
                 {[...Array(3)].map((_, j) => (
