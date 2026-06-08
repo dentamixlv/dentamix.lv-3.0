@@ -28,6 +28,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         logoImage: doc.data.logo_image || undefined,
         phoneNumber: doc.data.phone_number || undefined,
         bookingButtonText: doc.data.booking_button_text || undefined,
+        whatsappCtaText: doc.data.whatsapp_cta_text || undefined,
+        whatsappLinkUrl: doc.data.whatsapp_link_url || undefined,
         menuLinks: Array.isArray(doc.data.menu_links)
           ? doc.data.menu_links
               .filter((link: any) => link.label || link.path)
@@ -94,6 +96,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
         phoneNumber={menuData?.phoneNumber}
         bookingButtonText={menuData?.bookingButtonText}
         menuLinks={menuData?.menuLinks}
+        whatsappCtaText={menuData?.whatsappCtaText}
+        whatsappLinkUrl={menuData?.whatsappLinkUrl}
       />
       <main className="flex-grow">
         {children}

@@ -34,6 +34,20 @@
           "placeholder": "Pierakstīties"
         }
       },
+      "whatsapp_cta_text": {
+        "type": "Text",
+        "config": {
+          "label": "WhatsApp CTA Text",
+          "placeholder": "Whatsapp"
+        }
+      },
+      "whatsapp_link_url": {
+        "type": "Text",
+        "config": {
+          "label": "WhatsApp Link URL",
+          "placeholder": "https://wa.me/37129419999"
+        }
+      },
       "menu_links": {
         "type": "Group",
         "config": {
