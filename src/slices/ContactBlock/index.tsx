@@ -285,20 +285,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                   </div>
                 </div>
 
-                {/* Direct Google Maps Link Button */}
-                {directUrl && (
-                  <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
-                    <a
-                      href={directUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-sm font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
-                    >
-                      <span>{isEn ? 'Open in Google Maps' : 'Skatīt Google Maps'}</span>
-                      <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                    </a>
-                  </div>
-                )}
+
               </div>
             </motion.div>
           );
