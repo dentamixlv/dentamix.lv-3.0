@@ -43,7 +43,7 @@ export default function TestimonialCard({ item, variants }: TestimonialCardProps
           </h3>
           
           {/* Complete story matching descriptive length of doctors */}
-          <p className="text-base text-[#6a5b5e] leading-relaxed mt-3 font-normal">
+          <p className="text-base text-[#6a5b5e] leading-relaxed mt-3 italic">
             {item.story}
           </p>
         </div>

@@ -183,7 +183,7 @@ export default function TestimonialBlock({ slice, context }: TestimonialBlockPro
                       {authorName}
                     </h3>
 
-                    <p className="text-sm text-[#6a5b5e] leading-relaxed mt-2.5 font-normal">
+                    <p className="text-sm text-[#6a5b5e] leading-relaxed mt-2.5 italic">
                       {storyText}
                     </p>
                   </div>
@@ -289,7 +289,7 @@ export default function TestimonialBlock({ slice, context }: TestimonialBlockPro
                       {authorName}
                     </h3>
 
-                    <p className="text-base text-[#6a5b5e] leading-relaxed mt-3 font-normal">
+                    <p className="text-base text-[#6a5b5e] leading-relaxed mt-3 italic">
                       {storyText}
                     </p>
                   </div>
