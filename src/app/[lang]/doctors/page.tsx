@@ -43,7 +43,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: 'Profesionāli speciālisti, kas apvieno klīnisko precizitāti un personalizētu, iejūtīgu aprūpi.',
   };
 
-  return constructMetadata(document?.data, locale, fallback);
+  return constructMetadata(document?.data, locale, fallback, { type: 'doctors' });
 }
 
 export default async function Page({ params }: PageProps) {

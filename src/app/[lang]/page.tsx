@@ -1,7 +1,7 @@
 import React from 'react';
 import { createClient } from '../../prismicio';
 import HomeClient from './HomeClient';
-import { constructMetadata, SEOStructuredData } from '../seoHelper';
+import { constructMetadata, SEOStructuredData, SEODentistStructuredData } from '../seoHelper';
 
 export function getPrismicLocale(lang?: string | string[]) {
   const code = Array.isArray(lang) ? lang[0] : lang;
@@ -38,10 +38,10 @@ export async function generateMetadata({ params }: PageProps) {
     description: 'Premium dental clinic with advanced technology and personalized care in Riga and Adazi.',
   } : {
     title: 'Dentamic | Premium zobārstniecības klīnika',
-    description: 'Premium zobārstniecības klīnikas mājaslapa ar interaktīvu vizīšu pieteikšanas un speciālistu vizītkaršu sistēmu.',
+    description: 'Premium zobārstniecības klīnikas mājaslapa ar interaktīvu vizīšu pieteikšanas un speciālistu vizītkaršu sistemu.',
   };
 
-  return constructMetadata(document?.data, locale, fallback);
+  return constructMetadata(document?.data, locale, fallback, { type: 'home' });
 }
 
 export default async function Page({ params }: PageProps) {
@@ -64,6 +64,28 @@ export default async function Page({ params }: PageProps) {
     console.warn(`Prismic homepage document for locale "${locale}" with UID not found, falling back to static content.`, error);
   }
 
+  // Fetch Prismic clinics from footer settings for Dentist schema
+  let footerClinics = null;
+  try {
+    const footerDoc = await client.getSingle('footer', { lang: locale });
+    if (footerDoc && Array.isArray(footerDoc.data?.clinics)) {
+      footerClinics = footerDoc.data.clinics
+        .filter((c: any) => c.name || c.address)
+        .map((c: any) => ({
+          id: c.name?.toLowerCase().includes('adazi') || c.name?.toLowerCase().includes('ādaži') ? 'adazi' : 'riga',
+          name: c.name || '',
+          address: c.address || '',
+          phone: c.phone || '',
+          email: c.email || '',
+          workHoursWeekdays: c.work_hours_weekdays || '',
+          workHoursSaturday: c.work_hours_saturday || '',
+          workHoursSunday: c.work_hours_sunday || '',
+        }));
+    }
+  } catch (error) {
+    console.warn("Failed to fetch Prismic footer clinics for Dentist structured data schema, falling back to local static clinics.", error);
+  }
+
   const title = document?.data?.meta_title || (locale === 'en-us' ? 'Dentamic | Premium Dental Clinic' : 'Dentamic | Premium zobārstniecības klīnika');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
@@ -76,6 +98,7 @@ export default async function Page({ params }: PageProps) {
         description={description}
         imageUrl={imageUrl}
       />
+      <SEODentistStructuredData locale={locale} prismicClinics={footerClinics} />
       <HomeClient slices={slices} langCode={locale} />
     </>
   );

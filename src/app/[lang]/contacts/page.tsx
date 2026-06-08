@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: 'Sazinieties ar Dentamic Centra (Rīga) un Pierīgas (Ādaži) filiālēm. Aizpildiet pieteikumu vai zvaniet.',
   };
 
-  return constructMetadata(document?.data, locale, fallback);
+  return constructMetadata(document?.data, locale, fallback, { type: 'contacts' });
 }
 
 export default async function Page({ params }: PageProps) {

@@ -55,7 +55,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: '',
   };
 
-  return constructMetadata(pageDoc?.data, locale, fallback);
+  return constructMetadata(pageDoc?.data, locale, fallback, { type: 'doctor-detail', id });
 }
 
 export default async function Page({ params }: PageProps) {

@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: 'Pilns mūsdienīgu pakalpojumu spektrs – no estētikas un higiēnas līdz implantācijai un sarežģītai ķirurģijai.',
   };
 
-  return constructMetadata(document?.data, locale, fallback);
+  return constructMetadata(document?.data, locale, fallback, { type: 'services' });
 }
 
 export default async function Page({ params }: PageProps) {

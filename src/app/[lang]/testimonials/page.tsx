@@ -38,7 +38,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: 'Pacientu patiesas atsauksmes un stāsti par veikto zobu labošanu un estētisko restaurāciju.',
   };
 
-  return constructMetadata(document?.data, locale, fallback);
+  return constructMetadata(document?.data, locale, fallback, { type: 'testimonials' });
 }
 
 export default async function Page({ params }: PageProps) {

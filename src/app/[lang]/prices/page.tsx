@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: 'Skaidrs un saprotams cenrādis bez slēptiem maksājumiem ar pilnīgu izmaksu pārredzamību.',
   };
 
-  return constructMetadata(document?.data, locale, fallback);
+  return constructMetadata(document?.data, locale, fallback, { type: 'prices' });
 }
 
 export default async function Page({ params }: PageProps) {

@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: 'Speciālistu ieteikumi, jaunākās tehnoloģijas un praktiski padomi smaida aprūpei.',
   };
 
-  return constructMetadata(document?.data, locale, fallback);
+  return constructMetadata(document?.data, locale, fallback, { type: 'blogs' });
 }
 
 export default async function Page({ params }: PageProps) {

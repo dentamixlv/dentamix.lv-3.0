@@ -39,7 +39,7 @@ export async function generateMetadata({ params }: PageProps) {
     description: 'Uzziniet par Dentamic - mūsdienīgu zobārstniecības klīniku, kas apvieno jaunākās tehnoloģijas un individuālu pieeju.',
   };
 
-  return constructMetadata(document?.data, locale, fallback);
+  return constructMetadata(document?.data, locale, fallback, { type: 'about' });
 }
 
 export default async function Page({ params }: PageProps) {

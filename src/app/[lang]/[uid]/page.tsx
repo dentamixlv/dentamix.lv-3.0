@@ -26,9 +26,21 @@ export async function generateMetadata({ params }: PageProps) {
     // Ignore and fallback
   }
 
+  let alternateUid = undefined;
+  if (document && Array.isArray(document.alternate_languages)) {
+    const alt = document.alternate_languages.find((a: any) => a.lang === (locale === 'en-us' ? 'lv' : 'en-us'));
+    if (alt && alt.uid) {
+      alternateUid = alt.uid;
+    }
+  }
+
   return constructMetadata(document?.data, locale, {
     title: 'Dentamic',
     description: '',
+  }, {
+    type: 'custom-page',
+    id: uid,
+    alternateUid,
   });
 }
 
