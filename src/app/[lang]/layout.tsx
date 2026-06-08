@@ -5,6 +5,8 @@ import Footer from '../../components/Footer';
 import { createClient } from '../../prismicio';
 import { getPrismicLocale } from './page';
 import { LanguageProvider } from '../../components/LanguageContext';
+import ConvexClientProvider from '../../components/ConvexClientProvider';
+import ChatAssistant from '../../components/ChatAssistant';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -90,32 +92,35 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
 
   return (
     <LanguageProvider>
-      <Header 
-        logoText={menuData?.logoText}
-        logoImage={menuData?.logoImage}
-        phoneNumber={menuData?.phoneNumber}
-        bookingButtonText={menuData?.bookingButtonText}
-        menuLinks={menuData?.menuLinks}
-        whatsappCtaText={menuData?.whatsappCtaText}
-        whatsappLinkUrl={menuData?.whatsappLinkUrl}
-      />
-      <main className="flex-grow">
-        {children}
-      </main>
-      <Footer 
-        logoText={footerData?.logoText}
-        logoImage={footerData?.logoImage}
-        description={footerData?.description}
-        clinicsTitle={footerData?.clinicsTitle}
-        workingHoursTitle={footerData?.workingHoursTitle}
-        clinics={footerData?.clinics}
-        copyrightText={footerData?.copyrightText}
-        privacyPolicyLabel={footerData?.privacyPolicyLabel}
-        privacyPolicyLink={footerData?.privacyPolicyLink}
-        cookiePolicyLabel={footerData?.cookiePolicyLabel}
-        cookiePolicyLink={footerData?.cookiePolicyLink}
-      />
-      <SpeedInsights />
+      <ConvexClientProvider>
+        <Header 
+          logoText={menuData?.logoText}
+          logoImage={menuData?.logoImage}
+          phoneNumber={menuData?.phoneNumber}
+          bookingButtonText={menuData?.bookingButtonText}
+          menuLinks={menuData?.menuLinks}
+          whatsappCtaText={menuData?.whatsappCtaText}
+          whatsappLinkUrl={menuData?.whatsappLinkUrl}
+        />
+        <main className="flex-grow">
+          {children}
+        </main>
+        <Footer 
+          logoText={footerData?.logoText}
+          logoImage={footerData?.logoImage}
+          description={footerData?.description}
+          clinicsTitle={footerData?.clinicsTitle}
+          workingHoursTitle={footerData?.workingHoursTitle}
+          clinics={footerData?.clinics}
+          copyrightText={footerData?.copyrightText}
+          privacyPolicyLabel={footerData?.privacyPolicyLabel}
+          privacyPolicyLink={footerData?.privacyPolicyLink}
+          cookiePolicyLabel={footerData?.cookiePolicyLabel}
+          cookiePolicyLink={footerData?.cookiePolicyLink}
+        />
+        <SpeedInsights />
+        <ChatAssistant />
+      </ConvexClientProvider>
     </LanguageProvider>
   );
 }
