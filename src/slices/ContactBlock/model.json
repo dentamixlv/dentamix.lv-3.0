@@ -137,6 +137,20 @@
             "label": "Waze Link Title",
             "placeholder": "Waze"
           }
+        },
+        "review_url": {
+          "type": "Text",
+          "config": {
+            "label": "Review Link URL",
+            "placeholder": "https://g.page/r/..."
+          }
+        },
+        "review_title": {
+          "type": "Text",
+          "config": {
+            "label": "Review Link Title",
+            "placeholder": "Write a review"
+          }
         }
       }
     }

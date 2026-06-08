@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { MapPin, Phone, Mail, Clock, ArrowRight, AlertCircle, Map, Navigation } from 'lucide-react';
+import { MapPin, Phone, Mail, Clock, ArrowRight, AlertCircle, Map, Navigation, Star } from 'lucide-react';
 import { useParams } from 'next/navigation';
 
 interface ContactBlockItem {
@@ -24,6 +24,8 @@ interface ContactBlockItem {
   map_title?: string | null;
   waze_url?: string | null;
   waze_title?: string | null;
+  review_url?: string | null;
+  review_title?: string | null;
 }
 
 interface ContactBlockSlice {
@@ -100,6 +102,8 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
           const wazeUrl     = item.waze_url || '';
           const mapTitle    = item.map_title || '';
           const wazeTitle   = item.waze_title || '';
+          const reviewUrl   = item.review_url || '';
+          const reviewTitle = item.review_title || '';
 
           // Check if the user entered a direct share URL instead of an iframe embed URL
           const isShareLink = rawMapUrl.includes('maps.app.goo.gl') || (rawMapUrl.includes('google.com/maps') && !rawMapUrl.includes('embed'));
@@ -218,6 +222,21 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                           className="hover:text-[#5d1726] hover:underline transition-colors font-medium"
                         >
                           {wazeTitle || 'Waze'}
+                        </a>
+                      </p>
+                    )}
+
+                    {/* Review Link */}
+                    {reviewUrl && (
+                      <p className="flex items-center gap-2">
+                        <Star className="w-4 h-4 text-[#de7c8a] shrink-0" />
+                        <a 
+                          href={reviewUrl} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          className="hover:text-[#5d1726] hover:underline transition-colors font-medium"
+                        >
+                          {reviewTitle || (isEn ? 'Write a review' : 'Pievieno atsauksmi')}
                         </a>
                       </p>
                     )}
