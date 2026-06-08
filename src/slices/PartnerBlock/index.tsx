@@ -141,10 +141,10 @@ export default function PartnerBlock({ slice }: PartnerBlockProps) {
                 <motion.div
                   key={idx}
                   variants={fadeUpVariants}
-                  className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-4 rounded-2xl aspect-square flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group"
+                  className="bg-[#fbf9f8]/40 border border-[#efedec]/65 hover:border-[#de7c8a]/20 p-3 rounded-2xl aspect-square flex flex-col items-center justify-center text-center transition-all duration-300 hover:shadow-sm group"
                 >
                   {hasLogo ? (
-                    <div className="relative w-[70%] aspect-square mx-auto">
+                    <div className="relative w-full h-full">
                       <Image
                         src={item.logo.url!}
                         alt={item.logo.alt || "Partner Logo"}
