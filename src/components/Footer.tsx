@@ -193,7 +193,7 @@ export default function Footer({
                 
                 <div className="flex flex-col gap-2 text-sm text-[#989999]">
                   {/* Row 1: Phone */}
-                  <div className="h-5 flex items-center">
+                  <div className="md:h-5 flex items-center">
                     {clinic.phone ? (
                       <a 
                         href={`tel:${clinic.phone.replace(/\s+/g, '')}`} 
@@ -208,7 +208,7 @@ export default function Footer({
                   </div>
 
                   {/* Row 2: WhatsApp */}
-                  <div className="h-5 flex items-center">
+                  <div className={`${clinic.whatsappText ? 'flex' : 'hidden md:flex'} md:h-5 items-center`}>
                     {clinic.whatsappText ? (
                       <a 
                         href={clinic.whatsappUrl || `https://wa.me/${clinic.whatsappText.replace(/[^0-9]/g, '')}`} 
@@ -227,7 +227,7 @@ export default function Footer({
                   </div>
 
                   {/* Row 3: Address */}
-                  <div className="h-5 flex items-center">
+                  <div className="md:h-5 flex items-center">
                     <span className="flex items-center gap-2">
                       <MapPin className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
                       <span className="hover:text-white transition-colors duration-200">{clinic.address}</span>
@@ -235,7 +235,7 @@ export default function Footer({
                   </div>
 
                   {/* Row 4: Email */}
-                  <div className="h-5 flex items-center">
+                  <div className={`${clinic.email ? 'flex' : 'hidden md:flex'} md:h-5 items-center`}>
                     {clinic.email ? (
                       <span className="flex items-center gap-2">
                         <Mail className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
@@ -247,7 +247,7 @@ export default function Footer({
                   </div>
 
                   {/* Row 5: Actions */}
-                  <div className="h-5 flex items-center">
+                  <div className={`${(clinic.gmapsLink || clinic.waze || clinic.reviewUrl) ? 'flex' : 'hidden md:flex'} md:h-5 items-center`}>
                     {(clinic.gmapsLink || clinic.waze || clinic.reviewUrl) ? (
                       <div className="flex items-center gap-4 flex-wrap">
                         {clinic.gmapsLink && (
@@ -318,7 +318,7 @@ export default function Footer({
                 
                 <div className="flex flex-col gap-2 text-sm text-[#989999]">
                   {/* Row 1: Weekdays */}
-                  <div className="h-5 flex justify-between items-center gap-4">
+                  <div className={`${clinic.workHours.weekdays ? 'flex' : 'hidden md:flex'} md:h-5 justify-between items-center gap-4`}>
                     {clinic.workHours.weekdays ? (
                       <>
                         <span className="font-medium group-hover:text-white transition-colors duration-200">
@@ -334,7 +334,7 @@ export default function Footer({
                   </div>
                   
                   {/* Row 2: Saturday */}
-                  <div className="h-5 flex justify-between items-center gap-4">
+                  <div className="md:h-5 flex justify-between items-center gap-4">
                     <span className="font-medium group-hover:text-white transition-colors duration-200">
                       {clinic.labels.saturday}
                     </span>
@@ -350,7 +350,7 @@ export default function Footer({
                   </div>
 
                   {/* Row 3: Sunday */}
-                  <div className="h-5 flex justify-between items-center gap-4">
+                  <div className="md:h-5 flex justify-between items-center gap-4">
                     <span className="font-medium group-hover:text-white transition-colors duration-200">
                       {clinic.labels.sunday}
                     </span>
@@ -366,7 +366,7 @@ export default function Footer({
                   </div>
 
                   {/* Row 4: Accessibility Alert Message 1 */}
-                  <div className="h-5 flex items-center">
+                  <div className={`${clinic.accessibilityAlert ? 'flex' : 'hidden md:flex'} md:h-5 items-center`}>
                     {clinic.accessibilityAlert ? (
                       <span className="flex items-center gap-2 text-white font-bold transition-colors duration-200">
                         <AlertCircle className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
@@ -378,7 +378,7 @@ export default function Footer({
                   </div>
 
                   {/* Row 5: Accessibility Alert Message 2 */}
-                  <div className="h-5 flex items-center font-medium group-hover:text-white transition-colors duration-200">
+                  <div className={`${clinic.accessibilityAlertSecond ? 'flex font-medium group-hover:text-white transition-colors duration-200' : 'hidden md:flex font-medium group-hover:text-white transition-colors duration-200'} md:h-5 items-center`}>
                     {clinic.accessibilityAlertSecond || '\u00A0'}
                   </div>
                 </div>
