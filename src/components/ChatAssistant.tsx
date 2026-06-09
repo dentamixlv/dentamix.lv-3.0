@@ -57,11 +57,11 @@ export default function ChatAssistant() {
 
   // Localization strings
   const strings = {
-    title: isEn ? "Dentamix Assistant" : "Dentamix Asistents",
+    title: isEn ? "Dentamix assistant" : "Dentamix palīgs",
     online: isEn ? "Online" : "Tiešsaistē",
     welcome: isEn 
-      ? "Hello! I am your Dentamix AI assistant. How can I help you today?" 
-      : "Sveiki! Esmu Dentamix AI asistents. Kā es varu Jums palīdzēt?",
+      ? "Hello! I am your Dentamix assistant. How can I help you today?" 
+      : "Sveiki! Esmu Dentamix palīgs. Kā es varu Jums palīdzēt?",
     placeholder: isEn ? "Type a message..." : "Rakstīt ziņu...",
     clearTooltip: isEn ? "Clear conversation" : "Dzēst saraksti",
     clearConfirm: isEn 
