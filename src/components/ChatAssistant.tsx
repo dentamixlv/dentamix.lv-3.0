@@ -44,6 +44,7 @@ export default function ChatAssistant() {
   const [conversationId, setConversationId] = useState<Id<"conversations"> | null>(null);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [optimisticMessage, setOptimisticMessage] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   // Convex mutations, queries, actions
@@ -54,6 +55,25 @@ export default function ChatAssistant() {
     conversationId ? { conversationId } : "skip"
   );
   const respondAction = useAction(api.assistant.respond);
+
+  // Merge database messages with our optimistic pending user message
+  const displayMessages = React.useMemo(() => {
+    const list = dbMessages ? [...dbMessages] : [];
+    if (optimisticMessage) {
+      const alreadyInDb = list.some(
+        (m) => m.role === "user" && m.content === optimisticMessage
+      );
+      if (!alreadyInDb) {
+        list.push({
+          _id: "optimistic-temp-id" as any,
+          role: "user",
+          content: optimisticMessage,
+          _creationTime: Date.now(),
+        } as any);
+      }
+    }
+    return list;
+  }, [dbMessages, optimisticMessage]);
 
   // Localization strings
   const strings = {
@@ -93,7 +113,7 @@ export default function ChatAssistant() {
   // Auto-scroll to bottom of messages
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [dbMessages, isSending]);
+  }, [displayMessages, isSending]);
 
   // Handle message send
   const handleSend = async (textToSend: string) => {
@@ -101,6 +121,7 @@ export default function ChatAssistant() {
     if (textToSend.length > 140) return;
 
     setIsSending(true);
+    setOptimisticMessage(textToSend); // Set optimistic message
     setInputValue("");
 
     try {
@@ -129,6 +150,7 @@ export default function ChatAssistant() {
       console.error("Failed to send message:", error);
     } finally {
       setIsSending(false);
+      setOptimisticMessage(null); // Clear optimistic message
     }
   };
 
@@ -222,7 +244,7 @@ export default function ChatAssistant() {
                   </div>
                   
                   {/* Call and WhatsApp Buttons for Welcome Message */}
-                  {(!dbMessages || dbMessages.length === 0) && (
+                  {(!displayMessages || displayMessages.length === 0) && (
                     <div className="flex gap-2 pl-1">
                       <a
                         href="tel:+37129419999"
@@ -246,7 +268,7 @@ export default function ChatAssistant() {
               </div>
 
               {/* Suggestions (only show when there is no message history yet) */}
-              {(!dbMessages || dbMessages.length === 0) && (
+              {(!displayMessages || displayMessages.length === 0) && (
                 <div className="pl-10 space-y-2 pt-2">
                   <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-1.5">
                     <Sparkles size={12} className="text-[var(--main-color)]" />
@@ -267,9 +289,9 @@ export default function ChatAssistant() {
               )}
 
               {/* Message History */}
-              {dbMessages && dbMessages.map((msg, index) => {
+              {displayMessages && displayMessages.map((msg, index) => {
                 const isAssistant = msg.role === "assistant";
-                const isLast = index === dbMessages.length - 1;
+                const isLast = index === displayMessages.length - 1;
                 return (
                   <div
                     key={msg._id}
@@ -340,7 +362,7 @@ export default function ChatAssistant() {
               })}
 
               {/* Loading indicator when waiting for Gemini response */}
-              {isSending && (!dbMessages || dbMessages.length === 0 || dbMessages[dbMessages.length - 1].role !== "assistant") && (
+              {isSending && (!displayMessages || displayMessages.length === 0 || displayMessages[displayMessages.length - 1].role !== "assistant") && (
                 <div className="flex gap-2.5 items-start max-w-[85%]">
                   <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
                     <img 
@@ -378,7 +400,7 @@ export default function ChatAssistant() {
                   maxLength={140}
                   placeholder={strings.placeholder}
                   disabled={isSending}
-                  className="w-full border border-gray-200 rounded-full pl-4 pr-16 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--main-color)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-400"
+                  className="w-full border border-gray-200 rounded-full pl-4 pr-16 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--main-color)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-400"
                 />
                 {inputValue.length > 0 && (
                   <span 
