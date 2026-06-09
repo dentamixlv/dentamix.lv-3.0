@@ -63,6 +63,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
                 name: c.name || '',
                 address: c.address || '',
                 phone: c.phone || '',
+                whatsappText: c.whatsapp_text || undefined,
+                whatsappUrl: c.whatsapp_url || undefined,
                 email: c.email || '',
                 workHoursWeekdays: c.work_hours_weekdays || '',
                 workHoursSaturday: c.work_hours_saturday || '',

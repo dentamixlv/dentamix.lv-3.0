@@ -83,6 +83,26 @@ export interface FooterDocumentDataClinicsItem {
 	phone: prismic.KeyTextField;
 	
 	/**
+	 * WhatsApp Text field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: +371 29 459 999
+	 * - **API ID Path**: footer.clinics[].whatsapp_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	whatsapp_text: prismic.KeyTextField;
+	
+	/**
+	 * WhatsApp URL field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://wa.me/...
+	 * - **API ID Path**: footer.clinics[].whatsapp_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	whatsapp_url: prismic.KeyTextField;
+	
+	/**
 	 * Email Address field in *Footer → Clinics*
 	 *
 	 * - **Field Type**: Text
@@ -503,6 +523,28 @@ interface MenuDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	booking_button_text: prismic.KeyTextField;
+	
+	/**
+	 * WhatsApp CTA Text field in *Menu*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Whatsapp
+	 * - **API ID Path**: menu.whatsapp_cta_text
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	whatsapp_cta_text: prismic.KeyTextField;
+	
+	/**
+	 * WhatsApp Link URL field in *Menu*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://wa.me/37129419999
+	 * - **API ID Path**: menu.whatsapp_link_url
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	whatsapp_link_url: prismic.KeyTextField;
 	
 	/**
 	 * Menu Links field in *Menu*
@@ -990,6 +1032,26 @@ export interface ContactBlockSliceDefaultItem {
 	phone: prismic.KeyTextField;
 	
 	/**
+	 * WhatsApp Text field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: +371 29 459 999
+	 * - **API ID Path**: contact_block.items[].whatsapp_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	whatsapp_text: prismic.KeyTextField;
+	
+	/**
+	 * WhatsApp URL field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://wa.me/37129459999
+	 * - **API ID Path**: contact_block.items[].whatsapp_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	whatsapp_url: prismic.KeyTextField;
+	
+	/**
 	 * Address field in *ContactBlock → Items*
 	 *
 	 * - **Field Type**: Text
@@ -1100,26 +1162,6 @@ export interface ContactBlockSliceDefaultItem {
 	gmaps_iframe_url: prismic.KeyTextField;
 	
 	/**
-	 * Google Maps Direct Link / Share URL field in *ContactBlock → Items*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: https://maps.app.goo.gl/DvLgodzdiR5t2KQK8
-	 * - **API ID Path**: contact_block.items[].gmaps_direct_url
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	gmaps_direct_url: prismic.KeyTextField;
-	
-	/**
-	 * Map Link Title field in *ContactBlock → Items*
-	 *
-	 * - **Field Type**: Text
-	 * - **Placeholder**: Karte / Google Maps
-	 * - **API ID Path**: contact_block.items[].map_title
-	 * - **Documentation**: https://prismic.io/docs/fields/text
-	 */
-	map_title: prismic.KeyTextField;
-	
-	/**
 	 * Waze Directions Link field in *ContactBlock → Items*
 	 *
 	 * - **Field Type**: Text
@@ -1138,6 +1180,26 @@ export interface ContactBlockSliceDefaultItem {
 	 * - **Documentation**: https://prismic.io/docs/fields/text
 	 */
 	waze_title: prismic.KeyTextField;
+	
+	/**
+	 * Review Link URL field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://g.page/r/...
+	 * - **API ID Path**: contact_block.items[].review_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	review_url: prismic.KeyTextField;
+	
+	/**
+	 * Review Link Title field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Write a review
+	 * - **API ID Path**: contact_block.items[].review_title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	review_title: prismic.KeyTextField;
 }
 
 /**

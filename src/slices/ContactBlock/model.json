@@ -33,6 +33,20 @@
             "placeholder": "+371 29 459 999"
           }
         },
+        "whatsapp_text": {
+          "type": "Text",
+          "config": {
+            "label": "WhatsApp Text",
+            "placeholder": "+371 29 459 999"
+          }
+        },
+        "whatsapp_url": {
+          "type": "Text",
+          "config": {
+            "label": "WhatsApp URL",
+            "placeholder": "https://wa.me/37129459999"
+          }
+        },
         "address": {
           "type": "Text",
           "config": {
