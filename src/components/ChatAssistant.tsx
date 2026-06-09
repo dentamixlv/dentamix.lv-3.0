@@ -156,6 +156,15 @@ export default function ChatAssistant() {
         userMessageText: textToSend,
       });
 
+      // Play sound notification when the answer is fully typed/received
+      try {
+        const audio = new Audio("https://dentamix-v30.cdn.prismic.io/dentamix-v30/aigVAAeQX7-eXDrC_chat.mp3");
+        audio.volume = 0.4;
+        audio.play().catch((e) => console.log("Audio playback blocked by autoplay rules:", e));
+      } catch (audioErr) {
+        console.error("Failed to play notification audio:", audioErr);
+      }
+
     } catch (error) {
       console.error("Failed to send message:", error);
       setOptimisticMessage(null); // Clear immediately on failure
