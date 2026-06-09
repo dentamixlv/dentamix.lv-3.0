@@ -77,8 +77,8 @@ export default function ChatAssistant() {
 
   // Localization strings
   const strings = {
-    title: isEn ? "Dentamix assistant" : "Dentamix palīgs",
-    online: isEn ? "Online" : "Tiešsaistē",
+    title: isEn ? "Ieva, dental assistant" : "Ieva, zobārsta palīgs",
+    online: "Online",
     welcome: isEn 
       ? "Hello! I am Ieva. How can I help you? You can ask me anything about dental services, prices, or dentists!" 
       : "Sveiki! Esmu Ieva. Kā varu Jums palīdzēt? Varat man jautāt jebko par zobārstniecības pakalpojumiem, cenām, zobārstiem!",

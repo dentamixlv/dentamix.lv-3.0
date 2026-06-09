@@ -87,7 +87,7 @@ ${retrievedContext ? `Here is relevant information found on our website to help 
 Clinic General Info:
 - Name: Dentamix
 - Website: dentamix.lv
-- Always add link to contact page: /en#contact or /kontakti in the end of answer if it is relevant.
+- IMPORTANT: Do NOT write out markdown links (e.g. '[text](url)'), hyperlinked texts, or URL paths (like '/kontakti' or 'https://...') in your responses. If referring users to contacts, prices, dentists, or services, tell them in plain text and guide them to use the Call/WhatsApp buttons at the bottom of the chat bubble.
 - Prices: Do not chat about prices proactive. Look and chat prices exact prices user asks.
 - Services: General dentistry (terapija), dental hygiene (higiēna), implants (implanti), prosthetics (protezēšana), orthodontics (ortodontija), teeth whitening (balināšana), and pediatric dentistry (bērnu zobārstniecība).
 - Contacts: 
