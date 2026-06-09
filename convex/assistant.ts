@@ -2,6 +2,7 @@ import { v } from "convex/values";
 import { action } from "./_generated/server";
 import { api } from "./_generated/api";
 import { Doc, Id } from "./_generated/dataModel";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 export const respond = action({
   args: {
@@ -22,31 +23,34 @@ export const respond = action({
     });
 
     // 3. Initialize client env checks
-    const aiUrl = process.env.DENTAMIX_AI_URL || "https://dentamix-ai-chat.girts-kizenbahs.workers.dev";
     const apiKey = process.env.DENTAMIX_AI_API_KEY;
     if (!apiKey) {
       throw new Error("DENTAMIX_AI_API_KEY is not set in Convex environment");
     }
 
+    const genAI = new GoogleGenerativeAI(apiKey);
+
     // 4. Generate user message embedding and perform vector search for RAG context
     let retrievedContext = "";
     try {
-      const embedUrl = `${aiUrl.replace(/\/$/, "")}/embeddings`;
+      const embedUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${apiKey}`;
       const embedRes = await fetch(embedUrl, {
         method: "POST",
         headers: {
-          "Authorization": `Bearer ${apiKey}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          text: args.userMessageText,
+          content: {
+            parts: [{ text: args.userMessageText }]
+          },
+          outputDimensionality: 768
         }),
       });
 
       if (embedRes.ok) {
         const embedData: any = await embedRes.json();
-        if (embedData.data && embedData.data.length > 0) {
-          const queryVector: number[] = embedData.data[0];
+        if (embedData.embedding && embedData.embedding.values) {
+          const queryVector: number[] = embedData.embedding.values;
 
           const searchResults: { _id: Id<"documents">; _score: number }[] = await ctx.vectorSearch("documents", "by_embedding", {
             vector: queryVector,
@@ -83,7 +87,11 @@ Clinic General Info:
 - Name: Dentamix
 - Website: dentamix.lv
 - Services: General dentistry (terapija), dental hygiene (higiēna), implants (implanti), prosthetics (protezēšana), orthodontics (ortodontija), teeth whitening (balināšana), and pediatric dentistry (bērnu zobārstniecība).
-- Contacts: Clients can book appointments online using the booking button in the header, or call +371 29222222, or email info@dentamix.lv.
+- Contacts: 
+  - Riga Clinic: Phone +371 29 459 999, Email riga@dentamix.lv, Address Brīvības iela 100, Rīga
+  - Adazi Clinic: Phone +371 29 111 222, Email adazi@dentamix.lv, Address Rīgas gatve 5, Ādaži
+  - General Email: info@dentamix.lv
+  - Booking: Clients can book appointments online using the booking button in the header.
 - Tone: Warm, professional, clean, polite, reassuring.
 - Response Language: Respond in the language the user speaks (Latvian, English, or Russian). If the user starts in Latvian, reply in Latvian. If in English, reply in English.
 - Formatting: Use clear, readable paragraphs or bullet points. Avoid overly technical jargon. Be empathetic to patients who might feel dental anxiety.`;
@@ -95,102 +103,41 @@ Clinic General Info:
       content: msg.content,
     }));
 
-    // 6. Send message and stream the response using Custom Cloudflare Worker
-    const chatUrl = `${aiUrl.replace(/\/$/, "")}/api/chat`;
+    // 6. Send message and stream the response using Google Gemini API
     let accumulatedContent = "";
 
     try {
-      const res = await fetch(chatUrl, {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          messages: [
-            { role: "system", content: systemPrompt },
-            ...history,
-            { role: "user", content: args.userMessageText }
-          ],
-          model: "@cf/google/gemma-4-26b-a4b-it",
-          stream: true,
-        }),
+      const model = genAI.getGenerativeModel({
+        model: "gemini-2.5-flash",
+        systemInstruction: systemPrompt,
       });
 
-      if (!res.ok) {
-        const errText = await res.text();
-        throw new Error(`Cloudflare Worker API returned ${res.status}: ${errText}`);
-      }
+      // Map chat history to Google Gemini format (role must be 'user' or 'model')
+      const contents = [
+        ...history.map((msg) => ({
+          role: msg.role === "assistant" ? ("model" as const) : ("user" as const),
+          parts: [{ text: msg.content }],
+        })),
+        { role: "user" as const, parts: [{ text: args.userMessageText }] },
+      ];
 
-      const reader = res.body?.getReader();
-      if (!reader) {
-        throw new Error("Response body is not readable");
-      }
+      const result = await model.generateContentStream({
+        contents,
+      });
 
-      const decoder = new TextDecoder("utf-8");
-      let buffer = "";
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-
-        buffer += decoder.decode(value, { stream: true });
-        const lines = buffer.split("\n");
-        buffer = lines.pop() || "";
-
-        for (const line of lines) {
-          const trimmed = line.trim();
-          if (trimmed.startsWith("data:")) {
-            const dataStr = trimmed.substring(5).trim();
-            if (dataStr === "[DONE]") continue;
-            try {
-              const data = JSON.parse(dataStr);
-              // Handle both direct response format (data.response) and OpenAI choices format (data.choices[0].delta.content)
-              let text = "";
-              if (data.response !== undefined) {
-                text = data.response;
-              } else if (data.choices && data.choices[0] && data.choices[0].delta) {
-                text = data.choices[0].delta.content || "";
-              }
-
-              if (text) {
-                accumulatedContent += text;
-                await ctx.runMutation(api.messages.updateContent, {
-                  messageId: assistantMessageId,
-                  content: accumulatedContent,
-                });
-              }
-            } catch (parseError) {
-              // Ignore incomplete lines
-            }
-          }
+      for await (const chunk of result.stream) {
+        const text = chunk.text();
+        if (text) {
+          accumulatedContent += text;
+          await ctx.runMutation(api.messages.updateContent, {
+            messageId: assistantMessageId,
+            content: accumulatedContent,
+          });
         }
       }
 
-      // Process any trailing buffer contents
-      if (buffer.trim().startsWith("data:")) {
-        const dataStr = buffer.trim().substring(5).trim();
-        try {
-          const data = JSON.parse(dataStr);
-          let text = "";
-          if (data.response !== undefined) {
-            text = data.response;
-          } else if (data.choices && data.choices[0] && data.choices[0].delta) {
-            text = data.choices[0].delta.content || "";
-          }
-
-          if (text) {
-            accumulatedContent += text;
-            await ctx.runMutation(api.messages.updateContent, {
-              messageId: assistantMessageId,
-              content: accumulatedContent,
-            });
-          }
-        } catch (e) {}
-      }
-
     } catch (error) {
-      console.error("Error streaming response from Cloudflare Worker API:", error);
+      console.error("Error streaming response from Google Gemini API:", error);
       accumulatedContent += "\n\n(Atvainojiet, radās kļūda saziņā ar serveri. Lūdzu, mēģiniet vēlreiz. / Sorry, an error occurred while connecting to the server. Please try again.)";
       await ctx.runMutation(api.messages.updateContent, {
         messageId: assistantMessageId,

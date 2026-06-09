@@ -57,7 +57,6 @@ export const ingest = action({
     await ctx.runMutation(api.documents.clear);
 
     // 2. Initialize Credentials
-    const aiUrl = process.env.DENTAMIX_AI_URL || "https://dentamix-ai-chat.girts-kizenbahs.workers.dev";
     const apiKey = process.env.DENTAMIX_AI_API_KEY;
     if (!apiKey) {
       return {
@@ -67,42 +66,44 @@ export const ingest = action({
       };
     }
 
-    const embedUrl = `${aiUrl.replace(/\/$/, "")}/embeddings`;
+    const embedUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${apiKey}`;
 
     // 3. Process each chunk
     let count = 0;
     const errors: string[] = [];
 
     for (const chunk of args.chunks) {
-      let res = null;
-      let data: any = null;
+      let embedding: number[] | null = null;
       let success = false;
       let retries = 3;
 
       while (retries > 0 && !success) {
         try {
-          res = await fetch(embedUrl, {
+          const embedRes = await fetch(embedUrl, {
             method: "POST",
             headers: {
-              "Authorization": `Bearer ${apiKey}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              text: chunk.text,
+              content: {
+                parts: [{ text: chunk.text }]
+              },
+              outputDimensionality: 768
             }),
           });
 
-          if (!res.ok) {
-            const errText = await res.text();
-            throw new Error(`Embedding API status ${res.status}: ${errText}`);
+          if (!embedRes.ok) {
+            const errText = await embedRes.text();
+            throw new Error(`Embedding API status ${embedRes.status}: ${errText}`);
           }
 
-          data = await res.json();
-          if (!data.data || data.data.length === 0) {
-            throw new Error(`Invalid response structure: ${JSON.stringify(data)}`);
+          const embedData = await embedRes.json();
+          if (embedData.embedding && embedData.embedding.values) {
+            embedding = embedData.embedding.values;
+            success = true;
+          } else {
+            throw new Error(`Invalid embedding response: no values found`);
           }
-
-          success = true;
         } catch (err: any) {
           retries--;
           if (retries > 0) {
@@ -113,9 +114,8 @@ export const ingest = action({
         }
       }
 
-      if (success && data) {
+      if (success && embedding) {
         try {
-          const embedding: number[] = data.data[0];
           await ctx.runMutation(api.documents.insert, {
             text: chunk.text,
             source: chunk.source,

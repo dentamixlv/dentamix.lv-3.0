@@ -6,7 +6,7 @@ import { createClient } from '../../prismicio';
 import { getPrismicLocale } from './page';
 import { LanguageProvider } from '../../components/LanguageContext';
 import ConvexClientProvider from '../../components/ConvexClientProvider';
-// import ChatAssistant from '../../components/ChatAssistant';
+import ChatAssistant from '../../components/ChatAssistant';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -122,7 +122,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
           cookiePolicyLink={footerData?.cookiePolicyLink}
         />
         <SpeedInsights />
-        {/* <ChatAssistant /> */}
+        <ChatAssistant />
       </ConvexClientProvider>
     </LanguageProvider>
   );
