@@ -453,14 +453,10 @@ export default function ChatAssistant() {
       {/* Floating Toggle Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full relative p-[2px] flex items-center justify-center shadow-lg focus:outline-none select-none overflow-visible"
+        className="w-14 h-14 rounded-full relative border-2 border-[#de7c8a] flex items-center justify-center shadow-lg focus:outline-none select-none overflow-visible"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        {/* Rotating border gradient layer (clipped to circle wrapper) */}
-        <div className="absolute inset-0 rounded-full overflow-hidden flex items-center justify-center pointer-events-none">
-          <div className="absolute w-[200%] h-[200%] bg-[conic-gradient(from_0deg,#de7c8a,#de7c8a_30%,#10b981_60%,#de7c8a)] animate-[spin_4s_linear_infinite]" />
-        </div>
         
         {/* Inner circle wrapper to clip and display image or X */}
         <div className="w-full h-full rounded-full overflow-hidden bg-[var(--main-color)] relative z-10 flex items-center justify-center">
