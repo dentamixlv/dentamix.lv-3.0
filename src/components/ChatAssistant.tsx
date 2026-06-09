@@ -60,8 +60,8 @@ export default function ChatAssistant() {
     title: isEn ? "Dentamix assistant" : "Dentamix palīgs",
     online: isEn ? "Online" : "Tiešsaistē",
     welcome: isEn 
-      ? "Hello! I am your Dentamix assistant. How can I help you today?" 
-      : "Sveiki! Esmu Dentamix palīgs. Kā es varu Jums palīdzēt?",
+      ? "Hello! I am Ieva, the Dentamix assistant. How can I help you today? You can ask me anything about dental services, prices, or dentists!" 
+      : "Sveiki! Esmu Dentamix mājas lapas palīgs Ieva. Kā es varu Jums palīdzēt? Varat man jautāt jebko par zobārstniecības pakalpojumiem, cenām, zobārstiem!",
     placeholder: isEn ? "Type a message..." : "Rakstīt ziņu...",
     clearTooltip: isEn ? "Clear conversation" : "Dzēst saraksti",
     clearConfirm: isEn 
