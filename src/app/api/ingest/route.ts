@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { ConvexHttpClient } from "convex/browser";
 import { api } from "../../../../convex/_generated/api";
 import { createClient } from "../../../prismicio";
+import { getPricesFromGoogleSheets } from "../../../data/prices";
 
 export const dynamic = "force-dynamic";
 
@@ -251,6 +252,51 @@ ${clinic.accessibility_alert ? `Piezīme par pieejamību: ${clinic.accessibility
       for (const text of docChunks) {
         chunks.push({ text: sanitizeText(text), source: url });
       }
+    }
+
+    // 3. Process Google Sheets prices
+    try {
+      const pricesLv = await getPricesFromGoogleSheets('lv');
+      if (pricesLv && pricesLv.length > 0) {
+        const categoriesLv = new Map<string, typeof pricesLv>();
+        for (const item of pricesLv) {
+          const list = categoriesLv.get(item.category) || [];
+          list.push(item);
+          categoriesLv.set(item.category, list);
+        }
+        for (const [category, items] of categoriesLv.entries()) {
+          let text = `Klīnika: Dentamix\nLapa: Zobārstniecības Cenas - ${category} (Latvian)\nSaite: /cenas\nSaturs:\nKategorija: ${category}\nCenrādis:\n`;
+          for (const item of items) {
+            text += `- ${item.title}: ${item.price}${item.description ? ` (${item.description})` : ''}\n`;
+          }
+          chunks.push({ text: sanitizeText(text), source: '/cenas' });
+        }
+      }
+    } catch (e: any) {
+      console.warn("Failed to ingest Latvian prices from Google Sheets:", e);
+      warnings.push(`Latvian prices ingestion warning: ${e.message}`);
+    }
+
+    try {
+      const pricesEn = await getPricesFromGoogleSheets('en-us');
+      if (pricesEn && pricesEn.length > 0) {
+        const categoriesEn = new Map<string, typeof pricesEn>();
+        for (const item of pricesEn) {
+          const list = categoriesEn.get(item.category) || [];
+          list.push(item);
+          categoriesEn.set(item.category, list);
+        }
+        for (const [category, items] of categoriesEn.entries()) {
+          let text = `Klīnika: Dentamix\nLapa: Dental Prices - ${category} (English)\nSaite: /en/prices\nSaturs:\nCategory: ${category}\nPricelist:\n`;
+          for (const item of items) {
+            text += `- ${item.title}: ${item.price}${item.description ? ` (${item.description})` : ''}\n`;
+          }
+          chunks.push({ text: sanitizeText(text), source: '/en/prices' });
+        }
+      }
+    } catch (e: any) {
+      console.warn("Failed to ingest English prices from Google Sheets:", e);
+      warnings.push(`English prices ingestion warning: ${e.message}`);
     }
 
     if (chunks.length === 0) {

@@ -18,6 +18,13 @@ export const getByIds = query({
   },
 });
 
+export const listAll = query({
+  args: {},
+  handler: async (ctx) => {
+    return await ctx.db.query("documents").collect();
+  },
+});
+
 export const insert = mutation({
   args: {
     text: v.string(),

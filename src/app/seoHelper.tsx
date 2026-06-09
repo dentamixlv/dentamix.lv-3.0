@@ -158,9 +158,9 @@ export function SEODentistStructuredData({ locale, prismicClinics }: DentistStru
     return {
       "@context": "https://schema.org",
       "@type": "Dentist",
-      "name": clinic.name || (isAdazi ? "Dentamic Ādaži" : "Dentamic Rīga"),
-      "telephone": clinic.phone || (isAdazi ? "+371 29 111 222" : "+371 29 459 999"),
-      "email": clinic.email || (isAdazi ? "adazi@dentamic.lv" : "riga@dentamic.lv"),
+      "name": clinic.name || (isAdazi ? "Dentamix Ādaži" : "Dentamix Rīga"),
+      "telephone": clinic.phone || "+371 29419999",
+      "email": clinic.email || "info@dentamix.lv",
       "url": isEn ? "https://dentamix.lv/en" : "https://dentamix.lv",
       "logo": "https://dentamix.lv/favicon.ico",
       "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800",
