@@ -44,7 +44,6 @@ export default function ChatAssistant() {
   const [conversationId, setConversationId] = useState<Id<"conversations"> | null>(null);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
-  const [cooldown, setCooldown] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   // Convex mutations, queries, actions
@@ -96,23 +95,13 @@ export default function ChatAssistant() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [dbMessages, isSending]);
 
-  // Cooldown countdown timer
-  useEffect(() => {
-    if (cooldown <= 0) return;
-    const timer = setInterval(() => {
-      setCooldown((prev) => prev - 1);
-    }, 1000);
-    return () => clearInterval(timer);
-  }, [cooldown]);
-
   // Handle message send
   const handleSend = async (textToSend: string) => {
-    if (!textToSend.trim() || isSending || cooldown > 0) return;
+    if (!textToSend.trim() || isSending) return;
     if (textToSend.length > 140) return;
 
     setIsSending(true);
     setInputValue("");
-    setCooldown(10); // Start 10-second cooldown
 
     try {
       let activeId = conversationId;
@@ -407,14 +396,10 @@ export default function ChatAssistant() {
               </div>
               <button
                 type="submit"
-                disabled={!inputValue.trim() || isSending || cooldown > 0}
+                disabled={!inputValue.trim() || isSending}
                 className="w-9 h-9 rounded-full bg-[var(--main-color)] hover:bg-[color-mix(in_srgb,var(--main-color)_90%,black)] text-white flex items-center justify-center transition-all duration-200 disabled:opacity-40 disabled:hover:bg-[var(--main-color)] shadow-md hover:scale-105 active:scale-95 flex-shrink-0"
               >
-                {cooldown > 0 ? (
-                  <span className="text-xs font-semibold">{cooldown}s</span>
-                ) : (
-                  <Send size={15} />
-                )}
+                <Send size={15} />
               </button>
             </form>
 
