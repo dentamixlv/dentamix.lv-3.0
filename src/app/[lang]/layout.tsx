@@ -73,6 +73,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
                 labelSaturday: c.label_saturday || undefined,
                 labelSunday: c.label_sunday || undefined,
                 accessibilityAlert: c.accessibility_alert || undefined,
+                accessibilityAlertSecond: c.accessibility_alert_second || undefined,
                 mapTitle: c.map_title || undefined,
                 mapUrl: c.map_url || undefined,
                 wazeTitle: c.waze_title || undefined,

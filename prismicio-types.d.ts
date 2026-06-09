@@ -183,6 +183,16 @@ export interface FooterDocumentDataClinicsItem {
 	accessibility_alert: prismic.KeyTextField;
 	
 	/**
+	 * Accessibility Alert Message Second field in *Footer → Clinics*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: e.g., Klīnika ir pilnībā pieejama ratiņkrēslā
+	 * - **API ID Path**: footer.clinics[].accessibility_alert_second
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	accessibility_alert_second: prismic.KeyTextField;
+	
+	/**
 	 * Map Link Title field in *Footer → Clinics*
 	 *
 	 * - **Field Type**: Text

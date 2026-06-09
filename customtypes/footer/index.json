@@ -137,6 +137,13 @@
                 "placeholder": "e.g., Klīnika ir pilnībā pieejama ratiņkrēslā"
               }
             },
+            "accessibility_alert_second": {
+              "type": "Text",
+              "config": {
+                "label": "Accessibility Alert Message Second",
+                "placeholder": "e.g., Klīnika ir pilnībā pieejama ratiņkrēslā"
+              }
+            },
             "map_title": {
               "type": "Text",
               "config": {

@@ -70,6 +70,7 @@ export interface Clinic {
   gmapsLink?: string;
   waze?: string;
   accessibilityAlert?: string;
+  accessibilityAlertSecond?: string;
 }
 
 export interface BlogPost {
