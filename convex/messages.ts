@@ -21,6 +21,22 @@ export const send = mutation({
     content: v.string(),
   },
   handler: async (ctx, args) => {
+    // If this is the first user message in the conversation, update the conversation title
+    if (args.role === "user") {
+      const existing = await ctx.db
+        .query("messages")
+        .withIndex("by_conversation", (q) => q.eq("conversationId", args.conversationId))
+        .collect();
+      
+      if (existing.length === 0) {
+        let title = args.content.trim();
+        if (title.length > 60) {
+          title = title.substring(0, 57) + "...";
+        }
+        await ctx.db.patch(args.conversationId, { title });
+      }
+    }
+
     const messageId = await ctx.db.insert("messages", {
       conversationId: args.conversationId,
       role: args.role,

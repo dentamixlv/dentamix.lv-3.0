@@ -107,9 +107,10 @@ export default function ChatAssistant() {
 
       // 1. If no conversation exists, create it lazily
       if (!activeId) {
-        const title = isEn 
-          ? `English Chat - ${new Date().toLocaleDateString()}` 
-          : `Saruna - ${new Date().toLocaleDateString()}`;
+        let title = textToSend.trim();
+        if (title.length > 60) {
+          title = title.substring(0, 57) + "...";
+        }
         
         const newId = await createConversation({ title });
         activeId = newId;
