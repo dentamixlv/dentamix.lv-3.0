@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useAction } from "convex/react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, Trash2, Bot, User, Loader2, Sparkles } from "lucide-react";
+import { MessageSquare, X, Send, Trash2, Bot, User, Loader2, Sparkles, Phone, MessageCircle } from "lucide-react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 
@@ -214,8 +214,32 @@ export default function ChatAssistant() {
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-800 leading-relaxed">
-                  {strings.welcome}
+                <div className="flex flex-col gap-2">
+                  <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-800 leading-relaxed">
+                    {strings.welcome}
+                  </div>
+                  
+                  {/* Call and WhatsApp Buttons for Welcome Message */}
+                  {(!dbMessages || dbMessages.length === 0) && (
+                    <div className="flex gap-2 pl-1">
+                      <a
+                        href="tel:+37129419999"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#de7c8a]/30 text-xs font-semibold text-[#511B29] transition-all hover:bg-[#de7c8a]/10 active:scale-95 shadow-sm"
+                      >
+                        <Phone size={12} className="text-[#de7c8a]" />
+                        <span>{isEn ? "Call" : "Zvanīt"}</span>
+                      </a>
+                      <a
+                        href="https://wa.me/37129419999"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 transition-all hover:bg-emerald-100 active:scale-95 shadow-sm"
+                      >
+                        <MessageCircle size={12} className="text-emerald-500 fill-emerald-500" />
+                        <span>WhatsApp</span>
+                      </a>
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -241,8 +265,9 @@ export default function ChatAssistant() {
               )}
 
               {/* Message History */}
-              {dbMessages && dbMessages.map((msg) => {
+              {dbMessages && dbMessages.map((msg, index) => {
                 const isAssistant = msg.role === "assistant";
+                const isLast = index === dbMessages.length - 1;
                 return (
                   <div
                     key={msg._id}
@@ -266,21 +291,45 @@ export default function ChatAssistant() {
                       )}
                     </div>
                     
-                    <div
-                      className={`rounded-2xl p-3 shadow-sm text-sm leading-relaxed ${
-                        isAssistant
-                          ? "bg-white border border-gray-100 text-gray-800 rounded-tl-none"
-                          : "bg-[var(--main-color)] text-white rounded-tr-none"
-                      }`}
-                    >
-                      {/* Show loading indicator if assistant message is empty and we are sending */}
-                      {isAssistant && msg.content === "" ? (
-                        <div className="flex items-center gap-2 text-gray-400">
-                          <Loader2 size={14} className="animate-spin" />
-                          <span className="text-xs">Domā... / Thinking...</span>
+                    <div className="flex flex-col gap-2">
+                      <div
+                        className={`rounded-2xl p-3 shadow-sm text-sm leading-relaxed ${
+                          isAssistant
+                            ? "bg-white border border-gray-100 text-gray-800 rounded-tl-none"
+                            : "bg-[var(--main-color)] text-white rounded-tr-none"
+                        }`}
+                      >
+                        {/* Show loading indicator if assistant message is empty and we are sending */}
+                        {isAssistant && msg.content === "" ? (
+                          <div className="flex items-center gap-2 text-gray-400">
+                            <Loader2 size={14} className="animate-spin" />
+                            <span className="text-xs">Domā... / Thinking...</span>
+                          </div>
+                        ) : (
+                          formatMessageContent(msg.content)
+                        )}
+                      </div>
+
+                      {/* Call and WhatsApp Buttons for the latest Assistant message */}
+                      {isAssistant && isLast && msg.content !== "" && (
+                        <div className="flex gap-2 pl-1">
+                          <a
+                            href="tel:+37129419999"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#de7c8a]/30 text-xs font-semibold text-[#511B29] transition-all hover:bg-[#de7c8a]/10 active:scale-95 shadow-sm"
+                          >
+                            <Phone size={12} className="text-[#de7c8a]" />
+                            <span>{isEn ? "Call" : "Zvanīt"}</span>
+                          </a>
+                          <a
+                            href="https://wa.me/37129419999"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 transition-all hover:bg-emerald-100 active:scale-95 shadow-sm"
+                          >
+                            <MessageCircle size={12} className="text-emerald-500 fill-emerald-500" />
+                            <span>WhatsApp</span>
+                          </a>
                         </div>
-                      ) : (
-                        formatMessageContent(msg.content)
                       )}
                     </div>
                   </div>
