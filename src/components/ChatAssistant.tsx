@@ -44,6 +44,7 @@ export default function ChatAssistant() {
   const [conversationId, setConversationId] = useState<Id<"conversations"> | null>(null);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
+  const [cooldown, setCooldown] = useState(0);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   // Convex mutations, queries, actions
@@ -60,8 +61,8 @@ export default function ChatAssistant() {
     title: isEn ? "Dentamix assistant" : "Dentamix palīgs",
     online: isEn ? "Online" : "Tiešsaistē",
     welcome: isEn 
-      ? "Hello! I am Ieva, the Dentamix assistant. How can I help you today? You can ask me anything about dental services, prices, or dentists!" 
-      : "Sveiki! Esmu Dentamix mājas lapas palīgs Ieva. Kā es varu Jums palīdzēt? Varat man jautāt jebko par zobārstniecības pakalpojumiem, cenām, zobārstiem!",
+      ? "Hello! I am Ieva. How can I help you? You can ask me anything about dental services, prices, or dentists!" 
+      : "Sveiki! Esmu Ieva. Kā varu Jums palīdzēt? Varat man jautāt jebko par zobārstniecības pakalpojumiem, cenām, zobārstiem!",
     placeholder: isEn ? "Type a message..." : "Rakstīt ziņu...",
     clearTooltip: isEn ? "Clear conversation" : "Dzēst saraksti",
     clearConfirm: isEn 
@@ -69,16 +70,16 @@ export default function ChatAssistant() {
       : "Vai tiešām vēlaties dzēst šo saraksti?",
     suggestions: isEn 
       ? [
-          { text: "What services do you offer?", prompt: "What services do you offer?" },
-          { text: "How can I book an appointment?", prompt: "How can I book an appointment?" },
-          { text: "Where are you located?", prompt: "Where are you located?" },
-          { text: "What are your prices?", prompt: "What are your dental prices?" }
+          { text: "Contacts", url: "/en/contacts" },
+          { text: "Services", url: "/en/services" },
+          { text: "Prices", url: "/en/prices" },
+          { text: "Dentists", url: "/en/doctors" }
         ]
       : [
-          { text: "Kādus pakalpojumus piedāvājat?", prompt: "Kādus pakalpojumus piedāvājat?" },
-          { text: "Kā pieteikties vizītei?", prompt: "Kā pieteikties vizītei?" },
-          { text: "Kur jūs atrodaties?", prompt: "Kur jūs atrodaties?" },
-          { text: "Kādas ir pakalpojumu cenas?", prompt: "Kādas ir jūsu pakalpojumu cenas?" }
+          { text: "Kontakti", url: "/kontakti" },
+          { text: "Pakalpojumi", url: "/pakalpojumi" },
+          { text: "Cenas", url: "/cenas" },
+          { text: "Zobārsti", url: "/zobarsti" }
         ]
   };
 
@@ -95,12 +96,23 @@ export default function ChatAssistant() {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [dbMessages, isSending]);
 
+  // Cooldown countdown timer
+  useEffect(() => {
+    if (cooldown <= 0) return;
+    const timer = setInterval(() => {
+      setCooldown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
   // Handle message send
   const handleSend = async (textToSend: string) => {
-    if (!textToSend.trim() || isSending) return;
+    if (!textToSend.trim() || isSending || cooldown > 0) return;
+    if (textToSend.length > 140) return;
 
     setIsSending(true);
     setInputValue("");
+    setCooldown(10); // Start 10-second cooldown
 
     try {
       let activeId = conversationId;
@@ -249,17 +261,17 @@ export default function ChatAssistant() {
                 <div className="pl-10 space-y-2 pt-2">
                   <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-1.5">
                     <Sparkles size={12} className="text-[var(--main-color)]" />
-                    <span>Ieteikumi / Suggestions:</span>
+                    <span>Noderīgas saites / Useful links:</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {strings.suggestions.map((sug, idx) => (
-                      <button
+                      <a
                         key={idx}
-                        onClick={() => handleSend(sug.prompt)}
-                        className="text-xs text-left bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 px-3.5 py-2 rounded-full transition-all duration-200 hover:border-gray-300 shadow-sm"
+                        href={sug.url}
+                        className="text-xs bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 px-3.5 py-2 rounded-full transition-all duration-200 hover:border-gray-300 shadow-sm font-medium inline-flex items-center justify-center cursor-pointer"
                       >
                         {sug.text}
-                      </button>
+                      </a>
                     ))}
                   </div>
                 </div>
@@ -369,20 +381,40 @@ export default function ChatAssistant() {
               }}
               className="p-3 bg-white border-t border-gray-100 flex items-center gap-2"
             >
-              <input
-                type="text"
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                placeholder={strings.placeholder}
-                disabled={isSending}
-                className="flex-1 border border-gray-200 rounded-full px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--main-color)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-400"
-              />
+              <div className="relative flex-1 flex items-center">
+                <input
+                  type="text"
+                  value={inputValue}
+                  onChange={(e) => setInputValue(e.target.value)}
+                  maxLength={140}
+                  placeholder={strings.placeholder}
+                  disabled={isSending}
+                  className="w-full border border-gray-200 rounded-full pl-4 pr-16 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-[var(--main-color)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-400"
+                />
+                {inputValue.length > 0 && (
+                  <span 
+                    className={`absolute right-4 text-[10px] font-semibold pointer-events-none select-none transition-colors duration-150 ${
+                      inputValue.length >= 125 
+                        ? "text-rose-500 font-bold" 
+                        : inputValue.length >= 100 
+                          ? "text-amber-500" 
+                          : "text-gray-400"
+                    }`}
+                  >
+                    {inputValue.length}/140
+                  </span>
+                )}
+              </div>
               <button
                 type="submit"
-                disabled={!inputValue.trim() || isSending}
-                className="w-9 h-9 rounded-full bg-[var(--main-color)] hover:bg-[color-mix(in_srgb,var(--main-color)_90%,black)] text-white flex items-center justify-center transition-all duration-200 disabled:opacity-40 disabled:hover:bg-[var(--main-color)] shadow-md hover:scale-105 active:scale-95"
+                disabled={!inputValue.trim() || isSending || cooldown > 0}
+                className="w-9 h-9 rounded-full bg-[var(--main-color)] hover:bg-[color-mix(in_srgb,var(--main-color)_90%,black)] text-white flex items-center justify-center transition-all duration-200 disabled:opacity-40 disabled:hover:bg-[var(--main-color)] shadow-md hover:scale-105 active:scale-95 flex-shrink-0"
               >
-                <Send size={15} />
+                {cooldown > 0 ? (
+                  <span className="text-xs font-semibold">{cooldown}s</span>
+                ) : (
+                  <Send size={15} />
+                )}
               </button>
             </form>
 
