@@ -161,7 +161,7 @@ export default function ChatAssistant() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 30, scale: 0.95 }}
             transition={{ duration: 0.25, ease: "easeOut" }}
-            className="w-96 max-w-[calc(100vw-2rem)] h-[550px] max-h-[calc(100vh-6rem)] rounded-2xl shadow-2xl flex flex-col bg-white border border-gray-100 overflow-hidden mb-4"
+            className="w-96 max-w-[calc(100vw-2rem)] h-[550px] max-h-[calc(100vh-6rem)] rounded-2xl shadow-2xl flex flex-col bg-white border border-gray-100 overflow-hidden fixed bottom-24 left-1/2 -translate-x-1/2 sm:relative sm:bottom-0 sm:left-auto sm:translate-x-0 sm:mb-4"
           >
             
             {/* Header */}
@@ -388,38 +388,53 @@ export default function ChatAssistant() {
       {/* Floating Toggle Button */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
-        className="w-14 h-14 rounded-full bg-[var(--main-color)] hover:bg-[color-mix(in_srgb,var(--main-color)_90%,black)] text-white flex items-center justify-center shadow-lg transition-transform focus:outline-none select-none relative"
+        className="w-14 h-14 rounded-full relative p-[2px] flex items-center justify-center shadow-lg focus:outline-none select-none overflow-visible"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
       >
-        <AnimatePresence mode="wait">
-          {isOpen ? (
-            <motion.div
-              key="close"
-              initial={{ rotate: -45, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: 45, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-            >
-              <X size={24} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="chat"
-              initial={{ rotate: 45, opacity: 0 }}
-              animate={{ rotate: 0, opacity: 1 }}
-              exit={{ rotate: -45, opacity: 0 }}
-              transition={{ duration: 0.15 }}
-              className="relative"
-            >
-              <MessageSquare size={24} />
-              {/* Sparkle badge */}
-              <div className="absolute -top-1.5 -right-1.5 bg-emerald-500 text-white rounded-full p-0.5 border border-[var(--main-color)]">
-                <Sparkles size={8} />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {/* Rotating border gradient layer (clipped to circle wrapper) */}
+        <div className="absolute inset-0 rounded-full overflow-hidden flex items-center justify-center pointer-events-none">
+          <div className="absolute w-[200%] h-[200%] bg-[conic-gradient(from_0deg,#de7c8a,#de7c8a_30%,#10b981_60%,#de7c8a)] animate-[spin_4s_linear_infinite]" />
+        </div>
+        
+        {/* Inner circle wrapper to clip and display image or X */}
+        <div className="w-full h-full rounded-full overflow-hidden bg-[var(--main-color)] relative z-10 flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            {isOpen ? (
+              <motion.div
+                key="close"
+                initial={{ rotate: -45, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 45, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+              >
+                <X size={24} className="text-white" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="chat"
+                initial={{ rotate: 45, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: -45, opacity: 0 }}
+                transition={{ duration: 0.15 }}
+                className="relative w-full h-full"
+              >
+                <img 
+                  src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
+                  alt="Chat assistant" 
+                  className="w-full h-full object-cover"
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* Online Status Indicator (placed outside overflow-hidden inner circle to sit on top of the border) */}
+        {!isOpen && (
+          <div className="absolute top-0 right-0 w-3.5 h-3.5 rounded-full border-2 border-white bg-emerald-500 z-30 flex items-center justify-center shadow-md">
+            <span className="absolute inset-0 rounded-full bg-emerald-400 opacity-75 animate-ping" />
+          </div>
+        )}
       </motion.button>
 
     </div>
