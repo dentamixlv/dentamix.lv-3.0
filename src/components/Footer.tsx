@@ -249,7 +249,7 @@ export default function Footer({
                   {/* Row 5: Actions */}
                   <div className={`${(clinic.gmapsLink || clinic.waze || clinic.reviewUrl) ? 'flex' : 'hidden md:flex'} md:h-5 items-center`}>
                     {(clinic.gmapsLink || clinic.waze || clinic.reviewUrl) ? (
-                      <div className="flex items-center gap-4 flex-wrap">
+                      <div className="flex flex-col gap-2 md:flex-row md:gap-4 md:items-center w-full">
                         {clinic.gmapsLink && (
                           <span className="flex items-center gap-2">
                             <Map className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
