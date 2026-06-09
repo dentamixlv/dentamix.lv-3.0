@@ -186,7 +186,7 @@ export default function Footer({
           </h4>
           <div className="flex flex-col gap-8">
             {clinicsToRender.map((clinic) => (
-              <div key={clinic.id} className="group border-l-2 border-white/[0.06] hover:border-[#de7c8a]/50 pl-4 transition-all duration-300">
+              <div key={clinic.id} className="group">
                 <h5 className="text-sm font-bold text-white tracking-wide uppercase mb-2">
                   {clinic.name}
                 </h5>
@@ -310,7 +310,7 @@ export default function Footer({
             {clinicsToRender.map((clinic) => (
               <div 
                 key={`hours-${clinic.id}`} 
-                className="group border-l-2 border-white/[0.06] hover:border-[#de7c8a]/50 pl-4 transition-all duration-300"
+                className="group"
               >
                 <h5 className="text-sm font-bold text-white tracking-wide uppercase mb-2">
                   {clinic.name}
