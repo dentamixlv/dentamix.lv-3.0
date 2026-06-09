@@ -301,9 +301,10 @@ export default function ChatAssistant() {
                       >
                         {/* Show loading indicator if assistant message is empty and we are sending */}
                         {isAssistant && msg.content === "" ? (
-                          <div className="flex items-center gap-2 text-gray-400">
-                            <Loader2 size={14} className="animate-spin" />
-                            <span className="text-xs">Domā... / Thinking...</span>
+                          <div className="flex items-center gap-1.5 py-1.5 px-1">
+                            <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
+                            <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
+                            <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" />
                           </div>
                         ) : (
                           formatMessageContent(msg.content)
@@ -346,9 +347,12 @@ export default function ChatAssistant() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-400 flex items-center gap-2">
-                    <Loader2 size={14} className="animate-spin" />
-                    <span>Domā... / Thinking...</span>
+                  <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-400 flex items-center justify-center">
+                    <div className="flex items-center gap-1.5 py-1 px-0.5">
+                      <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
+                      <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
+                      <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" />
+                    </div>
                   </div>
                 </div>
               )}
