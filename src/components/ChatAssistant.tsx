@@ -89,16 +89,14 @@ export default function ChatAssistant() {
       : "Vai tiešām vēlaties dzēst šo saraksti?",
     suggestions: isEn 
       ? [
-          { text: "Contacts", url: "/en/contacts" },
-          { text: "Services", url: "/en/services" },
-          { text: "Prices", url: "/en/prices" },
-          { text: "Dentists", url: "/en/doctors" }
+          { text: "How can I book an appointment?", prompt: "How can I book an appointment?" },
+          { text: "Where are you located?", prompt: "Where are you located?" },
+          { text: "What are your prices?", prompt: "What are your dental prices?" }
         ]
       : [
-          { text: "Kontakti", url: "/kontakti" },
-          { text: "Pakalpojumi", url: "/pakalpojumi" },
-          { text: "Cenas", url: "/cenas" },
-          { text: "Zobārsti", url: "/zobarsti" }
+          { text: "Kā pieteikties vizītei?", prompt: "Kā pieteikties vizītei?" },
+          { text: "Kur jūs atrodaties?", prompt: "Kur jūs atrodaties?" },
+          { text: "Kādas ir pakalpojumu cenas?", prompt: "Kādas ir jūsu pakalpojumu cenas?" }
         ]
   };
 
@@ -114,6 +112,18 @@ export default function ChatAssistant() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [displayMessages, isSending]);
+
+  // Clear optimistic message once it has been saved and synced from the database
+  useEffect(() => {
+    if (optimisticMessage && dbMessages) {
+      const alreadyInDb = dbMessages.some(
+        (m) => m.role === "user" && m.content === optimisticMessage
+      );
+      if (alreadyInDb) {
+        setOptimisticMessage(null);
+      }
+    }
+  }, [dbMessages, optimisticMessage]);
 
   // Handle message send
   const handleSend = async (textToSend: string) => {
@@ -148,9 +158,16 @@ export default function ChatAssistant() {
 
     } catch (error) {
       console.error("Failed to send message:", error);
+      setOptimisticMessage(null); // Clear immediately on failure
+      // Clean up potentially stale/nonexistent conversation ID so the next try creates a new conversation
+      setConversationId(null);
+      localStorage.removeItem("dentamix_chat_conv_id");
     } finally {
       setIsSending(false);
-      setOptimisticMessage(null); // Clear optimistic message
+      // Safety timeout: if the database doesn't sync the message within 3 seconds, clear it anyway
+      setTimeout(() => {
+        setOptimisticMessage((current) => current === textToSend ? null : current);
+      }, 3000);
     }
   };
 
@@ -272,17 +289,17 @@ export default function ChatAssistant() {
                 <div className="pl-10 space-y-2 pt-2">
                   <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-1.5">
                     <Sparkles size={12} className="text-[var(--main-color)]" />
-                    <span>Noderīgas saites / Useful links:</span>
+                    <span>Ieteikumi / Suggestions:</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {strings.suggestions.map((sug, idx) => (
-                      <a
+                      <button
                         key={idx}
-                        href={sug.url}
-                        className="text-xs bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 px-3.5 py-2 rounded-full transition-all duration-200 hover:border-gray-300 shadow-sm font-medium inline-flex items-center justify-center cursor-pointer"
+                        onClick={() => handleSend(sug.prompt)}
+                        className="text-xs text-left bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 px-3.5 py-2 rounded-full transition-all duration-200 hover:border-gray-300 shadow-sm cursor-pointer"
                       >
                         {sug.text}
-                      </a>
+                      </button>
                     ))}
                   </div>
                 </div>

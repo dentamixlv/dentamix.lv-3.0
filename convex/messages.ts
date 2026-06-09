@@ -21,6 +21,12 @@ export const send = mutation({
     content: v.string(),
   },
   handler: async (ctx, args) => {
+    // Verify conversation exists
+    const conversation = await ctx.db.get(args.conversationId);
+    if (!conversation) {
+      throw new Error(`Conversation ${args.conversationId} not found`);
+    }
+
     // If this is the first user message in the conversation, update the conversation title
     if (args.role === "user") {
       const existing = await ctx.db
