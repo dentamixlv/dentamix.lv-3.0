@@ -185,6 +185,19 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                         <span>{whatsappText}</span>
                       </a>
                     )}
+
+                    {/* Review Link */}
+                    {reviewUrl && (
+                      <a 
+                        href={reviewUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer" 
+                        className="flex items-center gap-2 font-bold text-[#511B29] hover:text-[#5d1726]/80 transition-colors w-fit"
+                      >
+                        <Star className="w-4 h-4 text-[#de7c8a] shrink-0" />
+                        <span>{reviewTitle || (isEn ? 'Write a review' : 'Pievieno atsauksmi')}</span>
+                      </a>
+                    )}
                     {/* Address */}
                     {addressVal && (
                       <p className="flex items-start gap-2 text-[#6A5B5E] font-medium leading-relaxed">
@@ -241,20 +254,7 @@ export default function ContactBlock({ slice }: ContactBlockProps) {
                       </p>
                     )}
 
-                    {/* Review Link */}
-                    {reviewUrl && (
-                      <p className="flex items-center gap-2">
-                        <Star className="w-4 h-4 text-[#de7c8a] shrink-0" />
-                        <a 
-                          href={reviewUrl} 
-                          target="_blank" 
-                          rel="noopener noreferrer" 
-                          className="hover:text-[#5d1726] hover:underline transition-colors font-medium"
-                        >
-                          {reviewTitle || (isEn ? 'Write a review' : 'Pievieno atsauksmi')}
-                        </a>
-                      </p>
-                    )}
+
 
                     {/* Working hours as sub-list within the vertical list */}
                     {whLabel && (
