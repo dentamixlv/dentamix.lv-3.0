@@ -4,6 +4,60 @@ import { api } from "./_generated/api";
 import { Doc, Id } from "./_generated/dataModel";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+async function extractUserName(
+  genAI: GoogleGenerativeAI,
+  userMessageText: string,
+  history: { role: "user" | "assistant"; content: string }[]
+): Promise<string | null> {
+  try {
+    const model = genAI.getGenerativeModel({
+      model: "gemini-2.5-flash",
+      generationConfig: {
+        responseMimeType: "application/json",
+        responseSchema: {
+          type: "object",
+          properties: {
+            name: {
+              type: "string",
+              description: "The extracted first name of the user, or null if not provided.",
+            },
+          },
+          required: ["name"],
+        } as any,
+      },
+    });
+
+    const contextStr = history
+      .slice(-3)
+      .map((m) => `${m.role === "assistant" ? "Assistant" : "User"}: ${m.content}`)
+      .join("\n");
+
+    const prompt = `You are a name extraction assistant.
+Analyze the user's latest message (in the context of the recent conversation history) to determine if the user is introducing themselves, stating their name, or responding to a query asking for their name.
+If they are, extract their first name.
+If no name is being introduced or stated, return {"name": null}.
+
+Recent conversation history:
+${contextStr}
+
+User's latest message: "${userMessageText}"
+
+Return the JSON output matching the schema.`;
+
+    const result = await model.generateContent(prompt);
+    const text = result.response.text();
+    if (!text) return null;
+    const parsed = JSON.parse(text);
+    if (parsed && typeof parsed.name === "string" && parsed.name.trim().length > 0) {
+      const name = parsed.name.trim();
+      return name.charAt(0).toUpperCase() + name.slice(1);
+    }
+  } catch (error) {
+    console.error("Error extracting user name:", error);
+  }
+  return null;
+}
+
 export const respond = action({
   args: {
     conversationId: v.id("conversations"),
@@ -22,6 +76,13 @@ export const respond = action({
       conversationId: args.conversationId,
     });
 
+    // Fetch conversation first to see if we already have the user's name
+    const conversation: Doc<"conversations"> | null = await ctx.runQuery(api.conversations.get, {
+      id: args.conversationId,
+    });
+
+    let userName = conversation?.userName;
+
     // 3. Initialize client env checks
     const apiKey = process.env.DENTAMIX_AI_API_KEY;
     if (!apiKey) {
@@ -29,6 +90,24 @@ export const respond = action({
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
+
+    // If userName is not set, try to extract it from the message
+    if (!userName) {
+      const priorMessages = dbMessages.slice(0, -2);
+      const history = priorMessages.map((msg) => ({
+        role: msg.role === "assistant" ? ("assistant" as const) : ("user" as const),
+        content: msg.content,
+      }));
+
+      const extractedName = await extractUserName(genAI, args.userMessageText, history);
+      if (extractedName) {
+        userName = extractedName;
+        await ctx.runMutation(api.conversations.updateUserName, {
+          id: args.conversationId,
+          userName: extractedName,
+        });
+      }
+    }
 
     // 4. Generate user message embedding and perform vector search for RAG context
     let retrievedContext = "";
@@ -81,6 +160,8 @@ export const respond = action({
     const systemPrompt = `You are Ieva, a helpful, professional, and friendly AI assistant for Dentamix, a premium dental clinic in Latvia.
 Your goal is to answer client questions in a helpful way, explain services, share pricing info, and guide them to book an appointment.
 If asked about who you are or your name, state that you are Ieva, the Dentamix website assistant (mājas lapas palīgs). Otherwise, do NOT introduce yourself, do NOT state your name (e.g. do NOT say "Esmu Ieva" or "I am Ieva"), and do NOT repeat greetings or ask "How can I help you?" / "Kā varu palīdzēt?" in your responses. The welcome message already establishes this. Dive straight into answering the user's inquiry.
+
+${userName ? `The user's name is **${userName}**. You MUST start this response by addressing them by name (e.g., "${userName}, ..." or similar friendly greeting using their name). Never ask for their name again.` : `The user's name is NOT known yet. After answering the user's question, at the very end of your response, you MUST gently and politely ask for their name (e.g. in Latvian: 'Kā es varētu Jūs uzrunāt?' or 'Kā Jūs sauc?', in English: 'May I ask for your name?', in Russian: 'Как я могу к вам обращаться?'). Only do this if they haven't just introduced themselves or stated their name in their message.`}
 
 ${retrievedContext ? `Here is relevant information found on our website to help you answer this question:\n${retrievedContext}\n\nUse this information to provide accurate and specific details. If the answer cannot be found in the context, use your general dental knowledge, but do not make up specific facts about Dentamix (like prices or schedules) that aren't mentioned in the text.` : ''}
 

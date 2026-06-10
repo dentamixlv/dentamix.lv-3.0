@@ -43,3 +43,20 @@ export const remove = mutation({
     await ctx.db.delete(args.id);
   },
 });
+
+export const get = query({
+  args: { id: v.id("conversations") },
+  handler: async (ctx, args) => {
+    return await ctx.db.get(args.id);
+  },
+});
+
+export const updateUserName = mutation({
+  args: {
+    id: v.id("conversations"),
+    userName: v.string(),
+  },
+  handler: async (ctx, args) => {
+    await ctx.db.patch(args.id, { userName: args.userName });
+  },
+});
