@@ -85,6 +85,12 @@ export const respond = action({
     });
 
     let userName = conversation?.userName;
+    if (userName) {
+      const lower = userName.trim().toLowerCase();
+      if (lower === "null" || lower === "undefined" || lower === "none") {
+        userName = undefined;
+      }
+    }
 
     // 3. Initialize client env checks
     const apiKey = process.env.DENTAMIX_AI_API_KEY;
