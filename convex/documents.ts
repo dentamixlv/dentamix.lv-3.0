@@ -73,7 +73,7 @@ export const ingest = action({
       };
     }
 
-    const embedUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${apiKey}`;
+    const embedUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:embedContent?key=${apiKey}`;
 
     // 3. Process each chunk
     let count = 0;

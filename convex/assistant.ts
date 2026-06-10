@@ -121,7 +121,7 @@ export const respond = action({
     // 4. Generate user message embedding and perform vector search for RAG context
     let retrievedContext = "";
     try {
-      const embedUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-001:embedContent?key=${apiKey}`;
+      const embedUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-embedding-2:embedContent?key=${apiKey}`;
       const embedRes = await fetch(embedUrl, {
         method: "POST",
         headers: {
