@@ -19,7 +19,7 @@ async function extractUserName(
           properties: {
             name: {
               type: "string",
-              description: "The extracted first name of the user, or null if not provided.",
+              description: "The extracted first name of the user, or the string 'null' if not provided.",
             },
           },
           required: ["name"],
@@ -35,7 +35,7 @@ async function extractUserName(
     const prompt = `You are a name extraction assistant.
 Analyze the user's latest message (in the context of the recent conversation history) to determine if the user is introducing themselves, stating their name, or responding to a query asking for their name.
 If they are, extract their first name.
-If no name is being introduced or stated, return {"name": null}.
+If no name is being introduced or stated, return {"name": "null"}.
 
 Recent conversation history:
 ${contextStr}
@@ -50,7 +50,10 @@ Return the JSON output matching the schema.`;
     const parsed = JSON.parse(text);
     if (parsed && typeof parsed.name === "string" && parsed.name.trim().length > 0) {
       const name = parsed.name.trim();
-      return name.charAt(0).toUpperCase() + name.slice(1);
+      const lowerName = name.toLowerCase();
+      if (lowerName !== "null" && lowerName !== "undefined" && lowerName !== "none") {
+        return name.charAt(0).toUpperCase() + name.slice(1);
+      }
     }
   } catch (error) {
     console.error("Error extracting user name:", error);
