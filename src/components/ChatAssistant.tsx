@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery, useMutation, useAction } from "convex/react";
+import { ConvexError } from "convex/values";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, Send, Trash2, Bot, User, Loader2, Sparkles, Phone, MessageCircle } from "lucide-react";
@@ -166,11 +167,16 @@ export default function ChatAssistant() {
       }
 
     } catch (error) {
-      console.error("Failed to send message:", error);
-      setOptimisticMessage(null); // Clear immediately on failure
-      // Clean up potentially stale/nonexistent conversation ID so the next try creates a new conversation
-      setConversationId(null);
-      localStorage.removeItem("dentamix_chat_conv_id");
+      if (error instanceof ConvexError) {
+        alert(error.data);
+        setOptimisticMessage(null); // Clear immediately on validation failure
+      } else {
+        console.error("Failed to send message:", error);
+        setOptimisticMessage(null); // Clear immediately on failure
+        // Clean up potentially stale/nonexistent conversation ID so the next try creates a new conversation
+        setConversationId(null);
+        localStorage.removeItem("dentamix_chat_conv_id");
+      }
     } finally {
       setIsSending(false);
       // Safety timeout: if the database doesn't sync the message within 3 seconds, clear it anyway

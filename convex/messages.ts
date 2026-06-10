@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { mutation, query } from "./_generated/server";
 
 export const list = query({
@@ -25,6 +25,24 @@ export const send = mutation({
     const conversation = await ctx.db.get(args.conversationId);
     if (!conversation) {
       throw new Error(`Conversation ${args.conversationId} not found`);
+    }
+
+    // Rate limiting: check last 11 messages in this conversation
+    if (args.role === "user") {
+      const recent = await ctx.db
+        .query("messages")
+        .withIndex("by_conversation", (q) => q.eq("conversationId", args.conversationId))
+        .order("desc")
+        .take(11);
+
+      const oneMinuteAgo = Date.now() - 60000;
+      const spamCount = recent.filter((m: any) => m._creationTime > oneMinuteAgo).length;
+
+      if (spamCount >= 10) {
+        throw new ConvexError(
+          "Ziņu sūtīšanas biežums pārsniegts. Lūdzu, uzgaidiet minūti. / Rate limit exceeded. Please wait a minute."
+        );
+      }
     }
 
     // If this is the first user message in the conversation, update the conversation title
