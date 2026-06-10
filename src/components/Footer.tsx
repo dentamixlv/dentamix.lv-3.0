@@ -226,6 +226,23 @@ export default function Footer({
                     )}
                   </div>
 
+                  {/* Row 2.5: Google Review */}
+                  <div className={`${clinic.reviewUrl ? 'flex' : 'hidden md:flex'} md:h-5 items-center`}>
+                    {clinic.reviewUrl ? (
+                      <a 
+                        href={clinic.reviewUrl} 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-white hover:text-[#de7c8a] transition-colors duration-200 w-fit font-bold"
+                      >
+                        <Star className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
+                        <span>{clinic.reviewTitle || (isEn ? 'Write a review' : 'Pievieno atsauksmi')}</span>
+                      </a>
+                    ) : (
+                      '\u00A0'
+                    )}
+                  </div>
+
                   {/* Row 3: Address */}
                   <div className="md:h-5 flex items-center">
                     <span className="flex items-center gap-2">
@@ -247,8 +264,8 @@ export default function Footer({
                   </div>
 
                   {/* Row 5: Actions */}
-                  <div className={`${(clinic.gmapsLink || clinic.waze || clinic.reviewUrl) ? 'flex' : 'hidden md:flex'} md:h-5 items-center`}>
-                    {(clinic.gmapsLink || clinic.waze || clinic.reviewUrl) ? (
+                  <div className={`${(clinic.gmapsLink || clinic.waze) ? 'flex' : 'hidden md:flex'} md:h-5 items-center`}>
+                    {(clinic.gmapsLink || clinic.waze) ? (
                       <div className="flex flex-col gap-2 md:flex-row md:gap-4 md:items-center w-full">
                         {clinic.gmapsLink && (
                           <span className="flex items-center gap-2">
@@ -273,19 +290,6 @@ export default function Footer({
                               className="hover:text-white hover:underline transition-colors duration-200 font-medium"
                             >
                               {clinic.wazeTitle || 'Waze'}
-                            </a>
-                          </span>
-                        )}
-                        {clinic.reviewUrl && (
-                          <span className="flex items-center gap-2">
-                            <Star className="w-3.5 h-3.5 shrink-0 text-[#de7c8a]" />
-                            <a 
-                              href={clinic.reviewUrl}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="hover:text-white hover:underline transition-colors duration-200 font-medium"
-                            >
-                              {clinic.reviewTitle || (isEn ? 'Write a review' : 'Pievieno atsauksmi')}
                             </a>
                           </span>
                         )}
