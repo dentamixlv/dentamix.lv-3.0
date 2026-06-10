@@ -220,12 +220,23 @@ Clinic General Info:
 
       const result = await model.generateContentStream({
         contents,
+        generationConfig: {
+          thinkingConfig: {
+            thinkingBudget: 2048,
+          },
+        } as any,
       });
 
       for await (const chunk of result.stream) {
-        const text = chunk.text();
-        if (text) {
-          accumulatedContent += text;
+        const parts = chunk.candidates?.[0]?.content?.parts || [];
+        
+        for (const part of parts) {
+          if ('text' in part && part.text) {
+            accumulatedContent += part.text;
+          }
+        }
+
+        if (accumulatedContent) {
           await ctx.runMutation(api.messages.updateContent, {
             messageId: assistantMessageId,
             content: accumulatedContent,
