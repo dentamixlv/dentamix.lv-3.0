@@ -686,6 +686,138 @@ interface SettingsDocumentData {
 	 * - **Documentation**: https://prismic.io/docs/fields/color
 	 */
 	header_color: prismic.ColorField;
+	
+	/**
+	 * Schema Dentist Name field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Uzņēmums X Zobārstniecība
+	 * - **API ID Path**: settings.schema_dentist_name
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_name: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Phone field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: +371 20000000
+	 * - **API ID Path**: settings.schema_dentist_phone
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_phone: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Price Range field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: $$
+	 * - **API ID Path**: settings.schema_dentist_price_range
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_price_range: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Street Address field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Brīvības iela 100
+	 * - **API ID Path**: settings.schema_dentist_street_address
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_street_address: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Locality (City) field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Rīga
+	 * - **API ID Path**: settings.schema_dentist_locality
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_locality: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Postal Code field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: LV-1001
+	 * - **API ID Path**: settings.schema_dentist_postal_code
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_postal_code: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Country field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: LV
+	 * - **API ID Path**: settings.schema_dentist_country
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_country: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Latitude field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 56.95
+	 * - **API ID Path**: settings.schema_dentist_latitude
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_latitude: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Longitude field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 24.11
+	 * - **API ID Path**: settings.schema_dentist_longitude
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_longitude: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Rating Value (e.g. 4.9) field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 4.9
+	 * - **API ID Path**: settings.schema_dentist_rating_value
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_rating_value: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Review Count (e.g. 142) field in *Settings*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 142
+	 * - **API ID Path**: settings.schema_dentist_review_count
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	schema_dentist_review_count: prismic.KeyTextField;
+	
+	/**
+	 * Schema Dentist Image (Logo) field in *Settings*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: settings.schema_dentist_image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	schema_dentist_image: prismic.ImageField<never>;
 }
 
 /**

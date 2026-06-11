@@ -1,7 +1,7 @@
 import React from 'react';
 import { createClient } from '../../prismicio';
 import HomeClient from './HomeClient';
-import { constructMetadata, SEOStructuredData, SEODentistStructuredData } from '../seoHelper';
+import { constructMetadata, SEOStructuredData, SEODentistStructuredData, SchemaDentist } from '../seoHelper';
 
 export function getPrismicLocale(lang?: string | string[]) {
   const code = Array.isArray(lang) ? lang[0] : lang;
@@ -48,6 +48,13 @@ export default async function Page({ params }: PageProps) {
   const { lang } = await params;
   const locale = getPrismicLocale(lang);
   const client = createClient();
+
+  let settings = null;
+  try {
+    settings = await client.getSingle('settings', { lang: locale });
+  } catch (error) {
+    console.warn("Failed to fetch settings for SchemaDentist", error);
+  }
 
   let slices = null;
   let document = null;
@@ -99,6 +106,7 @@ export default async function Page({ params }: PageProps) {
         imageUrl={imageUrl}
       />
       <SEODentistStructuredData locale={locale} prismicClinics={footerClinics} />
+      <SchemaDentist settingsData={settings?.data} locale={locale} />
       <HomeClient slices={slices} langCode={locale} />
     </>
   );

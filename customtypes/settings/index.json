@@ -24,6 +24,91 @@
         "config": {
           "label": "Header Color"
         }
+      },
+      "schema_dentist_name": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Name",
+          "placeholder": "Uzņēmums X Zobārstniecība"
+        }
+      },
+      "schema_dentist_phone": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Phone",
+          "placeholder": "+371 20000000"
+        }
+      },
+      "schema_dentist_price_range": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Price Range",
+          "placeholder": "$$"
+        }
+      },
+      "schema_dentist_street_address": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Street Address",
+          "placeholder": "Brīvības iela 100"
+        }
+      },
+      "schema_dentist_locality": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Locality (City)",
+          "placeholder": "Rīga"
+        }
+      },
+      "schema_dentist_postal_code": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Postal Code",
+          "placeholder": "LV-1001"
+        }
+      },
+      "schema_dentist_country": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Country",
+          "placeholder": "LV"
+        }
+      },
+      "schema_dentist_latitude": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Latitude",
+          "placeholder": "56.95"
+        }
+      },
+      "schema_dentist_longitude": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Longitude",
+          "placeholder": "24.11"
+        }
+      },
+      "schema_dentist_rating_value": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Rating Value (e.g. 4.9)",
+          "placeholder": "4.9"
+        }
+      },
+      "schema_dentist_review_count": {
+        "type": "Text",
+        "config": {
+          "label": "Schema Dentist Review Count (e.g. 142)",
+          "placeholder": "142"
+        }
+      },
+      "schema_dentist_image": {
+        "type": "Image",
+        "config": {
+          "label": "Schema Dentist Image (Logo)",
+          "constraint": {},
+          "thumbnails": []
+        }
       }
     }
   }
