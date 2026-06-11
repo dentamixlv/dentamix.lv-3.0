@@ -81,8 +81,8 @@ export default function ChatAssistant() {
     title: isEn ? "Ieva, dental assistant" : "Ieva, zobārsta palīgs",
     online: "Online",
     welcome: isEn 
-      ? "Hello! I am Ieva. How can I help you? You can ask me anything about dental services, prices, or dentists!" 
-      : "Sveiki! Esmu Ieva. Kā varu Jums palīdzēt? Varat man jautāt jebko par zobārstniecības pakalpojumiem, cenām, zobārstiem!",
+      ? "Hello! I am Ieva. I can help you and answer questions about:\n\n- dental services\n- prices\n- dentists\n- booking\n\nFeel free to ask me, call, or write on WhatsApp!" 
+      : "Sveiki! Esmu Ieva. Varu Jums palīdzēt un atbildēt par:\n\n- pakalpojumiem\n- cenām\n- zobārstiem\n- pierakstu\n\nDroši jautājiet man, zvaniet vai rakstiet WhatsApp!",
     placeholder: isEn ? "Type a message..." : "Rakstīt ziņu...",
     clearTooltip: isEn ? "Clear conversation" : "Dzēst saraksti",
     clearConfirm: isEn 
@@ -91,13 +91,13 @@ export default function ChatAssistant() {
     suggestions: isEn 
       ? [
           { text: "How can I book an appointment?", prompt: "How can I book an appointment?" },
-          { text: "Where are you located?", prompt: "Where are you located?" },
-          { text: "What are your prices?", prompt: "What are your dental prices?" }
+          { text: "Where are the clinics located?", prompt: "Where are the clinics located?" },
+          { text: "What are the working hours?", prompt: "What are the working hours?" }
         ]
       : [
           { text: "Kā pieteikties vizītei?", prompt: "Kā pieteikties vizītei?" },
-          { text: "Kur jūs atrodaties?", prompt: "Kur jūs atrodaties?" },
-          { text: "Kādas ir pakalpojumu cenas?", prompt: "Kādas ir jūsu pakalpojumu cenas?" }
+          { text: "Kur atrodas klīnikas?", prompt: "Kur atrodas klīnikas?" },
+          { text: "Kāds ir darba laiks?", prompt: "Kāds ir darba laiks?" }
         ]
   };
 
@@ -272,7 +272,7 @@ export default function ChatAssistant() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-800 leading-relaxed">
-                    {strings.welcome}
+                    {formatMessageContent(strings.welcome)}
                   </div>
                   
                   {/* Call and WhatsApp Buttons for Welcome Message */}
