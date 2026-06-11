@@ -48,7 +48,8 @@ const nextConfig: NextConfig = {
               "img-src 'self' data: blob: https://*.prismic.io https://images.unsplash.com https://images.prismic.io;",
               "style-src 'self' 'unsafe-inline';",
               "font-src 'self' data:;",
-              "media-src 'self' https://*.prismic.io https://*.prismic.io/dentamix-v30/;"
+              "media-src 'self' https://*.prismic.io https://*.prismic.io/dentamix-v30/;",
+              "frame-src 'self' https://www.google.com;"
             ].join(" "),
           },
         ],
