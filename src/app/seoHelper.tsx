@@ -33,6 +33,7 @@ export interface RouteInfo {
 interface DentistStructuredDataProps {
   locale: string;
   prismicClinics?: any[] | null;
+  settingsData?: any;
 }
 
 /**
@@ -75,7 +76,7 @@ export function SEOStructuredData({
  * Renders structured data (JSON-LD Dentist schema) using Next.js Script component.
  * Supports dynamic clinics fetched from Prismic (the footer doc) with a static fallback.
  */
-export function SEODentistStructuredData({ locale, prismicClinics }: DentistStructuredDataProps) {
+export function SEODentistStructuredData({ locale, prismicClinics, settingsData }: DentistStructuredDataProps) {
   const isEn = locale === 'en-us';
   
   let rawClinics: any[] = [];
@@ -85,25 +86,21 @@ export function SEODentistStructuredData({ locale, prismicClinics }: DentistStru
     rawClinics = getClinics(locale);
   }
 
-  const schemas = rawClinics.map((clinic, index) => {
-    // Clinic coordinates based on fallback/known values
-    // Riga coordinates: lat: 56.9585641, lng: 24.1313913
-    // Adazi coordinates: lat: 57.0725451, lng: 24.3257538
-    let latitude = 56.9585641;
-    let longitude = 24.1313913;
-    
-    const isAdazi = clinic.id === 'adazi' || (clinic.name && (clinic.name.toLowerCase().includes('ādaži') || clinic.name.toLowerCase().includes('adazi')));
-    if (isAdazi) {
-      latitude = 57.0725451;
-      longitude = 24.3257538;
-    }
+  // Extract dynamic rating data from Prismic settings doc
+  const ratingValue = settingsData?.schema_dentist_rating_value || null;
+  const reviewCount = settingsData?.schema_dentist_review_count || null;
+  const priceRange = settingsData?.schema_dentist_price_range || "$$";
 
-    // Try to extract street address, city, postal code
+  const schemas = rawClinics.map((clinic) => {
+    const isAdazi = clinic.id === 'adazi' || (clinic.name && (clinic.name.toLowerCase().includes('ādaži') || clinic.name.toLowerCase().includes('adazi')));
+    const siteUrl = isEn ? "https://dentamix.lv/en" : "https://dentamix.lv";
+    
+    // Try to extract street address, city, postal code from clinic.address if it exists
     let streetAddress = clinic.address || '';
     let addressLocality = isAdazi ? (isEn ? 'Adazi' : 'Ādaži') : (isEn ? 'Riga' : 'Rīga');
     let postalCode = isAdazi ? 'LV-2164' : 'LV-1001';
     
-    if (clinic.address) {
+    if (clinic.address && clinic.address.includes(',')) {
       const parts = clinic.address.split(',');
       if (parts.length >= 3) {
         streetAddress = parts[0].trim();
@@ -155,15 +152,17 @@ export function SEODentistStructuredData({ locale, prismicClinics }: DentistStru
       });
     }
 
-    return {
+    const clinicSchema: Record<string, any> = {
       "@context": "https://schema.org",
       "@type": "Dentist",
+      "@id": `${siteUrl}/#clinic-${isAdazi ? 'adazi' : 'riga'}`,
       "name": clinic.name || (isAdazi ? "Dentamix Ādaži" : "Dentamix Rīga"),
       "telephone": clinic.phone || "+371 29419999",
       "email": clinic.email || "info@dentamix.lv",
-      "url": isEn ? "https://dentamix.lv/en" : "https://dentamix.lv",
+      "url": siteUrl,
       "logo": "https://dentamix.lv/favicon.ico",
       "image": "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800",
+      "priceRange": priceRange,
       "address": {
         "@type": "PostalAddress",
         "streetAddress": streetAddress,
@@ -173,11 +172,24 @@ export function SEODentistStructuredData({ locale, prismicClinics }: DentistStru
       },
       "geo": {
         "@type": "GeoCoordinates",
-        "latitude": latitude,
-        "longitude": longitude
+        "latitude": isAdazi ? 57.0725451 : 56.9585641,
+        "longitude": isAdazi ? 24.3257538 : 24.1313913
       },
       "openingHoursSpecification": openingHours
     };
+
+    // Inject aggregate rating to both multi-location entries dynamically
+    if (ratingValue && reviewCount) {
+      clinicSchema["aggregateRating"] = {
+        "@type": "AggregateRating",
+        "ratingValue": ratingValue,
+        "reviewCount": reviewCount,
+        "bestRating": "5",
+        "worstRating": "1"
+      };
+    }
+
+    return clinicSchema;
   });
 
   return (
@@ -189,87 +201,6 @@ export function SEODentistStructuredData({ locale, prismicClinics }: DentistStru
     />
   );
 }
-
-interface SchemaDentistProps {
-  settingsData: any;
-  locale: string;
-}
-
-/**
- * Renders structured data (JSON-LD Dentist schema) using Next.js Script component.
- * Allows custom aggregate ratings and values from Prismic Settings page.
- */
-export function SchemaDentist({ settingsData, locale }: SchemaDentistProps) {
-  if (!settingsData) return null;
-
-  const isEn = locale === 'en-us';
-  const name = settingsData.schema_dentist_name || "Dentamix";
-  const phone = settingsData.schema_dentist_phone || "+371 29419999";
-  const priceRange = settingsData.schema_dentist_price_range || "$$";
-  
-  const streetAddress = settingsData.schema_dentist_street_address || "";
-  const addressLocality = settingsData.schema_dentist_locality || (isEn ? "Riga" : "Rīga");
-  const postalCode = settingsData.schema_dentist_postal_code || "";
-  const addressCountry = settingsData.schema_dentist_country || "LV";
-  
-  const latitudeStr = settingsData.schema_dentist_latitude;
-  const longitudeStr = settingsData.schema_dentist_longitude;
-  const latitude = latitudeStr ? parseFloat(latitudeStr) : undefined;
-  const longitude = longitudeStr ? parseFloat(longitudeStr) : undefined;
-  
-  const ratingValue = settingsData.schema_dentist_rating_value;
-  const reviewCount = settingsData.schema_dentist_review_count;
-  
-  const imageUrl = settingsData.schema_dentist_image?.url || settingsData.favicon?.url || "https://dentamix.lv/favicon.ico";
-  const siteUrl = isEn ? "https://dentamix.lv/en" : "https://dentamix.lv";
-
-  // Build the schema object dynamically
-  const schemaData: Record<string, any> = {
-    "@context": "https://schema.org",
-    "@type": "Dentist",
-    "@id": `${siteUrl}/#clinic`,
-    "name": name,
-    "image": imageUrl,
-    "url": siteUrl,
-    "telephone": phone,
-    "priceRange": priceRange,
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": streetAddress,
-      "addressLocality": addressLocality,
-      "postalCode": postalCode,
-      "addressCountry": addressCountry
-    }
-  };
-
-  if (latitude !== undefined && !isNaN(latitude) && longitude !== undefined && !isNaN(longitude)) {
-    schemaData["geo"] = {
-      "@type": "GeoCoordinates",
-      "latitude": latitude,
-      "longitude": longitude
-    };
-  }
-
-  if (ratingValue && reviewCount) {
-    schemaData["aggregateRating"] = {
-      "@type": "AggregateRating",
-      "ratingValue": ratingValue,
-      "reviewCount": reviewCount,
-      "bestRating": "5",
-      "worstRating": "1"
-    };
-  }
-
-  return (
-    <Script
-      id="jsonld-custom-dentist"
-      strategy="afterInteractive"
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-    />
-  );
-}
-
 
 /**
  * Resolves standard routes paths for canonical/hreflang tags
