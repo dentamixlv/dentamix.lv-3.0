@@ -43,9 +43,9 @@ const nextConfig: NextConfig = {
             key: "Content-Security-Policy",
             value: [
               "default-src 'self';",
-              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.prismic.io https://*.convex.cloud;",
-              "connect-src 'self' https://*.prismic.io https://*.convex.cloud wss://*.convex.cloud https://generativelanguage.googleapis.com;",
-              "img-src 'self' data: blob: https://*.prismic.io https://images.unsplash.com https://images.prismic.io;",
+              "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.prismic.io https://*.convex.cloud https://*.posthog.com https://*.i.posthog.com;",
+              "connect-src 'self' https://*.prismic.io https://*.convex.cloud wss://*.convex.cloud https://generativelanguage.googleapis.com https://*.posthog.com https://*.i.posthog.com;",
+              "img-src 'self' data: blob: https://*.prismic.io https://images.unsplash.com https://images.prismic.io https://*.posthog.com https://*.i.posthog.com;",
               "style-src 'self' 'unsafe-inline';",
               "font-src 'self' data:;",
               "media-src 'self' https://*.prismic.io https://*.prismic.io/dentamix-v30/;",
