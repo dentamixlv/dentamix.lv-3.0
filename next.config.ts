@@ -46,10 +46,11 @@ const nextConfig: NextConfig = {
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.prismic.io https://*.convex.cloud https://*.posthog.com https://*.i.posthog.com;",
               "connect-src 'self' https://*.prismic.io https://*.convex.cloud wss://*.convex.cloud https://generativelanguage.googleapis.com https://*.posthog.com https://*.i.posthog.com;",
               "img-src 'self' data: blob: https://*.prismic.io https://images.unsplash.com https://images.prismic.io https://*.posthog.com https://*.i.posthog.com;",
-              "style-src 'self' 'unsafe-inline';",
-              "font-src 'self' data:;",
-              "media-src 'self' https://*.prismic.io https://*.prismic.io/dentamix-v30/;",
-              "frame-src 'self' https://www.google.com;"
+              "style-src 'self' 'unsafe-inline' https://*.posthog.com https://*.i.posthog.com;",
+              "font-src 'self' data: https://*.posthog.com https://*.i.posthog.com;",
+              "media-src 'self' https://*.prismic.io https://*.prismic.io/dentamix-v30/ https://*.posthog.com https://*.i.posthog.com;",
+              "frame-src 'self' https://www.google.com;",
+              `report-uri https://eu.i.posthog.com/report/?token=${process.env.NEXT_PUBLIC_POSTHOG_KEY || "phc_z7oTfiM6pyqbrJ6AxJAEpfGEnADMLctohsjsGWaZC9Z3"}`
             ].join(" "),
           },
         ],
