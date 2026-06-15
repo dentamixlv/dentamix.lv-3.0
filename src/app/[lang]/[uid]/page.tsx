@@ -69,6 +69,23 @@ export default async function Page({ params }: PageProps) {
     }
   }
 
+  // Pre-fetch data for slices on the server to prevent client-side hydration waterfalls
+  let prismicServices = null;
+  let prismicBlogPosts = null;
+  let prismicTestimonials = null;
+  try {
+    const [servicesRes, blogsRes, testimonialsRes] = await Promise.all([
+      client.getAllByType('service', { lang: locale }).catch(() => []),
+      client.getAllByType('blog_post', { lang: locale }).catch(() => []),
+      client.getAllByType('testimonial', { lang: locale }).catch(() => []),
+    ]);
+    prismicServices = servicesRes;
+    prismicBlogPosts = blogsRes;
+    prismicTestimonials = testimonialsRes;
+  } catch (err) {
+    console.warn("Failed to pre-fetch static slice data on server", err);
+  }
+
   let alternateLanguageUrl = null;
   if (document && Array.isArray(document.alternate_languages)) {
     const alt = document.alternate_languages.find((a: any) => a.lang === (locale === 'en-us' ? 'lv' : 'en-us'));
@@ -95,7 +112,7 @@ export default async function Page({ params }: PageProps) {
           description={description}
           imageUrl={imageUrl}
         />
-        {renderPageLayout(document.data.slices, components)}
+        {renderPageLayout(document.data.slices, components, {}, { prismicServices, prismicBlogPosts, prismicTestimonials })}
       </>
     );
   }

@@ -48,6 +48,7 @@ export default async function Page({ params }: PageProps) {
 
   let slices = null;
   let document = null;
+  let prismicTestimonials = null;
   try {
     const uid = locale === 'en-us' ? 'testimonials' : 'atsauksmes';
     try {
@@ -61,12 +62,18 @@ export default async function Page({ params }: PageProps) {
     console.warn("No Prismic page document for 'testimonials' found, falling back to standalone testimonials list.");
   }
 
+  try {
+    prismicTestimonials = await client.getAllByType('testimonial', { lang: locale });
+  } catch (error) {
+    console.warn("Failed to pre-fetch testimonials on the server", error);
+  }
+
   const title = document?.data?.meta_title || (locale === 'en-us' ? 'Patient Testimonials | Dentamic Dental Clinic' : 'Atsauksmes | Dentamic zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 
   const content = slices && slices.length > 0 ? (
-    <SliceZone slices={slices} components={components} />
+    <SliceZone slices={slices} components={components} context={{ prismicTestimonials }} />
   ) : (
     <>
       <div className="pt-8 pb-4 md:pt-12 md:pb-6 max-w-7xl mx-auto px-6">
@@ -79,7 +86,19 @@ export default async function Page({ params }: PageProps) {
           </h1>
         </div>
       </div>
-      <TestimonialsClient langCode={locale} customTestimonials={null} hideHeader={true} />
+      <TestimonialsClient langCode={locale} customTestimonials={prismicTestimonials ? prismicTestimonials.map((d: any) => ({
+        id: d.uid!,
+        author: d.data.author || '',
+        initials: d.data.initials || 'PT',
+        bgColor: d.data.bgColor || 'bg-[#511B29] text-white',
+        treatment: d.data.treatment || '',
+        doctor: d.data.doctor || '',
+        rating: Number(d.data.rating) || 5,
+        date: d.data.date || '',
+        advTag: d.data.advTag || '',
+        quote: d.data.quote || '',
+        story: d.data.story || ''
+      })) : null} hideHeader={true} />
     </>
   );
 

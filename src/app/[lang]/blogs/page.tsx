@@ -42,11 +42,18 @@ export default async function Page({ params }: PageProps) {
 
   let slices = null;
   let document = null;
+  let prismicBlogPosts = null;
   try {
     document = await client.getByUID('page', 'blogs', { lang: locale });
     slices = document?.data?.slices || null;
   } catch (error) {
     console.warn("No Prismic page document for 'blogs' found, falling back to standalone blog posts list.");
+  }
+
+  try {
+    prismicBlogPosts = await client.getAllByType('blog_post', { lang: locale });
+  } catch (error) {
+    console.warn("Failed to pre-fetch blog posts on the server", error);
   }
 
   const title = document?.data?.meta_title || (locale === 'en-us' ? 'Dentamic Blog | Knowledge & Dental Advice' : 'Blogs un padomi | Dentamic zobārstniecība');
@@ -60,12 +67,12 @@ export default async function Page({ params }: PageProps) {
         const mainSlices = slices.slice(0, -1);
         return (
           <>
-            <SliceZone slices={mainSlices} components={components} />
-            <SliceZone slices={[lastSlice]} components={components} context={{ isBottom: true }} />
+            <SliceZone slices={mainSlices} components={components} context={{ prismicBlogPosts }} />
+            <SliceZone slices={[lastSlice]} components={components} context={{ prismicBlogPosts, isBottom: true }} />
           </>
         );
       }
-      return <SliceZone slices={slices} components={components} />;
+      return <SliceZone slices={slices} components={components} context={{ prismicBlogPosts }} />;
     })()
   ) : (
     <>
@@ -79,7 +86,19 @@ export default async function Page({ params }: PageProps) {
           </h1>
         </div>
       </div>
-      <BlogsClient langCode={locale} customBlogPosts={null} hideHeader={true} />
+      <BlogsClient langCode={locale} customBlogPosts={prismicBlogPosts ? prismicBlogPosts.map((d: any) => ({
+        id: d.uid!,
+        title: d.data.title || '',
+        category: d.data.category || '',
+        description: d.data.description || '',
+        detailedContent: Array.isArray(d.data.detailedContent) 
+          ? d.data.detailedContent.map((p: any) => p.text || '')
+          : [],
+        image: d.data.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800',
+        date: d.data.date || '',
+        author: d.data.author || '',
+        readTime: d.data.readTime || '4 MIN'
+      })) : null} hideHeader={true} />
     </>
   );
 

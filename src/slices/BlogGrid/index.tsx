@@ -36,85 +36,114 @@ const fadeUpVariants = {
   }
 } as const;
 
-type BlogGridProps = SliceComponentProps<Content.BlogGridSlice>;
+type BlogGridProps = SliceComponentProps<Content.BlogGridSlice, { prismicBlogPosts?: any[] }>;
 
-export default function BlogGrid({ slice }: BlogGridProps) {
+export default function BlogGrid({ slice, context }: BlogGridProps) {
   const params = useParams();
   const langList = params?.lang;
   const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
   const langCode = isEn ? 'en-us' : 'lv';
   const langPrefix = isEn ? '/en' : '';
 
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [clientPosts, setClientPosts] = useState<BlogPost[]>([]);
 
   // Check if items are provided inline
   const inlineItems = slice.items || [];
   const hasInlineItems = inlineItems.length > 0 && inlineItems.some(item => item.title || item.excerpt || item.link_url);
 
+  // Synchronously compute posts if inline or pre-fetched via context on the server/first render
+  const posts = React.useMemo(() => {
+    if (hasInlineItems) {
+      return inlineItems.map((item, index) => {
+        const title = item.title || '';
+        const category = item.badge_text || (isEn ? 'BLOG' : 'BLOGS');
+        const description = item.excerpt || '';
+        const imageUrl = item.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800';
+        const slug = item.link_url ? item.link_url.replace(/^\/?(en\/)?blogs\//, '').replace(/\/?$/, '') : `inline-${index}`;
+
+        return {
+          id: slug,
+          title,
+          category,
+          description,
+          image: imageUrl,
+          date: '',
+          author: '',
+          readTime: '4 MIN',
+          detailedContent: []
+        };
+      });
+    }
+
+    if (context?.prismicBlogPosts && context.prismicBlogPosts.length > 0) {
+      // Sort and take latest 3 posts (matching fallback client-side behavior)
+      const sorted = [...context.prismicBlogPosts].sort((a: any, b: any) => {
+        const dateA = a.first_publication_date || '';
+        const dateB = b.first_publication_date || '';
+        return dateB.localeCompare(dateA);
+      });
+      const sliceLimit = sorted.slice(0, 3);
+      return sliceLimit.map((d: any) => ({
+        id: d.uid!,
+        title: d.data.title || '',
+        category: d.data.category || '',
+        description: d.data.description || '',
+        detailedContent: Array.isArray(d.data.detailedContent) 
+          ? d.data.detailedContent.map((p: any) => p.text || '')
+          : [],
+        image: d.data.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800',
+        date: d.data.date || '',
+        author: d.data.author || '',
+        readTime: d.data.readTime || '4 MIN'
+      }));
+    }
+
+    return clientPosts.length > 0 ? clientPosts : getBlogPosts(langCode).slice(0, 3);
+  }, [hasInlineItems, inlineItems, context?.prismicBlogPosts, clientPosts, langCode, isEn]);
+
   useEffect(() => {
+    // Skip client-side fetch if inline items or context blog posts are already provided
+    if (hasInlineItems || (context?.prismicBlogPosts && context.prismicBlogPosts.length > 0)) {
+      return;
+    }
+
     const fetchPosts = async () => {
       try {
         const client = createClient();
-
-        if (hasInlineItems) {
-          // Map inline items to blog post objects
-          const mapped = inlineItems.map((item, index) => {
-            const title = item.title || '';
-            const category = item.badge_text || (isEn ? 'BLOG' : 'BLOGS');
-            const description = item.excerpt || '';
-            const imageUrl = item.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800';
-            const slug = item.link_url ? item.link_url.replace(/^\/?(en\/)?blogs\//, '').replace(/\/?$/, '') : `inline-${index}`;
-
-            return {
-              id: slug,
-              title,
-              category,
-              description,
-              image: imageUrl,
-              date: '',
-              author: '',
-              readTime: '4 MIN',
-              detailedContent: []
-            };
-          });
-
-          setPosts(mapped);
-        } else {
-          // Query latest 3 blog posts from Prismic as a fallback
-          const response = await client.getAllByType('blog_post', { 
-            lang: langCode, 
-            limit: 3,
-            orderings: {
-              field: 'document.first_publication_date',
-              direction: 'desc'
-            }
-          });
-          
-          if (response && response.length > 0) {
-            setPosts(response.map(d => ({
-              id: d.uid!,
-              title: d.data.title || '',
-              category: d.data.category || '',
-              description: d.data.description || '',
-              detailedContent: Array.isArray(d.data.detailedContent) 
-                ? d.data.detailedContent.map((p: any) => p.text || '')
-                : [],
-              image: d.data.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800',
-              date: d.data.date || '',
-              author: d.data.author || '',
-              readTime: d.data.readTime || '4 MIN'
-            })));
-          } else {
-            setPosts(getBlogPosts(langCode).slice(0, 3));
+        // Query latest 3 blog posts from Prismic as a fallback
+        const response = await client.getAllByType('blog_post', { 
+          lang: langCode, 
+          limit: 3,
+          orderings: {
+            field: 'document.first_publication_date',
+            direction: 'desc'
           }
+        });
+        
+        if (response && response.length > 0) {
+          setClientPosts(response.map(d => ({
+            id: d.uid!,
+            title: d.data.title || '',
+            category: d.data.category || '',
+            description: d.data.description || '',
+            detailedContent: Array.isArray(d.data.detailedContent) 
+              ? d.data.detailedContent.map((p: any) => p.text || '')
+              : [],
+            image: d.data.image?.url || 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&q=80&w=800',
+            date: d.data.date || '',
+            author: d.data.author || '',
+            readTime: d.data.readTime || '4 MIN'
+          })));
+        } else {
+          setClientPosts(getBlogPosts(langCode).slice(0, 3));
         }
       } catch (e) {
         console.warn("Failed to load blog posts in BlogGrid, using local fallback data.", e);
-        setPosts(getBlogPosts(langCode).slice(0, 3));
+        setClientPosts(getBlogPosts(langCode).slice(0, 3));
       }
     };
     fetchPosts();
-  }, [hasInlineItems, slice.items, langCode, isEn]);
+  }, [hasInlineItems, slice.items, langCode, isEn, context?.prismicBlogPosts]);
 
   const readPostLabel = isEn ? 'Read Article' : 'Lasīt rakstu';
 

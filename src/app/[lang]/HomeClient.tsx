@@ -184,9 +184,10 @@ const homeTranslations = {
 interface HomeClientProps {
   slices: any[] | null;
   langCode: string;
+  context?: any;
 }
 
-export default function HomeClient({ slices, langCode }: HomeClientProps) {
+export default function HomeClient({ slices, langCode, context }: HomeClientProps) {
   const t = langCode === 'en-us' ? homeTranslations.en : homeTranslations.lv;
   const langPrefix = langCode === 'en-us' ? '/en' : '';
 
@@ -196,7 +197,7 @@ export default function HomeClient({ slices, langCode }: HomeClientProps) {
   return (
     <div className="relative">
       {/* Dynamic Hero Section via SliceZone */}
-      <SliceZone slices={activeSlices} components={components} />
+      <SliceZone slices={activeSlices} components={components} context={context} />
 
 
 

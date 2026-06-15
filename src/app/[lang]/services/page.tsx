@@ -48,6 +48,7 @@ export default async function Page({ params }: PageProps) {
 
   let slices = null;
   let document = null;
+  let prismicServices = null;
   try {
     const uid = locale === 'en-us' ? 'services' : 'pakalpojumi';
     try {
@@ -61,6 +62,12 @@ export default async function Page({ params }: PageProps) {
     console.warn("No Prismic page document for 'services' found, falling back to standalone services list.");
   }
 
+  try {
+    prismicServices = await client.getAllByType('service', { lang: locale });
+  } catch (error) {
+    console.warn("Failed to pre-fetch services on the server", error);
+  }
+
   const title = document?.data?.meta_title || (locale === 'en-us' ? 'Our Services | Dentamic Dental Clinic' : 'Mūsu pakalpojumi | Dentamic zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
@@ -72,12 +79,12 @@ export default async function Page({ params }: PageProps) {
         const mainSlices = slices.slice(0, -1);
         return (
           <>
-            <SliceZone slices={mainSlices} components={components} />
-            <SliceZone slices={[lastSlice]} components={components} context={{ isBottom: true }} />
+            <SliceZone slices={mainSlices} components={components} context={{ prismicServices }} />
+            <SliceZone slices={[lastSlice]} components={components} context={{ prismicServices, isBottom: true }} />
           </>
         );
       }
-      return <SliceZone slices={slices} components={components} />;
+      return <SliceZone slices={slices} components={components} context={{ prismicServices }} />;
     })()
   ) : (
     <>
@@ -91,7 +98,16 @@ export default async function Page({ params }: PageProps) {
           </h1>
         </div>
       </div>
-      <ServicesClient langCode={locale} customServices={null} hideHeader={true} />
+      <ServicesClient langCode={locale} customServices={prismicServices ? prismicServices.map((d: any) => ({
+        id: d.uid!,
+        title: d.data.title || '',
+        description: d.data.description || '',
+        detailedInfo: Array.isArray(d.data.detailedInfo) ? (d.data.detailedInfo[0] as any)?.text || '' : (d.data.detailedInfo as any) || '',
+        priceRange: d.data.priceRange || '',
+        duration: d.data.duration || '',
+        iconName: d.data.iconName || 'Sparkles',
+        image: d.data.image?.url || 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=800',
+      })) : null} hideHeader={true} />
     </>
   );
 

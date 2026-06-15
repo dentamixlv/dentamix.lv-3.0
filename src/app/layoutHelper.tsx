@@ -20,7 +20,8 @@ export interface PageLayoutOptions {
 export function renderPageLayout(
   slices: any[] | null,
   pageComponents: any = components,
-  options?: PageLayoutOptions
+  options?: PageLayoutOptions,
+  context?: any
 ) {
   if (!slices || slices.length === 0) {
     return null;
@@ -34,7 +35,7 @@ export function renderPageLayout(
     return (
       <PageStaggerWrapper>
         <PageStaggerItem>
-          <SliceZone slices={slices} components={pageComponents} />
+          <SliceZone slices={slices} components={pageComponents} context={context} />
         </PageStaggerItem>
       </PageStaggerWrapper>
     );
@@ -83,7 +84,7 @@ export function renderPageLayout(
     <PageStaggerWrapper>
       {topSlices.length > 0 && (
         <PageStaggerItem>
-          <SliceZone slices={topSlices} components={pageComponents} />
+          <SliceZone slices={topSlices} components={pageComponents} context={context} />
         </PageStaggerItem>
       )}
 
@@ -95,7 +96,7 @@ export function renderPageLayout(
               <SliceZone 
                 slices={leftColumnSlices} 
                 components={pageComponents} 
-                context={{ isEmbedded: true }} 
+                context={{ ...context, isEmbedded: true }} 
               />
             ) : (
               <div className="text-slate-400 py-12 text-center border border-dashed border-slate-200 rounded-3xl">
@@ -109,7 +110,7 @@ export function renderPageLayout(
             <SliceZone 
               slices={[rightColumnSlice]} 
               components={pageComponents} 
-              context={{ isEmbedded: true }} 
+              context={{ ...context, isEmbedded: true }} 
             />
           </div>
         </div>
@@ -117,7 +118,7 @@ export function renderPageLayout(
 
       {bottomSlices.length > 0 && (
         <PageStaggerItem>
-          <SliceZone slices={bottomSlices} components={pageComponents} context={{ isBottom: true }} />
+          <SliceZone slices={bottomSlices} components={pageComponents} context={{ ...context, isBottom: true }} />
         </PageStaggerItem>
       )}
       

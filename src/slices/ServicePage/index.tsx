@@ -10,20 +10,56 @@ import { getServices } from '../../data';
 import { Service } from '../../types';
 import { createClient } from '../../prismicio';
 
-type ServicePageProps = SliceComponentProps<Content.ServicePageSlice>;
+type ServicePageProps = SliceComponentProps<Content.ServicePageSlice, { prismicServices?: any[] }>;
 
-export default function ServicePage({ slice }: ServicePageProps) {
+export default function ServicePage({ slice, context }: ServicePageProps) {
   const params = useParams();
   const langList = params?.lang;
   const isEn = langList === 'en' || (Array.isArray(langList) && langList.length > 0 && langList[0] === 'en');
   const langCode = isEn ? 'en-us' : 'lv';
 
-  const [services, setServices] = useState<Service[] | null>(null);
+  const [clientServices, setClientServices] = useState<Service[] | null>(null);
 
   // Check if items are provided (linked service documents)
   const hasLinkedServices = slice.items && slice.items.length > 0 && slice.items.some(item => isFilled.link(item.service));
 
+  // Synchronously compute services if pre-fetched via context on the server/first render
+  const services = React.useMemo(() => {
+    if (context?.prismicServices && context.prismicServices.length > 0) {
+      const linkedItems = slice.items || [];
+      let docs = [];
+      if (hasLinkedServices) {
+        const ids = linkedItems
+          .map(item => (isFilled.link(item.service) && (item.service as any).id) || '')
+          .filter(Boolean);
+        docs = context.prismicServices.filter((d: any) => ids.includes(d.id));
+      } else {
+        docs = context.prismicServices;
+      }
+      
+      if (docs.length > 0) {
+        return docs.map((d: any) => ({
+          id: d.uid!,
+          title: d.data.title || '',
+          description: d.data.description || '',
+          detailedInfo: Array.isArray(d.data.detailedInfo) ? (d.data.detailedInfo[0] as any)?.text || '' : (d.data.detailedInfo as any) || '',
+          priceRange: d.data.priceRange || '',
+          duration: d.data.duration || '',
+          iconName: d.data.iconName || 'Sparkles',
+          image: d.data.image?.url || 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=800',
+        }));
+      }
+    }
+    
+    return clientServices || getServices(langCode);
+  }, [hasLinkedServices, slice.items, context?.prismicServices, clientServices, langCode]);
+
   useEffect(() => {
+    // Skip client-side fetch if we already have services pre-fetched via context
+    if (context?.prismicServices && context.prismicServices.length > 0) {
+      return;
+    }
+
     const fetchServices = async () => {
       const linkedItems = slice.items || [];
       try {
@@ -46,7 +82,7 @@ export default function ServicePage({ slice }: ServicePageProps) {
         }
 
         if (docs && docs.length > 0) {
-          setServices(docs.map(d => ({
+          setClientServices(docs.map(d => ({
             id: d.uid!,
             title: d.data.title || '',
             description: d.data.description || '',
@@ -57,15 +93,15 @@ export default function ServicePage({ slice }: ServicePageProps) {
             image: d.data.image?.url || 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=800',
           })));
         } else {
-          setServices(getServices(langCode));
+          setClientServices(getServices(langCode));
         }
       } catch (e) {
         console.warn("Failed to fetch services in ServicePage, using fallbacks.", e);
-        setServices(getServices(langCode));
+        setClientServices(getServices(langCode));
       }
     };
     fetchServices();
-  }, [hasLinkedServices, slice.items, langCode]);
+  }, [hasLinkedServices, slice.items, langCode, context?.prismicServices]);
 
   const hideHeaderValue = slice.primary.hideHeader !== null && slice.primary.hideHeader !== undefined 
     ? slice.primary.hideHeader 

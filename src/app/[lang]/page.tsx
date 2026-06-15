@@ -93,6 +93,23 @@ export default async function Page({ params }: PageProps) {
     console.warn("Failed to fetch Prismic footer clinics for Dentist structured data schema, falling back to local static clinics.", error);
   }
 
+  // Pre-fetch dynamic data on the server for slices to prevent client-side waterfalls
+  let prismicServices = null;
+  let prismicBlogPosts = null;
+  let prismicTestimonials = null;
+  try {
+    const [servicesRes, blogsRes, testimonialsRes] = await Promise.all([
+      client.getAllByType('service', { lang: locale }).catch(() => []),
+      client.getAllByType('blog_post', { lang: locale }).catch(() => []),
+      client.getAllByType('testimonial', { lang: locale }).catch(() => []),
+    ]);
+    prismicServices = servicesRes;
+    prismicBlogPosts = blogsRes;
+    prismicTestimonials = testimonialsRes;
+  } catch (err) {
+    console.warn("Failed to pre-fetch homepage component data on server", err);
+  }
+
   const title = document?.data?.meta_title || (locale === 'en-us' ? 'Dentamic | Premium Dental Clinic' : 'Dentamic | Premium zobārstniecības klīnika');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
@@ -106,7 +123,11 @@ export default async function Page({ params }: PageProps) {
         imageUrl={imageUrl}
       />
       <SEODentistStructuredData locale={locale} prismicClinics={footerClinics} settingsData={settings?.data} />
-      <HomeClient slices={slices} langCode={locale} />
+      <HomeClient 
+        slices={slices} 
+        langCode={locale} 
+        context={{ prismicServices, prismicBlogPosts, prismicTestimonials }}
+      />
     </>
   );
 }
