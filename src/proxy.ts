@@ -247,17 +247,17 @@ function handleRequest(request: NextRequest) {
   if (pathname === '/lv/zobarsti') {
     const url = request.nextUrl.clone();
     url.pathname = '/lv/doctors';
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname.startsWith('/zobarsti/')) {
     const url = request.nextUrl.clone();
     url.pathname = `/lv/doctors/${pathname.substring('/zobarsti/'.length)}`;
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
   if (pathname.startsWith('/lv/zobarsti/')) {
     const url = request.nextUrl.clone();
     url.pathname = `/lv/doctors/${pathname.substring('/lv/zobarsti/'.length)}`;
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
 
   // Check if pathname starts with a supported locale
@@ -267,7 +267,7 @@ function handleRequest(request: NextRequest) {
     // Rewrite internally to /lv
     const url = request.nextUrl.clone();
     url.pathname = `/lv${pathname}`;
-    return NextResponse.rewrite(url);
+    return NextResponse.rewrite(url, { request: { headers: requestHeaders } });
   }
 
   return NextResponse.next();

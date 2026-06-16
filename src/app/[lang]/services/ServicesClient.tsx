@@ -61,7 +61,7 @@ interface ServicesClientProps {
 export default function ServicesClient({ langCode, customServices, hideHeader = false }: ServicesClientProps) {
   const t = langCode === 'en-us' ? translations.en : translations.lv;
   const isEn = langCode === 'en-us';
-  const langPrefix = isEn ? '/en' : '';
+  const serviceDetailPrefix = isEn ? '/en/services' : '/pakalpojumi';
   const services = customServices || getServices(langCode);
 
 
@@ -102,7 +102,7 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
             id={`service-card-${serv.id}`}
           >
             {/* Upper Card image block */}
-            <Link href={`${langPrefix}/services/${serv.id}`} className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec] block">
+            <Link href={`${serviceDetailPrefix}/${serv.id}`} className="relative aspect-[4/3] bg-[#fbf9f8] overflow-hidden border-b border-[#efedec] block">
               <Image
                 src={serv.image}
                 alt={serv.title}
@@ -119,7 +119,7 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
                   {t.premium}
                 </span>
                 <h3 className="text-xl font-serif font-bold text-[#511B29] tracking-tight group-hover:text-[#5d1726] transition-colors line-clamp-1">
-                  <Link href={`${langPrefix}/services/${serv.id}`}>
+                  <Link href={`${serviceDetailPrefix}/${serv.id}`}>
                     {serv.title}
                   </Link>
                 </h3>
@@ -131,7 +131,7 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
               {/* Bottom actions */}
               <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
                 <Link
-                  href={`${langPrefix}/services/${serv.id}`}
+                  href={`${serviceDetailPrefix}/${serv.id}`}
                   className="inline-flex items-center gap-1.5 text-sm font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
                   id={`learn-service-btn-${serv.id}`}
                 >

@@ -301,6 +301,7 @@ export function constructMetadata(
     alternates.languages = {
       'lv-LV': `${baseUrl}${locale === 'en-us' ? routePaths.alternatePath : routePaths.currentPath}`,
       'en-US': `${baseUrl}${locale === 'en-us' ? routePaths.currentPath : routePaths.alternatePath}`,
+      'x-default': `${baseUrl}${locale === 'en-us' ? routePaths.alternatePath : routePaths.currentPath}`,
     };
   }
 
