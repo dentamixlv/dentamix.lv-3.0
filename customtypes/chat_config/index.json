@@ -13,21 +13,21 @@
         }
       },
       "system_prompt": {
-        "type": "RichText",
+        "type": "StructuredText",
         "config": {
           "label": "System Instruction / Prompt Guidance",
           "placeholder": "You are a helpful, professional, and friendly AI assistant for Dentamix, a premium dental clinic in Latvia...",
           "allowTargetBlank": true,
-          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,ordered-list,unordered-list"
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,ordered-list,unordered-list,strong,em"
         }
       },
       "core_contacts": {
-        "type": "RichText",
+        "type": "StructuredText",
         "config": {
           "label": "Clinic Core Contacts Info",
           "placeholder": "Riga Clinic: Phone +371 29419999, Adazi Clinic: Phone +371 29419999...",
           "allowTargetBlank": true,
-          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,ordered-list,unordered-list"
+          "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,ordered-list,unordered-list,strong,em"
         }
       },
       "suggestions": {

@@ -55,8 +55,8 @@ export default function ChatAssistant() {
     api.messages.list,
     conversationId ? { conversationId } : "skip"
   );
-  const dbSuggestions = useQuery(
-    api.assistant.getChatSuggestions,
+  const chatConfig = useQuery(
+    api.assistant.getChatConfig,
     { locale: isEn ? "en-us" : "lv" }
   );
   const respondAction = useAction(api.assistant.respond);
@@ -82,11 +82,7 @@ export default function ChatAssistant() {
 
   // Localization strings
   const strings = {
-    title: isEn ? "Ieva, dental assistant" : "Ieva, zobārsta palīgs",
     online: "Online",
-    welcome: isEn 
-      ? "Hello! I am Ieva. I can help you and answer questions about:\n\n- dental services\n- prices\n- dentists\n- booking\n\nFeel free to ask me, call, or write on WhatsApp!" 
-      : "Sveiki! Esmu Ieva. Varu Jums palīdzēt un atbildēt par:\n\n- pakalpojumiem\n- cenām\n- zobārstiem\n- pierakstu\n\nDroši jautājiet man, zvaniet vai rakstiet WhatsApp!",
     placeholder: isEn ? "Type a message..." : "Rakstīt ziņu...",
     clearTooltip: isEn ? "Clear conversation" : "Dzēst saraksti",
     clearConfirm: isEn 
@@ -94,10 +90,19 @@ export default function ChatAssistant() {
       : "Vai tiešām vēlaties dzēst šo saraksti?"
   };
 
+  // Dynamic configuration values from database cache or fallback
+  const assistantName = chatConfig?.assistantName || "Ieva";
+  const chatTitle = isEn 
+    ? `${assistantName}, dental assistant` 
+    : `${assistantName}, zobārsta palīgs`;
+  const welcomeMessage = isEn 
+    ? `Hello! I am ${assistantName}. I can help you and answer questions about:\n\n- dental services\n- prices\n- dentists\n- booking\n\nFeel free to ask me, call, or write on WhatsApp!` 
+    : `Sveiki! Esmu ${assistantName}. Varu Jums palīdzēt un atbildēt par:\n\n- pakalpojumiem\n- cenām\n- zobārstiem\n- pierakstu\n\nDroši jautājiet man, zvaniet vai rakstiet WhatsApp!`;
+
   // Dynamic suggestions from database cache or fallback
   const suggestions = React.useMemo(() => {
-    if (dbSuggestions && dbSuggestions.length > 0) {
-      return dbSuggestions.map((s) => ({
+    if (chatConfig?.suggestions && chatConfig.suggestions.length > 0) {
+      return chatConfig.suggestions.map((s) => ({
         text: s.label,
         prompt: s.promptText,
       }));
@@ -113,7 +118,7 @@ export default function ChatAssistant() {
           { text: "Kur atrodas klīnikas?", prompt: "Kur atrodas klīnikas?" },
           { text: "Kāds ir darba laiks?", prompt: "Kāds ir darba laiks?" }
         ];
-  }, [dbSuggestions, isEn]);
+  }, [chatConfig, isEn]);
 
   // Load conversation ID from localStorage on mount
   useEffect(() => {
@@ -246,7 +251,7 @@ export default function ChatAssistant() {
                   />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-sm leading-tight">{strings.title}</h3>
+                  <h3 className="font-semibold text-sm leading-tight">{chatTitle}</h3>
                   <div className="flex items-center gap-1.5 mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
                     <span className="text-[11px] text-white/80">{strings.online}</span>
@@ -287,7 +292,7 @@ export default function ChatAssistant() {
                 </div>
                 <div className="flex flex-col gap-2">
                   <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-800 leading-relaxed">
-                    {formatMessageContent(strings.welcome)}
+                    {formatMessageContent(welcomeMessage)}
                   </div>
                   
                   {/* Call and WhatsApp Buttons for Welcome Message */}

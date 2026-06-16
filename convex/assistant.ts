@@ -336,3 +336,17 @@ export const getConfigForAction = internalQuery({
       .first();
   },
 });
+
+// 4. Query function to fetch the complete chat configuration for the frontend client
+export const getChatConfig = query({
+  args: {
+    locale: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const targetLocale = args.locale || "lv";
+    return await ctx.db
+      .query("chatConfig")
+      .withIndex("by_locale", (q) => q.eq("locale", targetLocale))
+      .first();
+  },
+});

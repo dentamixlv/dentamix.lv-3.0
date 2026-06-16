@@ -11,6 +11,7 @@
 import type * as assistant from "../assistant.js";
 import type * as conversations from "../conversations.js";
 import type * as documents from "../documents.js";
+import type * as http from "../http.js";
 import type * as messages from "../messages.js";
 
 import type {
@@ -23,6 +24,7 @@ declare const fullApi: ApiFromModules<{
   assistant: typeof assistant;
   conversations: typeof conversations;
   documents: typeof documents;
+  http: typeof http;
   messages: typeof messages;
 }>;
 
