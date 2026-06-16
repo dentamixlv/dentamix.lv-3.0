@@ -5,6 +5,12 @@
   --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
 /* Scrollbar customization for horizontal elements */
 .scrollbar-none::-webkit-scrollbar {
   display: none;
