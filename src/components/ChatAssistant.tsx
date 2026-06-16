@@ -55,6 +55,10 @@ export default function ChatAssistant() {
     api.messages.list,
     conversationId ? { conversationId } : "skip"
   );
+  const dbSuggestions = useQuery(
+    api.assistant.getChatSuggestions,
+    { locale: isEn ? "en-us" : "lv" }
+  );
   const respondAction = useAction(api.assistant.respond);
 
   // Merge database messages with our optimistic pending user message
@@ -87,8 +91,18 @@ export default function ChatAssistant() {
     clearTooltip: isEn ? "Clear conversation" : "Dzēst saraksti",
     clearConfirm: isEn 
       ? "Are you sure you want to delete this chat history?" 
-      : "Vai tiešām vēlaties dzēst šo saraksti?",
-    suggestions: isEn 
+      : "Vai tiešām vēlaties dzēst šo saraksti?"
+  };
+
+  // Dynamic suggestions from database cache or fallback
+  const suggestions = React.useMemo(() => {
+    if (dbSuggestions && dbSuggestions.length > 0) {
+      return dbSuggestions.map((s) => ({
+        text: s.label,
+        prompt: s.promptText,
+      }));
+    }
+    return isEn 
       ? [
           { text: "How can I book an appointment?", prompt: "How can I book an appointment?" },
           { text: "Where are the clinics located?", prompt: "Where are the clinics located?" },
@@ -98,8 +112,8 @@ export default function ChatAssistant() {
           { text: "Kā pieteikties vizītei?", prompt: "Kā pieteikties vizītei?" },
           { text: "Kur atrodas klīnikas?", prompt: "Kur atrodas klīnikas?" },
           { text: "Kāds ir darba laiks?", prompt: "Kāds ir darba laiks?" }
-        ]
-  };
+        ];
+  }, [dbSuggestions, isEn]);
 
   // Load conversation ID from localStorage on mount
   useEffect(() => {
@@ -155,6 +169,7 @@ export default function ChatAssistant() {
       await respondAction({
         conversationId: activeId,
         userMessageText: textToSend,
+        locale: isEn ? "en" : "lv",
       });
 
       // Play sound notification when the answer is fully typed/received
@@ -309,7 +324,7 @@ export default function ChatAssistant() {
                     <span>Ieteikumi / Suggestions:</span>
                   </div>
                   <div className="flex flex-wrap gap-2">
-                    {strings.suggestions.map((sug, idx) => (
+                    {suggestions.map((sug, idx) => (
                       <button
                         key={idx}
                         onClick={() => handleSend(sug.prompt)}

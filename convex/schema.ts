@@ -21,4 +21,17 @@ export default defineSchema({
     vectorField: "embedding",
     dimensions: 768,
   }),
+  chatConfig: defineTable({
+    locale: v.string(),
+    assistantName: v.string(),
+    systemPrompt: v.string(),
+    coreContacts: v.string(),
+    suggestions: v.array(
+      v.object({
+        label: v.string(),
+        promptText: v.string(),
+      })
+    ),
+    updatedAt: v.number(),
+  }).index("by_locale", ["locale"]),
 });

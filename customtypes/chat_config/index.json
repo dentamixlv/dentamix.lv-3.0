@@ -1,0 +1,57 @@
+{
+  "id": "chat_config",
+  "label": "Chat Configuration",
+  "repeatable": false,
+  "status": true,
+  "json": {
+    "Main": {
+      "assistant_name": {
+        "type": "Text",
+        "config": {
+          "label": "Assistant Name",
+          "placeholder": "Ieva"
+        }
+      },
+      "system_prompt": {
+        "type": "RichText",
+        "config": {
+          "label": "System Instruction / Prompt Guidance",
+          "placeholder": "You are a helpful, professional, and friendly AI assistant for Dentamix, a premium dental clinic in Latvia...",
+          "allowTargetBlank": true,
+          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,ordered-list,unordered-list"
+        }
+      },
+      "core_contacts": {
+        "type": "RichText",
+        "config": {
+          "label": "Clinic Core Contacts Info",
+          "placeholder": "Riga Clinic: Phone +371 29419999, Adazi Clinic: Phone +371 29419999...",
+          "allowTargetBlank": true,
+          "single": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,ordered-list,unordered-list"
+        }
+      },
+      "suggestions": {
+        "type": "Group",
+        "config": {
+          "label": "Chat Suggestion Buttons",
+          "fields": {
+            "label": {
+              "type": "Text",
+              "config": {
+                "label": "Button Label",
+                "placeholder": "Kā pieteikties vizītei?"
+              }
+            },
+            "prompt_text": {
+              "type": "Text",
+              "config": {
+                "label": "Prompt Action Text",
+                "placeholder": "Kā pieteikties vizītei?"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
