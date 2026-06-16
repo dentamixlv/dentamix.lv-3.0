@@ -40,3 +40,44 @@
 .nav-text-desktop {
   font-size: 0.8125rem; /* 13px */
 }
+
+/* Card Border Beam animation */
+@keyframes border-beam {
+  0% {
+    offset-distance: 0%;
+  }
+  100% {
+    offset-distance: 100%;
+  }
+}
+
+.cta-border-beam {
+  pointer-events: none;
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit; /* Inherits the 24px/rounded-3xl from parent */
+  border: 2px solid transparent;
+  
+  /* Mask out the inside of the border, showing only the 2px border track */
+  mask-clip: padding-box, border-box;
+  -webkit-mask-clip: padding-box, border-box;
+  
+  mask-composite: intersect;
+  -webkit-mask-composite: source-in; /* for Safari compatibility */
+  
+  mask-image: linear-gradient(transparent, transparent), linear-gradient(white, white);
+  -webkit-mask-image: linear-gradient(transparent, transparent), linear-gradient(white, white);
+}
+
+.cta-border-beam::after {
+  content: "";
+  position: absolute;
+  aspect-ratio: 1 / 1;
+  width: 240px; /* Length of the trailing tail */
+  background-image: linear-gradient(to left, #de7c8a 0%, rgba(222, 124, 138, 0.4) 40%, transparent 100%);
+  
+  /* Animate along the rectangle path clockwise */
+  offset-anchor: 100% 50%;
+  offset-path: rect(0 auto auto 0 round 24px);
+  animation: border-beam 6s linear infinite;
+}

@@ -47,7 +47,7 @@ export default function CTABlock({
   const isTitleString = typeof title === 'string';
   const isDescString = typeof description === 'string';
 
-  const buttonClass = "px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0";
+  const buttonClass = "px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0 relative z-10";
   const hasCustomBg = style?.background || style?.backgroundColor;
 
   return (
@@ -56,9 +56,12 @@ export default function CTABlock({
       animate="visible"
       variants={fadeUpVariants}
       style={style}
-      className={`${hasCustomBg ? 'border border-[#efedec]' : 'bg-[#fbf9f8] border border-[#efedec]'} rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm hover:shadow-xl transition-shadow duration-300 ${className}`}
+      className={`relative ${hasCustomBg ? 'border border-[#efedec]' : 'bg-[#fbf9f8] border border-[#efedec]'} rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm hover:shadow-xl transition-shadow duration-300 ${className}`}
     >
-      <div className="space-y-3 max-w-2xl text-center md:text-left w-full">
+      {/* Running card border rocket glow (Border Beam) */}
+      <div className="cta-border-beam" />
+
+      <div className="space-y-3 max-w-2xl text-center md:text-left w-full relative z-10">
         {/* Badge text */}
         <span className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a] block">
           {badgeText}
