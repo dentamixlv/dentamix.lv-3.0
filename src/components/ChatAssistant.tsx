@@ -120,17 +120,6 @@ export default function ChatAssistant() {
         ];
   }, [chatConfig, isEn]);
 
-  // Log active state to browser console for easy debugging
-  useEffect(() => {
-    console.log("ChatAssistant Locale Sync:", {
-      pathname,
-      isEn,
-      resolvedLocale: isEn ? "en-us" : "lv",
-      assistantName,
-      loadedSuggestionsCount: suggestions.length
-    });
-  }, [pathname, isEn, assistantName, suggestions]);
-
   // Load conversation ID from localStorage on mount
   useEffect(() => {
     const savedId = localStorage.getItem("dentamix_chat_conv_id");
