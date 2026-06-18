@@ -9,7 +9,7 @@ import { MessageSquare, X, Send, Trash2, Bot, User, Loader2, Sparkles, Phone, Me
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
 
-// Custom helper to parse basic markdown (**bold** and newlines)
+// Custom helper to parse basic markdown (**bold**, [links](url), and newlines)
 function formatMessageContent(content: string) {
   if (!content) return "";
   
@@ -17,13 +17,29 @@ function formatMessageContent(content: string) {
   const lines = content.split("\n");
   
   return lines.map((line, lineIdx) => {
-    // Look for **bold text**
-    const parts = line.split(/(\*\*.*?\*\*)/g);
+    // Look for **bold text** and [markdown links](url)
+    const parts = line.split(/(\*\*.*?\*\*|\[.*?\]\(.*?\))/g);
     
     const elements = parts.map((part, partIdx) => {
       if (part.startsWith("**") && part.endsWith("**")) {
         return <strong key={partIdx} className="font-semibold text-gray-900">{part.slice(2, -2)}</strong>;
       }
+      
+      const linkMatch = part.match(/^\[(.*?)\]\((.*?)\)$/);
+      if (linkMatch) {
+        return (
+          <a
+            key={partIdx}
+            href={linkMatch[2]}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[var(--main-color)] underline hover:opacity-90 font-medium"
+          >
+            {linkMatch[1]}
+          </a>
+        );
+      }
+      
       return part;
     });
     
