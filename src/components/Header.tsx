@@ -367,7 +367,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
-                className="w-full mt-3 inline-flex items-center justify-center gap-2 bg-transparent border border-white/30 text-white hover:bg-white/10 hover:border-white/60 px-6 py-3.5 rounded-full text-sm font-bold transition-all"
+                className="w-full mt-3 inline-flex items-center justify-center gap-2 bg-[#25d366] border border-[#25d366] text-white hover:bg-[#20ba5a] hover:border-[#20ba5a] px-6 py-3.5 rounded-full text-sm font-bold transition-all"
                 id="mobile-whatsapp-btn"
               >
                 <svg className="w-4 h-4 fill-current shrink-0" viewBox="0 0 24 24">
