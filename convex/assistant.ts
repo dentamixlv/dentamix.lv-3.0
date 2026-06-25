@@ -225,50 +225,77 @@ ${dbCoreContacts}`;
 
     // 6. Send message and stream the response using Google Gemini API
     let accumulatedContent = "";
+    const maxAttempts = 3;
+    let success = false;
+    let lastError: any = null;
 
-    try {
-      const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash",
-        systemInstruction: systemPrompt,
-      });
+    for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+      try {
+        const model = genAI.getGenerativeModel({
+          model: "gemini-2.5-flash",
+          systemInstruction: systemPrompt,
+        });
 
-      // Map chat history to Google Gemini format (role must be 'user' or 'model')
-      const contents = [
-        ...history.map((msg) => ({
-          role: msg.role === "assistant" ? ("model" as const) : ("user" as const),
-          parts: [{ text: msg.content }],
-        })),
-        { role: "user" as const, parts: [{ text: args.userMessageText }] },
-      ];
+        // Map chat history to Google Gemini format (role must be 'user' or 'model')
+        const contents = [
+          ...history.map((msg) => ({
+            role: msg.role === "assistant" ? ("model" as const) : ("user" as const),
+            parts: [{ text: msg.content }],
+          })),
+          { role: "user" as const, parts: [{ text: args.userMessageText }] },
+        ];
 
-      const result = await model.generateContentStream({
-        contents,
-        generationConfig: {
-          thinkingConfig: {
-            thinkingBudget: 2048,
-          },
-        } as any,
-      });
+        const result = await model.generateContentStream({
+          contents,
+          generationConfig: {
+            thinkingConfig: {
+              thinkingBudget: 2048,
+            },
+          } as any,
+        });
 
-      for await (const chunk of result.stream) {
-        const parts = chunk.candidates?.[0]?.content?.parts || [];
-        
-        for (const part of parts) {
-          if ('text' in part && part.text) {
-            accumulatedContent += part.text;
+        for await (const chunk of result.stream) {
+          const parts = chunk.candidates?.[0]?.content?.parts || [];
+          
+          for (const part of parts) {
+            if ('text' in part && part.text) {
+              accumulatedContent += part.text;
+            }
+          }
+
+          if (accumulatedContent) {
+            await ctx.runMutation(api.messages.updateContent, {
+              messageId: assistantMessageId,
+              content: accumulatedContent,
+            });
           }
         }
+        
+        success = true;
+        break; // streaming succeeded, break the retry loop
+      } catch (error: any) {
+        lastError = error;
+        console.warn(`Gemini stream attempt ${attempt} failed:`, error);
 
-        if (accumulatedContent) {
-          await ctx.runMutation(api.messages.updateContent, {
-            messageId: assistantMessageId,
-            content: accumulatedContent,
-          });
+        // If it's a transient 503 or fetch error and we have attempts left, wait and retry
+        const isTransient = error.status === 503 || 
+                            error.message?.includes("503") || 
+                            error.message?.includes("fetch") || 
+                            error.message?.includes("Service Unavailable");
+        
+        if (attempt < maxAttempts && isTransient) {
+          // Clear any partial content to avoid duplicates/messy stream on retry
+          accumulatedContent = "";
+          // Wait with exponential backoff (e.g., 1s, 2s)
+          await new Promise((resolve) => setTimeout(resolve, attempt * 1000));
+        } else {
+          break; // break loop and trigger error block
         }
       }
+    }
 
-    } catch (error) {
-      console.error("Error streaming response from Google Gemini API:", error);
+    if (!success) {
+      console.error("Error streaming response from Google Gemini API after retries:", lastError);
       accumulatedContent += "\n\n(Atvainojiet, radās kļūda saziņā ar serveri. Lūdzu, mēģiniet vēlreiz. / Sorry, an error occurred while connecting to the server. Please try again.)";
       await ctx.runMutation(api.messages.updateContent, {
         messageId: assistantMessageId,
