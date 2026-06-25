@@ -115,7 +115,7 @@ export const respond = action({
 
     // If userName is not set, try to extract it from the message
     if (!userName) {
-      const priorMessages = dbMessages.slice(0, -2);
+      const priorMessages = dbMessages.slice(0, -1);
       const history = priorMessages.map((msg) => ({
         role: msg.role === "assistant" ? ("assistant" as const) : ("user" as const),
         content: msg.content,
@@ -217,7 +217,7 @@ ${dbCoreContacts}`;
 
 
     // Prepare history:
-    const priorMessages = dbMessages.slice(0, -2);
+    const priorMessages = dbMessages.slice(0, -1);
     const history = priorMessages.map((msg) => ({
       role: msg.role === "assistant" ? ("assistant" as const) : ("user" as const),
       content: msg.content,
