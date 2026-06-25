@@ -18,96 +18,179 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const entries: MetadataRoute.Sitemap = [];
 
-  // Add static paths
-  for (const path of staticPaths) {
-    // Latvian static path
-    entries.push({
-      url: `${baseUrl}${path.lv}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: path.lv === '' ? 1.0 : 0.8,
-    });
+  // 1. Add static paths
+  try {
+    for (const path of staticPaths) {
+      const lvUrl = `${baseUrl}${path.lv}`;
+      const enUrl = `${baseUrl}/en${path.en}`;
+      const langAlternates = {
+        'lv-LV': lvUrl,
+        'en-US': enUrl,
+        'x-default': lvUrl,
+      };
 
-    // English static path
-    entries.push({
-      url: `${baseUrl}/en${path.en}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: path.en === '' ? 1.0 : 0.8,
-    });
+      // Latvian static path
+      entries.push({
+        url: lvUrl,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: path.lv === '' ? 1.0 : 0.8,
+        alternates: {
+          languages: langAlternates,
+        },
+      });
+
+      // English static path
+      entries.push({
+        url: enUrl,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: path.en === '' ? 1.0 : 0.8,
+        alternates: {
+          languages: langAlternates,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error processing static paths for sitemap:", error);
   }
 
-  // Add dynamic service paths
-  const services = getServices('lv');
-  for (const service of services) {
-    // Latvian service detail - public URL is /pakalpojumi/{id}
-    entries.push({
-      url: `${baseUrl}/pakalpojumi/${service.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    });
-    // English service detail - public URL is /en/services/{id}
-    entries.push({
-      url: `${baseUrl}/en/services/${service.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    });
+  // 2. Add dynamic service paths
+  try {
+    const services = getServices('lv');
+    for (const service of services) {
+      const lvUrl = `${baseUrl}/pakalpojumi/${service.id}`;
+      const enUrl = `${baseUrl}/en/services/${service.id}`;
+      const langAlternates = {
+        'lv-LV': lvUrl,
+        'en-US': enUrl,
+        'x-default': lvUrl,
+      };
+
+      // Latvian service detail - public URL is /pakalpojumi/{id}
+      entries.push({
+        url: lvUrl,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: {
+          languages: langAlternates,
+        },
+      });
+
+      // English service detail - public URL is /en/services/{id}
+      entries.push({
+        url: enUrl,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: {
+          languages: langAlternates,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error processing dynamic service paths for sitemap:", error);
   }
 
-  // Add dynamic doctor paths
-  const doctors = getDoctors('lv');
-  for (const doctor of doctors) {
-    // Latvian doctor detail - public URL is /zobarsti/{id}
-    entries.push({
-      url: `${baseUrl}/zobarsti/${doctor.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    });
-    // English doctor detail - public URL is /en/doctors/{id}
-    entries.push({
-      url: `${baseUrl}/en/doctors/${doctor.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    });
+  // 3. Add dynamic doctor paths
+  try {
+    const doctors = getDoctors('lv');
+    for (const doctor of doctors) {
+      const lvUrl = `${baseUrl}/zobarsti/${doctor.id}`;
+      const enUrl = `${baseUrl}/en/doctors/${doctor.id}`;
+      const langAlternates = {
+        'lv-LV': lvUrl,
+        'en-US': enUrl,
+        'x-default': lvUrl,
+      };
+
+      // Latvian doctor detail - public URL is /zobarsti/{id}
+      entries.push({
+        url: lvUrl,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: {
+          languages: langAlternates,
+        },
+      });
+
+      // English doctor detail - public URL is /en/doctors/{id}
+      entries.push({
+        url: enUrl,
+        lastModified: new Date(),
+        changeFrequency: 'monthly',
+        priority: 0.7,
+        alternates: {
+          languages: langAlternates,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error processing dynamic doctor paths for sitemap:", error);
   }
 
-  // Add dynamic blog paths
-  const blogs = getBlogPosts('lv');
-  for (const blog of blogs) {
-    // Latvian blog detail - public URL is /blogs/{id}
-    entries.push({
-      url: `${baseUrl}/blogs/${blog.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    });
-    // English blog detail - public URL is /en/blogs/{id}
-    entries.push({
-      url: `${baseUrl}/en/blogs/${blog.id}`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    });
+  // 4. Add dynamic blog paths
+  try {
+    const blogs = getBlogPosts('lv');
+    for (const blog of blogs) {
+      const lvUrl = `${baseUrl}/blogs/${blog.id}`;
+      const enUrl = `${baseUrl}/en/blogs/${blog.id}`;
+      const langAlternates = {
+        'lv-LV': lvUrl,
+        'en-US': enUrl,
+        'x-default': lvUrl,
+      };
+
+      // Latvian blog detail - public URL is /blogs/{id}
+      entries.push({
+        url: lvUrl,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.6,
+        alternates: {
+          languages: langAlternates,
+        },
+      });
+
+      // English blog detail - public URL is /en/blogs/{id}
+      entries.push({
+        url: enUrl,
+        lastModified: new Date(),
+        changeFrequency: 'weekly',
+        priority: 0.6,
+        alternates: {
+          languages: langAlternates,
+        },
+      });
+    }
+  } catch (error) {
+    console.error("Error processing dynamic blog paths for sitemap:", error);
   }
 
-  // Add dynamic custom Prismic pages (filtering out static paths, services, doctors, and blogs)
+  // 5. Add dynamic custom Prismic pages (filtering out static paths, services, doctors, and blogs)
   try {
     const client = createClient();
-    const prismicPages = await client.getAllByType('page');
+    const prismicPages = await client.getAllByType('page', {
+      lang: '*',
+      pageSize: 100
+    });
     
+    // Build maps/lists to help filter known core paths quickly
+    const knownServices = getServices('lv');
+    const knownDoctors = getDoctors('lv');
+    const knownBlogs = getBlogPosts('lv');
+
     for (const pageDoc of prismicPages) {
       const uid = pageDoc.uid;
       const lang = pageDoc.lang; // 'lv' or 'en-us'
 
       // Skip if the page matches one of our known core static routes or other dynamic content
       const isStaticOrKnown = staticPaths.some(p => p.en === `/${uid}` || p.lv === `/${uid}`) ||
-        services.some(s => s.id === uid) ||
-        doctors.some(d => d.id === uid) ||
-        blogs.some(b => b.id === uid) ||
+        knownServices.some(s => s.id === uid) ||
+        knownDoctors.some(d => d.id === uid) ||
+        knownBlogs.some(b => b.id === uid) ||
         // Fallback checks for common routing equivalents
         uid === 'home' || uid === 'sakums' ||
         uid === 'zobardti'; // fallback doctor list uid
@@ -118,21 +201,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         ? new Date(pageDoc.last_publication_date)
         : new Date();
 
-      if (lang === 'en-us') {
-        entries.push({
-          url: `${baseUrl}/en/${uid}`,
-          lastModified: lastModifiedDate,
-          changeFrequency: 'weekly',
-          priority: 0.5,
-        });
-      } else {
-        entries.push({
-          url: `${baseUrl}/${uid}`,
-          lastModified: lastModifiedDate,
-          changeFrequency: 'weekly',
-          priority: 0.5,
-        });
+      const isEn = lang === 'en-us';
+      const currentPathSegment = isEn ? `/en/${uid}` : `/${uid}`;
+      
+      let alternatePathSegment = '';
+      if (Array.isArray(pageDoc.alternate_languages) && pageDoc.alternate_languages.length > 0) {
+        const alt = pageDoc.alternate_languages[0];
+        if (alt && alt.uid) {
+          alternatePathSegment = alt.lang === 'en-us' ? `/en/${alt.uid}` : `/${alt.uid}`;
+        }
       }
+
+      if (!alternatePathSegment) {
+        // Fallback if no explicit translation is linked
+        alternatePathSegment = isEn ? `/${uid}` : `/en/${uid}`;
+      }
+
+      const lvUrl = isEn ? `${baseUrl}${alternatePathSegment}` : `${baseUrl}${currentPathSegment}`;
+      const enUrl = isEn ? `${baseUrl}${currentPathSegment}` : `${baseUrl}${alternatePathSegment}`;
+
+      entries.push({
+        url: isEn ? enUrl : lvUrl,
+        lastModified: lastModifiedDate,
+        changeFrequency: 'weekly',
+        priority: 0.5,
+        alternates: {
+          languages: {
+            'lv-LV': lvUrl,
+            'en-US': enUrl,
+            'x-default': lvUrl,
+          }
+        }
+      });
     }
   } catch (error) {
     console.warn("Failed to fetch Prismic custom pages for sitemap.", error);

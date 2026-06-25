@@ -112,7 +112,7 @@ export function SEODentistStructuredData({ locale, prismicClinics, settingsData 
     // Build OpeningHoursSpecification dynamically
     const openingHours: any[] = [];
     
-    const wd = clinic.workHoursWeekdays || clinic.workHours?.weekdays || '';
+    const wd = clinic.work_hours_weekdays || clinic.workHoursWeekdays || clinic.workHours?.weekdays || '';
     if (wd) {
       const match = wd.match(/(\d{2}:\d{2})\s*-\s*(\d{2}:\d{2})/);
       if (match) {
@@ -132,7 +132,7 @@ export function SEODentistStructuredData({ locale, prismicClinics, settingsData 
       });
     }
 
-    const sat = clinic.workHoursSaturday || clinic.workHours?.saturday || '';
+    const sat = clinic.work_hours_saturday || clinic.workHoursSaturday || clinic.workHours?.saturday || '';
     if (sat && !sat.toLowerCase().includes('slēgts') && !sat.toLowerCase().includes('closed')) {
       const match = sat.match(/(\d{2}:\d{2})\s*-\s*(\d{2}:\d{2})/);
       if (match) {
@@ -150,6 +150,19 @@ export function SEODentistStructuredData({ locale, prismicClinics, settingsData 
         "opens": "10:00",
         "closes": "15:00"
       });
+    }
+
+    const sun = clinic.work_hours_sunday || clinic.workHoursSunday || clinic.workHours?.sunday || '';
+    if (sun && !sun.toLowerCase().includes('slēgts') && !sun.toLowerCase().includes('closed')) {
+      const match = sun.match(/(\d{2}:\d{2})\s*-\s*(\d{2}:\d{2})/);
+      if (match) {
+        openingHours.push({
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Sunday"],
+          "opens": match[1],
+          "closes": match[2]
+        });
+      }
     }
 
     const clinicSchema: Record<string, any> = {
@@ -178,12 +191,22 @@ export function SEODentistStructuredData({ locale, prismicClinics, settingsData 
       "openingHoursSpecification": openingHours
     };
 
-    // Inject aggregate rating to both multi-location entries dynamically
-    if (ratingValue && reviewCount) {
+    // Safe aggregate rating injection: hide if rating/reviews are 0, null, or invalid
+    const numRating = ratingValue ? Number(ratingValue) : 0;
+    const numReviews = reviewCount ? Number(reviewCount) : 0;
+    
+    if (
+      ratingValue && 
+      reviewCount && 
+      !isNaN(numRating) && 
+      !isNaN(numReviews) && 
+      numRating > 0 && 
+      numReviews > 0
+    ) {
       clinicSchema["aggregateRating"] = {
         "@type": "AggregateRating",
-        "ratingValue": ratingValue,
-        "reviewCount": reviewCount,
+        "ratingValue": numRating.toString(),
+        "reviewCount": numReviews.toString(),
         "bestRating": "5",
         "worstRating": "1"
       };
@@ -277,6 +300,28 @@ function getRoutePaths(locale: string, routeInfo?: RouteInfo): { currentPath: st
 }
 
 /**
+ * Helper to append optimization URL parameters for Imgix/Prismic and Unsplash OpenGraph images.
+ */
+function optimizeOgImageUrl(url: string): string {
+  if (!url) return '';
+  const isImgix = url.includes('prismic.io') || url.includes('unsplash.com') || url.includes('imgix');
+  if (isImgix) {
+    try {
+      const urlObj = new URL(url);
+      urlObj.searchParams.set('w', '1200');
+      urlObj.searchParams.set('h', '630');
+      urlObj.searchParams.set('fit', 'crop');
+      urlObj.searchParams.set('auto', 'format,compress');
+      return urlObj.toString();
+    } catch (e) {
+      const separator = url.includes('?') ? '&' : '?';
+      return `${url}${separator}w=1200&h=630&fit=crop`;
+    }
+  }
+  return url;
+}
+
+/**
  * Utility to generate Next.js Metadata for SEO/OpenGraph/Twitter
  */
 export function constructMetadata(
@@ -287,7 +332,7 @@ export function constructMetadata(
 ): Metadata {
   const title = data?.meta_title || fallback.title;
   const description = data?.meta_description || fallback.description;
-  const ogImageUrl = data?.og_image?.url || '';
+  const ogImageUrl = optimizeOgImageUrl(data?.og_image?.url || '');
   const ogImageAlt = data?.og_image?.alt || title;
 
   const localeCode = locale === 'en-us' ? 'en_US' : 'lv_LV';
@@ -297,11 +342,26 @@ export function constructMetadata(
   const alternates: Metadata['alternates'] = {};
   
   if (routePaths) {
-    alternates.canonical = `${baseUrl}${routePaths.currentPath}`;
+    const getCleanUrl = (path: string) => {
+      let fullUrl = `${baseUrl}${path}`;
+      // Clean duplicate slashes
+      fullUrl = fullUrl.replace(/([^:]\/)\/+/g, "$1");
+      // Remove trailing slash for non-root paths
+      if (fullUrl.endsWith('/') && fullUrl !== 'https://dentamix.lv/') {
+        fullUrl = fullUrl.slice(0, -1);
+      }
+      return fullUrl;
+    };
+
+    const lvUrl = getCleanUrl(locale === 'en-us' ? routePaths.alternatePath : routePaths.currentPath);
+    const enUrl = getCleanUrl(locale === 'en-us' ? routePaths.currentPath : routePaths.alternatePath);
+    const defaultUrl = getCleanUrl(locale === 'en-us' ? routePaths.alternatePath : routePaths.currentPath);
+
+    alternates.canonical = getCleanUrl(routePaths.currentPath);
     alternates.languages = {
-      'lv-LV': `${baseUrl}${locale === 'en-us' ? routePaths.alternatePath : routePaths.currentPath}`,
-      'en-US': `${baseUrl}${locale === 'en-us' ? routePaths.currentPath : routePaths.alternatePath}`,
-      'x-default': `${baseUrl}${locale === 'en-us' ? routePaths.alternatePath : routePaths.currentPath}`,
+      'lv-LV': lvUrl,
+      'en-US': enUrl,
+      'x-default': defaultUrl,
     };
   }
 
