@@ -70,7 +70,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
       micProcessorRef.current = null;
     }
     if (audioContextRef.current) {
-      audioContextRef.current.close().catch(() => {});
+      audioContextRef.current.close().catch(() => { });
       audioContextRef.current = null;
     }
     if (micStreamRef.current) {
@@ -144,7 +144,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
             },
             systemInstruction: {
               parts: [{
-                text: config.systemInstruction || (isEn 
+                text: config.systemInstruction || (isEn
                   ? "You are a professional and polite assistant for Dentamix Dental Clinic. Speak briefly, provide concise answers in English."
                   : "Tu esi Dentamix zobārstniecības klīnikas profesionāls asistents. Runā īsi, sniedz kodolīgas atbildes latviešu valodā.")
               }]
@@ -161,9 +161,10 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
               clientContent: {
                 turns: [{
                   role: "user",
-                  parts: [{ text: isEn
-                    ? "Hello"
-                    : "Sveiki"
+                  parts: [{
+                    text: isEn
+                      ? "Hello"
+                      : "Sveiki"
                   }]
                 }],
                 turnComplete: true
@@ -223,7 +224,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
               });
               currentUserTranscriptRef.current = '';
             }
-            
+
             if (aiText) {
               await saveMessage({
                 conversationId: activeConversationIdRef.current || conversationId,
@@ -270,8 +271,8 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
       socket.onclose = (event) => {
         console.warn(`Gemini WebSocket closed: code=${event.code}, reason=${event.reason}`);
         if (event.code !== 1000 && event.code !== 1005) {
-          setError(isEn 
-            ? `Connection closed: ${event.reason || 'Unknown error'} (code ${event.code})` 
+          setError(isEn
+            ? `Connection closed: ${event.reason || 'Unknown error'} (code ${event.code})`
             : `Savienojums slēgts: ${event.reason || 'Nezināma kļūda'} (kods ${event.code})`
           );
         }
@@ -291,7 +292,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
     audioContextRef.current = audioContext;
 
     const source = audioContext.createMediaStreamSource(stream);
-    
+
     // Create processor node (buffer size 2048, 1 input channel, 1 output channel)
     const processor = audioContext.createScriptProcessor(2048, 1, 1);
     micProcessorRef.current = processor;
@@ -332,8 +333,8 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
                 role: "user",
                 parts: [{
                   text: isEn
-                    ? "[The user has been silent for a while. Say a polite goodbye and then end the call.]"
-                    : "[Lietotājs kādu laiku ir klusējis. Pieklājīgi pasaki uz redzēšanos un pabeidz sarunu.]"
+                    ? "[The user has been silent for a while. Say a polite goodbye and then end the call.And invite to contact if they have any questions]"
+                    : "[Lietotājs kādu laiku ir klusējis. Pieklājīgi pasaki uz redzēšanos un pabeidz sarunu. Un aicini sazināties, ja rodas jautājumi]"
                 }]
               }],
               turnComplete: true
@@ -350,7 +351,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
 
       // Downsample microphone rate (usually 44.1k or 48k) to 16kHz for Gemini
       const resampled = downsampleBuffer(inputBuffer, audioContext.sampleRate, 16000);
-      
+
       // Convert Float32 resampled audio to 16-bit Int16 PCM
       const int16PCM = Float32ToInt16(resampled);
 
