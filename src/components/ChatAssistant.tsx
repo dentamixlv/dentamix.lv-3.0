@@ -93,7 +93,7 @@ export default function ChatAssistant() {
   });
 
   const handleVoiceClick = async () => {
-    if (isCallActive || isConnecting) {
+    if (isCallActive || isConnecting || voiceError) {
       endCall();
       return;
     }
@@ -332,7 +332,7 @@ export default function ChatAssistant() {
             </div>
 
             {/* Chat Body & Call Overlay */}
-            {(isCallActive || isConnecting) ? (
+            {(isCallActive || isConnecting || voiceError) ? (
               <div className="flex-grow flex flex-col items-center justify-center bg-[#fbf9f8] p-6 space-y-8 relative overflow-hidden">
                 {/* Voice Call Visualizer Animation */}
                 <div className="relative w-36 h-36 flex items-center justify-center">
@@ -582,7 +582,7 @@ export default function ChatAssistant() {
             )}
 
             {/* Input Footer */}
-            {!(isCallActive || isConnecting) && (
+            {!(isCallActive || isConnecting || voiceError) && (
               <form
                 onSubmit={(e) => {
                   e.preventDefault();

@@ -292,6 +292,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
 
   const endCall = () => {
     cleanup();
+    setError(null);
   };
 
   const toggleMute = () => {
