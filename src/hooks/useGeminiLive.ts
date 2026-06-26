@@ -48,6 +48,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
   const activeConversationIdRef = useRef<Id<"conversations"> | null>(null);
   const lastActiveTimeRef = useRef(Date.now());
   const isGoodbyeTriggeredRef = useRef(false);
+  const goodbyeIntervalRef = useRef<any>(null);
 
   useEffect(() => {
     isMutedRef.current = isMuted;
@@ -61,6 +62,10 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
   }, []);
 
   const cleanup = () => {
+    if (goodbyeIntervalRef.current) {
+      clearInterval(goodbyeIntervalRef.current);
+      goodbyeIntervalRef.current = null;
+    }
     if (socketRef.current) {
       socketRef.current.close();
       socketRef.current = null;
@@ -81,6 +86,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
       playerRef.current.destroy();
       playerRef.current = null;
     }
+    isGoodbyeTriggeredRef.current = false;
     setIsCallActive(false);
     setIsConnecting(false);
     setVolumeLevel(0);
@@ -241,10 +247,13 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
 
             if (isGoodbyeTriggeredRef.current) {
               // Wait for the audio queue to play the goodbye audio before hanging up
-              const checkInterval = setInterval(() => {
+              goodbyeIntervalRef.current = setInterval(() => {
                 const isPlaying = playerRef.current?.isPlaying || false;
                 if (!isPlaying) {
-                  clearInterval(checkInterval);
+                  if (goodbyeIntervalRef.current) {
+                    clearInterval(goodbyeIntervalRef.current);
+                    goodbyeIntervalRef.current = null;
+                  }
                   endCall();
                 }
               }, 200);
