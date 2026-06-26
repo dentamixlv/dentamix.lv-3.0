@@ -124,7 +124,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
         // 4. Send initial Setup payload
         const setupMessage = {
           setup: {
-            model: config.model || "models/gemini-2.0-flash",
+            model: "models/gemini-2.5-flash",
             generationConfig: {
               responseModalities: ["AUDIO"],
               speechConfig: {
