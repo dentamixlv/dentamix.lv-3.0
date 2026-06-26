@@ -376,14 +376,14 @@ export default function ChatAssistant() {
                 {/* Call Status Text */}
                 <div className="text-center z-10">
                   <h4 className="text-[#511B29] font-serif font-bold text-base leading-tight">
-                    {isEn ? `${assistantName} (Voice Mode)` : `${assistantName} (Balss režīms)`}
+                    {assistantName}
                   </h4>
                   <p className="text-xs text-gray-500 mt-1 font-medium">
                     {isConnecting
                       ? (isEn ? "Connecting..." : "Savieno...")
                       : isMuted
                         ? (isEn ? "Muted" : "Izslēgta skaņa")
-                        : (isEn ? "Active call..." : "Saruna...")}
+                        : (isEn ? "I'm listening carefully..." : "Es uzmanīgi klausos...")}
                   </p>
                   {voiceError && (
                     <p className="text-[11px] text-rose-500 mt-2 max-w-xs font-semibold">
