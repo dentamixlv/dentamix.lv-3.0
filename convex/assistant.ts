@@ -391,7 +391,7 @@ export const getVoiceConfig = action({
     
     return {
       wsUrl,
-      model: "models/gemini-2.5-flash" as const,
+      model: "models/gemini-2.5-flash-native-audio-latest" as const,
       voice: "Aoede" as const
     };
   }
