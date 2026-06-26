@@ -52,7 +52,7 @@ export default function AboutClient() {
       </motion.div>
 
       {/* Article Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start text-left">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 items-start text-left">
         {/* Main Content */}
         <motion.div variants={fadeUpVariants} className="lg:col-span-2 space-y-6">
           <div className="text-base sm:text-lg leading-relaxed text-slate-800 space-y-6 font-normal">

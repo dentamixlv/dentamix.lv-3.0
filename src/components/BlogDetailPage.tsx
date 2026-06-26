@@ -54,7 +54,7 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
       </motion.div>
 
       {/* Article Content Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start text-left">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 items-start text-left">
         {/* Main Content */}
         <motion.div variants={fadeUpVariants} className="lg:col-span-2 space-y-6">
           <div>

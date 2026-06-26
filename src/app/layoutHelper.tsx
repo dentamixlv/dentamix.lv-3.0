@@ -89,7 +89,7 @@ export function renderPageLayout(
       )}
 
       <PageStaggerItem className={`max-w-7xl mx-auto px-6 pt-2 md:pt-4 ${pbClass}`}>
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start text-left">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-12 items-start text-left">
           {/* Main Left Content Column */}
           <div className="lg:col-span-2 space-y-8">
             {leftColumnSlices.length > 0 ? (
