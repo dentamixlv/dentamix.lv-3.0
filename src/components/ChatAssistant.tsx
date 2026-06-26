@@ -92,6 +92,29 @@ export default function ChatAssistant() {
     locale: isEn ? "en" : "lv"
   });
 
+  const [callDuration, setCallDuration] = useState(0);
+
+  useEffect(() => {
+    let interval: any = null;
+    if (isCallActive) {
+      setCallDuration(0);
+      interval = setInterval(() => {
+        setCallDuration((prev) => prev + 1);
+      }, 1000);
+    } else {
+      setCallDuration(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [isCallActive]);
+
+  const formatDuration = (seconds: number) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
   const handleVoiceClick = async () => {
     if (isCallActive || isConnecting || voiceError) {
       endCall();
@@ -378,12 +401,12 @@ export default function ChatAssistant() {
                   <h4 className="text-[#511B29] font-serif font-bold text-base leading-tight">
                     {assistantName}
                   </h4>
-                  <p className="text-xs text-gray-500 mt-1 font-medium">
+                  <p className="text-xs text-gray-500 mt-1 font-medium font-mono tracking-wider">
                     {isConnecting
                       ? (isEn ? "Connecting..." : "Savieno...")
                       : isMuted
-                        ? (isEn ? "Muted" : "Izslēgta skaņa")
-                        : (isEn ? "I'm listening carefully..." : "Es uzmanīgi klausos...")}
+                        ? (isEn ? `Muted (${formatDuration(callDuration)})` : `Izslēgta skaņa (${formatDuration(callDuration)})`)
+                        : formatDuration(callDuration)}
                   </p>
                   {voiceError && (
                     <p className="text-[11px] text-rose-500 mt-2 max-w-xs font-semibold">
