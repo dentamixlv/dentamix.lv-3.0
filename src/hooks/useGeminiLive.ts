@@ -130,7 +130,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
               speechConfig: {
                 voiceConfig: {
                   prebuiltVoiceConfig: {
-                    voiceName: "Aoede" // Premium female voice
+                    voiceName: "Zephyr" // Female voice - breathy, airy
                   }
                 }
               }
