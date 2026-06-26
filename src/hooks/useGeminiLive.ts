@@ -33,6 +33,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
   const [isMuted, setIsMuted] = useState(false);
   const [volumeLevel, setVolumeLevel] = useState(0);
   const [error, setError] = useState<string | null>(null);
+  const [isAgentSpeaking, setIsAgentSpeaking] = useState(false);
 
   // Refs
   const socketRef = useRef<WebSocket | null>(null);
@@ -88,6 +89,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
       playerRef.current = null;
     }
     isGoodbyeTriggeredRef.current = false;
+    setIsAgentSpeaking(false);
     setIsCallActive(false);
     setIsConnecting(false);
     setVolumeLevel(0);
@@ -126,7 +128,9 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
       micStreamRef.current = stream;
 
       // 2. Initialize incoming Audio Queue Player
-      playerRef.current = new AudioQueuePlayer();
+      playerRef.current = new AudioQueuePlayer((playing) => {
+        setIsAgentSpeaking(playing);
+      });
 
       // 3. Connect to the WebSocket
       const socket = new WebSocket(config.wsUrl);
@@ -410,6 +414,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
     isConnecting,
     isMuted,
     volumeLevel,
+    isAgentSpeaking,
     error,
     startCall,
     endCall,

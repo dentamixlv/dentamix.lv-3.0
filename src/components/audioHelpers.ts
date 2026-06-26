@@ -67,10 +67,13 @@ export function downsampleBuffer(
 export class AudioQueuePlayer {
   private audioContext: AudioContext | null = null;
   private nextPlayTime: number = 0;
-  private isPlaying: boolean = false;
+  public isPlaying: boolean = false;
   private sourceNodes: AudioBufferSourceNode[] = [];
+  private onStatusChange?: (isPlaying: boolean) => void;
   
-  constructor() {}
+  constructor(onStatusChange?: (isPlaying: boolean) => void) {
+    this.onStatusChange = onStatusChange;
+  }
   
   /**
    * Initializes the AudioContext if not already created.
@@ -129,7 +132,10 @@ export class AudioQueuePlayer {
 
     // Increment next play position by the exact duration of the buffer
     this.nextPlayTime += audioBuffer.duration;
-    this.isPlaying = true;
+    if (!this.isPlaying) {
+      this.isPlaying = true;
+      this.onStatusChange?.(true);
+    }
     
     // Clean up node references once played to avoid memory leakage
     sourceNode.onended = () => {
@@ -139,6 +145,7 @@ export class AudioQueuePlayer {
       }
       if (this.sourceNodes.length === 0) {
         this.isPlaying = false;
+        this.onStatusChange?.(false);
       }
     };
   }
@@ -161,7 +168,10 @@ export class AudioQueuePlayer {
     if (this.audioContext) {
       this.nextPlayTime = this.audioContext.currentTime;
     }
-    this.isPlaying = false;
+    if (this.isPlaying) {
+      this.isPlaying = false;
+      this.onStatusChange?.(false);
+    }
   }
 
   /**

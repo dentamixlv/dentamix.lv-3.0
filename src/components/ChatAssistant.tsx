@@ -83,6 +83,7 @@ export default function ChatAssistant() {
     isConnecting,
     isMuted,
     volumeLevel,
+    isAgentSpeaking,
     error: voiceError,
     startCall,
     endCall,
@@ -361,33 +362,59 @@ export default function ChatAssistant() {
                 <div className="relative w-36 h-36 flex items-center justify-center">
                   {/* Fluid pulsating rings */}
                   <motion.div
-                    animate={{
-                      scale: isConnecting ? [1, 1.15, 1] : [1, 1 + volumeLevel * 0.5, 1],
-                      opacity: isConnecting ? [0.15, 0.3, 0.15] : [0.15, 0.4, 0.15],
-                    }}
+                    animate={
+                      isConnecting
+                        ? { scale: [1, 1.1, 1], opacity: [0.08, 0.18, 0.08] }
+                        : isAgentSpeaking
+                          ? { scale: [1, 1.15, 1], opacity: [0.1, 0.25, 0.1] }
+                          : { scale: [1, 1 + volumeLevel * 0.3, 1], opacity: [0.08, 0.2, 0.08] }
+                    }
                     transition={{
                       repeat: Infinity,
-                      duration: isConnecting ? 2.5 : 0.8,
+                      duration: isConnecting ? 2.5 : isAgentSpeaking ? 0.6 : 0.8,
                       ease: "easeInOut",
                     }}
-                    className="absolute inset-0 rounded-full bg-[var(--main-color)]"
+                    className="absolute inset-0 rounded-full border border-[var(--main-color)]/25"
                   />
                   <motion.div
-                    animate={{
-                      scale: isConnecting ? [1, 1.3, 1] : [1, 1 + volumeLevel * 0.8, 1],
-                      opacity: isConnecting ? [0.08, 0.2, 0.08] : [0.08, 0.25, 0.08],
-                    }}
+                    animate={
+                      isConnecting
+                        ? { scale: [1, 1.2, 1], opacity: [0.05, 0.12, 0.05] }
+                        : isAgentSpeaking
+                          ? { scale: [1, 1.28, 1], opacity: [0.06, 0.16, 0.06] }
+                          : { scale: [1, 1 + volumeLevel * 0.5, 1], opacity: [0.05, 0.12, 0.05] }
+                    }
                     transition={{
                       repeat: Infinity,
-                      duration: isConnecting ? 2.5 : 0.8,
-                      delay: 0.2,
+                      duration: isConnecting ? 2.5 : isAgentSpeaking ? 0.6 : 0.8,
+                      delay: isAgentSpeaking ? 0.15 : 0.2,
                       ease: "easeInOut",
                     }}
-                    className="absolute inset-0 rounded-full bg-[var(--main-color)]"
+                    className="absolute inset-0 rounded-full border border-[var(--main-color)]/15"
+                  />
+                  <motion.div
+                    animate={
+                      isConnecting
+                        ? { scale: [1, 1.3, 1], opacity: [0.02, 0.06, 0.02] }
+                        : isAgentSpeaking
+                          ? { scale: [1, 1.38, 1], opacity: [0.03, 0.09, 0.03] }
+                          : { scale: [1, 1 + volumeLevel * 0.7, 1], opacity: [0.02, 0.06, 0.02] }
+                    }
+                    transition={{
+                      repeat: Infinity,
+                      duration: isConnecting ? 2.5 : isAgentSpeaking ? 0.6 : 0.8,
+                      delay: isAgentSpeaking ? 0.3 : 0.4,
+                      ease: "easeInOut",
+                    }}
+                    className="absolute inset-0 rounded-full border border-[var(--main-color)]/8"
                   />
 
                   {/* Profile image inside call ring */}
-                  <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-white shadow-lg bg-white flex items-center justify-center z-10">
+                  <div className={`relative w-24 h-24 rounded-full overflow-hidden border-2 shadow-lg bg-white flex items-center justify-center z-10 transition-all duration-300 ${
+                    isAgentSpeaking 
+                      ? 'border-[var(--main-color)] scale-105 shadow-[var(--main-color)]/30 shadow-xl' 
+                      : 'border-white scale-100'
+                  }`}>
                     <img
                       src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png"
                       alt="Ieva"
