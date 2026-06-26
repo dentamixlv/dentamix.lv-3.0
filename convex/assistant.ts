@@ -314,6 +314,7 @@ export const updateConfig = internalMutation({
     assistantName: v.string(),
     systemPrompt: v.string(),
     coreContacts: v.string(),
+    voiceSystemInstruction: v.optional(v.string()),
     suggestions: v.array(
       v.object({
         label: v.string(),
@@ -418,27 +419,40 @@ export const getVoiceConfig = action({
     }
     
     const isEn = prismicLocale === "en-us";
-    
+
     const assistantName = cachedConfig?.assistantName || "Ieva";
     const coreContacts = cachedConfig?.coreContacts || `Clinic General Info:
 - Riga Clinic: Phone +371 29419999, Email info@dentamix.lv, Address Brīvības iela 97, 3. stāvs, Rīga
 - Adazi Clinic: Phone +371 29419999, Email info@dentamix.lv, Address Gaujas iela 20, Ādaži`;
 
-    const systemInstruction = isEn
+    const userNameBlock = userName
+      ? (isEn
+          ? `The user's name is ${userName}. Address them by name (e.g., "Hello, ${userName}!").`
+          : `Pacienta vārds ir ${userName}. Uzrunā pacientu vārdā (piemēram, "Sveiki, ${userName}!").`)
+      : "";
+
+    // Use voice-specific system instruction from Prismic if available,
+    // otherwise fall back to hardcoded defaults
+    const fallbackInstruction = isEn
       ? `You are ${assistantName}, a warm, polite, and helpful AI voice assistant for Dentamix Dental Clinic. Help patients book appointments, answer pricing queries, and explain treatments in a friendly, conversational tone.
-Speak briefly, provide concise answers since you are speaking verbally.
-${userName ? `The user's name is **${userName}**. You MUST address them by name (e.g., "Hello, ${userName}!").` : ""}
-Vocal guidelines: Avoid using markdown formatting (like asterisks, list bullet marks, headers) in your responses as they are read aloud. Speak naturally.
+Speak briefly and naturally — you are speaking verbally, not writing text.
+Vocal guidelines: Never use markdown formatting (asterisks, bullet marks, headers) as responses are read aloud.
 
 Here are the clinic details:
 ${coreContacts}`
       : `Tu esi ${assistantName}, sirsnīga, zinoša un laipna Dentamix zobārstniecības klīnikas mākslīgā intelekta balss asistente. Palīdzi pacientiem pieteikties vizītēm, atbildi uz cenu jautājumiem un izskaidro procedūras draudzīgā un vienkāršā valodā.
-Runā īsi un kodolīgi, jo saruna notiek mutiski. Runā dabiski, izvairies no gariem teikumiem.
-${userName ? `Pacienta vārds ir **${userName}**. Tev ir OBLIGĀTI jāuzrunā pacients vārdā (piemēram, "Sveiki, ${userName}!").` : ""}
-Izrunas vadlīnijas: Nelieto teksta formatējumu (piemēram, zvaigznītes, sarakstu punktus, virsrakstus) savās atbildēs, jo tās tiek ierunātas balsī.
+Runā īsi un kodolīgi — saruna notiek mutiski, nevis rakstveidā. Runā dabiski, izvairies no gariem teikumiem.
+Izrunas vadlīnijas: Nekad nelieto teksta formatējumu (zvaigznītes, sarakstu punktus, virsrakstus), jo atbildes tiek ierunātas balsī.
 
 Šeit ir klīnikas kontaktinformācija un adreses:
 ${coreContacts}`;
+
+    const baseInstruction = cachedConfig?.voiceSystemInstruction || fallbackInstruction;
+
+    // Inject user name into the instruction if known
+    const systemInstruction = userNameBlock
+      ? `${baseInstruction}\n\n${userNameBlock}`
+      : baseInstruction;
 
     return {
       wsUrl,

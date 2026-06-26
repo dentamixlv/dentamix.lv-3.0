@@ -26,6 +26,7 @@ export default defineSchema({
     assistantName: v.string(),
     systemPrompt: v.string(),
     coreContacts: v.string(),
+    voiceSystemInstruction: v.optional(v.string()),
     suggestions: v.array(
       v.object({
         label: v.string(),

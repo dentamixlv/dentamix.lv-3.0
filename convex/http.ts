@@ -33,7 +33,8 @@ http.route({
           // Serialize RichText fields to Plain Text strings for Gemini ingestion
           const serializedPrompt = prismic.asText(document.data.system_prompt) || "";
           const serializedContacts = prismic.asText(document.data.core_contacts) || "";
-          
+          const serializedVoiceInstruction = prismic.asText(document.data.voice_system_instruction) || undefined;
+
           // Parse suggestions group list
           const parsedSuggestions = (document.data.suggestions || []).map((item: any) => ({
             label: item.label || "",
@@ -46,6 +47,7 @@ http.route({
             assistantName: document.data.assistant_name || "Ieva",
             systemPrompt: serializedPrompt,
             coreContacts: serializedContacts,
+            voiceSystemInstruction: serializedVoiceInstruction || undefined,
             suggestions: parsedSuggestions,
           });
           

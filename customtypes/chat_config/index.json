@@ -30,6 +30,15 @@
           "multi": "paragraph,preformatted,heading1,heading2,heading3,heading4,heading5,heading6,ordered-list,unordered-list,strong,em"
         }
       },
+      "voice_system_instruction": {
+        "type": "StructuredText",
+        "config": {
+          "label": "Voice Agent System Instruction",
+          "placeholder": "You are Ieva, a warm and helpful voice assistant for Dentamix. Speak briefly and naturally. Never use markdown formatting...",
+          "allowTargetBlank": false,
+          "multi": "paragraph,preformatted"
+        }
+      },
       "suggestions": {
         "type": "Group",
         "config": {

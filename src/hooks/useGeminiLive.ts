@@ -146,7 +146,27 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
         };
         socket.send(JSON.stringify(setupMessage));
 
-        // 5. Start capturing and downsampling microphone audio
+        // 5a. Send a greeting trigger so the AI speaks first
+        //     We use a short delay to let the setup message be processed
+        setTimeout(() => {
+          if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+            const greetingTrigger = {
+              clientContent: {
+                turns: [{
+                  role: "user",
+                  parts: [{ text: isEn
+                    ? "Hello"
+                    : "Sveiki"
+                  }]
+                }],
+                turnComplete: true
+              }
+            };
+            socketRef.current.send(JSON.stringify(greetingTrigger));
+          }
+        }, 300);
+
+        // 5b. Start capturing and downsampling microphone audio
         startRecording(stream);
       };
 
