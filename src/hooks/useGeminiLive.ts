@@ -49,6 +49,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
   const lastActiveTimeRef = useRef(Date.now());
   const isGoodbyeTriggeredRef = useRef(false);
   const goodbyeIntervalRef = useRef<any>(null);
+  const lastSpeechTimeRef = useRef(Date.now());
 
   useEffect(() => {
     isMutedRef.current = isMuted;
@@ -104,6 +105,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
 
     activeConversationIdRef.current = activeId;
     lastActiveTimeRef.current = Date.now();
+    lastSpeechTimeRef.current = Date.now();
     isGoodbyeTriggeredRef.current = false;
 
     try {
@@ -331,6 +333,10 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
         lastActiveTimeRef.current = Date.now();
       }
 
+      if (!isSilent) {
+        lastSpeechTimeRef.current = Date.now();
+      }
+
       // Check silence timeout (e.g. 15 seconds) to trigger goodbye message
       const silentDuration = Date.now() - lastActiveTimeRef.current;
       if (silentDuration > SILENCE_TIMEOUT_MS && !isGoodbyeTriggeredRef.current) {
@@ -353,9 +359,14 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
         }
       }
 
-      // If silent, stop sending audio chunks to the server (saves tokens)
+      // If silent, stop sending audio chunks to the server after a 1.0 second trailing silence buffer.
+      // This trailing silence buffer is required for the server's Voice Activity Detection (VAD)
+      // to identify that the user has stopped speaking and trigger the AI's response immediately.
       if (isSilent) {
-        return;
+        const timeSinceLastSpeech = Date.now() - lastSpeechTimeRef.current;
+        if (timeSinceLastSpeech >= 1000) {
+          return;
+        }
       }
 
       // Downsample microphone rate (usually 44.1k or 48k) to 16kHz for Gemini
