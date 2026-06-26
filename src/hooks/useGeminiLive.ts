@@ -94,7 +94,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
     activeConversationIdRef.current = activeId;
 
     try {
-      const config = await getVoiceConfig();
+      const config = await getVoiceConfig({ locale });
       if (!config?.wsUrl) {
         throw new Error(isEn ? 'Voice configuration is empty.' : 'Balss konfigurācija ir tukša.');
       }
@@ -137,9 +137,9 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
             },
             systemInstruction: {
               parts: [{
-                text: isEn 
+                text: config.systemInstruction || (isEn 
                   ? "You are a professional and polite assistant for Dentamix Dental Clinic. Speak briefly, provide concise answers in English."
-                  : "Tu esi Dentamix zobārstniecības klīnikas profesionāls asistents. Runā īsi, sniedz kodolīgas atbildes latviešu valodā."
+                  : "Tu esi Dentamix zobārstniecības klīnikas profesionāls asistents. Runā īsi, sniedz kodolīgas atbildes latviešu valodā.")
               }]
             }
           }

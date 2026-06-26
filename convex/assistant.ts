@@ -379,8 +379,19 @@ export const getChatConfig = query({
 });
 
 export const getVoiceConfig = action({
-  args: {},
-  handler: async (ctx, args) => {
+  args: {
+    locale: v.optional(v.string()),
+    conversationId: v.optional(v.id("conversations")),
+  },
+  handler: async (
+    ctx,
+    args
+  ): Promise<{
+    wsUrl: string;
+    model: "models/gemini-2.5-flash-native-audio-latest";
+    voice: "Aoede";
+    systemInstruction: string;
+  }> => {
     const apiKey = process.env.DENTAMIX_AI_API_KEY;
     if (!apiKey) {
       throw new ConvexError("DENTAMIX_AI_API_KEY is not configured in Convex environment variables.");
@@ -389,10 +400,51 @@ export const getVoiceConfig = action({
     // Official Google AI Studio Multimodal Live API WebSocket Endpoint for v1beta
     const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${apiKey}`;
     
+    const rawLocale = args.locale || "lv";
+    const prismicLocale = rawLocale.toLowerCase().startsWith("en") ? "en-us" : "lv";
+    const cachedConfig = await ctx.runQuery(internal.assistant.getConfigForAction, { locale: prismicLocale });
+    
+    let userName: string | undefined = undefined;
+    if (args.conversationId) {
+      const conversation = await ctx.runQuery(api.conversations.get, {
+        id: args.conversationId,
+      });
+      if (conversation?.userName) {
+        const lower = conversation.userName.trim().toLowerCase();
+        if (lower !== "null" && lower !== "undefined" && lower !== "none") {
+          userName = conversation.userName.trim();
+        }
+      }
+    }
+    
+    const isEn = prismicLocale === "en-us";
+    
+    const assistantName = cachedConfig?.assistantName || "Ieva";
+    const coreContacts = cachedConfig?.coreContacts || `Clinic General Info:
+- Riga Clinic: Phone +371 29419999, Email info@dentamix.lv, Address Brīvības iela 97, 3. stāvs, Rīga
+- Adazi Clinic: Phone +371 29419999, Email info@dentamix.lv, Address Gaujas iela 20, Ādaži`;
+
+    const systemInstruction = isEn
+      ? `You are ${assistantName}, a warm, polite, and helpful AI voice assistant for Dentamix Dental Clinic. Help patients book appointments, answer pricing queries, and explain treatments in a friendly, conversational tone.
+Speak briefly, provide concise answers since you are speaking verbally.
+${userName ? `The user's name is **${userName}**. You MUST address them by name (e.g., "Hello, ${userName}!").` : ""}
+Vocal guidelines: Avoid using markdown formatting (like asterisks, list bullet marks, headers) in your responses as they are read aloud. Speak naturally.
+
+Here are the clinic details:
+${coreContacts}`
+      : `Tu esi ${assistantName}, sirsnīga, zinoša un laipna Dentamix zobārstniecības klīnikas mākslīgā intelekta balss asistente. Palīdzi pacientiem pieteikties vizītēm, atbildi uz cenu jautājumiem un izskaidro procedūras draudzīgā un vienkāršā valodā.
+Runā īsi un kodolīgi, jo saruna notiek mutiski. Runā dabiski, izvairies no gariem teikumiem.
+${userName ? `Pacienta vārds ir **${userName}**. Tev ir OBLIGĀTI jāuzrunā pacients vārdā (piemēram, "Sveiki, ${userName}!").` : ""}
+Izrunas vadlīnijas: Nelieto teksta formatējumu (piemēram, zvaigznītes, sarakstu punktus, virsrakstus) savās atbildēs, jo tās tiek ierunātas balsī.
+
+Šeit ir klīnikas kontaktinformācija un adreses:
+${coreContacts}`;
+
     return {
       wsUrl,
       model: "models/gemini-2.5-flash-native-audio-latest" as const,
-      voice: "Aoede" as const
+      voice: "Aoede" as const,
+      systemInstruction
     };
   }
 });
