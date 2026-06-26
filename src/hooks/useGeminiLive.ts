@@ -151,8 +151,8 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
             systemInstruction: {
               parts: [{
                 text: config.systemInstruction || (isEn
-                  ? "You are a professional and polite assistant for Dentamix Dental Clinic. Speak briefly, provide concise answers in English."
-                  : "Tu esi Dentamix zobārstniecības klīnikas profesionāls asistents. Runā īsi, sniedz kodolīgas atbildes latviešu valodā.")
+                  ? "You are a professional and polite assistant for Dentamix Dental Clinic. Speak briefly, provide concise answers in the language user speaks."
+                  : "Tu esi Dentamix zobārstniecības klīnikas profesionāls asistents. Runā īsi, sniedz kodolīgas atbildes valodā kādā runālietotājs.")
               }]
             }
           }
