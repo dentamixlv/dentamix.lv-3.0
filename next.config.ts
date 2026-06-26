@@ -44,7 +44,7 @@ const nextConfig: NextConfig = {
             value: [
               "default-src 'self';",
               "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://*.prismic.io https://*.convex.cloud https://*.posthog.com https://*.i.posthog.com https://www.googletagmanager.com https://*.google-analytics.com;",
-              "connect-src 'self' https://*.prismic.io https://*.convex.cloud wss://*.convex.cloud https://generativelanguage.googleapis.com https://*.posthog.com https://*.i.posthog.com https://*.google-analytics.com https://*.analytics.google.com https://*.doubleclick.net https://*.google.com;",
+              "connect-src 'self' https://*.prismic.io https://*.convex.cloud wss://*.convex.cloud https://generativelanguage.googleapis.com wss://generativelanguage.googleapis.com https://*.posthog.com https://*.i.posthog.com https://*.google-analytics.com https://*.analytics.google.com https://*.doubleclick.net https://*.google.com;",
               "img-src 'self' data: blob: https://*.prismic.io https://images.unsplash.com https://images.prismic.io https://*.posthog.com https://*.i.posthog.com https://*.google-analytics.com https://www.googletagmanager.com https://*.doubleclick.net https://*.google.com;",
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.posthog.com https://*.i.posthog.com;",
               "font-src 'self' data: https://fonts.gstatic.com https://*.posthog.com https://*.i.posthog.com;",

@@ -124,7 +124,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
         // 4. Send initial Setup payload
         const setupMessage = {
           setup: {
-            model: "models/gemini-2.0-flash-exp",
+            model: "models/gemini-2.5-flash",
             generationConfig: {
               responseModalities: ["AUDIO"],
               speechConfig: {
@@ -232,7 +232,9 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
       };
 
     } catch (err: any) {
-      setError(err.message || 'Microphone access denied or connection failed.');
+      console.error("Failed to start voice call:", err);
+      const errMsg = err.data || err.message || (isEn ? 'Microphone access denied or connection failed.' : 'Piekļuve mikrofonam liegta vai savienojums neizdevās.');
+      setError(errMsg);
       cleanup();
     }
   };
