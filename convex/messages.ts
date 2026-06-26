@@ -6,11 +6,12 @@ export const list = query({
     conversationId: v.id("conversations"),
   },
   handler: async (ctx, args) => {
-    return await ctx.db
+    const messages = await ctx.db
       .query("messages")
       .withIndex("by_conversation", (q) => q.eq("conversationId", args.conversationId))
       .order("asc")
       .collect();
+    return messages.filter((m) => m.source !== "voice");
   },
 });
 
@@ -19,6 +20,7 @@ export const send = mutation({
     conversationId: v.id("conversations"),
     role: v.union(v.literal("user"), v.literal("assistant")),
     content: v.string(),
+    source: v.optional(v.string()),
   },
   handler: async (ctx, args) => {
     // Verify conversation exists
@@ -66,6 +68,7 @@ export const send = mutation({
       role: args.role,
       content: args.content,
       createdAt: Date.now(),
+      source: args.source,
     });
     return messageId;
   },

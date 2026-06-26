@@ -12,6 +12,7 @@ export default defineSchema({
     role: v.union(v.literal("user"), v.literal("assistant")),
     content: v.string(),
     createdAt: v.number(),
+    source: v.optional(v.string()),
   }).index("by_conversation", ["conversationId"]),
   documents: defineTable({
     text: v.string(),

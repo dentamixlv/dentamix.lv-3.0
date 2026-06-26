@@ -211,7 +211,8 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
               await saveMessage({
                 conversationId: activeConversationIdRef.current || conversationId,
                 role: 'user',
-                content: userText
+                content: userText,
+                source: 'voice'
               });
               currentUserTranscriptRef.current = '';
             }
@@ -220,7 +221,8 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
               await saveMessage({
                 conversationId: activeConversationIdRef.current || conversationId,
                 role: 'assistant',
-                content: aiText
+                content: aiText,
+                source: 'voice'
               });
               currentModelTranscriptRef.current = '';
             }
