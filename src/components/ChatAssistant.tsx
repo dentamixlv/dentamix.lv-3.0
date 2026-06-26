@@ -5,9 +5,10 @@ import { useQuery, useMutation, useAction } from "convex/react";
 import { ConvexError } from "convex/values";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { MessageSquare, X, Send, Trash2, Bot, User, Loader2, Sparkles, Phone, MessageCircle } from "lucide-react";
+import { MessageSquare, X, Send, Trash2, Bot, User, Loader2, Sparkles, Phone, MessageCircle, Mic, MicOff } from "lucide-react";
 import { api } from "../../convex/_generated/api";
 import { Id } from "../../convex/_generated/dataModel";
+import { useGeminiLive } from "../hooks/useGeminiLive";
 
 // Custom helper to parse basic markdown (**bold**, [links](url), and newlines)
 function formatMessageContent(content: string) {
@@ -76,6 +77,42 @@ export default function ChatAssistant() {
     { locale: isEn ? "en-us" : "lv" }
   );
   const respondAction = useAction(api.assistant.respond);
+
+  const {
+    isCallActive,
+    isConnecting,
+    isMuted,
+    volumeLevel,
+    error: voiceError,
+    startCall,
+    endCall,
+    toggleMute
+  } = useGeminiLive({
+    conversationId,
+    locale: isEn ? "en" : "lv"
+  });
+
+  const handleVoiceClick = async () => {
+    if (isCallActive || isConnecting) {
+      endCall();
+      return;
+    }
+
+    let activeId = conversationId;
+    if (!activeId) {
+      try {
+        const newId = await createConversation({ title: isEn ? "Voice Call" : "Balss saruna" });
+        activeId = newId;
+        setConversationId(newId);
+        localStorage.setItem("dentamix_chat_conv_id", newId);
+      } catch (err) {
+        console.error("Failed to start conversation for voice call:", err);
+        return;
+      }
+    }
+    
+    startCall(activeId);
+  };
 
   // Merge database messages with our optimistic pending user message
   const displayMessages = React.useMemo(() => {
@@ -294,147 +331,97 @@ export default function ChatAssistant() {
               </div>
             </div>
 
-            {/* Chat Body */}
-            <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-gray-50/50">
-              
-              {/* Welcome Message */}
-              <div className="flex gap-2.5 items-start max-w-[85%]">
-                <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-                  <img 
-                    src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
-                    alt="Dentamix AI" 
-                    className="w-full h-full object-cover"
+            {/* Chat Body & Call Overlay */}
+            {(isCallActive || isConnecting) ? (
+              <div className="flex-grow flex flex-col items-center justify-center bg-[#fbf9f8] p-6 space-y-8 relative overflow-hidden">
+                {/* Voice Call Visualizer Animation */}
+                <div className="relative w-36 h-36 flex items-center justify-center">
+                  {/* Fluid pulsating rings */}
+                  <motion.div
+                    animate={{
+                      scale: isConnecting ? [1, 1.15, 1] : [1, 1 + volumeLevel * 0.5, 1],
+                      opacity: isConnecting ? [0.15, 0.3, 0.15] : [0.15, 0.4, 0.15],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: isConnecting ? 2.5 : 0.8,
+                      ease: "easeInOut",
+                    }}
+                    className="absolute inset-0 rounded-full bg-[var(--main-color)]"
                   />
-                </div>
-                <div className="flex flex-col gap-2">
-                  <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-800 leading-relaxed">
-                    {formatMessageContent(welcomeMessage)}
+                  <motion.div
+                    animate={{
+                      scale: isConnecting ? [1, 1.3, 1] : [1, 1 + volumeLevel * 0.8, 1],
+                      opacity: isConnecting ? [0.08, 0.2, 0.08] : [0.08, 0.25, 0.08],
+                    }}
+                    transition={{
+                      repeat: Infinity,
+                      duration: isConnecting ? 2.5 : 0.8,
+                      delay: 0.2,
+                      ease: "easeInOut",
+                    }}
+                    className="absolute inset-0 rounded-full bg-[var(--main-color)]"
+                  />
+
+                  {/* Profile image inside call ring */}
+                  <div className="relative w-24 h-24 rounded-full overflow-hidden border-2 border-white shadow-lg bg-white flex items-center justify-center z-10">
+                    <img
+                      src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png"
+                      alt="Ieva"
+                      className="w-full h-full object-cover"
+                    />
                   </div>
-                  
-                  {/* Call and WhatsApp Buttons for Welcome Message */}
-                  {(!displayMessages || displayMessages.length === 0) && (
-                    <div className="flex justify-center gap-2">
-                      <a
-                        href="tel:+37129419999"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#de7c8a]/30 text-xs font-semibold text-[#511B29] transition-all hover:bg-[#de7c8a]/10 active:scale-95 shadow-sm"
-                      >
-                        <Phone className="w-3 h-3 text-[#de7c8a] shrink-0" />
-                        <span>{isEn ? "Call" : "Zvanīt"}</span>
-                      </a>
-                      <a
-                        href="https://wa.me/37129419999"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 transition-all hover:bg-emerald-100 active:scale-95 shadow-sm"
-                      >
-                        <svg className="w-3 h-3 fill-emerald-500 shrink-0" viewBox="0 0 24 24">
-                          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                        </svg>
-                        <span>WhatsApp</span>
-                      </a>
-                    </div>
+                </div>
+
+                {/* Call Status Text */}
+                <div className="text-center z-10">
+                  <h4 className="text-[#511B29] font-serif font-bold text-base leading-tight">
+                    {isEn ? `${assistantName} (Voice Mode)` : `${assistantName} (Balss režīms)`}
+                  </h4>
+                  <p className="text-xs text-gray-500 mt-1 font-medium">
+                    {isConnecting
+                      ? (isEn ? "Connecting..." : "Savieno...")
+                      : isMuted
+                        ? (isEn ? "Muted" : "Izslēgta skaņa")
+                        : (isEn ? "Active call..." : "Saruna...")}
+                  </p>
+                  {voiceError && (
+                    <p className="text-[11px] text-rose-500 mt-2 max-w-xs font-semibold">
+                      {voiceError}
+                    </p>
                   )}
                 </div>
-              </div>
 
-              {/* Suggestions (only show when there is no message history yet) */}
-              {(!displayMessages || displayMessages.length === 0) && (
-                <div className="pl-10 space-y-2 pt-2">
-                  <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-1.5">
-                    <Sparkles size={12} className="text-[var(--main-color)]" />
-                    <span>Ieteikumi / Suggestions:</span>
-                  </div>
-                  <div className="flex flex-wrap gap-2">
-                    {suggestions.map((sug, idx) => (
-                      <button
-                        key={idx}
-                        onClick={() => handleSend(sug.prompt)}
-                        className="text-xs text-left bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 px-3.5 py-2 rounded-full transition-all duration-200 hover:border-gray-300 shadow-sm cursor-pointer"
-                      >
-                        {sug.text}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )}
-
-              {/* Message History */}
-              {displayMessages && displayMessages.map((msg, index) => {
-                const isAssistant = msg.role === "assistant";
-                const isLast = index === displayMessages.length - 1;
-                return (
-                  <div
-                    key={msg._id}
-                    className={`flex gap-2.5 items-start max-w-[85%] ${
-                      isAssistant ? "" : "ml-auto flex-row-reverse"
-                    }`}
+                {/* Call Control Tactile Buttons */}
+                <div className="flex items-center gap-6 z-10">
+                  {/* Mute Button */}
+                  <button
+                    onClick={toggleMute}
+                    disabled={isConnecting}
+                    className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 shadow-md active:scale-90 ${
+                      isMuted
+                        ? "bg-rose-100 text-rose-600 hover:bg-rose-200"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+                    } disabled:opacity-50 cursor-pointer`}
+                    title={isMuted ? (isEn ? "Unmute" : "Ieslēgt mikrofonu") : (isEn ? "Mute" : "Izslēgt mikrofonu")}
                   >
-                    <div
-                      className={`w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 ${
-                        isAssistant ? "" : "bg-[var(--main-color)] text-white"
-                      }`}
-                    >
-                      {isAssistant ? (
-                        <img 
-                          src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
-                          alt="Dentamix AI" 
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <User size={15} />
-                      )}
-                    </div>
-                    
-                    <div className="flex flex-col gap-2">
-                      <div
-                        className={`rounded-2xl p-3 shadow-sm text-sm leading-relaxed ${
-                          isAssistant
-                            ? "bg-white border border-gray-100 text-gray-800 rounded-tl-none"
-                            : "bg-[var(--main-color)] text-white rounded-tr-none"
-                        }`}
-                      >
-                        {/* Show loading indicator if assistant message is empty and we are sending */}
-                        {isAssistant && msg.content === "" ? (
-                          <div className="flex items-center gap-1.5 py-1.5 px-1">
-                            <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
-                            <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
-                            <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" />
-                          </div>
-                        ) : (
-                          formatMessageContent(msg.content)
-                        )}
-                      </div>
+                    {isMuted ? <MicOff size={20} /> : <Mic size={20} />}
+                  </button>
 
-                      {/* Call and WhatsApp Buttons for the latest Assistant message */}
-                      {isAssistant && isLast && msg.content !== "" && (
-                        <div className="flex justify-center gap-2">
-                          <a
-                            href="tel:+37129419999"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#de7c8a]/30 text-xs font-semibold text-[#511B29] transition-all hover:bg-[#de7c8a]/10 active:scale-95 shadow-sm"
-                          >
-                            <Phone className="w-3 h-3 text-[#de7c8a] shrink-0" />
-                            <span>{isEn ? "Call" : "Zvanīt"}</span>
-                          </a>
-                          <a
-                            href="https://wa.me/37129419999"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 transition-all hover:bg-emerald-100 active:scale-95 shadow-sm"
-                          >
-                            <svg className="w-3 h-3 fill-emerald-500 shrink-0" viewBox="0 0 24 24">
-                              <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                            </svg>
-                            <span>WhatsApp</span>
-                          </a>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-                );
-              })}
-
-              {/* Loading indicator when waiting for Gemini response */}
-              {isSending && (!displayMessages || displayMessages.length === 0 || displayMessages[displayMessages.length - 1].role !== "assistant") && (
+                  {/* End Call Button */}
+                  <button
+                    onClick={endCall}
+                    className="w-14 h-14 rounded-full bg-rose-600 hover:bg-rose-700 text-white flex items-center justify-center transition-all duration-200 shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+                    title={isEn ? "End Call" : "Beigt sarunu"}
+                  >
+                    <Phone size={24} className="rotate-[135deg]" />
+                  </button>
+                </div>
+              </div>
+            ) : (
+              <div className="flex-grow overflow-y-auto p-4 space-y-4 bg-gray-50/50">
+                
+                {/* Welcome Message */}
                 <div className="flex gap-2.5 items-start max-w-[85%]">
                   <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
                     <img 
@@ -443,59 +430,211 @@ export default function ChatAssistant() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-400 flex items-center justify-center">
-                    <div className="flex items-center gap-1.5 py-1 px-0.5">
-                      <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
-                      <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
-                      <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" />
+                  <div className="flex flex-col gap-2">
+                    <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-800 leading-relaxed">
+                      {formatMessageContent(welcomeMessage)}
                     </div>
+                    
+                    {/* Call and WhatsApp Buttons for Welcome Message */}
+                    {(!displayMessages || displayMessages.length === 0) && (
+                      <div className="flex justify-center gap-2">
+                        <a
+                          href="tel:+37129419999"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#de7c8a]/30 text-xs font-semibold text-[#511B29] transition-all hover:bg-[#de7c8a]/10 active:scale-95 shadow-sm"
+                        >
+                          <Phone className="w-3 h-3 text-[#de7c8a] shrink-0" />
+                          <span>{isEn ? "Call" : "Zvanīt"}</span>
+                        </a>
+                        <a
+                          href="https://wa.me/37129419999"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 transition-all hover:bg-emerald-100 active:scale-95 shadow-sm"
+                        >
+                          <svg className="w-3 h-3 fill-emerald-500 shrink-0" viewBox="0 0 24 24">
+                            <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                          </svg>
+                          <span>WhatsApp</span>
+                        </a>
+                      </div>
+                    )}
                   </div>
                 </div>
-              )}
 
-              <div ref={messagesEndRef} />
-            </div>
+                {/* Suggestions (only show when there is no message history yet) */}
+                {(!displayMessages || displayMessages.length === 0) && (
+                  <div className="pl-10 space-y-2 pt-2">
+                    <div className="flex items-center gap-1.5 text-xs text-gray-400 font-medium mb-1.5">
+                      <Sparkles size={12} className="text-[var(--main-color)]" />
+                      <span>Ieteikumi / Suggestions:</span>
+                    </div>
+                    <div className="flex flex-wrap gap-2">
+                      {suggestions.map((sug, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => handleSend(sug.prompt)}
+                          className="text-xs text-left bg-white hover:bg-gray-100 border border-gray-200 text-gray-700 px-3.5 py-2 rounded-full transition-all duration-200 hover:border-gray-300 shadow-sm cursor-pointer"
+                        >
+                          {sug.text}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Message History */}
+                {displayMessages && displayMessages.map((msg, index) => {
+                  const isAssistant = msg.role === "assistant";
+                  const isLast = index === displayMessages.length - 1;
+                  return (
+                    <div
+                      key={msg._id}
+                      className={`flex gap-2.5 items-start max-w-[85%] ${
+                        isAssistant ? "" : "ml-auto flex-row-reverse"
+                      }`}
+                    >
+                      <div
+                        className={`w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 ${
+                          isAssistant ? "" : "bg-[var(--main-color)] text-white"
+                        }`}
+                      >
+                        {isAssistant ? (
+                          <img 
+                            src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
+                            alt="Dentamix AI" 
+                            className="w-full h-full object-cover"
+                          />
+                        ) : (
+                          <User size={15} />
+                        )}
+                      </div>
+                      
+                      <div className="flex flex-col gap-2">
+                        <div
+                          className={`rounded-2xl p-3 shadow-sm text-sm leading-relaxed ${
+                            isAssistant
+                              ? "bg-white border border-gray-100 text-gray-800 rounded-tl-none"
+                              : "bg-[var(--main-color)] text-white rounded-tr-none"
+                          }`}
+                        >
+                          {/* Show loading indicator if assistant message is empty and we are sending */}
+                          {isAssistant && msg.content === "" ? (
+                            <div className="flex items-center gap-1.5 py-1.5 px-1">
+                              <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
+                              <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
+                              <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" />
+                            </div>
+                          ) : (
+                            formatMessageContent(msg.content)
+                          )}
+                        </div>
+
+                        {/* Call and WhatsApp Buttons for the latest Assistant message */}
+                        {isAssistant && isLast && msg.content !== "" && (
+                          <div className="flex justify-center gap-2">
+                            <a
+                              href="tel:+37129419999"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-white border border-[#de7c8a]/30 text-xs font-semibold text-[#511B29] transition-all hover:bg-[#de7c8a]/10 active:scale-95 shadow-sm"
+                            >
+                              <Phone className="w-3 h-3 text-[#de7c8a] shrink-0" />
+                              <span>{isEn ? "Call" : "Zvanīt"}</span>
+                            </a>
+                            <a
+                              href="https://wa.me/37129419999"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs font-semibold text-emerald-800 transition-all hover:bg-emerald-100 active:scale-95 shadow-sm"
+                            >
+                              <svg className="w-3 h-3 fill-emerald-500 shrink-0" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.746.953 3.71 1.458 5.704 1.459h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
+                              </svg>
+                              <span>WhatsApp</span>
+                            </a>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  );
+                })}
+
+                {/* Loading indicator when waiting for Gemini response */}
+                {isSending && (!displayMessages || displayMessages.length === 0 || displayMessages[displayMessages.length - 1].role !== "assistant") && (
+                  <div className="flex gap-2.5 items-start max-w-[85%]">
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
+                      <img 
+                        src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
+                        alt="Dentamix AI" 
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-400 flex items-center justify-center">
+                      <div className="flex items-center gap-1.5 py-1 px-0.5">
+                        <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.3s]" />
+                        <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce [animation-delay:-0.15s]" />
+                        <span className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" />
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                <div ref={messagesEndRef} />
+              </div>
+            )}
 
             {/* Input Footer */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSend(inputValue);
-              }}
-              className="p-3 bg-white border-t border-gray-100 flex items-center gap-2"
-            >
-              <div className="relative flex-1 flex items-center">
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  maxLength={140}
-                  placeholder={strings.placeholder}
-                  disabled={isSending}
-                  className="w-full border border-gray-200 rounded-full pl-4 pr-16 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--main-color)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-400"
-                />
-                {inputValue.length > 0 && (
-                  <span 
-                    className={`absolute right-4 text-[10px] font-semibold pointer-events-none select-none transition-colors duration-150 ${
-                      inputValue.length >= 125 
-                        ? "text-rose-500 font-bold" 
-                        : inputValue.length >= 100 
-                          ? "text-amber-500" 
-                          : "text-gray-400"
-                    }`}
-                  >
-                    {inputValue.length}/140
-                  </span>
-                )}
-              </div>
-              <button
-                type="submit"
-                disabled={!inputValue.trim() || isSending}
-                className="w-9 h-9 rounded-full bg-[var(--main-color)] hover:bg-[color-mix(in_srgb,var(--main-color)_90%,black)] text-white flex items-center justify-center transition-all duration-200 disabled:opacity-40 disabled:hover:bg-[var(--main-color)] shadow-md hover:scale-105 active:scale-95 flex-shrink-0"
+            {!(isCallActive || isConnecting) && (
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleSend(inputValue);
+                }}
+                className="p-3 bg-white border-t border-gray-100 flex items-center gap-2"
               >
-                <Send size={15} />
-              </button>
-            </form>
+                <div className="relative flex-1 flex items-center">
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    maxLength={140}
+                    placeholder={strings.placeholder}
+                    disabled={isSending}
+                    className="w-full border border-gray-200 rounded-full pl-4 pr-16 py-2.5 text-sm text-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--main-color)] focus:border-transparent disabled:bg-gray-50 disabled:text-gray-400"
+                  />
+                  {inputValue.length > 0 && (
+                    <span 
+                      className={`absolute right-4 text-[10px] font-semibold pointer-events-none select-none transition-colors duration-150 ${
+                        inputValue.length >= 125 
+                          ? "text-rose-500 font-bold" 
+                          : inputValue.length >= 100 
+                            ? "text-amber-500" 
+                            : "text-gray-400"
+                      }`}
+                    >
+                      {inputValue.length}/140
+                    </span>
+                  )}
+                </div>
+
+                {/* Voice Call Microphone Trigger Button */}
+                <button
+                  type="button"
+                  onClick={handleVoiceClick}
+                  disabled={isSending}
+                  className="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 flex items-center justify-center transition-all duration-200 shadow-md hover:scale-105 active:scale-95 flex-shrink-0 cursor-pointer disabled:opacity-50"
+                  title={isEn ? "Start voice conversation" : "Sākt balss sarunu"}
+                >
+                  <Mic size={15} />
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={!inputValue.trim() || isSending}
+                  className="w-9 h-9 rounded-full bg-[var(--main-color)] hover:bg-[color-mix(in_srgb,var(--main-color)_90%,black)] text-white flex items-center justify-center transition-all duration-200 disabled:opacity-40 disabled:hover:bg-[var(--main-color)] shadow-md hover:scale-105 active:scale-95 flex-shrink-0"
+                >
+                  <Send size={15} />
+                </button>
+              </form>
+            )}
 
           </motion.div>
         )}

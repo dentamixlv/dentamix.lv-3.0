@@ -377,3 +377,23 @@ export const getChatConfig = query({
       .first();
   },
 });
+
+// 5. Action to retrieve the Gemini Live API WebSocket connection URL securely
+export const getVoiceConfig = action({
+  args: {},
+  handler: async (ctx, args) => {
+    const apiKey = process.env.DENTAMIX_AI_API_KEY;
+    if (!apiKey) {
+      throw new ConvexError("DENTAMIX_AI_API_KEY is not configured in Convex environment variables.");
+    }
+    
+    // Using Google AI Studio key directly in query parameters
+    const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${apiKey}`;
+    
+    return {
+      wsUrl,
+      voice: "aoede" as const
+    };
+  }
+});
+
