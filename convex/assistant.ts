@@ -381,27 +381,18 @@ export const getChatConfig = query({
 export const getVoiceConfig = action({
   args: {},
   handler: async (ctx, args) => {
-    // In production, we route through Cloudflare Worker to avoid exposing key to client browser
-    const cfProxyUrl = process.env.CLOUDFLARE_VOICE_PROXY_URL;
-    if (cfProxyUrl) {
-      return {
-        wsUrl: cfProxyUrl,
-        model: "models/gemini-2.0-flash" as const,
-        voice: "aoede" as const
-      };
-    }
-
-    // Fallback/development mode: directly use Google AI Studio key if proxy is not configured yet
     const apiKey = process.env.DENTAMIX_AI_API_KEY;
     if (!apiKey) {
-      throw new ConvexError("Neither CLOUDFLARE_VOICE_PROXY_URL nor DENTAMIX_AI_API_KEY is configured in Convex.");
+      throw new ConvexError("DENTAMIX_AI_API_KEY is not configured in Convex environment variables.");
     }
+    
+    // Official Google AI Studio Multimodal Live API WebSocket Endpoint for v1beta
     const wsUrl = `wss://generativelanguage.googleapis.com/ws/google.ai.generativelanguage.v1beta.GenerativeService.BidiGenerateContent?key=${apiKey}`;
     
     return {
       wsUrl,
       model: "models/gemini-2.0-flash" as const,
-      voice: "aoede" as const
+      voice: "Aoede" as const
     };
   }
 });
