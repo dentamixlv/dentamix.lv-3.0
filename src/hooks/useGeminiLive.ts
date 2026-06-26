@@ -17,6 +17,9 @@ interface UseGeminiLiveProps {
   locale?: string;
 }
 
+const NOISE_GATE_THRESHOLD = 0.003; // RMS volume threshold for speech vs silence
+const SILENCE_TIMEOUT_MS = 15000;    // 15 seconds of silence before saying goodbye
+
 export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv' }: UseGeminiLiveProps) {
   const isEn = locale.startsWith('en');
 
@@ -43,6 +46,8 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
   const currentModelTranscriptRef = useRef('');
   const currentUserTranscriptRef = useRef('');
   const activeConversationIdRef = useRef<Id<"conversations"> | null>(null);
+  const lastActiveTimeRef = useRef(Date.now());
+  const isGoodbyeTriggeredRef = useRef(false);
 
   useEffect(() => {
     isMutedRef.current = isMuted;
@@ -92,6 +97,8 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
     }
 
     activeConversationIdRef.current = activeId;
+    lastActiveTimeRef.current = Date.now();
+    isGoodbyeTriggeredRef.current = false;
 
     try {
       const config = await getVoiceConfig({ locale });
@@ -230,6 +237,17 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
             if (onTranscriptSaved) {
               onTranscriptSaved();
             }
+
+            if (isGoodbyeTriggeredRef.current) {
+              // Wait for the audio queue to play the goodbye audio before hanging up
+              const checkInterval = setInterval(() => {
+                const isPlaying = playerRef.current?.isPlaying || false;
+                if (!isPlaying) {
+                  clearInterval(checkInterval);
+                  endCall();
+                }
+              }, 200);
+            }
           }
 
           // Handle Server Barge-in (If server detects client speaking over AI model)
@@ -293,6 +311,42 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
       }
       const rms = Math.sqrt(sum / inputBuffer.length);
       setVolumeLevel(Math.min(1, rms * 4)); // scale up sensitivity for visual display
+
+      // Noise gate: skip sending audio when silent to save input tokens
+      const isSilent = rms < NOISE_GATE_THRESHOLD;
+
+      // Do not count silence while the assistant is speaking or when active user speech is detected
+      const isAssistantSpeaking = playerRef.current?.isPlaying || false;
+      if (isAssistantSpeaking || !isSilent) {
+        lastActiveTimeRef.current = Date.now();
+      }
+
+      // Check silence timeout (e.g. 15 seconds) to trigger goodbye message
+      const silentDuration = Date.now() - lastActiveTimeRef.current;
+      if (silentDuration > SILENCE_TIMEOUT_MS && !isGoodbyeTriggeredRef.current) {
+        isGoodbyeTriggeredRef.current = true;
+        if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+          const goodbyeMessage = {
+            clientContent: {
+              turns: [{
+                role: "user",
+                parts: [{
+                  text: isEn
+                    ? "[The user has been silent for a while. Say a polite goodbye and then end the call.]"
+                    : "[Lietotājs kādu laiku ir klusējis. Pieklājīgi pasaki uz redzēšanos un pabeidz sarunu.]"
+                }]
+              }],
+              turnComplete: true
+            }
+          };
+          socketRef.current.send(JSON.stringify(goodbyeMessage));
+        }
+      }
+
+      // If silent, stop sending audio chunks to the server (saves tokens)
+      if (isSilent) {
+        return;
+      }
 
       // Downsample microphone rate (usually 44.1k or 48k) to 16kHz for Gemini
       const resampled = downsampleBuffer(inputBuffer, audioContext.sampleRate, 16000);
