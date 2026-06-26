@@ -432,22 +432,24 @@ export const getVoiceConfig = action({
       : "";
 
     // Use voice-specific system instruction from Prismic if available,
-    // otherwise fall back to hardcoded defaults
+    // otherwise fall back to hardcoded defaults.
+    // NOTE: coreContacts is ALWAYS appended separately so working hours,
+    // phone numbers and addresses are never lost even when a custom
+    // voiceSystemInstruction is set in Prismic.
     const fallbackInstruction = isEn
       ? `You are ${assistantName}, a warm, polite, and helpful AI voice assistant for Dentamix Dental Clinic. Help patients book appointments, answer pricing queries, and explain treatments in a friendly, conversational tone.
 Speak briefly and naturally — you are speaking verbally, not writing text.
-Vocal guidelines: Never use markdown formatting (asterisks, bullet marks, headers) as responses are read aloud.
-
-Here are the clinic details:
-${coreContacts}`
+Vocal guidelines: Never use markdown formatting (asterisks, bullet marks, headers) as responses are read aloud.`
       : `Tu esi ${assistantName}, sirsnīga, zinoša un laipna Dentamix zobārstniecības klīnikas mākslīgā intelekta balss asistente. Palīdzi pacientiem pieteikties vizītēm, atbildi uz cenu jautājumiem un izskaidro procedūras draudzīgā un vienkāršā valodā.
 Runā īsi un kodolīgi — saruna notiek mutiski, nevis rakstveidā. Runā dabiski, izvairies no gariem teikumiem.
-Izrunas vadlīnijas: Nekad nelieto teksta formatējumu (zvaigznītes, sarakstu punktus, virsrakstus), jo atbildes tiek ierunātas balsī.
+Izrunas vadlīnijas: Nekad nelieto teksta formatējumu (zvaigznītes, sarakstu punktus, virsrakstus), jo atbildes tiek ierunātas balsī.`;
 
-Šeit ir klīnikas kontaktinformācija un adreses:
-${coreContacts}`;
+    // Pick Prismic custom instruction or fallback, then always append coreContacts
+    const coreContactsBlock = isEn
+      ? `\n\nClinic details (working hours, contacts, address):\n${coreContacts}`
+      : `\n\nKlīnikas informācija (darba laiki, kontakti, adrese):\n${coreContacts}`;
 
-    const baseInstruction = cachedConfig?.voiceSystemInstruction || fallbackInstruction;
+    const baseInstruction = (cachedConfig?.voiceSystemInstruction || fallbackInstruction) + coreContactsBlock;
 
     // Inject user name into the instruction if known
     const systemInstruction = userNameBlock
