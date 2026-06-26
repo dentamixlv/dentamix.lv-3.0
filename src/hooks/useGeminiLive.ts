@@ -124,7 +124,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
         // 4. Send initial Setup payload
         const setupMessage = {
           setup: {
-            model: "models/gemini-2.5-flash",
+            model: config.model || "models/gemini-2.0-flash-exp",
             generationConfig: {
               responseModalities: ["AUDIO"],
               speechConfig: {
@@ -227,7 +227,14 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
         cleanup();
       };
 
-      socket.onclose = () => {
+      socket.onclose = (event) => {
+        console.warn(`Gemini WebSocket closed: code=${event.code}, reason=${event.reason}`);
+        if (event.code !== 1000 && event.code !== 1005) {
+          setError(isEn 
+            ? `Connection closed: ${event.reason || 'Unknown error'} (code ${event.code})` 
+            : `Savienojums slēgts: ${event.reason || 'Nezināma kļūda'} (kods ${event.code})`
+          );
+        }
         cleanup();
       };
 
