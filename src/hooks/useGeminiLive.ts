@@ -20,6 +20,8 @@ interface UseGeminiLiveProps {
 export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv' }: UseGeminiLiveProps) {
   const isEn = locale.startsWith('en');
 
+  // Convex Action for WebSocket Url
+  const getVoiceConfig = useAction(api.assistant.getVoiceConfig);
   const saveMessage = useMutation(api.messages.send);
 
   // States
@@ -92,12 +94,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
     activeConversationIdRef.current = activeId;
 
     try {
-      const res = await fetch('/api/assistant/voice-token');
-      if (!res.ok) {
-        const errorText = await res.text();
-        throw new Error(isEn ? `Failed to fetch secure voice token: ${errorText}` : `Neizdevās iegūt drošu balss žetonu: ${errorText}`);
-      }
-      const config = await res.json();
+      const config = await getVoiceConfig();
       if (!config?.wsUrl) {
         throw new Error(isEn ? 'Voice configuration is empty.' : 'Balss konfigurācija ir tukša.');
       }
