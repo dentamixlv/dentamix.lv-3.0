@@ -149,7 +149,7 @@ export function useGeminiLive({ conversationId, onTranscriptSaved, locale = 'lv'
               speechConfig: {
                 voiceConfig: {
                   prebuiltVoiceConfig: {
-                    voiceName: "Callirrhoe" // Female voice - easy-going
+                    voiceName: config.voice || "Callirrhoe"
                   }
                 }
               }

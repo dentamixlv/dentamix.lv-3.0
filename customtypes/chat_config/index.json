@@ -46,6 +46,13 @@
           "placeholder": "models/gemini-2.5-flash-native-audio-latest"
         }
       },
+      "voice_name": {
+        "type": "Text",
+        "config": {
+          "label": "Voice Agent Voice Name",
+          "placeholder": "Callirrhoe"
+        }
+      },
       "suggestions": {
         "type": "Group",
         "config": {

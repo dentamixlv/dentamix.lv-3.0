@@ -29,6 +29,7 @@ export default defineSchema({
     coreContacts: v.string(),
     voiceSystemInstruction: v.optional(v.string()),
     voiceModel: v.optional(v.string()),
+    voiceName: v.optional(v.string()),
     suggestions: v.array(
       v.object({
         label: v.string(),

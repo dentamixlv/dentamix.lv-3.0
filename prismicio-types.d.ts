@@ -133,6 +133,17 @@ interface ChatConfigDocumentData {
 	voice_model: prismic.KeyTextField;
 	
 	/**
+	 * Voice Agent Voice Name field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Callirrhoe
+	 * - **API ID Path**: chat_config.voice_name
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	voice_name: prismic.KeyTextField;
+	
+	/**
 	 * Chat Suggestion Buttons field in *Chat Configuration*
 	 *
 	 * - **Field Type**: Group
