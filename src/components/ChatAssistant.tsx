@@ -436,10 +436,10 @@ export default function ChatAssistant() {
 
                 {/* Call Status Text */}
                 <div className="text-center z-10">
-                  <h4 className="text-[#511B29] font-serif font-bold text-base leading-tight">
+                  <h4 className="text-[#511B29] font-serif font-bold text-xl leading-tight">
                     {assistantName}
                   </h4>
-                  <p className="text-xs text-gray-500 mt-1 font-medium font-mono tracking-wider">
+                  <p className="text-xs font-extrabold uppercase tracking-widest text-[#de7c8a] mb-3 block font-mono">
                     {isConnecting
                       ? (isEn ? "Connecting..." : "Savieno...")
                       : isMuted
