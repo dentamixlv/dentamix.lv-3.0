@@ -325,7 +325,7 @@ export default function ChatAssistant() {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border border-white/20">
                   <img 
-                    src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
+                    src={chatAvatarUrl} 
                     alt="Dentamix AI" 
                     className="w-full h-full object-cover"
                   />
