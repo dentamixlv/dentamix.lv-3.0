@@ -459,14 +459,14 @@ export default function ChatAssistant() {
                   <button
                     onClick={toggleMute}
                     disabled={isConnecting}
-                    className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-200 shadow-md active:scale-90 ${
+                    className={`w-14 h-14 rounded-full flex items-center justify-center transition-all duration-200 shadow-md active:scale-90 ${
                       isMuted
                         ? "bg-rose-100 text-rose-600 hover:bg-rose-200"
                         : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                     } disabled:opacity-50 cursor-pointer`}
                     title={isMuted ? (isEn ? "Unmute" : "Ieslēgt mikrofonu") : (isEn ? "Mute" : "Izslēgt mikrofonu")}
                   >
-                    {isMuted ? <MicOff size={20} /> : <Mic size={20} />}
+                    {isMuted ? <MicOff size={24} /> : <Mic size={24} />}
                   </button>
 
                   {/* End Call Button */}
