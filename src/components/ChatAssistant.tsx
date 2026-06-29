@@ -323,12 +323,16 @@ export default function ChatAssistant() {
             {/* Header */}
             <div className="bg-[var(--main-color)] text-white p-4 flex items-center justify-between shadow-md">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border border-white/20">
-                  <img 
-                    src={chatAvatarUrl} 
-                    alt="Dentamix AI" 
-                    className="w-full h-full object-cover"
-                  />
+                <div className="w-10 h-10 rounded-full overflow-hidden flex items-center justify-center border border-white/20 bg-white/10">
+                  {chatConfig === undefined ? (
+                    <Bot size={20} className="text-white/60 animate-pulse" />
+                  ) : (
+                    <img 
+                      src={chatAvatarUrl} 
+                      alt="Dentamix AI" 
+                      className="w-full h-full object-cover"
+                    />
+                  )}
                 </div>
                 <div>
                   <h3 className="font-semibold text-sm leading-tight">{chatTitle}</h3>
@@ -418,11 +422,15 @@ export default function ChatAssistant() {
                       ? 'border-[var(--main-color)] scale-105 shadow-[var(--main-color)]/30 shadow-xl' 
                       : 'border-white scale-100'
                   }`}>
-                    <img
-                      src={voiceAvatarUrl}
-                      alt="Ieva"
-                      className="w-full h-full object-cover"
-                    />
+                    {chatConfig === undefined ? (
+                      <Bot size={40} className="text-gray-300 animate-pulse" />
+                    ) : (
+                      <img
+                        src={voiceAvatarUrl}
+                        alt="Ieva"
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                 </div>
 
@@ -476,12 +484,16 @@ export default function ChatAssistant() {
                 
                 {/* Welcome Message */}
                 <div className="flex gap-2.5 items-start max-w-[85%]">
-                  <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-                    <img 
-                      src={chatAvatarUrl} 
-                      alt="Dentamix AI" 
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 bg-gray-100 border border-gray-100">
+                    {chatConfig === undefined ? (
+                      <Bot size={16} className="text-gray-400 animate-pulse" />
+                    ) : (
+                      <img 
+                        src={chatAvatarUrl} 
+                        alt="Dentamix AI" 
+                        className="w-full h-full object-cover"
+                      />
+                    )}
                   </div>
                   <div className="flex flex-col gap-2">
                     <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-800 leading-relaxed">
@@ -548,15 +560,19 @@ export default function ChatAssistant() {
                     >
                       <div
                         className={`w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 ${
-                          isAssistant ? "" : "bg-[var(--main-color)] text-white"
+                          isAssistant ? "bg-gray-100 border border-gray-100" : "bg-[var(--main-color)] text-white"
                         }`}
                       >
                         {isAssistant ? (
-                          <img 
-                            src={chatAvatarUrl} 
-                            alt="Dentamix AI" 
-                            className="w-full h-full object-cover"
-                          />
+                          chatConfig === undefined ? (
+                            <Bot size={16} className="text-gray-400 animate-pulse" />
+                          ) : (
+                            <img 
+                              src={chatAvatarUrl} 
+                              alt="Dentamix AI" 
+                              className="w-full h-full object-cover"
+                            />
+                          )
                         ) : (
                           <User size={15} />
                         )}
@@ -613,12 +629,16 @@ export default function ChatAssistant() {
                 {/* Loading indicator when waiting for Gemini response */}
                 {isSending && (!displayMessages || displayMessages.length === 0 || displayMessages[displayMessages.length - 1].role !== "assistant") && (
                   <div className="flex gap-2.5 items-start max-w-[85%]">
-                    <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
-                      <img 
-                        src={chatAvatarUrl} 
-                        alt="Dentamix AI" 
-                        className="w-full h-full object-cover"
-                      />
+                    <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0 bg-gray-100 border border-gray-100">
+                      {chatConfig === undefined ? (
+                        <Bot size={16} className="text-gray-400 animate-pulse" />
+                      ) : (
+                        <img 
+                          src={chatAvatarUrl} 
+                          alt="Dentamix AI" 
+                          className="w-full h-full object-cover"
+                        />
+                      )}
                     </div>
                     <div className="bg-white border border-gray-100 rounded-2xl rounded-tl-none p-3 shadow-sm text-sm text-gray-400 flex items-center justify-center">
                       <div className="flex items-center gap-1.5 py-1 px-0.5">
@@ -721,13 +741,17 @@ export default function ChatAssistant() {
                 animate={{ rotate: 0, opacity: 1 }}
                 exit={{ rotate: -45, opacity: 0 }}
                 transition={{ duration: 0.15 }}
-                className="relative w-full h-full"
+                className="relative w-full h-full flex items-center justify-center"
               >
-                <img 
-                  src={chatAvatarUrl} 
-                  alt="Chat assistant" 
-                  className="w-full h-full object-cover"
-                />
+                {chatConfig === undefined ? (
+                  <MessageSquare size={24} className="text-white" />
+                ) : (
+                  <img 
+                    src={chatAvatarUrl} 
+                    alt="Chat assistant" 
+                    className="w-full h-full object-cover"
+                  />
+                )}
               </motion.div>
             )}
           </AnimatePresence>
