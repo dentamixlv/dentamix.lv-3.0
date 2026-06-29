@@ -410,6 +410,16 @@ export const getVoiceConfig = action({
     const rawLocale = args.locale || "lv";
     const prismicLocale = rawLocale.toLowerCase().startsWith("en") ? "en-us" : "lv";
     const cachedConfig = await ctx.runQuery(internal.assistant.getConfigForAction, { locale: prismicLocale });
+
+    let priceListText = "";
+    try {
+      const allDocs = await ctx.runQuery(api.documents.listAll);
+      const targetSource = prismicLocale === "en-us" ? "/en/prices" : "/cenas";
+      const priceDocs = allDocs.filter((d) => d.source.includes(targetSource));
+      priceListText = priceDocs.map((d) => d.text).join("\n\n");
+    } catch (docErr) {
+      console.error("Failed to fetch documents for voice assistant:", docErr);
+    }
     
     let userName: string | undefined = undefined;
     if (args.conversationId) {
@@ -455,7 +465,16 @@ Izrunas vadlīnijas: Nekad nelieto teksta formatējumu (zvaigznītes, sarakstu p
       ? `\n\nClinic details (working hours, contacts, address):\n${coreContacts}`
       : `\n\nKlīnikas informācija (darba laiki, kontakti, adrese):\n${coreContacts}`;
 
-    const baseInstruction = (cachedConfig?.voiceSystemInstruction || fallbackInstruction) + coreContactsBlock;
+    const pricingBlock = priceListText
+      ? (isEn
+          ? `\n\nClinic Pricelist (always use exact prices from this list for pricing queries):\n${priceListText}`
+          : `\n\nKlīnikas cenrādis (cenas jautājumos vienmēr izmanto precīzas cenas no šī saraksta):\n${priceListText}`)
+      : "";
+
+    const baseInstruction =
+      (cachedConfig?.voiceSystemInstruction || fallbackInstruction) +
+      coreContactsBlock +
+      pricingBlock;
 
     // Inject user name into the instruction if known
     const systemInstruction = userNameBlock
