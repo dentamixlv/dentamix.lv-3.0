@@ -315,6 +315,7 @@ export const updateConfig = internalMutation({
     systemPrompt: v.string(),
     coreContacts: v.string(),
     voiceSystemInstruction: v.optional(v.string()),
+    voiceModel: v.optional(v.string()),
     suggestions: v.array(
       v.object({
         label: v.string(),
@@ -389,7 +390,7 @@ export const getVoiceConfig = action({
     args
   ): Promise<{
     wsUrl: string;
-    model: "models/gemini-2.5-flash-native-audio-latest";
+    model: string;
     voice: "Aoede";
     systemInstruction: string;
   }> => {
@@ -458,7 +459,7 @@ Izrunas vadlīnijas: Nekad nelieto teksta formatējumu (zvaigznītes, sarakstu p
 
     return {
       wsUrl,
-      model: "models/gemini-2.5-flash-native-audio-latest" as const,
+      model: cachedConfig?.voiceModel || "models/gemini-2.5-flash-native-audio-latest",
       voice: "Aoede" as const,
       systemInstruction
     };

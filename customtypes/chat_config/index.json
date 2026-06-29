@@ -39,6 +39,13 @@
           "multi": "paragraph,preformatted"
         }
       },
+      "voice_model": {
+        "type": "Text",
+        "config": {
+          "label": "Voice Agent Model Name",
+          "placeholder": "models/gemini-2.5-flash-native-audio-latest"
+        }
+      },
       "suggestions": {
         "type": "Group",
         "config": {

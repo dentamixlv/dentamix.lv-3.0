@@ -34,6 +34,7 @@ http.route({
           const serializedPrompt = prismic.asText(document.data.system_prompt) || "";
           const serializedContacts = prismic.asText(document.data.core_contacts) || "";
           const serializedVoiceInstruction = prismic.asText(document.data.voice_system_instruction) || undefined;
+          const voiceModel = document.data.voice_model || undefined;
 
           // Parse suggestions group list
           const parsedSuggestions = (document.data.suggestions || []).map((item: any) => ({
@@ -48,6 +49,7 @@ http.route({
             systemPrompt: serializedPrompt,
             coreContacts: serializedContacts,
             voiceSystemInstruction: serializedVoiceInstruction || undefined,
+            voiceModel: voiceModel || undefined,
             suggestions: parsedSuggestions,
           });
           

@@ -49,6 +49,113 @@ type ContentRelationshipFieldWithData<
 }[Exclude<TCustomType[number], string>["id"]];
 
 /**
+ * Item in *Chat Configuration → Chat Suggestion Buttons*
+ */
+export interface ChatConfigDocumentDataSuggestionsItem {
+	/**
+	 * Button Label field in *Chat Configuration → Chat Suggestion Buttons*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Kā pieteikties vizītei?
+	 * - **API ID Path**: chat_config.suggestions[].label
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	label: prismic.KeyTextField;
+	
+	/**
+	 * Prompt Action Text field in *Chat Configuration → Chat Suggestion Buttons*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Kā pieteikties vizītei?
+	 * - **API ID Path**: chat_config.suggestions[].prompt_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	prompt_text: prismic.KeyTextField;
+}
+
+/**
+ * Content for Chat Configuration documents
+ */
+interface ChatConfigDocumentData {
+	/**
+	 * Assistant Name field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Ieva
+	 * - **API ID Path**: chat_config.assistant_name
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	assistant_name: prismic.KeyTextField;
+	
+	/**
+	 * System Instruction / Prompt Guidance field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: You are a helpful, professional, and friendly AI assistant for Dentamix, a premium dental clinic in Latvia...
+	 * - **API ID Path**: chat_config.system_prompt
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	system_prompt: prismic.RichTextField;
+	
+	/**
+	 * Clinic Core Contacts Info field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: Riga Clinic: Phone +371 29419999, Adazi Clinic: Phone +371 29419999...
+	 * - **API ID Path**: chat_config.core_contacts
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	core_contacts: prismic.RichTextField;
+	
+	/**
+	 * Voice Agent System Instruction field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: You are Ieva, a warm and helpful voice assistant for Dentamix. Speak briefly and naturally. Never use markdown formatting...
+	 * - **API ID Path**: chat_config.voice_system_instruction
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	voice_system_instruction: prismic.RichTextField;
+	
+	/**
+	 * Voice Agent Model Name field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: models/gemini-2.5-flash-native-audio-latest
+	 * - **API ID Path**: chat_config.voice_model
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	voice_model: prismic.KeyTextField;
+	
+	/**
+	 * Chat Suggestion Buttons field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Group
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: chat_config.suggestions[]
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/repeatable-group
+	 */
+	suggestions: prismic.GroupField<Simplify<ChatConfigDocumentDataSuggestionsItem>>;
+}
+
+/**
+ * Chat Configuration document from Prismic
+ *
+ * - **API ID**: `chat_config`
+ * - **Repeatable**: `false`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ChatConfigDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<ChatConfigDocumentData>, "chat_config", Lang>;
+
+/**
  * Item in *Footer → Clinics*
  */
 export interface FooterDocumentDataClinicsItem {
@@ -831,7 +938,7 @@ interface SettingsDocumentData {
  */
 export type SettingsDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<SettingsDocumentData>, "settings", Lang>;
 
-export type AllDocumentTypes = FooterDocument | HomepageDocument | MenuDocument | PageDocument | SettingsDocument;
+export type AllDocumentTypes = ChatConfigDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | SettingsDocument;
 
 /**
  * Primary content in *BlogGrid → Default → Primary*
@@ -2537,6 +2644,9 @@ declare module "@prismicio/client" {
 	
 	namespace Content {
 		export type {
+			ChatConfigDocument,
+			ChatConfigDocumentData,
+			ChatConfigDocumentDataSuggestionsItem,
 			FooterDocument,
 			FooterDocumentData,
 			FooterDocumentDataClinicsItem,
