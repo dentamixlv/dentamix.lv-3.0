@@ -3,6 +3,8 @@ import { action, internalMutation, internalQuery, query } from "./_generated/ser
 import { api, internal } from "./_generated/api";
 import { Doc, Id } from "./_generated/dataModel";
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { createClient } from "@prismicio/client";
+import * as prismic from "@prismicio/client";
 
 async function extractUserName(
   genAI: GoogleGenerativeAI,
@@ -466,6 +468,48 @@ Izrunas vadlīnijas: Nekad nelieto teksta formatējumu (zvaigznītes, sarakstu p
       voice: cachedConfig?.voiceName || "Callirrhoe",
       systemInstruction
     };
+  }
+});
+
+export const syncPrismicConfig = action({
+  args: {},
+  handler: async (ctx) => {
+    const repoName = process.env.PRISMIC_REPOSITORY_NAME || "dentamix-v30"; 
+    const client = createClient(repoName);
+    const documents = await client.getAllByType("chat_config", { lang: "*" });
+    
+    if (documents && documents.length > 0) {
+      for (const document of documents) {
+        const locale = document.lang;
+        const serializedPrompt = prismic.asText(document.data.system_prompt) || "";
+        const serializedContacts = prismic.asText(document.data.core_contacts) || "";
+        const serializedVoiceInstruction = prismic.asText(document.data.voice_system_instruction) || undefined;
+        const voiceModel = document.data.voice_model || undefined;
+        const voiceName = document.data.voice_name || undefined;
+        const chatAvatarUrl = document.data.chat_avatar?.url || undefined;
+        const voiceAvatarUrl = document.data.voice_avatar?.url || undefined;
+
+        const parsedSuggestions = (document.data.suggestions || []).map((item: any) => ({
+          label: item.label || "",
+          promptText: item.prompt_text || "",
+        }));
+
+        await ctx.runMutation(internal.assistant.updateConfig, {
+          locale,
+          assistantName: document.data.assistant_name || "Ieva",
+          systemPrompt: serializedPrompt,
+          coreContacts: serializedContacts,
+          voiceSystemInstruction: serializedVoiceInstruction || undefined,
+          voiceModel,
+          voiceName,
+          chatAvatarUrl,
+          voiceAvatarUrl,
+          suggestions: parsedSuggestions,
+        });
+      }
+      return { success: true, count: documents.length };
+    }
+    return { success: false, reason: "No chat_config documents found" };
   }
 });
 
