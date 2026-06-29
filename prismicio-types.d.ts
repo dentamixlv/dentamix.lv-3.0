@@ -144,6 +144,28 @@ interface ChatConfigDocumentData {
 	voice_name: prismic.KeyTextField;
 	
 	/**
+	 * Chat Agent Avatar Image field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: chat_config.chat_avatar
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	chat_avatar: prismic.ImageField<never>;
+	
+	/**
+	 * Voice Agent Avatar Image field in *Chat Configuration*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: chat_config.voice_avatar
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	voice_avatar: prismic.ImageField<never>;
+	
+	/**
 	 * Chat Suggestion Buttons field in *Chat Configuration*
 	 *
 	 * - **Field Type**: Group

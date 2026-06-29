@@ -53,6 +53,22 @@
           "placeholder": "Callirrhoe"
         }
       },
+      "chat_avatar": {
+        "type": "Image",
+        "config": {
+          "label": "Chat Agent Avatar Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
+      "voice_avatar": {
+        "type": "Image",
+        "config": {
+          "label": "Voice Agent Avatar Image",
+          "constraint": {},
+          "thumbnails": []
+        }
+      },
       "suggestions": {
         "type": "Group",
         "config": {

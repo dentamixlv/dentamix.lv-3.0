@@ -36,6 +36,8 @@ http.route({
           const serializedVoiceInstruction = prismic.asText(document.data.voice_system_instruction) || undefined;
           const voiceModel = document.data.voice_model || undefined;
           const voiceName = document.data.voice_name || undefined;
+          const chatAvatarUrl = document.data.chat_avatar?.url || undefined;
+          const voiceAvatarUrl = document.data.voice_avatar?.url || undefined;
 
           // Parse suggestions group list
           const parsedSuggestions = (document.data.suggestions || []).map((item: any) => ({
@@ -52,6 +54,8 @@ http.route({
             voiceSystemInstruction: serializedVoiceInstruction || undefined,
             voiceModel: voiceModel || undefined,
             voiceName: voiceName || undefined,
+            chatAvatarUrl: chatAvatarUrl || undefined,
+            voiceAvatarUrl: voiceAvatarUrl || undefined,
             suggestions: parsedSuggestions,
           });
           

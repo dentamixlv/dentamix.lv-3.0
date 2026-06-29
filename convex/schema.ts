@@ -30,6 +30,8 @@ export default defineSchema({
     voiceSystemInstruction: v.optional(v.string()),
     voiceModel: v.optional(v.string()),
     voiceName: v.optional(v.string()),
+    chatAvatarUrl: v.optional(v.string()),
+    voiceAvatarUrl: v.optional(v.string()),
     suggestions: v.array(
       v.object({
         label: v.string(),

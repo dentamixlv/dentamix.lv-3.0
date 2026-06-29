@@ -76,6 +76,9 @@ export default function ChatAssistant() {
     api.assistant.getChatConfig,
     { locale: isEn ? "en-us" : "lv" }
   );
+  const fallbackAvatarUrl = "https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png";
+  const chatAvatarUrl = chatConfig?.chatAvatarUrl || fallbackAvatarUrl;
+  const voiceAvatarUrl = chatConfig?.voiceAvatarUrl || fallbackAvatarUrl;
   const respondAction = useAction(api.assistant.respond);
 
   const {
@@ -416,7 +419,7 @@ export default function ChatAssistant() {
                       : 'border-white scale-100'
                   }`}>
                     <img
-                      src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png"
+                      src={voiceAvatarUrl}
                       alt="Ieva"
                       className="w-full h-full object-cover"
                     />
@@ -475,7 +478,7 @@ export default function ChatAssistant() {
                 <div className="flex gap-2.5 items-start max-w-[85%]">
                   <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
                     <img 
-                      src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
+                      src={chatAvatarUrl} 
                       alt="Dentamix AI" 
                       className="w-full h-full object-cover"
                     />
@@ -550,7 +553,7 @@ export default function ChatAssistant() {
                       >
                         {isAssistant ? (
                           <img 
-                            src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
+                            src={chatAvatarUrl} 
                             alt="Dentamix AI" 
                             className="w-full h-full object-cover"
                           />
@@ -612,7 +615,7 @@ export default function ChatAssistant() {
                   <div className="flex gap-2.5 items-start max-w-[85%]">
                     <div className="w-8 h-8 rounded-full overflow-hidden flex items-center justify-center flex-shrink-0">
                       <img 
-                        src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
+                        src={chatAvatarUrl} 
                         alt="Dentamix AI" 
                         className="w-full h-full object-cover"
                       />
@@ -721,7 +724,7 @@ export default function ChatAssistant() {
                 className="relative w-full h-full"
               >
                 <img 
-                  src="https://images.prismic.io/dentamix-v30/aie7BweQX7-eW__g_zobarsts-riga-chat.png" 
+                  src={chatAvatarUrl} 
                   alt="Chat assistant" 
                   className="w-full h-full object-cover"
                 />
