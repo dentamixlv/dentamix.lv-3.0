@@ -1,5 +1,4 @@
 import React from 'react';
-import { SpeedInsights } from '@vercel/speed-insights/next';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { createClient } from '../../prismicio';
@@ -121,7 +120,6 @@ export default async function LocaleLayout({ children, params }: LayoutProps) {
           cookiePolicyLabel={footerData?.cookiePolicyLabel}
           cookiePolicyLink={footerData?.cookiePolicyLink}
         />
-        <SpeedInsights />
         <ClientChatAssistant />
       </ConvexClientProvider>
     </LanguageProvider>
