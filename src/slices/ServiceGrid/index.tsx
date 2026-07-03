@@ -13,6 +13,10 @@ interface ServiceGridItem {
   excerpt?: string | null;
   link_text?: string | null;
   link_url?: string | null;
+  book_text?: string | null;
+  book_url?: string | null;
+  book_url_blank?: boolean | null;
+  show_book_button?: boolean | null;
   image?: { url?: string; alt?: string } | null;
 }
 
@@ -66,6 +70,8 @@ export default function ServiceGrid({ slice }: ServiceGridProps) {
     : 'bg-[#fbf9f8] py-16 md:py-24';
 
   const defaultViewDesc = isEn ? 'Learn More' : 'Lasīt vairāk';
+  const defaultBook = isEn ? 'Book' : 'Pieteikties';
+  const defaultContacts = isEn ? `${langPrefix}/contacts` : '/kontakti';
 
   return (
     <section className={sectionClass}>
@@ -85,6 +91,12 @@ export default function ServiceGrid({ slice }: ServiceGridProps) {
             const excerptText = item.excerpt || '';
             const linkText   = item.link_text || defaultViewDesc;
             const linkUrl    = item.link_url || `${langPrefix}/services`;
+            const bookText    = item.book_text || defaultBook;
+            const bookUrl     = item.book_url || defaultContacts;
+            const bookUrlBlank = item.book_url_blank === true;
+            const isExternalBookUrl = bookUrl.startsWith('http://') || bookUrl.startsWith('https://') || bookUrl.startsWith('//');
+            const openBookBlank = bookUrlBlank || isExternalBookUrl;
+            const showBookButton = item.show_book_button !== false;
             const imageSrc   = item.image?.url || 'https://images.unsplash.com/photo-1629909615184-74f495363b67?auto=format&fit=crop&q=80&w=800';
             const imageAlt   = item.image?.alt || titleText;
 
@@ -132,6 +144,24 @@ export default function ServiceGrid({ slice }: ServiceGridProps) {
                       {linkText}
                       <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                     </Link>
+                    {showBookButton ? (
+                      <Link
+                        href={bookUrl}
+                        target={openBookBlank ? "_blank" : undefined}
+                        rel={openBookBlank ? "noopener noreferrer" : undefined}
+                        className="px-4 py-2 text-sm font-bold text-[#511B29] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
+                        id={`service-grid-book-btn-${idx}`}
+                      >
+                        {bookText}
+                      </Link>
+                    ) : (
+                      <span
+                        className="px-4 py-2 text-sm font-bold text-[#8e8385] bg-[#efedec] rounded-full cursor-not-allowed select-none"
+                        id={`service-grid-book-btn-inactive-${idx}`}
+                      >
+                        {bookText}
+                      </span>
+                    )}
                   </div>
                 </div>
               </motion.div>

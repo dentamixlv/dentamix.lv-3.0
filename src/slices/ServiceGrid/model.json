@@ -57,6 +57,38 @@
             "placeholder": "/pakalpojumi/higiene"
           }
         },
+        "book_text": {
+          "type": "Text",
+          "config": {
+            "label": "Book Button Text",
+            "placeholder": "Pieteikties"
+          }
+        },
+        "book_url": {
+          "type": "Text",
+          "config": {
+            "label": "Book Button URL",
+            "placeholder": "/kontakti"
+          }
+        },
+        "book_url_blank": {
+          "type": "Boolean",
+          "config": {
+            "label": "Open Booking URL in New Tab",
+            "placeholder_false": "Same Tab",
+            "placeholder_true": "New Tab (_blank)",
+            "default_value": false
+          }
+        },
+        "show_book_button": {
+          "type": "Boolean",
+          "config": {
+            "label": "Show Book Button",
+            "placeholder_false": "Hidden",
+            "placeholder_true": "Visible",
+            "default_value": true
+          }
+        },
         "image": {
           "type": "Image",
           "config": {

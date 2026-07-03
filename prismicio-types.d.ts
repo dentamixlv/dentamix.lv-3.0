@@ -2264,6 +2264,48 @@ export interface ServiceGridSliceDefaultItem {
 	link_url: prismic.KeyTextField;
 	
 	/**
+	 * Book Button Text field in *ServiceGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Pieteikties
+	 * - **API ID Path**: service_grid.items[].book_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	book_text: prismic.KeyTextField;
+	
+	/**
+	 * Book Button URL field in *ServiceGrid → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: /kontakti
+	 * - **API ID Path**: service_grid.items[].book_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	book_url: prismic.KeyTextField;
+	
+	/**
+	 * Open Booking URL in New Tab field in *ServiceGrid → Items*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: service_grid.items[].book_url_blank
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	book_url_blank: prismic.BooleanField;
+	
+	/**
+	 * Show Book Button field in *ServiceGrid → Items*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: service_grid.items[].show_book_button
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	show_book_button: prismic.BooleanField;
+	
+	/**
 	 * Service Image field in *ServiceGrid → Items*
 	 *
 	 * - **Field Type**: Image

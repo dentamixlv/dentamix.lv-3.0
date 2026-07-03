@@ -46,7 +46,7 @@ const translations = {
     sub: 'A complete spectrum of modern dental services – from aesthetics to implants and complex surgery.',
     premium: 'PREMIUM SERVICE',
     viewDesc: 'View Description',
-    apply: 'Inquire Now'
+    apply: 'Book'
   }
 };
 
@@ -61,6 +61,7 @@ interface ServicesClientProps {
 export default function ServicesClient({ langCode, customServices, hideHeader = false }: ServicesClientProps) {
   const t = langCode === 'en-us' ? translations.en : translations.lv;
   const isEn = langCode === 'en-us';
+  const langPrefix = isEn ? '/en' : '';
   const serviceDetailPrefix = isEn ? '/en/services' : '/pakalpojumi';
   const services = customServices || getServices(langCode);
 
@@ -129,7 +130,7 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
               </div>
 
               {/* Bottom actions */}
-              <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center">
+              <div className="mt-8 pt-5 border-t border-[#efedec]/60 flex items-center justify-between">
                 <Link
                   href={`${serviceDetailPrefix}/${serv.id}`}
                   className="inline-flex items-center gap-1.5 text-sm font-bold text-[#511B29] hover:text-[#5d1726] transition-colors cursor-pointer group-hover:text-[#5d1726]"
@@ -137,6 +138,12 @@ export default function ServicesClient({ langCode, customServices, hideHeader = 
                 >
                   {t.viewDesc}
                   <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                </Link>
+                <Link
+                  href={`${langPrefix}/contacts`}
+                  className="px-4 py-2 text-sm font-bold text-[#511B29] bg-[#f2dde1]/50 hover:bg-[#f2dde1] rounded-full transition-colors cursor-pointer"
+                >
+                  {t.apply}
                 </Link>
               </div>
             </div>
