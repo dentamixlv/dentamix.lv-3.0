@@ -9,6 +9,7 @@ import Image from 'next/image';
 import { SliceZone } from '@prismicio/react';
 import { components } from '../../slices';
 import { getTestimonials } from '../../data/testimonials';
+import Hero from '../../slices/Hero';
 
 // Fallback slices if Prismic CMS doesn't return data (e.g. for en-us document before it is created)
 const getFallbackSlices = (langCode: string) => [
@@ -194,13 +195,15 @@ export default function HomeClient({ slices, langCode, context }: HomeClientProp
   const isEn = langCode === 'en-us';
   const activeSlices = slices && slices.length > 0 ? slices : getFallbackSlices(langCode);
 
+  const overriddenComponents = {
+    ...components,
+    hero: Hero,
+  };
+
   return (
     <div className="relative">
       {/* Dynamic Hero Section via SliceZone */}
-      <SliceZone slices={activeSlices} components={components} context={context} />
-
-
-
+      <SliceZone slices={activeSlices} components={overriddenComponents} context={context} />
     </div>
   );
 }

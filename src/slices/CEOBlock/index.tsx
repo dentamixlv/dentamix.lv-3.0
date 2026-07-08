@@ -132,9 +132,8 @@ export default function CEOBlock({ slice }: CEOBlockProps) {
               src={imageUrl}
               alt={imageAlt}
               fill
-              unoptimized
+              sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
               className="object-cover object-top hover-scale-102"
-              priority
             />
           </motion.div>
 

@@ -90,6 +90,7 @@ export default function Hero({ slice }: HeroProps) {
           sizes="100vw"
           className="object-cover object-center scale-105"
           priority
+          fetchPriority="high"
         />
         <div className="absolute inset-0 bg-white/65" />
       </div>

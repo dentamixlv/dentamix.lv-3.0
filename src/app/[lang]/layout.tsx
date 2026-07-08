@@ -1,11 +1,18 @@
 import React from 'react';
+import dynamic from 'next/dynamic';
 import Header from '../../components/Header';
-import Footer from '../../components/Footer';
 import { createClient } from '../../prismicio';
 import { getPrismicLocale } from './page';
 import { LanguageProvider } from '../../components/LanguageContext';
 import ConvexClientProvider from '../../components/ConvexClientProvider';
-import ClientChatAssistant from '../../components/ClientChatAssistant';
+
+const Footer = dynamic(() => import('../../components/Footer'), {
+  ssr: true,
+});
+
+const ClientChatAssistant = dynamic(() => import('../../components/ClientChatAssistant'), {
+  ssr: false,
+});
 
 interface LayoutProps {
   children: React.ReactNode;

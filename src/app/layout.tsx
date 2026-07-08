@@ -7,12 +7,14 @@ const manrope = Manrope({
   subsets: ['latin'],
   variable: '--font-manrope',
   weight: ['400', '500', '600', '700', '800'],
+  display: 'swap',
 });
 
 const playfairDisplay = Playfair_Display({
   subsets: ['latin'],
   variable: '--font-playfair',
   weight: ['400', '500', '600', '700', '800', '900'],
+  display: 'swap',
 });
 
 export async function generateMetadata() {
@@ -84,9 +86,9 @@ export default async function RootLayout({
       <head>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-H5G60JK2JS"
-          strategy="afterInteractive"
+          strategy="lazyOnload"
         />
-        <Script id="google-analytics" strategy="afterInteractive">
+        <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
