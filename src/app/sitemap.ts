@@ -71,7 +71,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Error processing static paths for sitemap:", error);
   }
 
-  // Define sets of static IDs to categorize Prismic page documents
+  // Define sets of static IDs and fetch service docs from Prismic to build a dynamic list
   const serviceIds = new Set([
     ...getServices('lv').map(s => s.id.toLowerCase()),
     ...getServices('en-us').map(s => s.id.toLowerCase())
@@ -94,10 +94,43 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 2. Fetch and process dynamic Prismic pages
   try {
     const client = createClient();
+    
+    // Fetch all services from Prismic (type 'service') to include their dynamic UIDs
+    const prismicServices = await client.getAllByType('service', { lang: '*' });
+    for (const serviceDoc of prismicServices) {
+      if (serviceDoc.uid) {
+        serviceIds.add(serviceDoc.uid.toLowerCase());
+      }
+      if (Array.isArray(serviceDoc.alternate_languages)) {
+        serviceDoc.alternate_languages.forEach((alt: any) => {
+          if (alt.uid) {
+            serviceIds.add(alt.uid.toLowerCase());
+          }
+        });
+      }
+    }
+
     const prismicPages = await client.getAllByType('page', {
       lang: '*',
       pageSize: 100
     });
+
+    // First pass: identify doctor pages from page documents containing widget_block slice
+    for (const pageDoc of prismicPages) {
+      const hasWidget = Array.isArray(pageDoc.data?.slices) && 
+        pageDoc.data.slices.some((s: any) => s.slice_type === 'widget_block');
+      
+      if (hasWidget) {
+        doctorIds.add(pageDoc.uid.toLowerCase());
+        if (Array.isArray(pageDoc.alternate_languages)) {
+          pageDoc.alternate_languages.forEach((alt: any) => {
+            if (alt.uid) {
+              doctorIds.add(alt.uid.toLowerCase());
+            }
+          });
+        }
+      }
+    }
 
     for (const pageDoc of prismicPages) {
       const uid = pageDoc.uid;
@@ -126,8 +159,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       const isService = serviceIds.has(uid.toLowerCase()) ||
         pageDoc.alternate_languages?.some((alt: any) => alt.uid && serviceIds.has(alt.uid.toLowerCase()));
 
-      const isDoctor = doctorIds.has(uid.toLowerCase()) || uid.toLowerCase().startsWith('dr-') ||
-        pageDoc.alternate_languages?.some((alt: any) => alt.uid && (doctorIds.has(alt.uid.toLowerCase()) || alt.uid.toLowerCase().startsWith('dr-')));
+      const isDoctor = doctorIds.has(uid.toLowerCase()) ||
+        pageDoc.alternate_languages?.some((alt: any) => alt.uid && doctorIds.has(alt.uid.toLowerCase()));
 
       const isEn = lang === 'en-us';
       
