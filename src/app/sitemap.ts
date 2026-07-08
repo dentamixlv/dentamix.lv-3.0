@@ -18,11 +18,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const entries: MetadataRoute.Sitemap = [];
 
+  // Helper to clean and format URLs properly (no double slashes, trailing slashes)
+  const getCleanUrl = (path: string) => {
+    let fullUrl = `${baseUrl}${path}`;
+    fullUrl = fullUrl.replace(/([^:]\/)\/+/g, "$1");
+    if (fullUrl.endsWith('/') && fullUrl !== 'https://dentamix.lv/') {
+      fullUrl = fullUrl.slice(0, -1);
+    }
+    return fullUrl;
+  };
+
+  // Helper to check for 404 UIDs or paths
+  const is404Page = (uid: string) => {
+    const check = uid.toLowerCase();
+    return check.includes('404') || check.includes('404-lv') || check.includes('404-en');
+  };
+
   // 1. Add static paths
   try {
     for (const path of staticPaths) {
-      const lvUrl = `${baseUrl}${path.lv}`;
-      const enUrl = `${baseUrl}/en${path.en}`;
+      const lvUrl = getCleanUrl(path.lv);
+      const enUrl = getCleanUrl(`/en${path.en}`);
       const langAlternates = {
         'lv-LV': lvUrl,
         'en-US': enUrl,
@@ -55,19 +71,148 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     console.error("Error processing static paths for sitemap:", error);
   }
 
-  // 2. Add dynamic service paths
+  // Define sets of static IDs to categorize Prismic page documents
+  const serviceIds = new Set([
+    ...getServices('lv').map(s => s.id.toLowerCase()),
+    ...getServices('en-us').map(s => s.id.toLowerCase())
+  ]);
+
+  const doctorIds = new Set([
+    ...getDoctors('lv').map(d => d.id.toLowerCase()),
+    ...getDoctors('en-us').map(d => d.id.toLowerCase())
+  ]);
+
+  const blogIds = new Set([
+    ...getBlogPosts('lv').map(b => b.id.toLowerCase()),
+    ...getBlogPosts('en-us').map(b => b.id.toLowerCase())
+  ]);
+
+  // Sets to keep track of added items to prevent fallback duplication
+  const addedServiceIds = new Set<string>();
+  const addedDoctorIds = new Set<string>();
+
+  // 2. Fetch and process dynamic Prismic pages
+  try {
+    const client = createClient();
+    const prismicPages = await client.getAllByType('page', {
+      lang: '*',
+      pageSize: 100
+    });
+
+    for (const pageDoc of prismicPages) {
+      const uid = pageDoc.uid;
+      const lang = pageDoc.lang; // 'lv' or 'en-us'
+
+      // Skip 404/error pages
+      if (is404Page(uid)) {
+        continue;
+      }
+
+      // Check if it is static path (e.g. about, contacts) or home page
+      const isHome = uid === 'home' || uid === 'sakums';
+      const isStatic = staticPaths.some(p => p.en === `/${uid}` || p.lv === `/${uid}`);
+      if (isHome || isStatic) {
+        continue;
+      }
+
+      // Skip pages that are actually blogs (handled separately in blog paths)
+      const isBlog = blogIds.has(uid.toLowerCase()) ||
+        pageDoc.alternate_languages?.some((alt: any) => alt.uid && blogIds.has(alt.uid.toLowerCase()));
+      if (isBlog) {
+        continue;
+      }
+
+      // Determine category: service, doctor, or custom/general page
+      const isService = serviceIds.has(uid.toLowerCase()) ||
+        pageDoc.alternate_languages?.some((alt: any) => alt.uid && serviceIds.has(alt.uid.toLowerCase()));
+
+      const isDoctor = doctorIds.has(uid.toLowerCase()) || uid.toLowerCase().startsWith('dr-') ||
+        pageDoc.alternate_languages?.some((alt: any) => alt.uid && (doctorIds.has(alt.uid.toLowerCase()) || alt.uid.toLowerCase().startsWith('dr-')));
+
+      const isEn = lang === 'en-us';
+      
+      // Determine the alternate UID
+      let altUid = '';
+      if (Array.isArray(pageDoc.alternate_languages) && pageDoc.alternate_languages.length > 0) {
+        altUid = pageDoc.alternate_languages[0].uid;
+      }
+      if (!altUid) {
+        altUid = uid; // Fallback if no translation is linked
+      }
+
+      let currentPath = '';
+      let alternatePath = '';
+      let priority = 0.5;
+      let changeFrequency: 'weekly' | 'monthly' = 'weekly';
+
+      if (isService) {
+        addedServiceIds.add(uid.toLowerCase());
+        addedServiceIds.add(altUid.toLowerCase());
+        
+        currentPath = isEn ? `/en/services/${uid}` : `/pakalpojumi/${uid}`;
+        alternatePath = isEn ? `/pakalpojumi/${altUid}` : `/en/services/${altUid}`;
+        priority = 0.7;
+        changeFrequency = 'monthly';
+      } else if (isDoctor) {
+        addedDoctorIds.add(uid.toLowerCase());
+        addedDoctorIds.add(altUid.toLowerCase());
+        
+        currentPath = isEn ? `/en/doctors/${uid}` : `/zobarsti/${uid}`;
+        alternatePath = isEn ? `/zobarsti/${altUid}` : `/en/doctors/${altUid}`;
+        priority = 0.7;
+        changeFrequency = 'monthly';
+      } else {
+        // Custom/general page
+        currentPath = isEn ? `/en/${uid}` : `/${uid}`;
+        alternatePath = isEn ? `/${altUid}` : `/en/${altUid}`;
+        priority = 0.5;
+        changeFrequency = 'weekly';
+      }
+
+      const lvUrl = getCleanUrl(isEn ? alternatePath : currentPath);
+      const enUrl = getCleanUrl(isEn ? currentPath : alternatePath);
+
+      // Skip adding if URLs themselves contain 404
+      if (lvUrl.toLowerCase().includes('404') || enUrl.toLowerCase().includes('404')) {
+        continue;
+      }
+
+      // Add to entries
+      entries.push({
+        url: isEn ? enUrl : lvUrl,
+        lastModified: pageDoc.last_publication_date ? new Date(pageDoc.last_publication_date) : new Date(),
+        changeFrequency,
+        priority,
+        alternates: {
+          languages: {
+            'lv-LV': lvUrl,
+            'en-US': enUrl,
+            'x-default': lvUrl,
+          }
+        }
+      });
+    }
+  } catch (error) {
+    console.warn("Failed to fetch Prismic pages for sitemap.", error);
+  }
+
+  // 3. Add dynamic service fallbacks (for services in static DB but not created in Prismic)
   try {
     const services = getServices('lv');
     for (const service of services) {
-      const lvUrl = `${baseUrl}/pakalpojumi/${service.id}`;
-      const enUrl = `${baseUrl}/en/services/${service.id}`;
+      const lowerId = service.id.toLowerCase();
+      if (addedServiceIds.has(lowerId)) {
+        continue;
+      }
+
+      const lvUrl = getCleanUrl(`/pakalpojumi/${service.id}`);
+      const enUrl = getCleanUrl(`/en/services/${service.id}`);
       const langAlternates = {
         'lv-LV': lvUrl,
         'en-US': enUrl,
         'x-default': lvUrl,
       };
 
-      // Latvian service detail - public URL is /pakalpojumi/{id}
       entries.push({
         url: lvUrl,
         lastModified: new Date(),
@@ -78,7 +223,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       });
 
-      // English service detail - public URL is /en/services/{id}
       entries.push({
         url: enUrl,
         lastModified: new Date(),
@@ -90,22 +234,26 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
   } catch (error) {
-    console.error("Error processing dynamic service paths for sitemap:", error);
+    console.error("Error processing dynamic service fallbacks for sitemap:", error);
   }
 
-  // 3. Add dynamic doctor paths
+  // 4. Add dynamic doctor fallbacks (for doctors in static DB but not created in Prismic)
   try {
     const doctors = getDoctors('lv');
     for (const doctor of doctors) {
-      const lvUrl = `${baseUrl}/zobarsti/${doctor.id}`;
-      const enUrl = `${baseUrl}/en/doctors/${doctor.id}`;
+      const lowerId = doctor.id.toLowerCase();
+      if (addedDoctorIds.has(lowerId)) {
+        continue;
+      }
+
+      const lvUrl = getCleanUrl(`/zobarsti/${doctor.id}`);
+      const enUrl = getCleanUrl(`/en/doctors/${doctor.id}`);
       const langAlternates = {
         'lv-LV': lvUrl,
         'en-US': enUrl,
         'x-default': lvUrl,
       };
 
-      // Latvian doctor detail - public URL is /zobarsti/{id}
       entries.push({
         url: lvUrl,
         lastModified: new Date(),
@@ -116,7 +264,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       });
 
-      // English doctor detail - public URL is /en/doctors/{id}
       entries.push({
         url: enUrl,
         lastModified: new Date(),
@@ -128,22 +275,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       });
     }
   } catch (error) {
-    console.error("Error processing dynamic doctor paths for sitemap:", error);
+    console.error("Error processing dynamic doctor fallbacks for sitemap:", error);
   }
 
-  // 4. Add dynamic blog paths
+  // 5. Add dynamic blog paths
   try {
     const blogs = getBlogPosts('lv');
     for (const blog of blogs) {
-      const lvUrl = `${baseUrl}/blogs/${blog.id}`;
-      const enUrl = `${baseUrl}/en/blogs/${blog.id}`;
+      const lvUrl = getCleanUrl(`/blogs/${blog.id}`);
+      const enUrl = getCleanUrl(`/en/blogs/${blog.id}`);
       const langAlternates = {
         'lv-LV': lvUrl,
         'en-US': enUrl,
         'x-default': lvUrl,
       };
 
-      // Latvian blog detail - public URL is /blogs/{id}
+      // Latvian blog detail
       entries.push({
         url: lvUrl,
         lastModified: new Date(),
@@ -154,7 +301,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         },
       });
 
-      // English blog detail - public URL is /en/blogs/{id}
+      // English blog detail
       entries.push({
         url: enUrl,
         lastModified: new Date(),
@@ -167,75 +314,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   } catch (error) {
     console.error("Error processing dynamic blog paths for sitemap:", error);
-  }
-
-  // 5. Add dynamic custom Prismic pages (filtering out static paths, services, doctors, and blogs)
-  try {
-    const client = createClient();
-    const prismicPages = await client.getAllByType('page', {
-      lang: '*',
-      pageSize: 100
-    });
-    
-    // Build maps/lists to help filter known core paths quickly
-    const knownServices = getServices('lv');
-    const knownDoctors = getDoctors('lv');
-    const knownBlogs = getBlogPosts('lv');
-
-    for (const pageDoc of prismicPages) {
-      const uid = pageDoc.uid;
-      const lang = pageDoc.lang; // 'lv' or 'en-us'
-
-      // Skip if the page matches one of our known core static routes or other dynamic content
-      const isStaticOrKnown = staticPaths.some(p => p.en === `/${uid}` || p.lv === `/${uid}`) ||
-        knownServices.some(s => s.id === uid) ||
-        knownDoctors.some(d => d.id === uid) ||
-        knownBlogs.some(b => b.id === uid) ||
-        // Fallback checks for common routing equivalents
-        uid === 'home' || uid === 'sakums' ||
-        uid === 'zobardti'; // fallback doctor list uid
-
-      if (isStaticOrKnown) continue;
-
-      const lastModifiedDate = pageDoc.last_publication_date
-        ? new Date(pageDoc.last_publication_date)
-        : new Date();
-
-      const isEn = lang === 'en-us';
-      const currentPathSegment = isEn ? `/en/${uid}` : `/${uid}`;
-      
-      let alternatePathSegment = '';
-      if (Array.isArray(pageDoc.alternate_languages) && pageDoc.alternate_languages.length > 0) {
-        const alt = pageDoc.alternate_languages[0];
-        if (alt && alt.uid) {
-          alternatePathSegment = alt.lang === 'en-us' ? `/en/${alt.uid}` : `/${alt.uid}`;
-        }
-      }
-
-      if (!alternatePathSegment) {
-        // Fallback if no explicit translation is linked
-        alternatePathSegment = isEn ? `/${uid}` : `/en/${uid}`;
-      }
-
-      const lvUrl = isEn ? `${baseUrl}${alternatePathSegment}` : `${baseUrl}${currentPathSegment}`;
-      const enUrl = isEn ? `${baseUrl}${currentPathSegment}` : `${baseUrl}${alternatePathSegment}`;
-
-      entries.push({
-        url: isEn ? enUrl : lvUrl,
-        lastModified: lastModifiedDate,
-        changeFrequency: 'weekly',
-        priority: 0.5,
-        alternates: {
-          languages: {
-            'lv-LV': lvUrl,
-            'en-US': enUrl,
-            'x-default': lvUrl,
-          }
-        }
-      });
-    }
-  } catch (error) {
-    console.warn("Failed to fetch Prismic custom pages for sitemap.", error);
   }
 
   return entries;
