@@ -104,6 +104,7 @@ export default async function RootLayout({
                 api_host: 'https://eu.i.posthog.com',
                 defaults: '2026-05-30',
                 person_profiles: 'identified_only',
+                disable_session_recording: typeof window !== 'undefined' && window.innerWidth < 768,
             })
           `}
         </Script>
