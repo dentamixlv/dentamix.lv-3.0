@@ -64,6 +64,20 @@
             "placeholder_true": "New Tab (_blank)",
             "default_value": false
           }
+        },
+        "whatsapp_button_text": {
+          "type": "Text",
+          "config": {
+            "label": "WhatsApp button text",
+            "placeholder": "WhatsApp"
+          }
+        },
+        "whatsapp_phone": {
+          "type": "Text",
+          "config": {
+            "label": "WhatsApp phone number",
+            "placeholder": "+371 29 459 999"
+          }
         }
       },
       "items": {}

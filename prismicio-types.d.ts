@@ -1581,6 +1581,26 @@ export interface CtaBlockSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/boolean
 	 */
 	target_blank: prismic.BooleanField;
+	
+	/**
+	 * WhatsApp button text field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: WhatsApp
+	 * - **API ID Path**: cta_block.default.primary.whatsapp_button_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	whatsapp_button_text: prismic.KeyTextField;
+	
+	/**
+	 * WhatsApp phone number field in *CTABlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: +371 29 459 999
+	 * - **API ID Path**: cta_block.default.primary.whatsapp_phone
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	whatsapp_phone: prismic.KeyTextField;
 }
 
 /**
