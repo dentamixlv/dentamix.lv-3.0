@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { MapPin, Phone, Mail, Map, Navigation, Star, AlertCircle, Sun, Moon } from 'lucide-react';
+import { MapPin, Phone, Mail, Map, Navigation, Star, AlertCircle } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
@@ -58,31 +58,6 @@ export default function Footer({
   const params = useParams();
   const langList = params?.lang;
   const isEn = langList === 'en' || (Array.isArray(langList) && langList[0] === 'en');
-
-  // Theme state and toggler
-  const [theme, setTheme] = React.useState<string | null>(null);
-
-  React.useEffect(() => {
-    if (typeof window !== 'undefined') {
-      const isDark = document.documentElement.classList.contains('dark');
-      setTheme(isDark ? 'dark' : 'light');
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    if (typeof window !== 'undefined') {
-      const isCurrentlyDark = document.documentElement.classList.contains('dark');
-      const newTheme = isCurrentlyDark ? 'light' : 'dark';
-      if (newTheme === 'dark') {
-        document.documentElement.classList.add('dark');
-        localStorage.setItem('theme', 'dark');
-      } else {
-        document.documentElement.classList.remove('dark');
-        localStorage.setItem('theme', 'light');
-      }
-      setTheme(newTheme);
-    }
-  };
 
   const t = {
     quote: isEn ? '"Modern dental technologies and experienced specialists for your smile\'s health. We provide the highest quality dental services in a comfortable environment in Riga and Adazi."' : '"Modernas zobārstniecības tehnoloģijas un pieredzējuši speciālisti Jūsu smaida veselībai. Mēs nodrošinām augstākās kvalitātes zobārstniecības pakalpojumus ērtā vidē Rīgā un Ādažos."',
@@ -409,19 +384,7 @@ export default function Footer({
       <div className="border-t border-white/[0.06] bg-[#0f1011]">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#989999] font-medium">
           <p>© {new Date().getFullYear()} {copyrightText || `Dentamic. ${t.allRightsReserved}`}</p>
-          <div className="flex items-center gap-6">
-            <button
-              onClick={toggleTheme}
-              className="flex items-center justify-center text-[#989999] hover:text-white transition-colors duration-200 cursor-pointer h-5 w-5"
-              aria-label={isEn ? "Toggle dark mode" : "Pārslēgt nakts režīmu"}
-              title={isEn ? "Toggle dark mode" : "Pārslēgt nakts režīmu"}
-            >
-              {theme === 'dark' ? (
-                <Sun className="w-4 h-4 text-[#de7c8a]" />
-              ) : (
-                <Moon className="w-4 h-4" />
-              )}
-            </button>
+          <div className="flex gap-6">
             <Link
               href={resolveLink(privacyPolicyLink) || (isEn ? '/en/privacy-policy' : '/privatuma-politika')}
               className="hover:text-white transition-colors duration-200 cursor-pointer"
