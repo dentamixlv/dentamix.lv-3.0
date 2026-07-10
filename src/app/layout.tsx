@@ -84,6 +84,23 @@ export default async function RootLayout({
   return (
     <html lang={htmlLang} className={`${manrope.variable} ${playfairDisplay.variable}`}>
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                try {
+                  var theme = localStorage.getItem('theme');
+                  var systemDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                  if (theme === 'dark' || (!theme && systemDark)) {
+                    document.documentElement.classList.add('dark');
+                  } else {
+                    document.documentElement.classList.remove('dark');
+                  }
+                } catch (e) {}
+              })();
+            `
+          }}
+        />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-H5G60JK2JS"
           strategy="lazyOnload"

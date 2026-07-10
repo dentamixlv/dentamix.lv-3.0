@@ -98,7 +98,7 @@ export default function FAQBlock({ slice }: FAQBlockProps) {
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   className="w-full p-4 flex items-center justify-between text-left cursor-pointer group"
                 >
-                  <span className="text-base font-serif font-normal text-black leading-relaxed group-hover:text-[#de7c8a] transition-colors pr-4">
+                  <span className="text-base font-serif font-normal text-[#511B29] leading-relaxed group-hover:text-[#de7c8a] transition-colors pr-4">
                     {question}
                   </span>
                   <span className={`w-7 h-7 rounded-full bg-[#fbf9f8] border border-[#efedec] flex items-center justify-center shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 bg-[#f2dde1]/30 border-[#d9c1c2]/30 text-[#de7c8a]' : 'text-slate-400'}`}>
