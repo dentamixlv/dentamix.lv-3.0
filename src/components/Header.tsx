@@ -297,7 +297,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
           {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="p-2 lg:hidden text-white hover:bg-white/15 rounded-lg transition-colors cursor-pointer"
+            className="p-2 lg:hidden text-[#de7c8a] hover:bg-white/15 rounded-lg transition-colors cursor-pointer"
             id="mobile-menu-toggle-btn"
             aria-label={isEn ? "Menu" : "Izvēlne"}
           >
