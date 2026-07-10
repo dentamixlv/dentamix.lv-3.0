@@ -301,7 +301,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
             id="mobile-menu-toggle-btn"
             aria-label={isEn ? "Menu" : "Izvēlne"}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            {mobileMenuOpen ? <X className="w-8 h-8" /> : <Menu className="w-8 h-8" />}
           </button>
         </div>
       </div>
