@@ -85,7 +85,7 @@ export default function Hero({ slice }: HeroProps) {
       <div className="absolute inset-0 pointer-events-none transition-all duration-700">
         <Image
           src={bgImage}
-          alt="Dentamic Background"
+          alt={primary.background_image?.alt || "Dentamic Background"}
           fill
           sizes="100vw"
           className="object-cover object-center scale-105"
