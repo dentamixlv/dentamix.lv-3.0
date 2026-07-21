@@ -49,6 +49,110 @@ type ContentRelationshipFieldWithData<
 }[Exclude<TCustomType[number], string>["id"]];
 
 /**
+ * Content for Blog Post documents
+ */
+interface BlogPostDocumentData {
+	/**
+	 * Title field in *Blog Post*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Kāpēc regulāra mutes higiēna ir labākā investīcija?
+	 * - **API ID Path**: blog_post.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Category field in *Blog Post*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: MUTES HIGIĒNA
+	 * - **API ID Path**: blog_post.category
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	category: prismic.KeyTextField;
+	
+	/**
+	 * Short Summary Description field in *Blog Post*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Brief description...
+	 * - **API ID Path**: blog_post.description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	description: prismic.KeyTextField;
+	
+	/**
+	 * Detailed Article Content field in *Blog Post*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: Full paragraphs of the blog post...
+	 * - **API ID Path**: blog_post.detailedContent
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	detailedContent: prismic.RichTextField;
+	
+	/**
+	 * Cover Image field in *Blog Post*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: blog_post.image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+	
+	/**
+	 * Publication Date String field in *Blog Post*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 18. Maijs, 2026
+	 * - **API ID Path**: blog_post.date
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	date: prismic.KeyTextField;
+	
+	/**
+	 * Author Name field in *Blog Post*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Dr. Līga Ozoliņa
+	 * - **API ID Path**: blog_post.author
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	author: prismic.KeyTextField;
+	
+	/**
+	 * Reading Time field in *Blog Post*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 4 MIN
+	 * - **API ID Path**: blog_post.readTime
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	readTime: prismic.KeyTextField;
+}
+
+/**
+ * Blog Post document from Prismic
+ *
+ * - **API ID**: `blog_post`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type BlogPostDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<BlogPostDocumentData>, "blog_post", Lang>;
+
+/**
  * Item in *Chat Configuration → Chat Suggestion Buttons*
  */
 export interface ChatConfigDocumentDataSuggestionsItem {
@@ -791,6 +895,99 @@ interface PageDocumentData {
 export type PageDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<PageDocumentData>, "page", Lang>;
 
 /**
+ * Content for Service documents
+ */
+interface ServiceDocumentData {
+	/**
+	 * Title field in *Service*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Terapeitiskā zobārstniecība
+	 * - **API ID Path**: service.title
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Short Description field in *Service*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Brief service summary...
+	 * - **API ID Path**: service.description
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	description: prismic.KeyTextField;
+	
+	/**
+	 * Detailed Info field in *Service*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: Long descriptive paragraph of the service...
+	 * - **API ID Path**: service.detailedInfo
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	detailedInfo: prismic.RichTextField;
+	
+	/**
+	 * Price Range field in *Service*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: no 60 €
+	 * - **API ID Path**: service.priceRange
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	priceRange: prismic.KeyTextField;
+	
+	/**
+	 * Duration field in *Service*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 30 - 60 min
+	 * - **API ID Path**: service.duration
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	duration: prismic.KeyTextField;
+	
+	/**
+	 * Icon Name (Lucide) field in *Service*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: ShieldCheck, Sparkles, Droplet, Scissors, Activity
+	 * - **API ID Path**: service.iconName
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	iconName: prismic.KeyTextField;
+	
+	/**
+	 * Service Image field in *Service*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: service.image
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	image: prismic.ImageField<never>;
+}
+
+/**
+ * Service document from Prismic
+ *
+ * - **API ID**: `service`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type ServiceDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<ServiceDocumentData>, "service", Lang>;
+
+/**
  * Content for Settings documents
  */
 interface SettingsDocumentData {
@@ -971,7 +1168,133 @@ interface SettingsDocumentData {
  */
 export type SettingsDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<SettingsDocumentData>, "settings", Lang>;
 
-export type AllDocumentTypes = ChatConfigDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | SettingsDocument;
+/**
+ * Content for Testimonial documents
+ */
+interface TestimonialDocumentData {
+	/**
+	 * Author Name field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Kristaps Zariņš
+	 * - **API ID Path**: testimonial.author
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	author: prismic.KeyTextField;
+	
+	/**
+	 * Initials field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: KZ
+	 * - **API ID Path**: testimonial.initials
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	initials: prismic.KeyTextField;
+	
+	/**
+	 * Background Color Class field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: bg-[#511B29] text-white
+	 * - **API ID Path**: testimonial.bgColor
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	bgColor: prismic.KeyTextField;
+	
+	/**
+	 * Treatment Received field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Zobu implantācija (Straumann)
+	 * - **API ID Path**: testimonial.treatment
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	treatment: prismic.KeyTextField;
+	
+	/**
+	 * Doctor Name field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Dr. Jānis Kalniņš
+	 * - **API ID Path**: testimonial.doctor
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	doctor: prismic.KeyTextField;
+	
+	/**
+	 * Rating (1-5) field in *Testimonial*
+	 *
+	 * - **Field Type**: Number
+	 * - **Placeholder**: 5
+	 * - **API ID Path**: testimonial.rating
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/number
+	 */
+	rating: prismic.NumberField;
+	
+	/**
+	 * Date String field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: 12.04.2026
+	 * - **API ID Path**: testimonial.date
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	date: prismic.KeyTextField;
+	
+	/**
+	 * Advantage Tag field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Premium kvalitāte
+	 * - **API ID Path**: testimonial.advTag
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	advTag: prismic.KeyTextField;
+	
+	/**
+	 * Short Quote Summary field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Painless Swiss implants...
+	 * - **API ID Path**: testimonial.quote
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	quote: prismic.KeyTextField;
+	
+	/**
+	 * Full Experience Story field in *Testimonial*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Full story detailed description...
+	 * - **API ID Path**: testimonial.story
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	story: prismic.KeyTextField;
+}
+
+/**
+ * Testimonial document from Prismic
+ *
+ * - **API ID**: `testimonial`
+ * - **Repeatable**: `true`
+ * - **Documentation**: https://prismic.io/docs/content-modeling
+ *
+ * @typeParam Lang - Language API ID of the document.
+ */
+export type TestimonialDocument<Lang extends string = string> = prismic.PrismicDocumentWithUID<Simplify<TestimonialDocumentData>, "testimonial", Lang>;
+
+export type AllDocumentTypes = BlogPostDocument | ChatConfigDocument | FooterDocument | HomepageDocument | MenuDocument | PageDocument | ServiceDocument | SettingsDocument | TestimonialDocument;
 
 /**
  * Primary content in *BlogGrid → Default → Primary*
@@ -2739,6 +3062,8 @@ declare module "@prismicio/client" {
 	
 	namespace Content {
 		export type {
+			BlogPostDocument,
+			BlogPostDocumentData,
 			ChatConfigDocument,
 			ChatConfigDocumentData,
 			ChatConfigDocumentDataSuggestionsItem,
@@ -2754,8 +3079,12 @@ declare module "@prismicio/client" {
 			PageDocument,
 			PageDocumentData,
 			PageDocumentDataSlicesSlice,
+			ServiceDocument,
+			ServiceDocumentData,
 			SettingsDocument,
 			SettingsDocumentData,
+			TestimonialDocument,
+			TestimonialDocumentData,
 			AllDocumentTypes,
 			BlogGridSlice,
 			BlogGridSliceDefaultPrimary,

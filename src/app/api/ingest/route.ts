@@ -231,7 +231,7 @@ ${clinic.accessibility_alert ? `Piezīme par pieejamību: ${clinic.accessibility
       }
 
       // 2. Process page and homepage documents
-      const title = doc.data?.meta_title || doc.data?.title || doc.uid || doc.type;
+      const title = (doc.data as any)?.meta_title || (doc.data as any)?.title || doc.uid || doc.type;
       const url = getPublicUrl(doc.type, doc.uid, doc.lang);
       const paragraphs = extractTextFromPrismic(doc.data);
 

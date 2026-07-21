@@ -5,8 +5,8 @@ import { useQuery, useMutation, useAction } from "convex/react";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { MessageSquare, X, Send, Trash2, Bot, User, Loader2, Sparkles } from "lucide-react";
-import { api } from "../../convex/_generated/api";
-import { Id } from "../../convex/_generated/dataModel";
+import { api } from "../../../convex/_generated/api";
+import { Id } from "../../../convex/_generated/dataModel";
 
 // Custom helper to parse basic markdown (**bold** and newlines)
 function formatMessageContent(content: string) {
