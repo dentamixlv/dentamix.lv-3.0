@@ -65,8 +65,30 @@ Return the JSON output matching the schema.`;
 
 function isClinicOpenNow(): boolean {
   try {
-    const rigaTimeStr = new Date().toLocaleString("en-US", { timeZone: "Europe/Riga" });
-    const rigaDate = new Date(rigaTimeStr);
+    const formatter = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Europe/Riga",
+      hour12: false,
+      year: "numeric",
+      month: "numeric",
+      day: "numeric",
+      hour: "numeric",
+    });
+    
+    const parts = formatter.formatToParts(new Date());
+    const partsMap: Record<string, number> = {};
+    for (const part of parts) {
+      if (part.type !== "literal") {
+        partsMap[part.type] = parseInt(part.value, 10);
+      }
+    }
+    
+    // Construct local date using Riga components
+    const rigaDate = new Date(
+      partsMap.year,
+      partsMap.month - 1,
+      partsMap.day,
+      partsMap.hour
+    );
     
     const day = rigaDate.getDay(); // 0 = Sunday, 1 = Monday, ..., 6 = Saturday
     const hour = rigaDate.getHours();
