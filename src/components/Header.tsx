@@ -285,7 +285,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
         </nav>
 
         {/* Header CTA Button & Mobile Trigger */}
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 lg:hidden">
           <Link
             href={getPath('contacts')}
             className="hidden sm:inline-flex items-center justify-center bg-white text-[#511B29] hover:bg-[#fbf9f8] active:scale-[0.98] transition-all px-6 py-3 rounded-full text-sm font-semibold cursor-pointer shadow-md shadow-[#511B29]/30"
