@@ -13,6 +13,7 @@ import type * as conversations from "../conversations.js";
 import type * as documents from "../documents.js";
 import type * as http from "../http.js";
 import type * as messages from "../messages.js";
+import type * as newsletter from "../newsletter.js";
 
 import type {
   ApiFromModules,
@@ -26,6 +27,7 @@ declare const fullApi: ApiFromModules<{
   documents: typeof documents;
   http: typeof http;
   messages: typeof messages;
+  newsletter: typeof newsletter;
 }>;
 
 /**

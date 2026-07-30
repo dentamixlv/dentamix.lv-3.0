@@ -28,9 +28,15 @@ export function renderPageLayout(
   }
 
   const pageBlockIndex = slices.findIndex(s => s.slice_type === 'page_block');
-  const widgetBlockIndex = slices.findIndex(s => s.slice_type === 'widget_block');
+  
+  // Find the first widget slice (either widget_block or a newsletter_block sidebar widget)
+  const isRightColumnSlice = (s: any) => 
+    s.slice_type === 'widget_block' || 
+    (s.slice_type === 'newsletter_block' && s.variation === 'sidebar');
+    
+  const widgetBlockIndex = slices.findIndex(s => isRightColumnSlice(s));
 
-  // If no WidgetBlock (sidebar) is present, render everything full-width sequentially
+  // If no WidgetBlock or sidebar-variant NewsletterBlock is present, render everything full-width sequentially
   if (widgetBlockIndex === -1) {
     return (
       <PageStaggerWrapper>
@@ -42,7 +48,7 @@ export function renderPageLayout(
   }
 
   // Find the index of the first layout block
-  const firstLayoutIndex = pageBlockIndex !== -1 && pageBlockIndex < widgetBlockIndex
+  const firstLayoutIndex = pageBlockIndex !== -1 && (widgetBlockIndex === -1 || pageBlockIndex < widgetBlockIndex)
     ? pageBlockIndex
     : widgetBlockIndex;
 
@@ -63,12 +69,16 @@ export function renderPageLayout(
   // Slices inside the main left content column
   const leftColumnSlices = slices.filter((s, idx) => 
     idx >= firstLayoutIndex && 
-    s.slice_type !== 'widget_block' &&
+    !isRightColumnSlice(s) &&
     !(idx > widgetBlockIndex && bottomSliceTypes.includes(s.slice_type))
   );
 
-  // The sidebar widget slice
-  const rightColumnSlice = slices[widgetBlockIndex];
+  // Group all widgets (multiple stacked sidebar items) into the right column
+  const rightColumnSlices = slices.filter((s, idx) => 
+    idx >= firstLayoutIndex && 
+    isRightColumnSlice(s) &&
+    !(idx > widgetBlockIndex && bottomSliceTypes.includes(s.slice_type))
+  );
 
   // Slices below the layout grid (e.g. bottom CTABlocks, footer content)
   const bottomSlices = slices.filter((s, idx) => 
@@ -108,7 +118,7 @@ export function renderPageLayout(
           {/* Right Sidebar Column */}
           <div className="lg:col-span-1 space-y-6">
             <SliceZone 
-              slices={[rightColumnSlice]} 
+              slices={rightColumnSlices} 
               components={pageComponents} 
               context={{ ...context, isEmbedded: true }} 
             />

@@ -21,4 +21,5 @@ export const components = {
   doctor_grid: dynamic(() => import("./DoctorGrid")),
   faq_block: dynamic(() => import("./FAQBlock")),
   photo_block: dynamic(() => import("./PhotoBlock")),
+  newsletter_block: dynamic(() => import("./NewsletterBlock")),
 };

@@ -1,0 +1,67 @@
+{
+  "id": "newsletter_block",
+  "type": "SharedSlice",
+  "name": "NewsletterBlock",
+  "description": "Newsletter subscription block for page contents or sidebar widget.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "default",
+      "description": "Default full-width page newsletter subscription banner",
+      "primary": {
+        "badge_text": {
+          "type": "Text",
+          "config": {
+            "label": "Badge text",
+            "placeholder": "Email updates"
+          }
+        },
+        "title": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Title",
+            "placeholder": "Newsletter",
+            "allowTargetBlank": true,
+            "single": "heading1,heading2,heading3,heading4,heading5,heading6"
+          }
+        },
+        "description": {
+          "type": "StructuredText",
+          "config": {
+            "label": "Description",
+            "placeholder": "Subscribe to receive the latest updates, special offers...",
+            "allowTargetBlank": true,
+            "multi": "paragraph,preformatted"
+          }
+        }
+      },
+      "items": {}
+    },
+    {
+      "id": "sidebar",
+      "name": "Sidebar Widget",
+      "docURL": "...",
+      "version": "sidebar",
+      "description": "Compact newsletter subscription card designed for the sidebar",
+      "primary": {
+        "title": {
+          "type": "Text",
+          "config": {
+            "label": "Widget Title",
+            "placeholder": "Newsletter"
+          }
+        },
+        "description": {
+          "type": "Text",
+          "config": {
+            "label": "Widget Description",
+            "placeholder": "Subscribe to receive the latest updates..."
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}

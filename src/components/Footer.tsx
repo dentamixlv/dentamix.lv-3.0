@@ -6,6 +6,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 import { getClinics } from '../data';
+import NewsletterForm from './NewsletterForm';
 
 interface FooterProps {
   logoText?: string;
@@ -172,11 +173,12 @@ export default function Footer({
 
       {/* Upper Footer section with Grid */}
       <div className="max-w-7xl mx-auto px-6 pt-8 pb-16 md:pb-24 grid grid-cols-1 md:grid-cols-3 gap-12 lg:gap-20 items-start text-left">
-        {/* Column 1: Brand Info */}
-        <div className="flex flex-col gap-5">
+        {/* Column 1: Brand Info & Newsletter */}
+        <div className="flex flex-col gap-8">
           <p className="text-[#989999] text-sm leading-relaxed max-w-sm font-medium">
             {description || t.quote}
           </p>
+          <NewsletterForm variant="footer" />
         </div>
 
         {/* Column 2: Mūsu Klīnikas */}

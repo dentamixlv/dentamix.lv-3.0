@@ -40,4 +40,9 @@ export default defineSchema({
     ),
     updatedAt: v.number(),
   }).index("by_locale", ["locale"]),
+  newsletterSubscriptions: defineTable({
+    email: v.string(),
+    locale: v.string(),
+    status: v.string(),
+  }).index("by_email", ["email"]),
 });
