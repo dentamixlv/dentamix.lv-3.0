@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { useMutation } from 'convex/react';
-import { Mail, Check, AlertCircle, X } from 'lucide-react';
+import { Mail, Check, AlertCircle, X, ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { api } from '../../convex/_generated/api';
 
@@ -164,7 +164,7 @@ export default function NewsletterForm({
               placeholder={text.placeholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#1e2021]/80 border border-[#2d3031] focus:border-[#de7c8a] rounded-xl px-4 py-3 text-sm text-white placeholder-[#5e6061] outline-none transition-all duration-300 pr-10"
+              className="w-full bg-[#1e2021]/80 border border-[#de7c8a] rounded-xl px-4 py-3 text-sm text-white placeholder-[#5e6061] outline-none transition-all duration-300 pr-10"
               disabled={submitting}
             />
             <button
@@ -261,14 +261,14 @@ export default function NewsletterForm({
             <button
               type="submit"
               disabled={submitting}
-              className="w-full px-5 py-3 bg-[#511B29] hover:bg-[#632233] active:scale-[0.98] text-white rounded-xl text-xs font-bold shadow-md shadow-[#511B29]/10 hover:shadow-lg transition-all duration-200 text-center cursor-pointer flex items-center justify-center gap-2"
+              className="w-full px-5 py-3 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-xs font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer flex items-center justify-center gap-2 group"
             >
               {submitting ? (
                 <span className="block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               ) : (
                 <>
-                  <Mail className="w-3.5 h-3.5" />
                   <span>{text.button}</span>
+                  <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </button>
@@ -369,14 +369,14 @@ export default function NewsletterForm({
             <button
               type="submit"
               disabled={submitting}
-              className="px-8 py-4 bg-[#511B29] hover:bg-[#632233] active:scale-[0.98] text-white rounded-full text-sm font-bold shadow-lg shadow-[#511B29]/10 hover:shadow-xl transition-all duration-200 text-center cursor-pointer flex items-center justify-center gap-2 group shrink-0"
+              className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-sm font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer flex items-center justify-center gap-2 group shrink-0"
             >
               {submitting ? (
                 <span className="block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               ) : (
                 <>
                   <span>{text.button}</span>
-                  <Mail className="w-4 h-4 group-hover:scale-110 transition-transform" />
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </>
               )}
             </button>
