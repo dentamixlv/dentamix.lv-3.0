@@ -12,7 +12,7 @@ const t = {
   lv: {
     title: "Jaunumi",
     badge: "E-pasta jaunumi",
-    desc: "Pierakstieties jaunumiem, lai saņemtu jaunāko informāciju, īpašos piedāvājumus un padomus zobu kopšanā.",
+    desc: "Pieraksties jaunumiem, lai saņemtu jaunāko informāciju, īpašos piedāvājumus un padomus zobu kopšanā.",
     placeholder: "Jūsu e-pasta adrese",
     button: "Pierakstīties",
     success_subscribed: "Paldies! Jūs esat veiksmīgi pierakstījies.",
@@ -141,7 +141,7 @@ export default function NewsletterForm({
         <h4 className="text-[0.625rem] font-extrabold uppercase tracking-widest text-[#de7c8a]">
           {displayTitle}
         </h4>
-        <p className="text-xs text-[#989999] leading-relaxed">
+        <p className="text-sm text-[#989999] leading-relaxed font-medium">
           {displayDesc}
         </p>
         
@@ -213,7 +213,7 @@ export default function NewsletterForm({
         </form>
 
         {/* GDPR Notice */}
-        <p className="text-[10px] text-[#5e6061] leading-normal font-medium mt-0.5">
+        <p className="text-sm text-[#5e6061] leading-relaxed font-medium mt-0.5">
           {text.gdpr_prefix}
           <Link href={gdprLink} className="underline text-[#989999] hover:text-white transition-colors">
             {text.gdpr_link_text}
