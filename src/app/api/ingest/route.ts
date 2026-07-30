@@ -182,6 +182,15 @@ export async function GET(request: Request) {
   if (request.method === "HEAD") {
     return new Response(null, { status: 200 });
   }
+
+  const { searchParams } = new URL(request.url);
+  const secret = searchParams.get("secret");
+  const ingestSecret = process.env.INGEST_SECRET;
+
+  if (!ingestSecret || secret !== ingestSecret) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const warnings: string[] = [];
   try {
     const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL || "";

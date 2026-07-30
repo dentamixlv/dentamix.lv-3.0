@@ -1,5 +1,5 @@
 import { ConvexError, v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalMutation, mutation, query } from "./_generated/server";
 
 export const list = query({
   args: {
@@ -74,7 +74,7 @@ export const send = mutation({
   },
 });
 
-export const updateContent = mutation({
+export const updateContent = internalMutation({
   args: {
     messageId: v.id("messages"),
     content: v.string(),

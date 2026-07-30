@@ -1,8 +1,8 @@
 import { v } from "convex/values";
-import { action, mutation, query } from "./_generated/server";
-import { api } from "./_generated/api";
+import { action, internalMutation, internalQuery, mutation, query } from "./_generated/server";
+import { api, internal } from "./_generated/api";
 
-export const getByIds = query({
+export const getByIds = internalQuery({
   args: {
     ids: v.array(v.id("documents")),
   },
@@ -18,14 +18,14 @@ export const getByIds = query({
   },
 });
 
-export const listAll = query({
+export const listAll = internalQuery({
   args: {},
   handler: async (ctx) => {
     return await ctx.db.query("documents").collect();
   },
 });
 
-export const insert = mutation({
+export const insert = internalMutation({
   args: {
     text: v.string(),
     source: v.string(),
@@ -40,7 +40,7 @@ export const insert = mutation({
   },
 });
 
-export const clear = mutation({
+export const clear = internalMutation({
   args: {},
   handler: async (ctx) => {
     const docs = await ctx.db.query("documents").collect();
@@ -61,7 +61,7 @@ export const ingest = action({
   },
   handler: async (ctx, args) => {
     // 1. Clear existing documents
-    await ctx.runMutation(api.documents.clear);
+    await ctx.runMutation(internal.documents.clear);
 
     // 2. Initialize Credentials
     const apiKey = process.env.DENTAMIX_AI_API_KEY;
@@ -123,7 +123,7 @@ export const ingest = action({
 
       if (success && embedding) {
         try {
-          await ctx.runMutation(api.documents.insert, {
+          await ctx.runMutation(internal.documents.insert, {
             text: chunk.text,
             source: chunk.source,
             embedding,

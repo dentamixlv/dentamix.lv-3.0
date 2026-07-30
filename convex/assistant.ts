@@ -141,7 +141,7 @@ export const respond = action({
     });
 
     // Fetch conversation first to see if we already have the user's name
-    const conversation: Doc<"conversations"> | null = await ctx.runQuery(api.conversations.get, {
+    const conversation: Doc<"conversations"> | null = await ctx.runQuery(internal.conversations.get, {
       id: args.conversationId,
     });
 
@@ -179,7 +179,7 @@ export const respond = action({
       const extractedName = await extractUserName(genAI, args.userMessageText, history);
       if (extractedName) {
         userName = extractedName;
-        await ctx.runMutation(api.conversations.updateUserName, {
+        await ctx.runMutation(internal.conversations.updateUserName, {
           id: args.conversationId,
           userName: extractedName,
         });
@@ -215,7 +215,7 @@ export const respond = action({
 
           if (searchResults.length > 0) {
             const docIds = searchResults.map((r) => r._id);
-            const docs: Doc<"documents">[] = await ctx.runQuery(api.documents.getByIds, { ids: docIds });
+            const docs: Doc<"documents">[] = await ctx.runQuery(internal.documents.getByIds, { ids: docIds });
             retrievedContext = docs.map((doc) => `[Source: ${doc.source}]\n${doc.text}`).join("\n\n");
           }
         }
@@ -325,7 +325,7 @@ ${dbCoreContacts}`;
           }
 
           if (accumulatedContent) {
-            await ctx.runMutation(api.messages.updateContent, {
+            await ctx.runMutation(internal.messages.updateContent, {
               messageId: assistantMessageId,
               content: accumulatedContent,
             });
@@ -358,7 +358,7 @@ ${dbCoreContacts}`;
     if (!success) {
       console.error("Error streaming response from Google Gemini API after retries:", lastError);
       accumulatedContent += "\n\n(Atvainojiet, radās kļūda saziņā ar serveri. Lūdzu, mēģiniet vēlreiz. / Sorry, an error occurred while connecting to the server. Please try again.)";
-      await ctx.runMutation(api.messages.updateContent, {
+      await ctx.runMutation(internal.messages.updateContent, {
         messageId: assistantMessageId,
         content: accumulatedContent,
       });
@@ -472,7 +472,7 @@ export const getVoiceConfig = action({
 
     let priceListText = "";
     try {
-      const allDocs = await ctx.runQuery(api.documents.listAll);
+      const allDocs = await ctx.runQuery(internal.documents.listAll);
       const targetSource = prismicLocale === "en-us" ? "/en/prices" : "/cenas";
       const priceDocs = allDocs.filter((d) => d.source.includes(targetSource));
       priceListText = priceDocs.map((d) => d.text).join("\n\n");
@@ -482,7 +482,7 @@ export const getVoiceConfig = action({
     
     let userName: string | undefined = undefined;
     if (args.conversationId) {
-      const conversation = await ctx.runQuery(api.conversations.get, {
+      const conversation = await ctx.runQuery(internal.conversations.get, {
         id: args.conversationId,
       });
       if (conversation?.userName) {

@@ -1,5 +1,5 @@
 import { v } from "convex/values";
-import { mutation, query } from "./_generated/server";
+import { internalMutation, internalQuery, mutation, query } from "./_generated/server";
 
 export const create = mutation({
   args: {
@@ -14,13 +14,16 @@ export const create = mutation({
   },
 });
 
-export const list = query({
-  args: {},
-  handler: async (ctx) => {
+export const list = internalQuery({
+  args: {
+    limit: v.optional(v.number()),
+  },
+  handler: async (ctx, args) => {
+    const limit = args.limit ?? 50;
     return await ctx.db
       .query("conversations")
       .order("desc")
-      .collect();
+      .take(limit);
   },
 });
 
@@ -44,14 +47,14 @@ export const remove = mutation({
   },
 });
 
-export const get = query({
+export const get = internalQuery({
   args: { id: v.id("conversations") },
   handler: async (ctx, args) => {
     return await ctx.db.get(args.id);
   },
 });
 
-export const updateUserName = mutation({
+export const updateUserName = internalMutation({
   args: {
     id: v.id("conversations"),
     userName: v.string(),
