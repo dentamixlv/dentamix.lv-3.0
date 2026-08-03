@@ -47,7 +47,7 @@ export default function CTABlock({
   const isTitleString = typeof title === 'string';
   const isDescString = typeof description === 'string';
 
-  const buttonClass = "px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0 relative z-10";
+  const buttonClass = "px-8 py-4 bg-[#de7c8a] hover:bg-[#e38c98] active:scale-[0.98] text-[#511B29] rounded-full text-base font-bold shadow-lg shadow-[#de7c8a]/25 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group shrink-0 relative z-10";
   const hasCustomBg = style?.background || style?.backgroundColor;
 
   return (

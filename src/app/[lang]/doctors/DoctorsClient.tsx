@@ -186,7 +186,7 @@ export default function DoctorsClient({ langCode, customDoctors, hideHeader = fa
               </p>
               <Link
                 href={`${langPrefix}/contacts`}
-                className="inline-block px-10 py-4 bg-[#511B29] hover:bg-[#5d1726] text-white font-bold rounded-full text-sm tracking-uppercase active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-[#511B29]/20 uppercase"
+                className="inline-block px-10 py-4 bg-[#de7c8a] hover:bg-[#e38c98] text-[#511B29] font-bold rounded-full text-sm tracking-uppercase active:scale-[0.98] transition-all cursor-pointer shadow-lg shadow-[#de7c8a]/25 uppercase"
                 id="team-bottom-cta-btn"
               >
                 {t.bookVisit}
