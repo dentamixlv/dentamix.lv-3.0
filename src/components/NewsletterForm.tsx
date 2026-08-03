@@ -12,7 +12,7 @@ const t = {
   lv: {
     title: "Jaunumi",
     badge: "E-pasta jaunumi",
-    desc: "Pieraksties jaunumiem, lai saņemtu jaunāko informāciju, īpašos piedāvājumus un padomus zobu kopšanā.",
+    desc: "Pieraksties jaunumiem, saņem jaunāko informāciju, īpašos piedāvājumus un padomus zobu kopšanā. Bez spam.",
     placeholder: "Jūsu e-pasta adrese",
     button: "Pierakstīties",
     success_subscribed: "Paldies! Jūs esat veiksmīgi pierakstījies.",
