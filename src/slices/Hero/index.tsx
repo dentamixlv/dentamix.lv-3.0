@@ -128,7 +128,7 @@ export default function Hero({ slice }: HeroProps) {
           {isFilled.link(primary.cta_link) ? (
             <PrismicNextLink
               field={primary.cta_link}
-              className="px-8 py-4 bg-[#de7c8a] hover:bg-[#e38c98] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#de7c8a]/25 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
+              className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
               id="hero-primary-btn"
             >
               {ctaText}
@@ -137,7 +137,7 @@ export default function Hero({ slice }: HeroProps) {
           ) : (
             <Link
               href={isEn ? '/en/contacts' : '/kontakti'}
-              className="px-8 py-4 bg-[#de7c8a] hover:bg-[#e38c98] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#de7c8a]/25 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
+              className="px-8 py-4 bg-[#511B29] hover:bg-[#5d1726] active:scale-[0.98] text-white rounded-full text-base font-bold shadow-lg shadow-[#511B29]/20 transition-all text-center cursor-pointer inline-flex items-center justify-center gap-2 group"
               id="hero-primary-btn"
             >
               {ctaText}
