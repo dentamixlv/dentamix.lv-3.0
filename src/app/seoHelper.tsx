@@ -72,6 +72,169 @@ export function SEOStructuredData({
   );
 }
 
+function parseDateSafe(dateStr?: string | null): string | null {
+  if (!dateStr) return null;
+  const timestamp = Date.parse(dateStr);
+  if (!isNaN(timestamp)) {
+    return new Date(timestamp).toISOString();
+  }
+  
+  try {
+    const cleanStr = dateStr.replace(',', '').trim();
+    const parts = cleanStr.split(/\s+/);
+    if (parts.length === 3) {
+      const day = parseInt(parts[0].replace('.', ''));
+      const monthStr = parts[1].toLowerCase();
+      const year = parseInt(parts[2]);
+      
+      const months: Record<string, number> = {
+        janvāris: 0, janvaris: 0, jan: 0,
+        februāris: 1, februaris: 1, feb: 1,
+        marts: 2, mar: 2,
+        aprīlis: 3, aprilis: 3, apr: 3,
+        maijs: 4, mai: 4, may: 4,
+        jūnijs: 5, junijs: 5, jun: 5,
+        jūlijs: 6, julijs: 6, jul: 6,
+        augusts: 7, aug: 7,
+        septembris: 8, sep: 8,
+        oktobris: 9, okt: 9, oct: 9,
+        novembris: 10, nov: 10,
+        decembris: 11, dec: 11,
+      };
+      
+      let month = 4;
+      for (const key in months) {
+        if (monthStr.startsWith(key)) {
+          month = months[key];
+          break;
+        }
+      }
+      
+      if (!isNaN(day) && !isNaN(year)) {
+        return new Date(year, month, day).toISOString();
+      }
+    }
+  } catch (e) {
+    // Ignore
+  }
+  return null;
+}
+
+interface BlogPostStructuredDataProps {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl?: string | null;
+  url?: string;
+  datePublished?: string | null;
+  dateModified?: string | null;
+  authorName?: string | null;
+}
+
+/**
+ * Renders structured data (JSON-LD BlogPosting schema) using Next.js Script component.
+ */
+export function SEOBlogPostStructuredData({
+  id,
+  title,
+  description,
+  imageUrl,
+  url,
+  datePublished,
+  dateModified,
+  authorName,
+}: BlogPostStructuredDataProps) {
+  const publishedIso = parseDateSafe(datePublished);
+  const modifiedIso = parseDateSafe(dateModified);
+
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": title,
+    "description": description,
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": url || "https://dentamix.lv",
+    },
+    "publisher": {
+      "@type": "Dentist",
+      "name": "Dentamix",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://dentamix.lv/favicon.ico",
+      },
+    },
+  };
+
+  if (imageUrl && imageUrl.trim() !== '') {
+    schema["image"] = imageUrl;
+  }
+  if (publishedIso) {
+    schema["datePublished"] = publishedIso;
+  }
+  if (modifiedIso) {
+    schema["dateModified"] = modifiedIso;
+  }
+  if (authorName && authorName.trim() !== '') {
+    schema["author"] = {
+      "@type": "Person",
+      "name": authorName,
+    };
+  }
+
+  return (
+    <Script
+      id={`jsonld-blog-seo-${id}`}
+      strategy="afterInteractive"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
+interface MedicalProcedureStructuredDataProps {
+  id: string;
+  title: string;
+  description: string;
+  imageUrl?: string | null;
+  url?: string;
+}
+
+/**
+ * Renders structured data (JSON-LD MedicalProcedure schema) using Next.js Script component.
+ */
+export function SEOMedicalProcedureStructuredData({
+  id,
+  title,
+  description,
+  imageUrl,
+  url,
+}: MedicalProcedureStructuredDataProps) {
+  const schema: Record<string, any> = {
+    "@context": "https://schema.org",
+    "@type": "MedicalProcedure",
+    "name": title,
+    "description": description,
+    "bodyLocation": "Mouth",
+  };
+
+  if (imageUrl && imageUrl.trim() !== '') {
+    schema["image"] = imageUrl;
+  }
+  if (url && url.trim() !== '') {
+    schema["url"] = url;
+  }
+
+  return (
+    <Script
+      id={`jsonld-procedure-seo-${id}`}
+      strategy="afterInteractive"
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    />
+  );
+}
+
 /**
  * Renders structured data (JSON-LD Dentist schema) using Next.js Script component.
  * Supports dynamic clinics fetched from Prismic (the footer doc) with a static fallback.

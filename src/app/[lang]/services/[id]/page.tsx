@@ -6,7 +6,7 @@ import { getPrismicLocale } from '../../page';
 import { getServices } from '../../../../data';
 import { renderPageLayout } from '../../../layoutHelper';
 import { components } from '../../../../slices';
-import { constructMetadata, SEOStructuredData, getAlternativeLanguageRedirect } from '../../../seoHelper';
+import { constructMetadata, SEOStructuredData, SEOMedicalProcedureStructuredData, getAlternativeLanguageRedirect } from '../../../seoHelper';
 import { LanguageUpdater } from '../../../../components/LanguageContext';
 
 interface PageProps {
@@ -88,15 +88,18 @@ export default async function Page({ params }: PageProps) {
   const description = pageDoc?.data?.meta_description || service?.description || '';
   const imageUrl = pageDoc?.data?.schema_image?.url || null;
 
+  const serviceUrl = `https://dentamix.lv${locale === 'en-us' ? `/en/services/${id}` : `/pakalpojumi/${id}`}`;
+
   if (slices && slices.length > 0) {
     return (
       <>
         <LanguageUpdater url={alternateLanguageUrl} />
-        <SEOStructuredData
+        <SEOMedicalProcedureStructuredData
           id={`service-${id}`}
           title={title}
           description={description}
           imageUrl={imageUrl}
+          url={serviceUrl}
         />
         {renderPageLayout(slices, components, {
           showBackButton: true,
@@ -114,11 +117,12 @@ export default async function Page({ params }: PageProps) {
   return (
     <>
       <LanguageUpdater url={alternateLanguageUrl} />
-      <SEOStructuredData
+      <SEOMedicalProcedureStructuredData
         id={`service-${id}`}
         title={title}
         description={description}
         imageUrl={imageUrl}
+        url={serviceUrl}
       />
       <ServiceClient service={service} langCode={locale} />
     </>

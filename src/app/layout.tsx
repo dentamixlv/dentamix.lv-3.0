@@ -84,6 +84,7 @@ export default async function RootLayout({
   return (
     <html lang={htmlLang} className={`${manrope.variable} ${playfairDisplay.variable}`}>
       <head>
+        <link rel="alternate" type="text/markdown" title="LLM-friendly version" href="/llms.txt" />
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-H5G60JK2JS"
           strategy="lazyOnload"
