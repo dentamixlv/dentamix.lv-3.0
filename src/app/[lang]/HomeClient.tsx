@@ -115,26 +115,7 @@ const getFallbackSlices = (langCode: string) => [
         ? "We partner with the world's leading Swiss, German, and Finnish medical brands to guarantee excellence in every smile."
         : "Sadarbojamies ar pasaulē vadošajiem Šveices, Vācijas un Somijas medicīnas zīmoliem, lai garantētu izcilību katrā smaidā."
     },
-    items: [
-      {
-        logo: { url: "", alt: "" }
-      },
-      {
-        logo: { url: "", alt: "" }
-      },
-      {
-        logo: { url: "", alt: "" }
-      },
-      {
-        logo: { url: "", alt: "" }
-      },
-      {
-        logo: { url: "", alt: "" }
-      },
-      {
-        logo: { url: "", alt: "" }
-      }
-    ]
+    items: []
   }
 ];
 

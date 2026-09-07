@@ -1,9 +1,9 @@
 allowBuilds:
-  '@google/genai': set this to true or false
-  '@scarf/scarf': set this to true or false
+  '@google/genai': false
+  '@scarf/scarf': false
   esbuild: false
-  protobufjs: set this to true or false
-  sharp: set this to true or false
+  protobufjs: false
+  sharp: true
 
 overrides:
   postcss: '>=8.5.10'
