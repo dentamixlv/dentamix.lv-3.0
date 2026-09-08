@@ -57,7 +57,7 @@ export default function TestimonialBlock({ slice, context }: TestimonialBlockPro
       author: "Juris K.",
       testimonial_text: isEn 
         ? "Dr. Bērziņš is a true professional. The implant surgery was completely painless, and the result is outstanding."
-        : "Dr. Bērziņš ir klīnikas Dentamic dibinātājs un medicīniskais direktors. Viņš ir viens no cienījamākajiem zobārstniecības ekspertiem Latvijā ar vairāk nekā 20 gadu pieredzi.",
+        : "Dr. Bērziņš ir klīnikas Dentamix dibinātājs un medicīniskais direktors. Viņš ir viens no cienījamākajiem zobārstniecības ekspertiem Latvijā ar vairāk nekā 20 gadu pieredzi.",
       date: isEn ? "May 10, 2026" : "10. Maijs, 2026",
       rating: 5
     },

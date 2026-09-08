@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallback = locale === 'en-us' ? {
-    title: 'Patient Testimonials | Dentamic Dental Clinic',
-    description: 'Read reviews and smile stories from our happy patients at Dentamic Dental Clinic.',
+    title: 'Patient Testimonials | Dentamix Dental Clinic',
+    description: 'Read reviews and smile stories from our happy patients at Dentamix Dental Clinic.',
   } : {
-    title: 'Atsauksmes | Dentamic zobārstniecība',
+    title: 'Atsauksmes | Dentamix zobārstniecība',
     description: 'Pacientu patiesas atsauksmes un stāsti par veikto zobu labošanu un estētisko restaurāciju.',
   };
 
@@ -68,7 +68,7 @@ export default async function Page({ params }: PageProps) {
     console.warn("Failed to pre-fetch testimonials on the server", error);
   }
 
-  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Patient Testimonials | Dentamic Dental Clinic' : 'Atsauksmes | Dentamic zobārstniecība');
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Patient Testimonials | Dentamix Dental Clinic' : 'Atsauksmes | Dentamix zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 

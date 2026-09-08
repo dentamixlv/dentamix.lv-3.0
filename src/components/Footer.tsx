@@ -158,14 +158,14 @@ export default function Footer({
           {logoImage?.url ? (
             <Image 
               src={logoImage.url} 
-              alt={logoImage.alt || logoText || "Dentamic"} 
+              alt={logoImage.alt || logoText || "Dentamix"} 
               width={logoImage.dimensions?.width || 120}
               height={logoImage.dimensions?.height || 50}
               className="h-14 md:h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
             />
           ) : (
             <span className="text-3xl font-extrabold tracking-tight text-white font-serif relative select-none transition-opacity group-hover:opacity-95">
-              {logoText || 'Dentamic'}<span className="text-[#de7c8a]">.</span>
+              {logoText || 'Dentamix'}<span className="text-[#de7c8a]">.</span>
             </span>
           )}
         </Link>
@@ -385,7 +385,7 @@ export default function Footer({
       {/* Footer Bottom copyright */}
       <div className="border-t border-white/[0.06] bg-[#0f1011]">
         <div className="max-w-7xl mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-[#989999] font-medium">
-          <p>© {new Date().getFullYear()} {copyrightText || `Dentamic. ${t.allRightsReserved}`}</p>
+          <p>© {new Date().getFullYear()} {copyrightText || `Dentamix. ${t.allRightsReserved}`}</p>
           <div className="flex gap-6">
             <Link
               href={resolveLink(privacyPolicyLink) || (isEn ? '/en/privacy-policy' : '/privatuma-politika')}

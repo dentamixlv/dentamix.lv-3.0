@@ -31,11 +31,11 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallback = locale === 'en-us' ? {
-    title: 'Contact Us | Dentamic Dental Clinic',
-    description: 'Get in touch with Dentamic clinic branches in Riga and Adazi. Make an appointment or ask questions.',
+    title: 'Contact Us | Dentamix Dental Clinic',
+    description: 'Get in touch with Dentamix clinic branches in Riga and Adazi. Make an appointment or ask questions.',
   } : {
-    title: 'Kontakti | Dentamic zobārstniecība',
-    description: 'Sazinieties ar Dentamic Centra (Rīga) un Pierīgas (Ādaži) filiālēm. Aizpildiet pieteikumu vai zvaniet.',
+    title: 'Kontakti | Dentamix zobārstniecība',
+    description: 'Sazinieties ar Dentamix Centra (Rīga) un Pierīgas (Ādaži) filiālēm. Aizpildiet pieteikumu vai zvaniet.',
   };
 
   return constructMetadata(document?.data, locale, fallback, { type: 'contacts' });
@@ -61,7 +61,7 @@ export default async function Page({ params }: PageProps) {
     console.warn("No contacts page found in Prismic, falling back to static contact view.");
   }
 
-  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Contact Us | Dentamic Dental Clinic' : 'Kontakti | Dentamic zobārstniecība');
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Contact Us | Dentamix Dental Clinic' : 'Kontakti | Dentamix zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 

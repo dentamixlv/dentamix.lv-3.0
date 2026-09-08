@@ -39,7 +39,7 @@ export default function PhotoBlock({ slice, context }: PhotoBlockProps) {
     {
       image: {
         url: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=800",
-        alt: "Dentamic Clinic Interior"
+        alt: "Dentamix Clinic Interior"
       }
     },
     {

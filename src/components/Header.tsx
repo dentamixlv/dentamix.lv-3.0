@@ -227,14 +227,14 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
           {logoImage?.url ? (
             <Image 
               src={logoImage.url} 
-              alt={logoImage.alt || logoText || "Dentamic"} 
+              alt={logoImage.alt || logoText || "Dentamix"} 
               width={logoImage.dimensions?.width || 120}
               height={logoImage.dimensions?.height || 50}
               className="h-14 md:h-16 w-auto object-contain transition-opacity group-hover:opacity-90"
             />
           ) : (
             <span className="text-3xl font-extrabold tracking-tight text-white font-serif transition-opacity group-hover:opacity-95">
-              {logoText || 'Dentamic'}
+              {logoText || 'Dentamix'}
             </span>
           )}
         </Link>

@@ -29,7 +29,7 @@ export async function generateMetadata() {
   const faviconUrl = settings?.data?.favicon?.url || '/favicon.ico';
 
   return {
-    title: 'Dentamic | Premium zobārstniecības klīnika',
+    title: 'Dentamix | Premium zobārstniecības klīnika',
     description: 'Premium zobārstniecības klīnikas mājaslapa ar interaktīvu vizīšu pieteikšanas un speciālistu vizītkaršu sistēmu.',
     icons: {
       icon: faviconUrl,

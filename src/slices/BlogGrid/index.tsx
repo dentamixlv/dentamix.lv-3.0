@@ -153,7 +153,7 @@ export default function BlogGrid({ slice, context }: BlogGridProps) {
 
   const t = {
     tag: isEn ? 'Knowledge & Advice' : 'Zināšanas un padomi',
-    title: isEn ? 'Dentamic Blog' : 'Dentamic Blogs',
+    title: isEn ? 'Dentamix Blog' : 'Dentamix Blogs',
     sub: isEn 
       ? 'Specialist advice, latest technologies, and practical tips for successful oral care and a healthy smile.'
       : 'Speciālistu ieteikumi, jaunākās tehnoloģijas un praktiski padomi smaida aprūpei.'

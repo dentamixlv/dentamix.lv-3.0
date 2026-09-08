@@ -25,10 +25,10 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallback = locale === 'en-us' ? {
-    title: 'Dentamic Blog | Knowledge & Dental Advice',
+    title: 'Dentamix Blog | Knowledge & Dental Advice',
     description: 'Specialist advice, latest technologies, and practical tips for successful oral care and a healthy smile.',
   } : {
-    title: 'Blogs un padomi | Dentamic zobārstniecība',
+    title: 'Blogs un padomi | Dentamix zobārstniecība',
     description: 'Speciālistu ieteikumi, jaunākās tehnoloģijas un praktiski padomi smaida aprūpei.',
   };
 
@@ -56,7 +56,7 @@ export default async function Page({ params }: PageProps) {
     console.warn("Failed to pre-fetch blog posts on the server", error);
   }
 
-  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Dentamic Blog | Knowledge & Dental Advice' : 'Blogs un padomi | Dentamic zobārstniecība');
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Dentamix Blog | Knowledge & Dental Advice' : 'Blogs un padomi | Dentamix zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 
@@ -82,7 +82,7 @@ export default async function Page({ params }: PageProps) {
             {locale === 'en-us' ? 'KNOWLEDGE & ADVICE' : 'ZINĀŠANAS UN PADOMI'}
           </span>
           <h1 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight">
-            {locale === 'en-us' ? 'Dentamic Blog' : 'Dentamic Blogs'}
+            {locale === 'en-us' ? 'Dentamix Blog' : 'Dentamix Blogs'}
           </h1>
         </div>
       </div>

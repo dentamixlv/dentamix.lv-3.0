@@ -25,7 +25,7 @@ export const TESTIMONIALS_LV: Testimonial[] = [
     date: '05.05.2026',
     advTag: 'Absolūts komforts',
     quote: 'Bailes no zobārsta pilnībā izgaisa. Maigs pieskāriens un izcils rezultāts.',
-    story: 'Man vienmēr no bērnības bija milzīgas bailes no zobārsta krēsla, bet Dentamic klīnikā tās pilnībā izgaisa pirmās vizītes laikā. Dr. Anna Bērziņa ir neparasti mierīga un iejūtīga speciāliste, kura solis pa solim stāsta par katru darbību. Mana priekšzobu restaurācija izskatās tik dabiski, ka neviens nespēj pateikt, ka tie ir laboti. Esmu bezgala pateicīga.'
+    story: 'Man vienmēr no bērnības bija milzīgas bailes no zobārsta krēsla, bet Dentamix klīnikā tās pilnībā izgaisa pirmās vizītes laikā. Dr. Anna Bērziņa ir neparasti mierīga un iejūtīga speciāliste, kura solis pa solim stāsta par katru darbību. Mana priekšzobu restaurācija izskatās tik dabiski, ka neviens nespēj pateikt, ka tie ir laboti. Esmu bezgala pateicīga.'
   },
   {
     id: 'at-3',
@@ -106,7 +106,7 @@ export const TESTIMONIALS_EN: Testimonial[] = [
     date: '05.05.2026',
     advTag: 'Absolute Comfort',
     quote: 'My fear of the dentist completely vanished. Gentle touch and an exceptional result.',
-    story: 'I always had a huge fear of the dentist since childhood, but at Dentamic clinic, it vanished completely during my first visit. Dr. Anna Berzina is an unusually calm and empathetic specialist who explains every action step-by-step. My front teeth restoration looks so natural that nobody can tell they were repaired. I am incredibly grateful.'
+    story: 'I always had a huge fear of the dentist since childhood, but at Dentamix clinic, it vanished completely during my first visit. Dr. Anna Berzina is an unusually calm and empathetic specialist who explains every action step-by-step. My front teeth restoration looks so natural that nobody can tell they were repaired. I am incredibly grateful.'
   },
   {
     id: 'at-3',

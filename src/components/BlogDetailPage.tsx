@@ -78,7 +78,7 @@ export default function BlogDetailPage({ post, onBack, langCode = 'lv' }: BlogDe
 
           <div className="p-6 bg-[#fbf9f8] rounded-2xl border border-[#efedec] mt-8">
             <h4 className="text-[0.625rem] font-bold uppercase tracking-wider text-[#511B29] mb-2">
-              {isEn ? 'All procedures at Dentamic Clinic' : 'Visas procedūras klīnikā Dentamic'}
+              {isEn ? 'All procedures at Dentamix Clinic' : 'Visas procedūras klīnikā Dentamix'}
             </h4>
             <p className="text-sm md:text-base text-[#6a5b5e] leading-relaxed">
               {isEn 

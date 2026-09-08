@@ -29,13 +29,13 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallbackPost = getBlogPosts(locale).find(p => p.id === id);
-  const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
+  const suffix = locale === 'en-us' ? 'Dentamix Dental Clinic' : 'Dentamix zobārstniecība';
 
   const fallback = fallbackPost ? {
     title: `${fallbackPost.title} | ${suffix}`,
     description: fallbackPost.description || '',
   } : {
-    title: locale === 'en-us' ? 'Article Not Found | Dentamic' : 'Raksts nav atrasts | Dentamic',
+    title: locale === 'en-us' ? 'Article Not Found | Dentamix' : 'Raksts nav atrasts | Dentamix',
     description: '',
   };
 
@@ -83,7 +83,7 @@ export default async function Page({ params }: PageProps) {
 
   const post = getBlogPosts(locale).find(p => p.id === id) || null;
 
-  const title = pageDoc?.data?.meta_title || (post ? `${post.title} | ${locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība'}` : 'Dentamic');
+  const title = pageDoc?.data?.meta_title || (post ? `${post.title} | ${locale === 'en-us' ? 'Dentamix Dental Clinic' : 'Dentamix zobārstniecība'}` : 'Dentamix');
   const description = pageDoc?.data?.meta_description || post?.description || '';
   const imageUrl = pageDoc?.data?.schema_image?.url || null;
 

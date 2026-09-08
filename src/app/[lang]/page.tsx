@@ -34,10 +34,10 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallback = locale === 'en-us' ? {
-    title: 'Dentamic | Premium Dental Clinic',
+    title: 'Dentamix | Premium Dental Clinic',
     description: 'Premium dental clinic with advanced technology and personalized care in Riga and Adazi.',
   } : {
-    title: 'Dentamic | Premium zobārstniecības klīnika',
+    title: 'Dentamix | Premium zobārstniecības klīnika',
     description: 'Premium zobārstniecības klīnikas mājaslapa ar interaktīvu vizīšu pieteikšanas un speciālistu vizītkaršu sistemu.',
   };
 
@@ -110,7 +110,7 @@ export default async function Page({ params }: PageProps) {
     console.warn("Failed to pre-fetch homepage component data on server", err);
   }
 
-  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Dentamic | Premium Dental Clinic' : 'Dentamic | Premium zobārstniecības klīnika');
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Dentamix | Premium Dental Clinic' : 'Dentamix | Premium zobārstniecības klīnika');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 

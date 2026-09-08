@@ -29,13 +29,13 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallbackService = getServices(locale).find((s) => s.id === id);
-  const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
+  const suffix = locale === 'en-us' ? 'Dentamix Dental Clinic' : 'Dentamix zobārstniecība';
 
   const fallback = fallbackService ? {
     title: `${fallbackService.title} | ${suffix}`,
     description: fallbackService.description || '',
   } : {
-    title: locale === 'en-us' ? 'Service Not Found | Dentamic' : 'Pakalpojums nav atrasts | Dentamic',
+    title: locale === 'en-us' ? 'Service Not Found | Dentamix' : 'Pakalpojums nav atrasts | Dentamix',
     description: '',
   };
 
@@ -83,7 +83,7 @@ export default async function Page({ params }: PageProps) {
 
   const service = getServices(locale).find((s) => s.id === id) || null;
 
-  const defaultTitle = service ? `${service.title} | ${locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība'}` : 'Dentamic';
+  const defaultTitle = service ? `${service.title} | ${locale === 'en-us' ? 'Dentamix Dental Clinic' : 'Dentamix zobārstniecība'}` : 'Dentamix';
   const title = pageDoc?.data?.meta_title || defaultTitle;
   const description = pageDoc?.data?.meta_description || service?.description || '';
   const imageUrl = pageDoc?.data?.schema_image?.url || null;

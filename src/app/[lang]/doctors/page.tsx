@@ -36,10 +36,10 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallback = locale === 'en-us' ? {
-    title: 'Our Dentists | Dentamic Dental Clinic',
+    title: 'Our Dentists | Dentamix Dental Clinic',
     description: 'Meet our professional dental team. High clinical precision and compassionate care in Riga and Adazi.',
   } : {
-    title: 'Mūsu komanda | Dentamic zobārstniecība',
+    title: 'Mūsu komanda | Dentamix zobārstniecība',
     description: 'Profesionāli speciālisti, kas apvieno klīnisko precizitāti un personalizētu, iejūtīgu aprūpi.',
   };
 
@@ -70,7 +70,7 @@ export default async function Page({ params }: PageProps) {
     console.warn("No Prismic page document for 'doctors' found, falling back to standalone doctors list.");
   }
 
-  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Our Dentists | Dentamic Dental Clinic' : 'Mūsu komanda | Dentamic zobārstniecība');
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Our Dentists | Dentamix Dental Clinic' : 'Mūsu komanda | Dentamix zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 

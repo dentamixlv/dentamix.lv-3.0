@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallback = locale === 'en-us' ? {
-    title: 'About Us | Dentamic Dental Clinic',
-    description: 'Learn about Dentamic - a modern dental clinic combining advanced technology with personalized care in Riga and Adazi.',
+    title: 'About Us | Dentamix Dental Clinic',
+    description: 'Learn about Dentamix - a modern dental clinic combining advanced technology with personalized care in Riga and Adazi.',
   } : {
-    title: 'Par Mums | Dentamic zobārstniecība',
-    description: 'Uzziniet par Dentamic - mūsdienīgu zobārstniecības klīniku, kas apvieno jaunākās tehnoloģijas un individuālu pieeju.',
+    title: 'Par Mums | Dentamix zobārstniecība',
+    description: 'Uzziniet par Dentamix - mūsdienīgu zobārstniecības klīniku, kas apvieno jaunākās tehnoloģijas un individuālu pieeju.',
   };
 
   return constructMetadata(document?.data, locale, fallback, { type: 'about' });
@@ -62,7 +62,7 @@ export default async function Page({ params }: PageProps) {
     console.warn("No about/par-mums page found in Prismic, falling back to static about view.");
   }
 
-  const title = document?.data?.meta_title || (locale === 'en-us' ? 'About Us | Dentamic Dental Clinic' : 'Par Mums | Dentamic zobārstniecība');
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'About Us | Dentamix Dental Clinic' : 'Par Mums | Dentamix zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 

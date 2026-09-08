@@ -44,7 +44,7 @@ export default function BlogsClient({ langCode, customBlogPosts, hideHeader = fa
 
   const t = {
     tag: isEn ? 'Knowledge & Advice' : 'Zināšanas un padomi',
-    title: isEn ? 'Dentamic Blog' : 'Dentamic Blogs',
+    title: isEn ? 'Dentamix Blog' : 'Dentamix Blogs',
     sub: isEn 
       ? 'Specialist advice, latest technologies, and practical tips for successful oral care and a healthy smile.'
       : 'Speciālistu ieteikumi, jaunākās tehnoloģijas un praktiski padomi veiksmīgai mutes dobuma un smaida aprūpei.',

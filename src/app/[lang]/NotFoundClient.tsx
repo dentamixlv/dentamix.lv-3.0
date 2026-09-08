@@ -25,7 +25,7 @@ export default function NotFoundClient({
 
   return (
     <>
-      <title>{isEn ? 'Page Not Found | Dentamic' : 'Lapa nav atrasta | Dentamic'}</title>
+      <title>{isEn ? 'Page Not Found | Dentamix' : 'Lapa nav atrasta | Dentamix'}</title>
       {slices && slices.length > 0 ? (
         renderPageLayout(slices, components)
       ) : (

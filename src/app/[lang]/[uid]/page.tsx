@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   return constructMetadata(document?.data, locale, {
-    title: 'Dentamic',
+    title: 'Dentamix',
     description: '',
   }, {
     type: 'custom-page',
@@ -99,7 +99,7 @@ export default async function Page({ params }: PageProps) {
   }
 
   if (document && document.data?.slices && document.data.slices.length > 0) {
-    const title = document.data.meta_title || 'Dentamic';
+    const title = document.data.meta_title || 'Dentamix';
     const description = document.data.meta_description || '';
     const imageUrl = document.data.schema_image?.url || null;
 

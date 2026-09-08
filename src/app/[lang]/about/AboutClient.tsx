@@ -42,7 +42,7 @@ export default function AboutClient() {
           {isEn ? 'About the Clinic' : 'Par klīniku'}
         </span>
         <h2 className="text-3xl sm:text-4xl font-serif font-bold text-[#511B29] tracking-tight leading-tight mb-6 text-center w-full">
-          {isEn ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecības klīnika'}
+          {isEn ? 'Dentamix Dental Clinic' : 'Dentamix zobārstniecības klīnika'}
         </h2>
         <p className="text-base text-[#6a5b5e] mt-2 font-medium text-center max-w-2xl mx-auto">
           {isEn
@@ -58,8 +58,8 @@ export default function AboutClient() {
           <div className="text-base sm:text-lg leading-relaxed text-slate-800 space-y-6 font-normal">
             <p className="text-[#511B29] font-serif text-lg leading-relaxed border-l-2 border-[#de7c8a] pl-4 font-medium">
               {isEn
-                ? 'Dentamic is a modern dental clinic that combines the latest technologies with an individual approach to each patient. Our goal is to provide the highest quality dental services in a comfortable and friendly environment.'
-                : 'Dentamic ir mūsdienīga zobārstniecības klīnika, kas apvieno jaunākās tehnoloģijas un individuālu pieeju katram pacientam. Mūsu mērķis ir nodrošināt augstākās kvalitātes zobārstniecības pakalpojumus ērtā un draudzīgā vidē.'}
+                ? 'Dentamix is a modern dental clinic that combines the latest technologies with an individual approach to each patient. Our goal is to provide the highest quality dental services in a comfortable and friendly environment.'
+                : 'Dentamix ir mūsdienīga zobārstniecības klīnika, kas apvieno jaunākās tehnoloģijas un individuālu pieeju katram pacientam. Mūsu mērķis ir nodrošināt augstākās kvalitātes zobārstniecības pakalpojumus ērtā un draudzīgā vidē.'}
             </p>
             <p>
               {isEn
@@ -96,7 +96,7 @@ export default function AboutClient() {
           <div className="relative aspect-[3/2] rounded-3xl overflow-hidden border border-[#efedec] bg-[#fbf9f8] shadow-sm">
             <Image
               src="/clinic-placeholder.jpg"
-              alt={isEn ? 'Dentamic Clinic' : 'Dentamic klīnika'}
+              alt={isEn ? 'Dentamix Clinic' : 'Dentamix klīnika'}
               fill
               sizes="(max-width: 1024px) 100vw, 30vw"
               className="object-cover select-none"

@@ -31,10 +31,10 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallback = locale === 'en-us' ? {
-    title: 'Our Services | Dentamic Dental Clinic',
+    title: 'Our Services | Dentamix Dental Clinic',
     description: 'Explore our range of premium dental treatments: implants, veneers, hygienics, orthodontics, and therapy.',
   } : {
-    title: 'Mūsu pakalpojumi | Dentamic zobārstniecība',
+    title: 'Mūsu pakalpojumi | Dentamix zobārstniecība',
     description: 'Pilns mūsdienīgu pakalpojumu spektrs – no estētikas un higiēnas līdz implantācijai un sarežģītai ķirurģijai.',
   };
 
@@ -68,7 +68,7 @@ export default async function Page({ params }: PageProps) {
     console.warn("Failed to pre-fetch services on the server", error);
   }
 
-  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Our Services | Dentamic Dental Clinic' : 'Mūsu pakalpojumi | Dentamic zobārstniecība');
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Our Services | Dentamix Dental Clinic' : 'Mūsu pakalpojumi | Dentamix zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 

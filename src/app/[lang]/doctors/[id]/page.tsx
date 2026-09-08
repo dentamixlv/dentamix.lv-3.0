@@ -46,12 +46,12 @@ export async function generateMetadata({ params }: PageProps) {
     }
   }
 
-  const suffix = locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība';
+  const suffix = locale === 'en-us' ? 'Dentamix Dental Clinic' : 'Dentamix zobārstniecība';
   const fallback = doctor ? {
     title: `${doctor.name} | ${suffix}`,
     description: doctor.description || '',
   } : {
-    title: locale === 'en-us' ? 'Dentist Not Found | Dentamic' : 'Zobārsts nav atrasts | Dentamic',
+    title: locale === 'en-us' ? 'Dentist Not Found | Dentamix' : 'Zobārsts nav atrasts | Dentamix',
     description: '',
   };
 
@@ -99,7 +99,7 @@ export default async function Page({ params }: PageProps) {
 
   const doctor = getDoctors(locale).find(d => d.id === id) || null;
 
-  const defaultTitle = doctor ? `${doctor.name} | ${locale === 'en-us' ? 'Dentamic Dental Clinic' : 'Dentamic zobārstniecība'}` : 'Dentamic';
+  const defaultTitle = doctor ? `${doctor.name} | ${locale === 'en-us' ? 'Dentamix Dental Clinic' : 'Dentamix zobārstniecība'}` : 'Dentamix';
   const title = pageDoc?.data?.meta_title || defaultTitle;
   const description = pageDoc?.data?.meta_description || doctor?.description || '';
   const imageUrl = pageDoc?.data?.schema_image?.url || null;

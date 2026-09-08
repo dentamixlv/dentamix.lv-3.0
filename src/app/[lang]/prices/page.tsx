@@ -32,10 +32,10 @@ export async function generateMetadata({ params }: PageProps) {
   }
 
   const fallback = locale === 'en-us' ? {
-    title: 'Prices & Quality | Dentamic Dental Clinic',
-    description: 'Clear and simple pricing with zero hidden fees and full cost transparency at Dentamic.',
+    title: 'Prices & Quality | Dentamix Dental Clinic',
+    description: 'Clear and simple pricing with zero hidden fees and full cost transparency at Dentamix.',
   } : {
-    title: 'Cenas un kvalitāte | Dentamic zobārstniecība',
+    title: 'Cenas un kvalitāte | Dentamix zobārstniecība',
     description: 'Skaidrs un saprotams cenrādis bez slēptiem maksājumiem ar pilnīgu izmaksu pārredzamību.',
   };
 
@@ -62,7 +62,7 @@ export default async function Page({ params }: PageProps) {
     console.warn("No Prismic page document for 'prices' / 'cenas' found, falling back to standalone prices list.");
   }
 
-  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Prices & Quality | Dentamic Dental Clinic' : 'Cenas un kvalitāte | Dentamic zobārstniecība');
+  const title = document?.data?.meta_title || (locale === 'en-us' ? 'Prices & Quality | Dentamix Dental Clinic' : 'Cenas un kvalitāte | Dentamix zobārstniecība');
   const description = document?.data?.meta_description || '';
   const imageUrl = document?.data?.schema_image?.url || null;
 
