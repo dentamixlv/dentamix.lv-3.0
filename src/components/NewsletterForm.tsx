@@ -13,7 +13,7 @@ const t = {
     title: "Jaunumi",
     badge: "E-pasta jaunumi",
     desc: "Pieraksties jaunumiem, saņem jaunāko informāciju, īpašos piedāvājumus un padomus zobu kopšanā. Bez spam.",
-    placeholder: "Jūsu e-pasta adrese",
+    placeholder: "Mana e-pasta adrese",
     button: "Pierakstīties",
     success_subscribed: "Paldies! Jūs esat veiksmīgi pierakstījies.",
     success_reactivated: "Jūsu abonements ir veiksmīgi atjaunots!",
@@ -164,17 +164,17 @@ export default function NewsletterForm({
               placeholder={text.placeholder}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full bg-[#1e2021]/80 border border-[#de7c8a] rounded-xl px-4 py-3 text-sm text-white placeholder-[#5e6061] outline-none transition-all duration-300 pr-10"
+              className="w-full bg-[#1e2021]/80 border border-white rounded-xl px-4 py-3 text-sm text-white placeholder-[#5e6061] outline-none transition-all duration-300 pr-10"
               disabled={submitting}
             />
             <button
               type="submit"
               disabled={submitting}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-[#de7c8a] hover:text-white transition-colors duration-200 p-1 flex items-center justify-center cursor-pointer"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-white hover:text-[#de7c8a] transition-colors duration-200 p-1 flex items-center justify-center cursor-pointer"
               title={text.button}
             >
               {submitting ? (
-                <span className="block w-4 h-4 border-2 border-[#de7c8a] border-t-transparent rounded-full animate-spin"></span>
+                <span className="block w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
               ) : (
                 <Mail className="w-4 h-4 hover:scale-110 transition-transform" />
               )}
