@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { motion } from 'motion/react';
-import { ArrowRight } from 'lucide-react';
+import { Phone } from 'lucide-react';
 import Link from 'next/link';
 
 export interface CTABlockProps {
@@ -91,13 +91,13 @@ export default function CTABlock({
         customButton
       ) : href ? (
         <Link href={href} className={buttonClass} id={id} {...(targetBlank ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-          {buttonText}
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <Phone className="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110" />
+          <span>{buttonText}</span>
         </Link>
       ) : (
         <button onClick={onClick} className={buttonClass} id={id}>
-          {buttonText}
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+          <Phone className="w-5 h-5 shrink-0 transition-transform duration-200 group-hover:scale-110" />
+          <span>{buttonText}</span>
         </button>
       )}
     </motion.div>

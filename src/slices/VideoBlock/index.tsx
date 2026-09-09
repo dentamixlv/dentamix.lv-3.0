@@ -96,6 +96,11 @@ export default function VideoBlock({ slice, context }: VideoBlockProps) {
   const isWebm = videoSrc.toLowerCase().includes('.webm');
   const isMp4 = videoSrc.toLowerCase().includes('.mp4');
 
+  // Hide slice cleanly if no video or poster has been configured
+  if (!youtubeId && !videoSrc && !posterSrc) {
+    return null;
+  }
+
   // Handle HTML5 video autoplay safely on mount
   useEffect(() => {
     const video = videoRef.current;
