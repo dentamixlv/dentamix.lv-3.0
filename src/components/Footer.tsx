@@ -333,11 +333,11 @@ export default function Footer({
                       {clinic.labels.saturday}
                     </span>
                     {clinic.workHours.saturday.includes('Slēgts') || clinic.workHours.saturday.includes('Closed') || !getHoursValue(clinic.workHours.saturday) ? (
-                      <span className="text-slate-500 font-medium italic text-xs">
+                      <span className="text-[#de7c8a] font-medium italic text-xs">
                         {clinic.labels.closed}
                       </span>
                     ) : (
-                      <span className="font-mono font-semibold text-slate-200 group-hover:text-white transition-colors duration-200">
+                      <span className="font-mono font-semibold text-[#de7c8a] transition-colors duration-200">
                         {getHoursValue(clinic.workHours.saturday)}
                       </span>
                     )}
@@ -349,11 +349,11 @@ export default function Footer({
                       {clinic.labels.sunday}
                     </span>
                     {clinic.workHours.sunday.includes('Slēgts') || clinic.workHours.sunday.includes('Closed') || !getHoursValue(clinic.workHours.sunday) ? (
-                      <span className="text-slate-500 font-medium italic text-xs">
+                      <span className="text-[#de7c8a] font-medium italic text-xs">
                         {clinic.labels.closed}
                       </span>
                     ) : (
-                      <span className="font-mono font-semibold text-slate-200 group-hover:text-white transition-colors duration-200">
+                      <span className="font-mono font-semibold text-[#de7c8a] transition-colors duration-200">
                         {getHoursValue(clinic.workHours.sunday)}
                       </span>
                     )}
