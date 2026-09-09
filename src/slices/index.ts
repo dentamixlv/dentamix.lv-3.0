@@ -22,4 +22,5 @@ export const components = {
   faq_block: dynamic(() => import("./FAQBlock")),
   photo_block: dynamic(() => import("./PhotoBlock")),
   newsletter_block: dynamic(() => import("./NewsletterBlock")),
+  video_block: dynamic(() => import("./VideoBlock")),
 };

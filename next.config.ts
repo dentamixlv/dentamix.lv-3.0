@@ -49,7 +49,7 @@ const nextConfig: NextConfig = {
               "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://*.posthog.com https://*.i.posthog.com;",
               "font-src 'self' data: https://fonts.gstatic.com https://*.posthog.com https://*.i.posthog.com;",
               "media-src 'self' https://*.prismic.io https://*.prismic.io/dentamix-v30/ https://*.posthog.com https://*.i.posthog.com;",
-              "frame-src 'self' https://www.google.com;",
+              "frame-src 'self' https://www.google.com https://www.youtube.com https://www.youtube-nocookie.com;",
               `report-uri https://eu.i.posthog.com/report/?token=${process.env.NEXT_PUBLIC_POSTHOG_KEY || "phc_z7oTfiM6pybrJ6AxJAEpfGEnADMLctohsjsGWaZC9Z3"}`
             ].join(" "),
           },

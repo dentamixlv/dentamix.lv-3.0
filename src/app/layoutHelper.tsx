@@ -29,9 +29,10 @@ export function renderPageLayout(
 
   const pageBlockIndex = slices.findIndex(s => s.slice_type === 'page_block');
   
-  // Find the first widget slice (either widget_block or a newsletter_block sidebar widget)
+  // Find the first widget slice (either widget_block, video_block, or a newsletter_block sidebar widget)
   const isRightColumnSlice = (s: any) => 
     s.slice_type === 'widget_block' || 
+    s.slice_type === 'video_block' || 
     (s.slice_type === 'newsletter_block' && s.variation === 'sidebar');
     
   const widgetBlockIndex = slices.findIndex(s => isRightColumnSlice(s));

@@ -69,6 +69,12 @@
             },
             "photo_block": {
               "type": "SharedSlice"
+            },
+            "newsletter_block": {
+              "type": "SharedSlice"
+            },
+            "video_block": {
+              "type": "SharedSlice"
             }
           }
         }

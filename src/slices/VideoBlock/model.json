@@ -1,0 +1,97 @@
+{
+  "id": "video_block",
+  "type": "SharedSlice",
+  "name": "VideoBlock",
+  "description": "Video player slice designed for sidebar widgets or page content with WebM/MP4 support.",
+  "variations": [
+    {
+      "id": "default",
+      "name": "Default",
+      "docURL": "...",
+      "version": "default",
+      "description": "Video player formatted in 3:2 aspect ratio matching the WidgetBlock image style",
+      "primary": {
+        "video_file": {
+          "type": "Link",
+          "config": {
+            "label": "Video File (WebM / MP4)",
+            "placeholder": "Upload or select video media file",
+            "select": "media"
+          }
+        },
+        "video_url": {
+          "type": "Text",
+          "config": {
+            "label": "Direct Video URL",
+            "placeholder": "https://... or YouTube link or /videos/example.webm"
+          }
+        },
+        "video_embed": {
+          "type": "Embed",
+          "config": {
+            "label": "Video Embed (YouTube / Vimeo)",
+            "placeholder": "Paste YouTube or Vimeo link"
+          }
+        },
+        "poster_image": {
+          "type": "Image",
+          "config": {
+            "label": "Poster / Fallback Image",
+            "constraint": {},
+            "thumbnails": []
+          }
+        },
+        "widget_title": {
+          "type": "Text",
+          "config": {
+            "label": "Widget Title (optional)",
+            "placeholder": "e.g. Klīnikas video apskats"
+          }
+        },
+        "widget_icon": {
+          "type": "Text",
+          "config": {
+            "label": "Widget Icon (Lucide name)",
+            "placeholder": "e.g. Play, Video, Film, Sparkles"
+          }
+        },
+        "caption": {
+          "type": "Text",
+          "config": {
+            "label": "Caption / Description",
+            "placeholder": "Optional caption under the video"
+          }
+        },
+        "autoplay": {
+          "type": "Boolean",
+          "config": {
+            "label": "Autoplay (Muted)",
+            "default_value": true
+          }
+        },
+        "loop": {
+          "type": "Boolean",
+          "config": {
+            "label": "Loop Video",
+            "default_value": true
+          }
+        },
+        "muted": {
+          "type": "Boolean",
+          "config": {
+            "label": "Muted",
+            "default_value": true
+          }
+        },
+        "controls": {
+          "type": "Boolean",
+          "config": {
+            "label": "Show Native Video Controls",
+            "default_value": false
+          }
+        }
+      },
+      "items": {}
+    }
+  ]
+}
