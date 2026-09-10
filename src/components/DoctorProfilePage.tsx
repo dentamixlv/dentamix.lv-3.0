@@ -1,10 +1,11 @@
 'use client';
 
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, SquareArrowOutUpRight } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import { motion } from 'motion/react';
 import Image from 'next/image';
 import { SliceZone, PrismicRichText, JSXMapSerializer } from '@prismicio/react';
+import { PrismicNextLink } from '@prismicio/next';
 import { components } from '../slices';
 import { Doctor, GroupedWidget } from '../types';
 import { getTestimonials } from '../data';
@@ -48,6 +49,17 @@ const detailedBioSerializer: JSXMapSerializer = {
   heading4: ({ children }) => <h4 className="text-lg font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h4>,
   heading5: ({ children }) => <h5 className="text-base font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h5>,
   heading6: ({ children }) => <h6 className="text-sm font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h6>,
+  hyperlink: ({ node, children }: any) => (
+    <PrismicNextLink
+      field={node.data}
+      className="text-[#de7c8a] hover:text-[#511B29] underline underline-offset-2 transition-colors font-medium inline group"
+    >
+      {children}
+      <span className="inline-block">
+        <SquareArrowOutUpRight className="inline-block w-3.5 h-3.5 ml-1 -mt-0.5 align-middle shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+      </span>
+    </PrismicNextLink>
+  ),
 };
 
 interface DoctorProfilePageProps {

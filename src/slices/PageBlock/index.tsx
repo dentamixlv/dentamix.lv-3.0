@@ -2,6 +2,8 @@
 
 import React from 'react';
 import { PrismicRichText, JSXMapSerializer } from "@prismicio/react";
+import { PrismicNextLink } from '@prismicio/next';
+import { SquareArrowOutUpRight } from 'lucide-react';
 
 export interface PageBlockSlice {
   slice_type: "page_block";
@@ -14,6 +16,18 @@ export interface PageBlockSlice {
 type PageBlockProps = {
   slice: PageBlockSlice;
 };
+
+const hyperlinkSerializer = ({ node, children }: any) => (
+  <PrismicNextLink
+    field={node.data}
+    className="text-[#de7c8a] hover:text-[#511B29] underline underline-offset-2 transition-colors font-medium inline group"
+  >
+    {children}
+    <span className="inline-block">
+      <SquareArrowOutUpRight className="inline-block w-3.5 h-3.5 ml-1 -mt-0.5 align-middle shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+    </span>
+  </PrismicNextLink>
+);
 
 const contentSerializer: JSXMapSerializer = {
   paragraph: ({ node, children }: any) => {
@@ -38,6 +52,7 @@ const contentSerializer: JSXMapSerializer = {
   heading4: ({ children }) => <h4 className="text-lg font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h4>,
   heading5: ({ children }) => <h5 className="text-base font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h5>,
   heading6: ({ children }) => <h6 className="text-sm font-serif font-bold text-[#511B29] mt-4 mb-2">{children}</h6>,
+  hyperlink: hyperlinkSerializer,
 };
 
 export default function PageBlock({ slice }: PageBlockProps) {
@@ -51,7 +66,7 @@ export default function PageBlock({ slice }: PageBlockProps) {
     <div className="space-y-6">
       {hasExcerpt && (
         <div className="text-base md:text-lg font-serif font-medium text-[#511B29] leading-relaxed border-l-2 border-[#de7c8a] pl-4">
-          <PrismicRichText field={primary.excerpt} />
+          <PrismicRichText field={primary.excerpt} components={{ hyperlink: hyperlinkSerializer }} />
         </div>
       )}
       {hasContent && (
