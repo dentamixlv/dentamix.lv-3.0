@@ -1657,6 +1657,26 @@ export interface ContactBlockSliceDefaultItem {
 	whatsapp_url: prismic.KeyTextField;
 	
 	/**
+	 * Booking Link Text field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: piearsta.lv
+	 * - **API ID Path**: contact_block.items[].booking_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	booking_text: prismic.KeyTextField;
+	
+	/**
+	 * Booking Link URL field in *ContactBlock → Items*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://www.piearsta.lv/lv/iestazu-katalogs/dentamix-sia-1713/
+	 * - **API ID Path**: contact_block.items[].booking_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	booking_url: prismic.KeyTextField;
+	
+	/**
 	 * Address field in *ContactBlock → Items*
 	 *
 	 * - **Field Type**: Text
