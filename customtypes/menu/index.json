@@ -48,6 +48,20 @@
           "placeholder": "https://wa.me/37129419999"
         }
       },
+      "booking_text": {
+        "type": "Text",
+        "config": {
+          "label": "Booking / Appointment Link Text",
+          "placeholder": "piearsta.lv"
+        }
+      },
+      "booking_url": {
+        "type": "Text",
+        "config": {
+          "label": "Booking / Appointment Link URL",
+          "placeholder": "https://www.piearsta.lv/lv/iestazu-katalogs/dentamix-sia-1713/"
+        }
+      },
       "menu_links": {
         "type": "Group",
         "config": {

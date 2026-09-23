@@ -17,9 +17,21 @@ interface HeaderProps {
   menuLinks?: Array<{ label: string; path: string }>;
   whatsappCtaText?: string;
   whatsappLinkUrl?: string;
+  bookingText?: string;
+  bookingUrl?: string;
 }
 
-export default function Header({ logoText, logoImage, phoneNumber, bookingButtonText, menuLinks, whatsappCtaText, whatsappLinkUrl }: HeaderProps) {
+export default function Header({ 
+  logoText, 
+  logoImage, 
+  phoneNumber, 
+  bookingButtonText, 
+  menuLinks, 
+  whatsappCtaText, 
+  whatsappLinkUrl,
+  bookingText,
+  bookingUrl,
+}: HeaderProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const params = useParams();
   const pathname = usePathname();
@@ -377,7 +389,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
               </a>
 
               <a
-                href="https://www.piearsta.lv/lv/iestazu-katalogs/dentamix-sia-1713/"
+                href={bookingUrl || "https://www.piearsta.lv/lv/iestazu-katalogs/dentamix-sia-1713/"}
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => setMobileMenuOpen(false)}
@@ -385,7 +397,7 @@ export default function Header({ logoText, logoImage, phoneNumber, bookingButton
                 id="mobile-piearsta-btn"
               >
                 <Calendar className="w-4 h-4 shrink-0" />
-                <span>piearsta.lv</span>
+                <span>{bookingText || 'piearsta.lv'}</span>
               </a>
             </div>
           </motion.div>

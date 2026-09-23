@@ -634,7 +634,7 @@ interface FooterDocumentData {
  */
 export type FooterDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<FooterDocumentData>, "footer", Lang>;
 
-type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | WidgetBlockSlice | PricelistSlice | TestimonialGridSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | PageBlockSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice | FaqBlockSlice | PhotoBlockSlice
+type HomepageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | WidgetBlockSlice | PricelistSlice | TestimonialGridSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | PageBlockSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice | FaqBlockSlice | PhotoBlockSlice | NewsletterBlockSlice | VideoBlockSlice
 
 /**
  * Content for Homepage documents
@@ -801,6 +801,28 @@ interface MenuDocumentData {
 	whatsapp_link_url: prismic.KeyTextField;
 	
 	/**
+	 * Booking / Appointment Link Text field in *Menu*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: piearsta.lv
+	 * - **API ID Path**: menu.booking_text
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	booking_text: prismic.KeyTextField;
+	
+	/**
+	 * Booking / Appointment Link URL field in *Menu*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://www.piearsta.lv/lv/iestazu-katalogs/dentamix-sia-1713/
+	 * - **API ID Path**: menu.booking_url
+	 * - **Tab**: Main
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	booking_url: prismic.KeyTextField;
+	
+	/**
 	 * Menu Links field in *Menu*
 	 *
 	 * - **Field Type**: Group
@@ -823,7 +845,7 @@ interface MenuDocumentData {
  */
 export type MenuDocument<Lang extends string = string> = prismic.PrismicDocumentWithoutUID<Simplify<MenuDocumentData>, "menu", Lang>;
 
-type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | WidgetBlockSlice | PricelistSlice | TestimonialGridSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | PageBlockSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice | FaqBlockSlice | PhotoBlockSlice
+type PageDocumentDataSlicesSlice = HeroSlice | ServiceGridSlice | ServicePageSlice | WidgetBlockSlice | PricelistSlice | TestimonialGridSlice | ContactBlockSlice | CtaBlockSlice | CeoBlockSlice | TestimonialBlockSlice | PartnerBlockSlice | PageTitleSlice | PageBlockSlice | BlogGridSlice | BlogPageSlice | DoctorGridSlice | FaqBlockSlice | PhotoBlockSlice | NewsletterBlockSlice | VideoBlockSlice
 
 /**
  * Content for Page documents
@@ -1657,7 +1679,7 @@ export interface ContactBlockSliceDefaultItem {
 	whatsapp_url: prismic.KeyTextField;
 	
 	/**
-	 * Booking Link Text field in *ContactBlock → Items*
+	 * Booking / Appointment Link Text field in *ContactBlock → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: piearsta.lv
@@ -1667,7 +1689,7 @@ export interface ContactBlockSliceDefaultItem {
 	booking_text: prismic.KeyTextField;
 	
 	/**
-	 * Booking Link URL field in *ContactBlock → Items*
+	 * Booking / Appointment Link URL field in *ContactBlock → Items*
 	 *
 	 * - **Field Type**: Text
 	 * - **Placeholder**: https://www.piearsta.lv/lv/iestazu-katalogs/dentamix-sia-1713/
@@ -2285,6 +2307,98 @@ type HeroSliceVariation = HeroSliceDefault
  * - **Documentation**: https://prismic.io/docs/slices
  */
 export type HeroSlice = prismic.SharedSlice<"hero", HeroSliceVariation>;
+
+/**
+ * Primary content in *NewsletterBlock → Default → Primary*
+ */
+export interface NewsletterBlockSliceDefaultPrimary {
+	/**
+	 * Badge text field in *NewsletterBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Email updates
+	 * - **API ID Path**: newsletter_block.default.primary.badge_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	badge_text: prismic.KeyTextField;
+	
+	/**
+	 * Title field in *NewsletterBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: Newsletter
+	 * - **API ID Path**: newsletter_block.default.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	title: prismic.RichTextField;
+	
+	/**
+	 * Description field in *NewsletterBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Rich Text
+	 * - **Placeholder**: Subscribe to receive the latest updates, special offers...
+	 * - **API ID Path**: newsletter_block.default.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/rich-text
+	 */
+	description: prismic.RichTextField;
+}
+
+/**
+ * Default variation for NewsletterBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default full-width page newsletter subscription banner
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewsletterBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<NewsletterBlockSliceDefaultPrimary>, never>;
+
+/**
+ * Primary content in *NewsletterBlock → Sidebar Widget → Primary*
+ */
+export interface NewsletterBlockSliceSidebarPrimary {
+	/**
+	 * Widget Title field in *NewsletterBlock → Sidebar Widget → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Newsletter
+	 * - **API ID Path**: newsletter_block.sidebar.primary.title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	title: prismic.KeyTextField;
+	
+	/**
+	 * Widget Description field in *NewsletterBlock → Sidebar Widget → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Subscribe to receive the latest updates...
+	 * - **API ID Path**: newsletter_block.sidebar.primary.description
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	description: prismic.KeyTextField;
+}
+
+/**
+ * Sidebar Widget variation for NewsletterBlock Slice
+ *
+ * - **API ID**: `sidebar`
+ * - **Description**: Compact newsletter subscription card designed for the sidebar
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewsletterBlockSliceSidebar = prismic.SharedSliceVariation<"sidebar", Simplify<NewsletterBlockSliceSidebarPrimary>, never>;
+
+/**
+ * Slice variation for *NewsletterBlock*
+ */
+type NewsletterBlockSliceVariation = NewsletterBlockSliceDefault | NewsletterBlockSliceSidebar
+
+/**
+ * NewsletterBlock Shared Slice
+ *
+ * - **API ID**: `newsletter_block`
+ * - **Description**: Newsletter subscription block for page contents or sidebar widget.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type NewsletterBlockSlice = prismic.SharedSlice<"newsletter_block", NewsletterBlockSliceVariation>;
 
 /**
  * Primary content in *PageBlock → Default → Primary*
@@ -2995,6 +3109,148 @@ type TestimonialGridSliceVariation = TestimonialGridSliceDefault
 export type TestimonialGridSlice = prismic.SharedSlice<"testimonial_grid", TestimonialGridSliceVariation>;
 
 /**
+ * Primary content in *VideoBlock → Default → Primary*
+ */
+export interface VideoBlockSliceDefaultPrimary {
+	/**
+	 * Video File (WebM / MP4) field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Link to Media
+	 * - **Placeholder**: Upload or select video media file
+	 * - **API ID Path**: video_block.default.primary.video_file
+	 * - **Documentation**: https://prismic.io/docs/fields/link-to-media
+	 */
+	video_file: prismic.LinkToMediaField<prismic.FieldState, never>;
+	
+	/**
+	 * Direct Video URL field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: https://... or YouTube link or /videos/example.webm
+	 * - **API ID Path**: video_block.default.primary.video_url
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	video_url: prismic.KeyTextField;
+	
+	/**
+	 * Video Embed (YouTube / Vimeo) field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Embed
+	 * - **Placeholder**: Paste YouTube or Vimeo link
+	 * - **API ID Path**: video_block.default.primary.video_embed
+	 * - **Documentation**: https://prismic.io/docs/fields/embed
+	 */
+	video_embed: prismic.EmbedField
+	
+	/**
+	 * Poster / Fallback Image field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Image
+	 * - **Placeholder**: *None*
+	 * - **API ID Path**: video_block.default.primary.poster_image
+	 * - **Documentation**: https://prismic.io/docs/fields/image
+	 */
+	poster_image: prismic.ImageField<never>;
+	
+	/**
+	 * Widget Title (optional) field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: e.g. Klīnikas video apskats
+	 * - **API ID Path**: video_block.default.primary.widget_title
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	widget_title: prismic.KeyTextField;
+	
+	/**
+	 * Widget Icon (Lucide name) field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: e.g. Play, Video, Film, Sparkles
+	 * - **API ID Path**: video_block.default.primary.widget_icon
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	widget_icon: prismic.KeyTextField;
+	
+	/**
+	 * Caption / Description field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Optional caption under the video
+	 * - **API ID Path**: video_block.default.primary.caption
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	caption: prismic.KeyTextField;
+	
+	/**
+	 * Autoplay (Muted) field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: video_block.default.primary.autoplay
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	autoplay: prismic.BooleanField;
+	
+	/**
+	 * Loop Video field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: video_block.default.primary.loop
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	loop: prismic.BooleanField;
+	
+	/**
+	 * Muted field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: true
+	 * - **API ID Path**: video_block.default.primary.muted
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	muted: prismic.BooleanField;
+	
+	/**
+	 * Show Native Video Controls field in *VideoBlock → Default → Primary*
+	 *
+	 * - **Field Type**: Boolean
+	 * - **Placeholder**: *None*
+	 * - **Default Value**: false
+	 * - **API ID Path**: video_block.default.primary.controls
+	 * - **Documentation**: https://prismic.io/docs/fields/boolean
+	 */
+	controls: prismic.BooleanField;
+}
+
+/**
+ * Default variation for VideoBlock Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Video player formatted in 3:2 aspect ratio matching the WidgetBlock image style
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type VideoBlockSliceDefault = prismic.SharedSliceVariation<"default", Simplify<VideoBlockSliceDefaultPrimary>, never>;
+
+/**
+ * Slice variation for *VideoBlock*
+ */
+type VideoBlockSliceVariation = VideoBlockSliceDefault
+
+/**
+ * VideoBlock Shared Slice
+ *
+ * - **API ID**: `video_block`
+ * - **Description**: Video player slice designed for sidebar widgets or page content with WebM/MP4 support.
+ * - **Documentation**: https://prismic.io/docs/slices
+ */
+export type VideoBlockSlice = prismic.SharedSlice<"video_block", VideoBlockSliceVariation>;
+
+/**
  * Primary content in *WidgetBlock → Widget Detail → Primary*
  */
 export interface WidgetBlockSliceDefaultPrimary {
@@ -3142,6 +3398,12 @@ declare module "@prismicio/client" {
 			HeroSliceDefaultPrimary,
 			HeroSliceVariation,
 			HeroSliceDefault,
+			NewsletterBlockSlice,
+			NewsletterBlockSliceDefaultPrimary,
+			NewsletterBlockSliceSidebarPrimary,
+			NewsletterBlockSliceVariation,
+			NewsletterBlockSliceDefault,
+			NewsletterBlockSliceSidebar,
 			PageBlockSlice,
 			PageBlockSliceDefaultPrimary,
 			PageBlockSliceVariation,
@@ -3184,6 +3446,10 @@ declare module "@prismicio/client" {
 			TestimonialGridSliceDefaultItem,
 			TestimonialGridSliceVariation,
 			TestimonialGridSliceDefault,
+			VideoBlockSlice,
+			VideoBlockSliceDefaultPrimary,
+			VideoBlockSliceVariation,
+			VideoBlockSliceDefault,
 			WidgetBlockSlice,
 			WidgetBlockSliceDefaultPrimary,
 			WidgetBlockSliceDefaultItem,
