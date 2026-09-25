@@ -71,6 +71,20 @@
             "constraint": {},
             "thumbnails": []
           }
+        },
+        "rating_number": {
+          "type": "Number",
+          "config": {
+            "label": "Google Review Rating Number",
+            "placeholder": "5.0"
+          }
+        },
+        "rating_text": {
+          "type": "Text",
+          "config": {
+            "label": "Google Review Stars Text",
+            "placeholder": "Google atsauksmes"
+          }
         }
       },
       "items": {}

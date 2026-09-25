@@ -43,7 +43,9 @@ const getFallbackSlices = (langCode: string) => [
       secondary_cta_text: langCode === 'en-us' ? "Our Services" : "Mūsu pakalpojumi",
       background_image: {
         url: "https://images.unsplash.com/photo-1629909613654-28e377c37b09?auto=format&fit=crop&q=80&w=1400"
-      }
+      },
+      rating_number: 5.0,
+      rating_text: langCode === 'en-us' ? "Google reviews" : "Google atsauksmes"
     },
     items: []
   },

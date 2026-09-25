@@ -2283,6 +2283,26 @@ export interface HeroSliceDefaultPrimary {
 	 * - **Documentation**: https://prismic.io/docs/fields/image
 	 */
 	background_image: prismic.ImageField<never>;
+	
+	/**
+	 * Rating Number field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Number
+	 * - **Placeholder**: 5.0
+	 * - **API ID Path**: hero.default.primary.rating_number
+	 * - **Documentation**: https://prismic.io/docs/fields/number
+	 */
+	rating_number: prismic.NumberField;
+	
+	/**
+	 * Rating / Stars Text field in *Hero → Default → Primary*
+	 *
+	 * - **Field Type**: Text
+	 * - **Placeholder**: Google atsauksmes
+	 * - **API ID Path**: hero.default.primary.rating_text
+	 * - **Documentation**: https://prismic.io/docs/fields/text
+	 */
+	rating_text: prismic.KeyTextField;
 }
 
 /**
