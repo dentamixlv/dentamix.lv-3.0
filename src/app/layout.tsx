@@ -1,6 +1,5 @@
 import { Manrope, Playfair_Display } from 'next/font/google';
 import Script from 'next/script';
-import { Analytics } from '@vercel/analytics/next';
 import './globals.css';
 import { createClient } from '../prismicio';
 
@@ -190,7 +189,6 @@ export default async function RootLayout({
       </head>
       <body className="antialiased text-[#1a1718] bg-[#fbf9f8] flex flex-col min-h-screen">
         {children}
-        <Analytics />
       </body>
     </html>
   );

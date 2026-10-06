@@ -1,13 +1,13 @@
 import { Doctor, Service, Clinic, BlogPost, GroupedWidget } from './types';
 
-import { DOCTORS_LV, DOCTORS_EN } from './data/doctors';
 import { SERVICES_LV, SERVICES_EN } from './data/services';
 import { CLINICS_LV, CLINICS_EN } from './data/clinics';
 import { BLOG_POSTS_LV, BLOG_POSTS_EN } from './data/blogs';
 import { TESTIMONIALS_LV, TESTIMONIALS_EN, getTestimonials } from './data/testimonials';
 
-// Re-export specific locale arrays
-export { DOCTORS_LV, DOCTORS_EN };
+// Re-export specific locale arrays (doctors are sourced dynamically from Prismic)
+export const DOCTORS_LV: Doctor[] = [];
+export const DOCTORS_EN: Doctor[] = [];
 export { SERVICES_LV, SERVICES_EN };
 export { CLINICS_LV, CLINICS_EN };
 export { BLOG_POSTS_LV, BLOG_POSTS_EN };
