@@ -318,7 +318,7 @@ ${clinic.accessibility_alert ? `Piezīme par pieejamību: ${clinic.accessibility
     }
 
     // Call the Convex Ingestion Action
-    const result: any = await convex.action(api.documents.ingest, { chunks });
+    const result: any = await convex.action(api.documents.ingest, { secret: ingestSecret, chunks });
 
     return NextResponse.json({
       success: true,

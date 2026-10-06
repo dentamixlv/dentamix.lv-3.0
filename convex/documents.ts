@@ -1,4 +1,4 @@
-import { v } from "convex/values";
+import { ConvexError, v } from "convex/values";
 import { action, internalMutation, internalQuery, mutation, query } from "./_generated/server";
 import { api, internal } from "./_generated/api";
 
@@ -52,6 +52,7 @@ export const clear = internalMutation({
 
 export const ingest = action({
   args: {
+    secret: v.string(),
     chunks: v.array(
       v.object({
         text: v.string(),
@@ -60,6 +61,12 @@ export const ingest = action({
     ),
   },
   handler: async (ctx, args) => {
+    // Validate ingest secret
+    const ingestSecret = process.env.INGEST_SECRET;
+    if (!ingestSecret || args.secret !== ingestSecret) {
+      throw new ConvexError("Unauthorized: Invalid or missing INGEST_SECRET.");
+    }
+
     // 1. Clear existing documents
     await ctx.runMutation(internal.documents.clear);
 

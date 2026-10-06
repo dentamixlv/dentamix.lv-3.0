@@ -11,6 +11,19 @@ http.route({
   method: "POST",
   handler: httpAction(async (ctx, request) => {
     try {
+      const webhookSecret = process.env.PRISMIC_WEBHOOK_SECRET;
+      if (webhookSecret) {
+        const url = new URL(request.url);
+        const secretParam = url.searchParams.get("secret");
+        const secretHeader = request.headers.get("x-prismic-secret") || request.headers.get("x-webhook-secret");
+        if (secretParam !== webhookSecret && secretHeader !== webhookSecret) {
+          return new Response(JSON.stringify({ error: "Unauthorized" }), {
+            status: 401,
+            headers: { "Content-Type": "application/json" }
+          });
+        }
+      }
+
       // Optional: Parse request body (useful for logging or checking event type)
       try {
         const body = await request.json();
