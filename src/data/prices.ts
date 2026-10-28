@@ -6,6 +6,7 @@ export interface PriceItem {
   anchor: string;
   discount?: string;
   originalPrice?: string;
+  eyebrow?: string;
 }
 
 export function formatDiscount(discountStr: string): string {
@@ -115,6 +116,7 @@ export async function getPricesFromGoogleSheets(locale: string = 'lv', forceRefr
 
         let discount: string | undefined = undefined;
         let originalPrice: string | undefined = undefined;
+        const eyebrow: string | undefined = colG || undefined;
 
         if (colF) {
           if (colF.includes('|')) {
@@ -126,10 +128,6 @@ export async function getPricesFromGoogleSheets(locale: string = 'lv', forceRefr
           }
         }
 
-        if (!originalPrice && colG) {
-          originalPrice = formatPrice(colG) || undefined;
-        }
-
         if (category && title) {
           results.push({
             category,
@@ -138,7 +136,8 @@ export async function getPricesFromGoogleSheets(locale: string = 'lv', forceRefr
             description,
             anchor,
             discount,
-            originalPrice
+            originalPrice,
+            eyebrow
           });
         }
       }

@@ -12,6 +12,7 @@ export interface PriceItem {
   anchor: string;
   discount?: string;
   originalPrice?: string;
+  eyebrow?: string;
 }
 
 interface CenasPageProps {
@@ -67,6 +68,7 @@ interface GroupedCategory {
     note?: string;
     discount?: string;
     originalPrice?: string;
+    eyebrow?: string;
   }[];
 }
 
@@ -152,7 +154,8 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
         price: item.price,
         note: item.description || undefined,
         discount: item.discount || undefined,
-        originalPrice: item.originalPrice || undefined
+        originalPrice: item.originalPrice || undefined,
+        eyebrow: item.eyebrow || undefined
       }))
     };
   });
@@ -244,9 +247,9 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
                         {item.discount ? (
                           <div className="relative inline-flex items-center gap-2.5 bg-[#f2dde1]/35 border border-[#d9c1c2]/35 rounded-full p-1 pl-1.5 pr-3.5 shadow-xs">
                             {/* Eyebrow badge sitting on top of the border */}
-                            {(!item.discount.toLowerCase().includes('akcija') && !item.discount.toLowerCase().includes('special')) && (
+                            {(item.eyebrow || (!item.discount.toLowerCase().includes('akcija') && !item.discount.toLowerCase().includes('special'))) && (
                               <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#25D366] text-white text-[8.5px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest shadow-xs pointer-events-none whitespace-nowrap leading-none">
-                                {isEn ? 'Special' : 'Akcija'}
+                                {item.eyebrow || (isEn ? 'Special' : 'Akcija')}
                               </span>
                             )}
                             <span className="bg-[#511B29] text-white text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
@@ -257,9 +260,16 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
                             </span>
                           </div>
                         ) : (
-                          <span className="text-sm font-mono font-extrabold text-[#511B29] bg-[#f2dde1]/35 px-4 py-2 rounded-full border border-[#d9c1c2]/20">
-                            {item.price}
-                          </span>
+                          <div className="relative inline-flex items-center">
+                            {item.eyebrow && (
+                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#25D366] text-white text-[8.5px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest shadow-xs pointer-events-none whitespace-nowrap leading-none">
+                                {item.eyebrow}
+                              </span>
+                            )}
+                            <span className="text-sm font-mono font-extrabold text-[#511B29] bg-[#f2dde1]/35 px-4 py-2 rounded-full border border-[#d9c1c2]/20">
+                              {item.price}
+                            </span>
+                          </div>
                         )}
                       </div>
                     )}
