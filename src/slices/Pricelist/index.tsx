@@ -21,7 +21,9 @@ export default function Pricelist({ slice }: PricelistProps) {
   useEffect(() => {
     const fetchPrices = async () => {
       try {
-        const response = await fetch(`/api/prices?lang=${langCode}`);
+        const response = await fetch(`/api/prices?lang=${langCode}&t=${Date.now()}`, {
+          cache: 'no-store'
+        });
         if (!response.ok) {
           throw new Error('Failed to fetch prices');
         }
@@ -34,7 +36,7 @@ export default function Pricelist({ slice }: PricelistProps) {
       }
     };
     fetchPrices();
-  }, []);
+  }, [langCode]);
 
   const handleBook = () => {
     router.push(langCode === 'en-us' ? '/en/contacts' : '/kontakti');

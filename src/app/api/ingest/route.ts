@@ -276,7 +276,8 @@ ${clinic.accessibility_alert ? `Piezīme par pieejamību: ${clinic.accessibility
         for (const [category, items] of categoriesLv.entries()) {
           let text = `Klīnika: Dentamix\nLapa: Zobārstniecības Cenas - ${category} (Latvian)\nSaite: /cenas\nSaturs:\nKategorija: ${category}\nCenrādis:\n`;
           for (const item of items) {
-            text += `- ${item.title}: ${item.price}${item.description ? ` (${item.description})` : ''}\n`;
+            const discountInfo = item.discount ? ` [Atlaide: ${item.discount}${item.originalPrice ? `, standarta cena: ${item.originalPrice}` : ''}]` : '';
+            text += `- ${item.title}: ${item.price}${discountInfo}${item.description ? ` (${item.description})` : ''}\n`;
           }
           chunks.push({ text: sanitizeText(text), source: '/cenas' });
         }
@@ -298,7 +299,8 @@ ${clinic.accessibility_alert ? `Piezīme par pieejamību: ${clinic.accessibility
         for (const [category, items] of categoriesEn.entries()) {
           let text = `Klīnika: Dentamix\nLapa: Dental Prices - ${category} (English)\nSaite: /en/prices\nSaturs:\nCategory: ${category}\nPricelist:\n`;
           for (const item of items) {
-            text += `- ${item.title}: ${item.price}${item.description ? ` (${item.description})` : ''}\n`;
+            const discountInfo = item.discount ? ` [Discount: ${item.discount}${item.originalPrice ? `, regular price: ${item.originalPrice}` : ''}]` : '';
+            text += `- ${item.title}: ${item.price}${discountInfo}${item.description ? ` (${item.description})` : ''}\n`;
           }
           chunks.push({ text: sanitizeText(text), source: '/en/prices' });
         }

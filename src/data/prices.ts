@@ -4,6 +4,23 @@ export interface PriceItem {
   price: string;
   description: string;
   anchor: string;
+  discount?: string;
+  originalPrice?: string;
+}
+
+export function formatDiscount(discountStr: string): string {
+  if (!discountStr) return '';
+  const trimmed = discountStr.trim();
+  if (!trimmed) return '';
+  // If purely digits like "20" -> "-20%"
+  if (/^\d+$/.test(trimmed)) {
+    return `-${trimmed}%`;
+  }
+  // If digits with percent like "20%" -> "-20%"
+  if (/^\d+[\s\xa0]*%$/.test(trimmed)) {
+    return `-${trimmed.replace(/[\s\xa0]/g, '')}`;
+  }
+  return trimmed;
 }
 
 export function formatPrice(priceStr: string): string {
@@ -24,22 +41,25 @@ export function formatPrice(priceStr: string): string {
   }
   // Standard price or range like "70,00-170,00" or "1 000,00"
   if (trimmed && !trimmed.endsWith('€') && !trimmed.endsWith('EUR')) {
+    if (/^\d+$/.test(trimmed)) {
+      return `${trimmed},00 €`;
+    }
     return `${trimmed} €`;
   }
   return trimmed;
 }
 
-export async function getPricesFromGoogleSheets(locale: string = 'lv'): Promise<PriceItem[]> {
+export async function getPricesFromGoogleSheets(locale: string = 'lv', forceRefresh = false): Promise<PriceItem[]> {
   try {
     const isEn = locale === 'en-us' || locale === 'en';
     const csvUrl = isEn
       ? (process.env.GOOGLE_SHEETS_CSV_URL_EN || "https://docs.google.com/spreadsheets/d/1JmbSDGtun5V56kYeEj9T8LbORPKMkrZ2dRh5IB3kirU/export?format=csv&gid=54843142")
       : (process.env.GOOGLE_SHEETS_CSV_URL_LV || "https://docs.google.com/spreadsheets/d/1JmbSDGtun5V56kYeEj9T8LbORPKMkrZ2dRh5IB3kirU/export?format=csv&gid=0");
     
-    // Cast options to bypass fetch extensions typing issues in some environments
-    const fetchOptions: any = {
-      next: { revalidate: 300 } // Cache for 5 minutes
-    };
+    // Low cache time so Google Sheets updates appear within seconds
+    const fetchOptions: any = forceRefresh
+      ? { cache: 'no-store' }
+      : { next: { revalidate: 15 } }; // Cache for 15 seconds max
 
     const response = await fetch(csvUrl, fetchOptions);
 
@@ -90,6 +110,25 @@ export async function getPricesFromGoogleSheets(locale: string = 'lv'): Promise<
         const priceRaw = stripQuotes(values[2]);
         const description = stripQuotes(values[3] || '');
         const anchor = stripQuotes(values[4] || '');
+        const colF = stripQuotes(values[5] || '');
+        const colG = stripQuotes(values[6] || '');
+
+        let discount: string | undefined = undefined;
+        let originalPrice: string | undefined = undefined;
+
+        if (colF) {
+          if (colF.includes('|')) {
+            const parts = colF.split('|').map(s => s.trim());
+            discount = formatDiscount(parts[0]) || undefined;
+            originalPrice = formatPrice(parts[1]) || undefined;
+          } else {
+            discount = formatDiscount(colF) || undefined;
+          }
+        }
+
+        if (!originalPrice && colG) {
+          originalPrice = formatPrice(colG) || undefined;
+        }
 
         if (category && title) {
           results.push({
@@ -97,7 +136,9 @@ export async function getPricesFromGoogleSheets(locale: string = 'lv'): Promise<
             title,
             price: formatPrice(priceRaw),
             description,
-            anchor
+            anchor,
+            discount,
+            originalPrice
           });
         }
       }

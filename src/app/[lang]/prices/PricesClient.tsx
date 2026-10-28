@@ -17,7 +17,9 @@ export default function PricesClient({ langCode, initialPriceItems = [] }: Price
     if (!initialPriceItems || initialPriceItems.length === 0) {
       const fetchPrices = async () => {
         try {
-          const response = await fetch(`/api/prices?lang=${langCode}`);
+          const response = await fetch(`/api/prices?lang=${langCode}&t=${Date.now()}`, {
+            cache: 'no-store'
+          });
           if (response.ok) {
             const data = await response.json();
             if (Array.isArray(data) && data.length > 0) {

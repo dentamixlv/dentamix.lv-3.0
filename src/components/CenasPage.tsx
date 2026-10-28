@@ -10,6 +10,8 @@ export interface PriceItem {
   price: string;
   description: string;
   anchor: string;
+  discount?: string;
+  originalPrice?: string;
 }
 
 interface CenasPageProps {
@@ -63,6 +65,8 @@ interface GroupedCategory {
     name: string;
     price: string;
     note?: string;
+    discount?: string;
+    originalPrice?: string;
   }[];
 }
 
@@ -146,7 +150,9 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
       items: categoriesMap[catName].map(item => ({
         name: item.title,
         price: item.price,
-        note: item.description || undefined
+        note: item.description || undefined,
+        discount: item.discount || undefined,
+        originalPrice: item.originalPrice || undefined
       }))
     };
   });
@@ -229,10 +235,32 @@ export default function CenasPage({ onBook, langCode = 'lv', priceItems = [], hi
                     </div>
                     {/* Price Tag styled aligned nicely */}
                     {item.price && (
-                      <div className="flex items-center self-end sm:self-auto sm:text-right shrink-0">
-                        <span className="text-sm font-mono font-extrabold text-[#511B29] bg-[#f2dde1]/35 px-4 py-2 rounded-full border border-[#d9c1c2]/20">
-                          {item.price}
-                        </span>
+                      <div className="flex items-center gap-2.5 self-end sm:self-auto sm:text-right shrink-0">
+                        {item.originalPrice && (
+                          <span className="text-xs font-mono font-medium line-through text-[#6a5b5e]/75">
+                            {item.originalPrice}
+                          </span>
+                        )}
+                        {item.discount ? (
+                          <div className="relative inline-flex items-center gap-2.5 bg-[#f2dde1]/35 border border-[#d9c1c2]/35 rounded-full p-1 pl-1.5 pr-3.5 shadow-xs">
+                            {/* Eyebrow badge sitting on top of the border */}
+                            {(!item.discount.toLowerCase().includes('akcija') && !item.discount.toLowerCase().includes('special')) && (
+                              <span className="absolute -top-2 left-1/2 -translate-x-1/2 bg-[#25D366] text-white text-[8.5px] font-black px-2 py-0.5 rounded-full uppercase tracking-widest shadow-xs pointer-events-none whitespace-nowrap leading-none">
+                                {isEn ? 'Special' : 'Akcija'}
+                              </span>
+                            )}
+                            <span className="bg-[#511B29] text-white text-[11px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                              {item.discount}
+                            </span>
+                            <span className="text-sm font-mono font-extrabold text-[#511B29]">
+                              {item.price}
+                            </span>
+                          </div>
+                        ) : (
+                          <span className="text-sm font-mono font-extrabold text-[#511B29] bg-[#f2dde1]/35 px-4 py-2 rounded-full border border-[#d9c1c2]/20">
+                            {item.price}
+                          </span>
+                        )}
                       </div>
                     )}
                   </div>
